@@ -1,7 +1,7 @@
 {
   "project": {
     "version": "1.0.0-beta.16",
-    "name": "new-material-2"
+    "name": "ZeTalk"
   },
   "apps": [
     {
@@ -15,9 +15,13 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
-        "styles.css"
+        "styles.css",
+        "styles/index.scss"
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/hammerjs/hammer.min.js",
+        "../node_modules/zetapush-js/dist/zetapush.min.js"
+      ],
       "environments": {
         "source": "environments/environment.ts",
         "dev": "environments/environment.ts",

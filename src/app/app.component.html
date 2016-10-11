@@ -1,3 +1,215 @@
+
+<router-outlet></router-outlet>
+
+<!--<md-toolbar color="primary">
+  <span>Application Title</span>
+  <span class="flex-fill"></span>
+
+  <span>Right Aligned Text</span>
+</md-toolbar>
+
 <h1>
   {{title}}
 </h1>
+
+<div>
+  <button md-button>FLAT</button>
+  <button md-raised-button>RAISED</button>
+  <button md-icon-button>
+      <md-icon class="md-24">favorite</md-icon>
+  </button>
+  <button md-fab>
+      <md-icon class="md-24">add</md-icon>
+  </button>
+  <button md-mini-fab>
+      <md-icon class="md-24">add</md-icon>
+  </button>
+
+  <button md-raised-button color="primary">PRIMARY</button>
+  <button md-raised-button color="accent">ACCENT</button>
+  <button md-raised-button color="warn">WARN</button>
+
+  <button md-button disabled>OFF</button>
+  <button md-raised-button [disabled]="isDisabled">OFF</button>
+  <button md-mini-fab [disabled]="isDisabled"><md-icon>check</md-icon></button>  
+</div>
+
+<div>
+  <md-card>
+    Basic card.
+  </md-card>
+
+  <md-card>
+   <md-card-subtitle>Subtitle first</md-card-subtitle>
+   <md-card-title>Card with title</md-card-title>   
+   <md-card-content>
+        <p>This is supporting text.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad</p>
+   </md-card-content>
+   <md-card-actions>
+        <button md-button>LIKE</button>
+        <button md-button>SHARE</button>
+   </md-card-actions>
+  </md-card>
+
+  <md-card>
+    <md-card-header>
+        <img md-card-avatar src="http://lorempixel.com/400/200/">
+        <md-card-title>Header title</md-card-title>
+        <md-card-subtitle>Header subtitle</md-card-subtitle>
+    </md-card-header>
+    <img md-card-image src="http://lorempixel.com/400/200/">
+    <md-card-content>
+        <p>Here is some more content</p>
+    </md-card-content>
+  </md-card>
+
+  <md-card>
+    <md-card-title-group>
+        <img md-card-sm-image src="http://lorempixel.com/200/200/">
+        <md-card-title>Card with title</md-card-title>
+        <md-card-subtitle>Subtitle</md-card-subtitle>
+    </md-card-title-group>
+  </md-card>
+</div>
+
+<div>
+  <md-checkbox [checked]="true" align="end">
+    I come after my label.
+  </md-checkbox>
+  <md-radio-group>
+    <md-radio-button value="option_1">1</md-radio-button>
+    <md-radio-button value="option_2">2</md-radio-button>
+  </md-radio-group>
+  <md-input placeholder="amount" align="end">
+    <span md-prefix>$&nbsp;</span>
+    <span md-suffix>.00</span>
+  </md-input>
+  <md-input placeholder="Character count (100 max)" maxlength="100" class="demo-full-width"
+            value="Hello world. How are you?"
+            #characterCountHintExample>
+    <md-hint align="end">{{characterCountHintExample.characterCount}} / 100</md-hint>
+  </md-input>
+  <md-card class="demo-card demo-basic">
+    <md-toolbar color="primary">Basic</md-toolbar>
+    <md-card-content>
+      <form>
+        <md-input class="demo-full-width" placeholder="Company (disabled)" disabled value="Google">
+        </md-input>
+
+        <table style="width: 100%" cellspacing="0"><tr>
+          <td><md-input placeholder="First name" style="width: 100%"></md-input></td>
+          <td><md-input placeholder="Long Last Name That Will Be Truncated" style="width: 100%"></md-input></td>
+        </tr></table>
+        <p>
+          <md-input class="demo-full-width" placeholder="Address" value="1600 Amphitheatre Pkway"></md-input>
+          <md-input class="demo-full-width" placeholder="Address 2"></md-input>
+        </p>
+        <table style="width: 100%" cellspacing="0"><tr>
+          <td><md-input class="demo-full-width" placeholder="City"></md-input></td>
+          <td><md-input class="demo-full-width" placeholder="State"></md-input></td>
+          <td><md-input #postalCode class="demo-full-width" maxlength="5"
+                        placeholder="Postal Code"
+                        value="94043">
+            <md-hint align="end">{{postalCode.characterCount}} / 5</md-hint>
+          </md-input></td>
+        </tr></table>
+      </form>
+    </md-card-content>
+  </md-card>
+</div>
+
+<div>
+  <md-list>
+   <md-list-item> Pepper </md-list-item>
+   <md-list-item> Salt </md-list-item>
+   <md-list-item> Paprika </md-list-item>
+  </md-list>
+  <md-list>
+    <md-list-item *ngFor="let message of messages">
+      <h3 md-line> {{message.from}} </h3>
+      <p md-line>
+        <span> {{message.subject}} </span>
+        <span class="demo-2"> -- {{message.message}} </span>
+      </p>
+    </md-list-item>
+  </md-list>
+  <md-list>
+    <md-list-item *ngFor="let message of messages">
+      <h3 md-line> {{message.from}} </h3>
+      <p md-line> {{message.subject}} </p>
+      <p md-line class="demo-2"> {{message.message}} </p>
+    </md-list-item>
+  </md-list>
+</div>
+
+<div>
+  <md-grid-list cols="4" rowHeight="100px">
+    <md-grid-tile *ngFor="let tile of tiles" [colspan]="tile.cols" [rowspan]="tile.rows"
+    [style.background]="tile.color">
+      {{tile.text}}
+    </md-grid-tile>
+  </md-grid-list>  
+</div>
+
+<md-icon>home</md-icon>
+
+<md-progress-circle mode="indeterminate" color="primary"></md-progress-circle>
+<md-progress-circle mode="indeterminate" color="accent"></md-progress-circle>
+<md-progress-circle mode="indeterminate" color="warn"></md-progress-circle>
+<md-spinner></md-spinner>
+
+<md-tab-group>
+  <md-tab>
+    <template md-tab-label>One</template>
+    <template md-tab-content>
+      <h1>Some tab content</h1>
+      <p>...</p>
+    </template>
+  </md-tab>
+  <md-tab>
+    <template md-tab-label>Two</template>
+    <template md-tab-content>
+      <h1>Some more tab content</h1>
+      <p>...</p>
+    </template>
+  </md-tab>
+</md-tab-group>
+
+<md-slide-toggle [checked]="isChecked">
+  Input Binding
+</md-slide-toggle>
+<md-slide-toggle color="primary">
+  Input Binding
+</md-slide-toggle>
+
+<md-button-toggle-group name="alignment">
+    <md-button-toggle value="left"><md-icon>format_align_left</md-icon></md-button-toggle>
+    <md-button-toggle value="center"><md-icon>format_align_center</md-icon></md-button-toggle>
+    <md-button-toggle value="right"><md-icon>format_align_right</md-icon></md-button-toggle>
+    <md-button-toggle value="justify"><md-icon>format_align_justify</md-icon></md-button-toggle>
+</md-button-toggle-group>
+
+<md-slider value="24"></md-slider>
+<md-slider step="5"></md-slider>
+
+<md-menu>
+    <button md-menu-item> Refresh </button>
+    <button md-menu-item> Settings </button>
+    <button md-menu-item> Help </button>
+    <button md-menu-item disabled> Sign Out </button>
+</md-menu>
+
+<button md-icon-button [md-menu-trigger-for]="menu">
+   <md-icon>more_vert</md-icon>
+</button>
+
+<md-menu #menu="mdMenu">
+    <button md-menu-item> Refresh </button>
+    <button md-menu-item> Settings </button>
+    <button md-menu-item> Help </button>
+    <button md-menu-item disabled> Sign Out </button>
+</md-menu>
+
+<button (click)="failed()" md-ripple md-tooltip="some message" tooltip-position="below">Button</button>-->
