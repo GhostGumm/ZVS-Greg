@@ -3,7 +3,6 @@ import { MdSnackBar, MdSnackBarConfig } from '@angular/material'
 import { Animations } from '../../utils/utils.animation'
 
 @Component({
-  moduleId: module.id,
   selector: 'zp-dashboard',
   templateUrl: './dashboard.view.html',
   //styleUrls: ['./dashboard.css'],

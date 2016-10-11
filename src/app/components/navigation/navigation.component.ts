@@ -3,7 +3,6 @@ import { Router } from '@angular/router'
 import { Animations } from '../../utils/utils.animation'
 
 @Component({
-  moduleId: module.id,
   selector: 'zp-navigation',
   templateUrl: './navigation.component.html',
   providers: [],

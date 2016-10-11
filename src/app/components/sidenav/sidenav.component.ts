@@ -3,7 +3,6 @@ import { Router } from '@angular/router'
 import { Animations } from '../../utils/utils.animation'
 
 @Component({
-  moduleId: module.id,
   selector: 'zp-sidenav',
   templateUrl: './sidenav.component.html',
   providers: [],

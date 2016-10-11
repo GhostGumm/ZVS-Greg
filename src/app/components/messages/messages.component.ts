@@ -3,7 +3,6 @@ import { Router } from '@angular/router'
 import { Animations } from '../../utils/utils.animation'
 
 @Component({
-  moduleId: module.id,
   selector: 'zp-messages',
   templateUrl: './messages.component.html',
   providers: [],
