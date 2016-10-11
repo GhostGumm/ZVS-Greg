@@ -23,14 +23,21 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    component: DashboardView
-  },
-  {
-    path: 'context/:id',
-    component: ContextView
-  },
-  {
-    path: 'messages/:id',
-    component: MessagesComponent
+    component: DashboardView,
+    children:[
+      { 
+        path: '', 
+        redirectTo: 'context/1', 
+        pathMatch: 'full'
+      },
+      {
+        path: 'context/:id',
+        component: ContextView
+      },
+      {
+        path: 'messages/:id',
+        component: MessagesComponent
+      }
+    ]  
   }
 ]
