@@ -2,10 +2,11 @@ import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { HttpModule } from '@angular/http'
-import { Routes, RouterModule } from '@angular/router'
+import { Router, Routes, RouterModule } from '@angular/router'
 
 import { routes } from './app.routes'
 import { AppComponent } from './app.component'
+import { AuthenticationService } from './services/services.authentication'
 // Views
 import { LoginView } from './views/authentication/login/login.view'
 import { RegisterView } from './views/authentication/register/register.view'
@@ -38,7 +39,9 @@ import { MaterialModule } from '@angular/material'
     MaterialModule.forRoot()
   ],
   exports: [RouterModule],
-  providers: [],
+  providers: [
+    AuthenticationService
+  ],
   bootstrap: [AppComponent]
 })
 
