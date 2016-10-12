@@ -10,30 +10,33 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="manifest" href="assets/manifest.json">
     <style>
-      html{transition:background-color 2s linear;}
+      html::before{
+        content:'';
+        opacity: 0;
+        transition:opacity 1.5s linear;
+      }
       zp-loader{
         position: fixed;
         top:50%;left:50%;
         transform:translate3d(-50%,-50%,0);
-        background-color:#3f51b5;
+        border:3px solid #3f51b5;
         border-radius:50%;
         pointer-events:none;
         animation:zp-loader 1.5s infinite both ease-in-out;
         transition:visiblity 0.5s;
       }
       @keyframes zp-loader{
-        90%,100%{
-          opacity: 0;
+        30%,70%{
+          opacity: 1;
         }
         from{
-          width: 0px;height: 0px;
+          width: 10px;height: 10px;opacity: 0;
         }
         to{
-          width: 100px;height: 100px;
+          width: 100px;height: 100px;opacity: 0;
         }
       }
     </style>
-    <style>html{background-color:#F5F5F5;}</style>
 
     <link rel="icon" type="image/png" href="assets/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="assets/favicon-16x16.png" sizes="16x16">
@@ -52,12 +55,12 @@
     <link rel="apple-touch-startup-image" href="assets/zetapush_logo.png">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
     <link rel="mask-icon" href="assets/safari-pinned-tab.svg" color="#5bbad5">
-    <!--Material Icons Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   </head>
   <body>
     <zp-root>
       <zp-loader></zp-loader>
     </zp-root>
   </body>
+  <style>
+  </style>
 </html>

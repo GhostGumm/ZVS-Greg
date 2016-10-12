@@ -3,6 +3,19 @@ html,body{
   min-height: 100%;
 }
 
+html::before{
+  opacity: 1;
+  position: absolute;
+  top:0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color:#F5F5F5;
+  background-image: url('../assets/texture_01.jpg');
+}
+
 app-root{
   display: flex;
   height: 100%;

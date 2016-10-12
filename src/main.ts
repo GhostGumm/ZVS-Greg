@@ -10,3 +10,9 @@ if (environment.production) {
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)
+
+window.WebFont.load({
+  google: {
+    families: ['Noto Sans', 'Material Icons']
+  }
+})
