@@ -10,6 +10,6 @@ export const routes: Routes = [
     redirectTo: '/login',
     pathMatch: 'full'
   },
-  ...dashboardRoutes
+  ...dashboardRoutes,
   ...authenticationRoutes,
 ]
