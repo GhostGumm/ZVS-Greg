@@ -1,5 +1,5 @@
 import { Component, HostBinding, AfterViewInit, OnChanges, Input, trigger } from '@angular/core'
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import { Animations } from '../../utils/utils.animation'
 
 @Component({
@@ -15,5 +15,15 @@ import { Animations } from '../../utils/utils.animation'
 })
 
 export class ContextView {
-  constructor(){}
+  private $params:any
+
+  constructor(private route: ActivatedRoute){
+    route.params.subscribe((params) => {
+      this.$params = params
+    })
+  }
+
+  ngOnInit() {
+    console.log(this.$params)
+  }
 }

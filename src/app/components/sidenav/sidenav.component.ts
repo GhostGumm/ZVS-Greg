@@ -11,5 +11,13 @@ import { Animations } from '../../utils/utils.animation'
 })
 
 export class SidenavComponent {
-  constructor(){}
+  @Input() sidenav:any
+
+  constructor(){
+
+  }  
+  
+  ngOnInit() {
+    console.debug('SidenavComponent::ngOnInit', { sidenav:this.sidenav })
+  }
 }

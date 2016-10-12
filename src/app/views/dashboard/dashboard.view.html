@@ -1,22 +1,20 @@
 <md-sidenav-layout>
 
-  <md-sidenav #start (open)="mybutton.focus()">
-    <button md-button #mybutton (click)="start.close()">Close</button>
-    <zp-navigation></zp-navigation>
+  <md-sidenav #navigation>
+    <zp-navigation [navigation]='navigation'></zp-navigation>
   </md-sidenav>
 
-  <md-sidenav #end align="end">
-    <button md-button (click)="end.close()">Close</button>
-    <zp-sidenav></zp-sidenav>
+  <md-sidenav #sidenav align="end">
+    <zp-sidenav [sidenav]='sidenav'></zp-sidenav>
   </md-sidenav>
 
 
 
   <md-toolbar color="primary" *ngIf="toolbarIsVisible" [@toolbarAnimation]="toolbarIsVisible">
-    <button md-icon-button (click)="start.open()"><md-icon>menu</md-icon></button>
+    <button md-icon-button (click)="navigation.open()"><md-icon>menu</md-icon></button>
     <span>ZeTalk</span>
     <span class="flex-fill"></span>
-    <button md-icon-button (click)="end.open()"><md-icon>more_vert</md-icon></button>
+    <button md-icon-button (click)="sidenav.open()"><md-icon>more_vert</md-icon></button>
   </md-toolbar>
 
   <div class="zp-content">

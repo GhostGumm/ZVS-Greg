@@ -1,15 +1,37 @@
-import { Component, HostBinding, AfterViewInit, OnChanges, Input, trigger } from '@angular/core'
+import { Component, Input } from '@angular/core'
 import { Router } from '@angular/router'
-import { Animations } from '../../utils/utils.animation'
 
 @Component({
   selector: 'zp-navigation',
-  templateUrl: './navigation.component.html',
-  providers: [],
-  host: {},
-  animations: []
+  templateUrl: './navigation.component.html'
 })
-
+/*
+* Main navigation component
+* Avatar - Global users list - Groups - Invitation alerts - 
+*/
 export class NavigationComponent {
-  constructor(){}
+  @Input() navigation:any // md-sidenav reference
+
+  user:any = {
+    fisrtname:'raf',
+    lastname:'millies',
+    mail:'raf@yopmail.com'
+  }
+
+  constructor(private router:Router){
+    /*
+    * Route state listener
+    * NavigationStart -> RoutesRecognized -> NavigationEnd
+    */
+    router.events.subscribe((event) => {
+      console.debug('NavigationComponent::routeChange', { event })
+      if (event.constructor.name == 'NavigationEnd') {
+        this.navigation.close()
+      }
+    })
+  }
+
+  ngOnInit() {
+    console.debug('NavigationComponent::ngOnInit', { navigation:this.navigation })
+  }
 }

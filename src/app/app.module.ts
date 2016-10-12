@@ -17,7 +17,8 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { SidenavComponent } from './components/sidenav/sidenav.component'
 import { MessagesComponent } from './components/messages/messages.component'
 
-import { MaterialModule } from '@angular/material'
+import { MaterialModule } from '@angular/material';
+import { ProfileComponent } from './components/profile/profile.component'
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { MaterialModule } from '@angular/material'
 
     NavigationComponent,
     SidenavComponent,
-    MessagesComponent
+    MessagesComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
