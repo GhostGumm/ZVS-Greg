@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { HttpModule } from '@angular/http'
 import { Router, Routes, RouterModule } from '@angular/router'
+import { MaterialModule } from '@angular/material'
 
 import { routes } from './app.routes'
 import { AppComponent } from './app.component'
@@ -16,9 +17,8 @@ import { ContextView } from './views/context/context.view'
 import { NavigationComponent } from './components/navigation/navigation.component'
 import { SidenavComponent } from './components/sidenav/sidenav.component'
 import { MessagesComponent } from './components/messages/messages.component'
-
-import { MaterialModule } from '@angular/material';
 import { ProfileComponent } from './components/profile/profile.component'
+import { StatsComponent } from './components/stats/stats.component'
 
 @NgModule({
   declarations: [
@@ -31,7 +31,8 @@ import { ProfileComponent } from './components/profile/profile.component'
     NavigationComponent,
     SidenavComponent,
     MessagesComponent,
-    ProfileComponent
+    ProfileComponent,
+    StatsComponent
   ],
   imports: [
     BrowserModule,
