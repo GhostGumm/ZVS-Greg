@@ -1,16 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core'
 
 @Component({
   selector: 'zp-profile',
   templateUrl: './profile.component.html'
 })
 export class ProfileComponent implements OnInit {
-  @Input() user:any
+  @Input() user: any
 
-  constructor() {
+  constructor() {}
 
-  }
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

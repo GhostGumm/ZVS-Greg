@@ -1,17 +1,15 @@
 import { Routes } from '@angular/router'
 
-import { AuthenticationService } from '../../services/services.authentication'
-
-import { LoginView } from './login/login.view'
-import { RegisterView } from './register/register.view'
+import { LoginViewComponent } from './login/login.view'
+import { RegisterViewComponent } from './register/register.view'
 
 export const authenticationRoutes: Routes = [
   {
     path: 'login',
-    component: LoginView
+    component: LoginViewComponent
   },
   {
     path: 'register',
-    component: RegisterView
+    component: RegisterViewComponent
   }
 ]

@@ -1,23 +1,19 @@
-import { Component, HostBinding, AfterViewInit, OnChanges, Input, trigger } from '@angular/core'
-import { Router } from '@angular/router'
-import { Animations } from '../../utils/utils.animation'
+import { Component, Input, OnInit } from '@angular/core'
 
 @Component({
   selector: 'zp-sidenav',
   templateUrl: './sidenav.component.html',
   providers: [],
-  host: {},
   animations: []
 })
+export class SidenavComponent implements OnInit {
+  @Input() sidenav: any
 
-export class SidenavComponent {
-  @Input() sidenav:any
+  constructor() {}
 
-  constructor(){
-
-  }  
-  
   ngOnInit() {
-    console.debug('SidenavComponent::ngOnInit', { sidenav:this.sidenav })
+    console.debug('SidenavComponent::ngOnInit', {
+      sidenav: this.sidenav
+    })
   }
 }

@@ -1,13 +1,10 @@
-import { Component, ViewContainerRef, AfterViewInit } from '@angular/core'
+import { Component, AfterViewInit, OnInit } from '@angular/core'
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  //styleUrls: ['./app.component.css'],
-  providers: []
+  selector: 'zp-root',
+  templateUrl: './root.component.html'
 })
-
-export class AppComponent implements AfterViewInit{
+export class RootComponent implements AfterViewInit, OnInit {
   ngOnInit() {
     console.debug('AppComponent::ngOnInit')
   }

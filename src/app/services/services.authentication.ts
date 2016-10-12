@@ -1,9 +1,9 @@
-import { CanActivate, Router } from '@angular/router';
+import { CanActivate } from '@angular/router'
 
 export class AuthenticationService implements CanActivate {
   constructor(
-  ){}
-  
+  ) {}
+
   isAuthenticated(token = true) {
     if (token === false) {
       // TODO : implement authent guard

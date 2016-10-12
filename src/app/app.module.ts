@@ -2,18 +2,19 @@ import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { HttpModule } from '@angular/http'
-import { Router, Routes, RouterModule } from '@angular/router'
 import { MaterialModule } from '@angular/material'
-
-import { routes } from './app.routes'
-import { AppComponent } from './app.component'
+// Routing Module
+import { AppRoutingModule } from './app-routing.module'
+// Services
 import { AuthenticationService } from './services/services.authentication'
+// Components
+import { RootComponent } from './root.component'
 import { ChartistComponent } from 'angular2-chartist'
 // Views
-import { LoginView } from './views/authentication/login/login.view'
-import { RegisterView } from './views/authentication/register/register.view'
-import { DashboardView } from './views/dashboard/dashboard.view'
-import { ContextView } from './views/context/context.view'
+import { LoginViewComponent } from './views/authentication/login/login.view'
+import { RegisterViewComponent } from './views/authentication/register/register.view'
+import { DashboardViewComponent } from './views/dashboard/dashboard.view'
+import { ContextViewComponent } from './views/context/context.view'
 // Component
 import { NavigationComponent } from './components/navigation/navigation.component'
 import { SidenavComponent } from './components/sidenav/sidenav.component'
@@ -23,12 +24,13 @@ import { StatsComponent } from './components/stats/stats.component'
 
 @NgModule({
   declarations: [
-    AppComponent,
+    RootComponent,
+    LoginViewComponent,
+    RegisterViewComponent,
+    DashboardViewComponent,
+    ContextViewComponent,
+
     ChartistComponent,
-    LoginView,
-    RegisterView,
-    DashboardView,
-    ContextView,
 
     NavigationComponent,
     SidenavComponent,
@@ -40,14 +42,12 @@ import { StatsComponent } from './components/stats/stats.component'
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(routes),
+    AppRoutingModule,
     MaterialModule.forRoot()
   ],
-  exports: [RouterModule],
   providers: [
     AuthenticationService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [RootComponent]
 })
-
 export class AppModule { }

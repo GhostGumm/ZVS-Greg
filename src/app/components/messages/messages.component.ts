@@ -1,15 +1,9 @@
-import { Component, HostBinding, AfterViewInit, OnChanges, Input, trigger } from '@angular/core'
-import { Router } from '@angular/router'
-import { Animations } from '../../utils/utils.animation'
+import { Component } from '@angular/core'
 
 @Component({
   selector: 'zp-messages',
-  templateUrl: './messages.component.html',
-  providers: [],
-  host: {},
-  animations: []
+  templateUrl: './messages.component.html'
 })
-
 export class MessagesComponent {
-  constructor(){}
+  constructor() {}
 }
