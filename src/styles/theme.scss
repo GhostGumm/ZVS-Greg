@@ -10,6 +10,8 @@
 // hue.
 $primary: md-palette($md-indigo);
 $accent:  md-palette($md-cyan);
+$background: #F5F5F5;
+$background-accent: #252525;
 
 // The warn palette is optional (defaults to red).
 $warn:    md-palette($md-red);
@@ -21,3 +23,27 @@ $theme: md-light-theme($primary, $accent, $warn);
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($theme);
+
+.dark-theme {
+  $dark-primary: md-palette($md-indigo);
+  $dark-accent:  md-palette($md-cyan);
+  $dark-warn:    md-palette($md-red);
+  $dark-theme: md-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+  @include angular-material-theme($dark-theme);   
+}
+$dark-background: #252525;
+$dark-background-accent: #F5F5F5;
+
+html.dark-theme{  
+  background-color:$dark-background;
+}
+.dark-theme{
+  .ct-label {
+    fill: rgba(255,255,255, 0.7);
+    color: rgba(255,255,255, 0.7);
+  }
+  md-sidenav {
+    background-color: $dark-background;
+  }
+}

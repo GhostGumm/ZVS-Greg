@@ -46,3 +46,45 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+// Chartist reset
+.ct-series-a {
+	.ct-point,
+	.ct-line,
+	.ct-bar,
+	.ct-slice-donut {
+		stroke: md-color($primary);
+	}
+	.ct-area,
+	.ct-slice-pie{
+		fill: md-color($primary);
+	}
+}
+
+.ct-series-b {
+	.ct-point,
+	.ct-line,
+	.ct-bar,
+	.ct-slice-donut {
+		stroke: md-color($accent);
+	}
+	.ct-area,
+	.ct-slice-pie{
+		fill: md-color($accent);
+	}
+}
+
+
+// Scrollbar reset
+::-webkit-scrollbar{
+  border-radius: 2px;
+  width: 10px;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner{
+  background: transparent;
+}
+::-webkit-scrollbar-thumb{
+  background: md-color($primary);
+  border-radius: 2px ;
+}

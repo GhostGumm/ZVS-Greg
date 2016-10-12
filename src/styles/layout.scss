@@ -4,8 +4,12 @@ body {
   min-height: 100%;
 }
 
+html{  
+  background-color:$background;
+}
+
 html::before{
-  opacity: 1;
+  opacity: 0.65;
   position: absolute;
   top:0;
   left: 0;
@@ -13,7 +17,6 @@ html::before{
   bottom: 0;
   z-index: -1;
   pointer-events: none;
-  background-color:#F5F5F5;
   background-image: url('../assets/texture_01.jpg');
 }
 
@@ -33,7 +36,14 @@ app-root{
   height: 100%;
   flex: 1;
 }
-
+md-sidenav{
+  background-color: rgba($background,.87);
+}
 md-sidenav-layout{
   height: 100%;
+  background-color: transparent !important;
+}
+.md-sidenav-content{
+  overflow: hidden !important;
+  background-color: transparent;
 }

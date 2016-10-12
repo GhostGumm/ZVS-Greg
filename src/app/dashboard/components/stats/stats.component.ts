@@ -16,6 +16,12 @@ export interface Chart {
 @Component({
   selector: 'zp-stats',
   templateUrl: './stats.component.html',
+  styles:[`
+    :host {
+      display: block;
+      position: relative;
+    }
+  `],
   animations: [
     trigger('statsAnimation', Animations.fadeInOutView())
   ]
