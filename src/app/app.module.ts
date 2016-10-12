@@ -20,7 +20,9 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { SidenavComponent } from './components/sidenav/sidenav.component'
 import { MessagesComponent } from './components/messages/messages.component'
 import { ProfileComponent } from './components/profile/profile.component'
-import { StatsComponent } from './components/stats/stats.component'
+import { StatsComponent } from './components/stats/stats.component';
+import { UsernameComponent } from './components/profile/username/username.component';
+import { AvatarComponent } from './components/profile/avatar/avatar.component'
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { StatsComponent } from './components/stats/stats.component'
     SidenavComponent,
     MessagesComponent,
     ProfileComponent,
-    StatsComponent
+    StatsComponent,
+    UsernameComponent,
+    AvatarComponent
   ],
   imports: [
     BrowserModule,

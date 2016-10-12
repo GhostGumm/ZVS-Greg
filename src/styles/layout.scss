@@ -23,10 +23,14 @@ app-root{
 }
 
 .flex-centered{
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.flex-height{
+  height: 100%;
+  flex: 1;
 }
 
 md-sidenav-layout{

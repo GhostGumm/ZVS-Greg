@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit, trigger } from '@angular/core'
+import { Component, OnInit, trigger, AfterViewInit, Input } from '@angular/core'
 import * as Chartist from 'chartist'
 import { ChartType, ChartEvent } from 'angular2-chartist'
 import { Animations } from '../../utils/utils.animation'
@@ -17,15 +17,12 @@ export interface Chart {
   selector: 'zp-stats',
   templateUrl: './stats.component.html',
   animations: [
-    trigger('routeAnimation', Animations.fadeInOutView())
+    trigger('statsAnimation', Animations.fadeInOutView())
   ]
 })
-export class StatsComponent implements OnInit {
+export class StatsComponent implements OnInit, AfterViewInit {
+  @Input() statsIsVisible: boolean = false
   charts: Chart[]
-
-  @HostBinding('@routeAnimation') get routeAnimation() {
-    return true
-  }
 
   constructor() {
     this.charts = [{
@@ -109,6 +106,13 @@ export class StatsComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this.statsIsVisible = true
+    console.debug('StatsComponent::ngAfterViewInit', {
+      statsIsVisible: this.statsIsVisible
+    })
   }
 
 }

@@ -29,7 +29,7 @@ export class LoginViewComponent implements OnInit, OnChanges, AfterViewInit {
     this.model = new LoginModel()
   }
 
-  @HostBinding('class.flex-centered')
+  @HostBinding('class') classes = 'flex-centered flex-height'
 
   @HostBinding('@routeAnimation') get routeAnimation() {
     return true

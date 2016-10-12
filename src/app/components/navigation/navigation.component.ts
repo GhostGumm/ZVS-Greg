@@ -1,17 +1,22 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 
+/** 
+ * Main navigation component
+ */ 
 @Component({
   selector: 'zp-navigation',
   templateUrl: './navigation.component.html'
 })
+
 export class NavigationComponent implements OnInit {
   @Input() navigation: any // md-sidenav reference
 
   user: any = {
-    fisrtname: 'raf',
+    firstname: 'raf',
     lastname: 'millies',
-    mail: 'raf@yopmail.com'
+    mail: 'raf@yopmail.com',
+    avatar: './assets/zetapush_logo.png'
   }
 
   constructor(

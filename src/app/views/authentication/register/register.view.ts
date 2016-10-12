@@ -32,7 +32,7 @@ export class RegisterViewComponent implements AfterViewInit, OnChanges, OnInit {
     return true
   }
 
-  @HostBinding('class.flex-centered')
+  @HostBinding('class') classes = 'flex-centered flex-height'
 
   ngOnInit() {
     console.debug('RegisterView::ngOnInit', {

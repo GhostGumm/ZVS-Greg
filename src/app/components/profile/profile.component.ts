@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core'
+import { Component, OnInit, Input, HostBinding } from '@angular/core'
 
 @Component({
   selector: 'zp-profile',
@@ -7,7 +7,13 @@ import { Component, OnInit, Input } from '@angular/core'
 export class ProfileComponent implements OnInit {
   @Input() user: any
 
-  constructor() {}
+  constructor() {
 
-  ngOnInit() {}
+  }
+
+  @HostBinding('class.flex-centered')
+
+  ngOnInit() {
+    console.debug('ProfileComponent::ngOnInit', { user:this.user })
+  }
 }
