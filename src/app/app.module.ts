@@ -8,6 +8,7 @@ import { MaterialModule } from '@angular/material'
 import { routes } from './app.routes'
 import { AppComponent } from './app.component'
 import { AuthenticationService } from './services/services.authentication'
+import { ChartistComponent } from 'angular2-chartist'
 // Views
 import { LoginView } from './views/authentication/login/login.view'
 import { RegisterView } from './views/authentication/register/register.view'
@@ -23,6 +24,7 @@ import { StatsComponent } from './components/stats/stats.component'
 @NgModule({
   declarations: [
     AppComponent,
+    ChartistComponent,
     LoginView,
     RegisterView,
     DashboardView,
