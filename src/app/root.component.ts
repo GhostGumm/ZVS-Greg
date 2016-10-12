@@ -2,7 +2,7 @@ import { Component, AfterViewInit, OnInit } from '@angular/core'
 
 @Component({
   selector: 'zp-root',
-  templateUrl: './root.component.html'
+  template: '<router-outlet></router-outlet>'
 })
 export class RootComponent implements AfterViewInit, OnInit {
   ngOnInit() {
