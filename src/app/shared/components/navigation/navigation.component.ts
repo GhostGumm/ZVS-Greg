@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
+import { Subscription } from 'rxjs/Subscription'
 
 /** 
  * Main navigation component
@@ -24,7 +25,7 @@ export class NavigationComponent implements OnDestroy, OnInit {
     avatar: './assets/zetapush_logo.png'
   }
 
-  subscriptions: Array<any> = []
+  subscriptions: Array<Subscription> = []
 
   constructor(
     private router: Router
