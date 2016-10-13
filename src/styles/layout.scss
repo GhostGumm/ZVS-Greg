@@ -3,8 +3,11 @@ body {
   height: 100%;
   min-height: 100%;
 }
+body{
+  font-family: 'Noto Sans', sans-serif !important; 
+}
 
-html{  
+html{
   background-color:$background;
 }
 
@@ -26,16 +29,21 @@ app-root{
   flex-direction: column;
 }
 
-.flex-centered{
+.flex-centered {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.flex-height{
+.flex-height {
   height: 100%;
   flex: 1;
 }
+
+.flex-fill{
+    flex: 1 1 auto;
+}
+
 md-sidenav{
   background-color: rgba($background,.87);
 }

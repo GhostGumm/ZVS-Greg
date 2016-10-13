@@ -2,13 +2,7 @@ import { Component, OnInit, Input, HostBinding } from '@angular/core'
 
 @Component({
   selector: 'zp-profile',
-  styles: [`
-    :host {
-      height: 200px;
-      display: flex;
-      flex-direction: column;
-    }
-  `],
+  styleUrls: ['./profile.component.scss'],
   templateUrl: './profile.component.html'
 })
 export class ProfileComponent implements OnInit {

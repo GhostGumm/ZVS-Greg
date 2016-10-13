@@ -12,11 +12,10 @@
       "main": "main.ts",
       "test": "test.ts",
       "tsconfig": "tsconfig.json",
-      "prefix": "app",
+      "prefix": "zp",
       "mobile": false,
       "styles": [
         "../node_modules/chartist/dist/chartist.css",
-        "styles.css",
         "styles/index.scss"
       ],
       "scripts": [
@@ -44,7 +43,7 @@
     }
   },
   "defaults": {
-    "styleExt": "css",
+    "styleExt": "scss",
     "prefixInterfaces": false
   }
 }

@@ -1,0 +1,22 @@
+@import '~@angular/material/core/theming/theming';
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue.
+$primary: md-palette($md-indigo);
+$accent:  md-palette($md-cyan);
+
+// The warn palette is optional (defaults to red).
+$warn:    md-palette($md-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$theme: md-light-theme($primary, $accent, $warn);
+
+$background: #F5F5F5;
+$background-accent: #252525;
+
+$dark-background: #252525;
+$dark-background-accent: #F5F5F5;
+
+$zp-navigation-width: 360px;
+$zp-sidenav-width: 280px;

@@ -1,11 +1,13 @@
-zp-avatar{
+@import '../../../../styles/_variables';
+
+:host {
   display: block;
   width: 40%;    
   border-radius: 50%;
   background: $background;
   border: 2px solid $background-accent;
   margin: 10px;  
-  > img {
+}
+img {
     width: 100%;
-  }
 }
