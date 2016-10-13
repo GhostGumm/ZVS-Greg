@@ -11,6 +11,7 @@ import { COMPONENTS } from './components'
 import { LAYOUTS } from './layouts'
 
 import { AuthenticationService } from './authentication.service'
+import { ApiUserService } from '../services/'
 
 const CORE_MODULES = [ CommonModule, BrowserModule, FormsModule, HttpModule ]
 
@@ -18,6 +19,6 @@ const CORE_MODULES = [ CommonModule, BrowserModule, FormsModule, HttpModule ]
   declarations: [ ...COMPONENTS, ...LAYOUTS ],
   exports: [ ...CORE_MODULES, MaterialModule ],
   imports: [ ...CORE_MODULES, MaterialModule.forRoot(), SharedRoutingModule ],
-  providers: [ AuthenticationService ]
+  providers: [ AuthenticationService, ApiUserService ]
 })
 export class SharedModule { }

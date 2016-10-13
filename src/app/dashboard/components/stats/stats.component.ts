@@ -101,11 +101,6 @@ export class StatsComponent implements OnInit, AfterViewInit {
         options: {
           donut: true,
           showLabel: false
-        },
-        events: {
-          draw(data: any): void {
-            console.log(data)
-          }
         }
       }
     ]

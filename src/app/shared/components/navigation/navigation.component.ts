@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
+import { ApiUserService, User } from '../../../services/'
 
 /** 
  * Main navigation component
@@ -18,11 +19,12 @@ import { Subscription } from 'rxjs/Subscription'
       right: 0;
     }
   `],
-  templateUrl: './navigation.component.html'
+  templateUrl: './navigation.component.html',
+  providers: [ ApiUserService ]
 })
 export class NavigationComponent implements OnDestroy, OnInit {
   @Input() navigation: any // md-sidenav reference
-
+  users: User[]
   user: any = {
     firstname: 'John',
     lastname: 'Doe',
@@ -33,7 +35,8 @@ export class NavigationComponent implements OnDestroy, OnInit {
   subscriptions: Array<Subscription> = []
 
   constructor(
-    private router: Router
+    private router: Router,
+    private userService: ApiUserService
   ) {
     /**
      * Route state listener
@@ -47,14 +50,21 @@ export class NavigationComponent implements OnDestroy, OnInit {
     }))
   }
 
+  ngOnInit() {
+    console.debug('NavigationComponent::ngOnInit', {
+      navigation: this.navigation
+    })
+    this.getUsers()
+  }
   ngOnDestroy() {
     console.debug('NavigationComponent::ngOnDestroy')
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
   }
 
-  ngOnInit() {
-    console.debug('NavigationComponent::ngOnInit', {
-      navigation: this.navigation
+  getUsers() {
+    this.userService.getAllUsers().then(users => {
+      console.debug('NavigationComponent::getUsers', { users })
+      this.users = users
     })
   }
 }

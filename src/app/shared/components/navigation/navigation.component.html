@@ -1,7 +1,9 @@
 <zp-profile [user]="user"></zp-profile>
-<button class="zp-nav-close" md-icon-button color="invert" (click)="navigation.close()">
+<!--<button class="zp-nav-close" md-icon-button color="invert" (click)="navigation.close()">
   <md-icon>close</md-icon>
-</button>
+</button>-->
 <button md-button [routerLink]="['/context', 1]">Context 1</button>
 <button md-button [routerLink]="['/context', 2]">Context 2</button>
 <button md-button [routerLink]="['/dashboard', 'stats']">Stats</button>
+
+<zp-user-list [users]="users"></zp-user-list>
