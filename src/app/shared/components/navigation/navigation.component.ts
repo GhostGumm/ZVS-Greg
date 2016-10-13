@@ -11,6 +11,11 @@ import { Router } from '@angular/router'
       display: block;
       width: 360px;
     }
+    .zp-nav-close{
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
   `],
   templateUrl: './navigation.component.html'
 })

@@ -19,15 +19,22 @@
   @include angular-material-theme($dark-theme);   
 }
 
+.md-invert{
+  color: rgba(255,255,255, 0.85) !important;
+}
+
 html.dark-theme{  
   background-color:$dark-background;
 }
 .dark-theme{
   .ct-label {
-    fill: rgba(255,255,255, 0.7);
-    color: rgba(255,255,255, 0.7);
+    fill: rgba(255,255,255, 0.85);
+    color: rgba(255,255,255, 0.85);
   }
   md-sidenav {
     background-color: $dark-background;
+  }
+  .md-invert{
+    color: rgba($dark-background, 0.85) !important;
   }
 }
