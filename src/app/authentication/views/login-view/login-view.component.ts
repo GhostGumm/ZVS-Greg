@@ -3,9 +3,8 @@ import { Router } from '@angular/router'
 import { Animations } from '../../../utils/utils.animation'
 
 class LoginModel {
-  public firstname: string = 'John'
-  public lastname: string = 'Doe'
-  public email: string = 'john.doe@yopmail.com'
+  public login: string = ''
+  public password: string = ''
 }
 
 @Component({
@@ -24,15 +23,14 @@ export class LoginViewComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() formIsVisible: boolean = false
 
   @HostBinding('class') classes = 'flex-centered flex-height'
+  @HostBinding('@routeAnimation') get routeAnimation() {
+    return true
+  }
 
   constructor(
     private router: Router,
   ) {
     this.model = new LoginModel()
-  }
-
-  @HostBinding('@routeAnimation') get routeAnimation() {
-    return true
   }
 
   ngOnInit() {

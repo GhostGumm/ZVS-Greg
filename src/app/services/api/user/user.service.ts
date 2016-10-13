@@ -18,7 +18,7 @@ export class ApiUserService implements OnDestroy {
   /**
    * Return global users list
    */
-  getAllUsers(): Promise<User[]> {
+  getAllUsers(): Promise<any[]> {
     return Promise.resolve(USERS)
   }
 }

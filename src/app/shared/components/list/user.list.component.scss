@@ -1,6 +1,9 @@
 @import '../../../../styles/_variables';
 
-md-list-avatar{
+[md-list-avatar]{
+  width: 28px;
+  height: 28px;
+  padding: 2px;
   background-color: $background;
   border: 2px solid $background-accent;
 }

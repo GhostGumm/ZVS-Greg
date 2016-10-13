@@ -1,15 +1,15 @@
 
-
 <md-card class="zp-card-form" *ngIf="formIsVisible" [@formAnimation]="formIsVisible">
   <md-toolbar color="primary">Register</md-toolbar>
   <md-card-content>
     <form (ngSubmit)="onSubmit()" #registerForm="ngForm" id="registerForm">
       <md-input type="text" placeholder="Firstname" [(ngModel)]="model.firstname" name="firstname" (ngModelChange)="model.firstname = $event" required></md-input>
-      <md-input type="password" placeholder="Password" [(ngModel)]="model.password" name="password" required></md-input>
+      <md-input type="text" placeholder="Lastname" [(ngModel)]="model.lastname" name="lastname" required></md-input>
+      <md-input type="email" placeholder="Email" [(ngModel)]="model.email" name="email" required></md-input>
     </form>
   </md-card-content>
   <md-card-actions align="end">
-    <button md-button routerLink="/login">Sign In</button>
-    <button form="registerForm" type="submit" md-raised-button color="primary">Sign Up</button>
+    <button md-button routerLink="/register">Sign Up</button>
+    <button form="registerForm" type="submit" md-raised-button color="primary">Sign In</button>
   </md-card-actions>
 </md-card>

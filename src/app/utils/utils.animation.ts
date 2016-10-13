@@ -4,11 +4,11 @@ export const Animations = {
 
   slideUpDown: ({ delay = '500ms', easingIn = 'ease-in-out', easingOut = 'ease-in-out' } = {}) => [
     state('true', style({transform: 'translateY(0)', opacity: 1})),
-    transition('void => *', [
+    transition(':enter', [
       style({transform: 'translateY(-50%)', opacity: 0}),
       animate(`${delay} ${easingIn}`) // cubic-bezier(0.175, 0.885, 0.32, 1.275)
     ]),
-    transition('* => void', [
+    transition(':leave', [
       animate(`${delay} ${easingOut}`, style({transform: 'translateY(50%)', opacity: 0}))
     ])
   ],
@@ -21,10 +21,10 @@ export const Animations = {
       right: 0,
       bottom: 0
     })),
-    transition('void => *', [
+    transition(':enter', [
         animate(`${delay} ${easingIn}`, style({opacity: 1}))
     ]),
-    transition('* => void', [
+    transition(':leave', [
         animate(`${delay} ${easingOut}`, style({opacity: 0}))
     ])
   ]

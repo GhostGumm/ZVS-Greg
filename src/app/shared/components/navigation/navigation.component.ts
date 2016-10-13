@@ -24,7 +24,7 @@ import { ApiUserService, User } from '../../../services/'
 })
 export class NavigationComponent implements OnDestroy, OnInit {
   @Input() navigation: any // md-sidenav reference
-  users: User[]
+  users: any[]
   user: any = {
     firstname: 'John',
     lastname: 'Doe',

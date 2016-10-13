@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { User } from '../../../services/'
 
 @Component({
   selector: 'zp-user-list',
@@ -7,7 +6,7 @@ import { User } from '../../../services/'
   styleUrls: ['./user.list.component.scss'],
 })
 export class UserListComponent implements OnInit {
-  @Input() users: User[]
+  @Input() users: any[] // User[]
 
   constructor() {
   }
@@ -16,5 +15,6 @@ export class UserListComponent implements OnInit {
     console.debug('UserListComponent::ngOnInit', {
       users: this.users
     })
+    // this.users.forEach((user) => user.message = 'coucou')
   }
 }
