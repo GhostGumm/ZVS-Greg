@@ -20,8 +20,7 @@
       ],
       "scripts": [
         "../node_modules/webfontloader/webfontloader.js",
-        "../node_modules/hammerjs/hammer.min.js",
-        "../node_modules/zetapush-js/dist/zetapush.min.js"
+        "../node_modules/hammerjs/hammer.min.js"
       ],
       "environments": {
         "source": "environments/environment.ts",

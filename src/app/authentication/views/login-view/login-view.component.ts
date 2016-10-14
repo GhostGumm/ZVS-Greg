@@ -26,7 +26,7 @@ export class LoginViewComponent implements OnInit, OnChanges, AfterViewInit {
   @HostBinding('class') classes = 'flex-centered flex-height'
 
   constructor(
-    private router: Router,
+    private router: Router
   ) {
     this.model = new LoginModel()
   }

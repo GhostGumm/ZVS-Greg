@@ -1,9 +1,5 @@
 import { Api } from './api'
 
-/**
- * @todo Should be auto generated
- * @extends Api
- */
 export class ApiGroup extends Api {
   getAllUserGroups() {
     this.$publish('getAllUserGroups', {})

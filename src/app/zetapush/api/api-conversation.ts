@@ -1,9 +1,5 @@
 import { Api } from './api'
 
-/**
- * @todo Should be auto generated
- * @extends Api
- */
 export class ApiConversation extends Api {
   createPublicConversation({ name }) {
     this.$publish('createPublicConversation', { name })
@@ -24,7 +20,7 @@ export class ApiConversation extends Api {
     this.$publish('addMessageInConversation', { message, owner, conversation })
   }
   addMessageIncoming({ id, owner, message }) {
-    this.$publish('addMessageIncoming', { id, owner, message })    
+    this.$publish('addMessageIncoming', { id, owner, message })
   }
   addAttachmentInConversation({ guid, owner, conversation, metadata = {}, tags = [] }) {
     this.$publish('addAttachmentInConversation', { guid, owner, conversation, metadata, tags })
@@ -45,7 +41,7 @@ export class ApiConversation extends Api {
     this.$publish('getConversationPresences', { id, owner })
   }
   getConversationUnreadMessages({ id }) {
-    this.$publish('getConversationUnreadMessages', { id })    
+    this.$publish('getConversationUnreadMessages', { id })
   }
   markConversationAsRead({ id }) {
     this.$publish('markConversationAsRead', { id })
@@ -84,7 +80,6 @@ export class ApiConversation extends Api {
     this.$publish('acceptInvitationToConversation', { id })
   }
   getUserInvitations() {
-    this.$publish('getUserInvitations')
+    this.$publish('getUserInvitations', {})
   }
-  
 }
