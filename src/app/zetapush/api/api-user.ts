@@ -1,24 +1,20 @@
 import { Api } from './api'
 
-/**
- * @todo Should be auto generated
- * @extends Api
- */
 export class ApiUser extends Api {
   getAllGlobalUsers() {
-    this.$publish('getAllGlobalUsers', {})    
+    this.$publish('getAllGlobalUsers', {})
   }
   getDashboard() {
     this.$publish('getDashboard', {})
   }
-  createUser({ login, password, mail  }) {
-    this.$publish('createUser', { login, password, mail  })
+  createUser({ login, password, mail }) {
+    this.$publish('createUser', { login, password, mail })
   }
-  isNewUser({ user }) {    
+  isNewUser({ user }) {
     this.$publish('isNewUser', { user })
   }
   getDelegateInfos({ userId }) {
-    this.$publish('getDelegateInfos', { userId  })    
+    this.$publish('getDelegateInfos', { userId })
   }
   getUserPublicInfos({ userKeys = [] }) {
     this.$publish('getUserPublicInfos', { userKeys })
@@ -29,22 +25,22 @@ export class ApiUser extends Api {
   getUserPrivateInfosAsUser({ user }) {
     this.$publish('getUserPrivateInfosAsUser', { user })
   }
-  searchUser({ criteria = {} } = {}) {
+  searchUser({ criteria = {} }) {
     this.$publish('searchUser', { criteria })
   }
-  updateUser({ profile } = {}) {
+  updateUser({ profile }) {
     this.$publish('updateUser', { profile })
   }
-  changePassword({ password, token } = {}) {
+  changePassword({ password, token }) {
     this.$publish('changePassword', { password, token }, false)
   }
-  resetPasswordByLogin({ login } = {}) {
+  resetPasswordByLogin({ login }) {
     this.$publish('resetPasswordByLogin', { login })
   }
-  resetPasswordByMail({ mail } = {}) {
+  resetPasswordByMail({ mail }) {
     this.$publish('resetPasswordByMail', { mail })
   }
-  resetPasswordByUserId({ userId } = {}) {
+  resetPasswordByUserId({ userId }) {
     this.$publish('resetPasswordByUserId', { userId })
   }
   addAvatar({ guid, metadata, tags }) {

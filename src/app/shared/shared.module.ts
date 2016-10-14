@@ -7,6 +7,8 @@ import { MaterialModule } from '@angular/material'
 
 import { SharedRoutingModule } from './shared-routing.module'
 
+import { ZetaPushModule } from '../zetapush/zetapush.module'
+
 import { COMPONENTS } from './components'
 import { LAYOUTS } from './layouts'
 
@@ -17,8 +19,8 @@ const CORE_MODULES = [ CommonModule, BrowserModule, FormsModule, HttpModule ]
 
 @NgModule({
   declarations: [ ...COMPONENTS, ...LAYOUTS ],
-  exports: [ ...CORE_MODULES, MaterialModule ],
-  imports: [ ...CORE_MODULES, MaterialModule.forRoot(), SharedRoutingModule ],
-  providers: [ AuthenticationService, ApiUserService ]
+  exports: [ ...CORE_MODULES, MaterialModule, ZetaPushModule ],
+  imports: [ ...CORE_MODULES, MaterialModule.forRoot(), SharedRoutingModule, ZetaPushModule ],
+  providers: [ AuthenticationService ]
 })
 export class SharedModule { }

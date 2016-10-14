@@ -28,7 +28,7 @@ export class LoginViewComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   constructor(
-    private router: Router,
+    private router: Router
   ) {
     this.model = new LoginModel()
   }
