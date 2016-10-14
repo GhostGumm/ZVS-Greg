@@ -8,30 +8,29 @@ import { ApiUserService, User } from '../../../services/'
  */
 @Component({
   selector: 'zp-navigation',
-  styles: [`
-    :host {
-      display: block;
-      width: 360px;
-    }
-    .zp-nav-close{
-      position: absolute;
-      top: 0;
-      right: 0;
-    }
-  `],
+  styleUrls: ['./navigation.component.scss'],
   templateUrl: './navigation.component.html',
   providers: [ ApiUserService ]
 })
 export class NavigationComponent implements OnDestroy, OnInit {
   @Input() navigation: any // md-sidenav reference
-  users: any[]
+  users: User[]
   user: any = {
     firstname: 'John',
     lastname: 'Doe',
     mail: 'john.doe@yopmail.com',
     avatar: './assets/zetapush_logo.png'
   }
-
+  routes: any[] = [
+    {
+      name: 'Stats',
+      link: ['/dashboard', 'stats']
+    },
+    {
+      name: 'Context',
+      link: ['/context', 1]
+    }
+  ]
   subscriptions: Array<Subscription> = []
 
   constructor(
@@ -54,13 +53,44 @@ export class NavigationComponent implements OnDestroy, OnInit {
     console.debug('NavigationComponent::ngOnInit', {
       navigation: this.navigation
     })
-    this.getUsers()
+    /**
+     * Md-Sidenav state listeners
+     */
+    this.subscriptions.push(this.navigation.onOpen.subscribe(() => {
+      console.debug('NavigationComponent.navigation::onOpen')
+      this.refreshStats()
+    }))
+    this.subscriptions.push(this.navigation.onClose.subscribe(() => {
+      console.debug('NavigationComponent.navigation::onClose')
+      this.refreshStats()
+    }))
+    /**
+     * Fetch all navigation data
+     */
+    this.getNavigationItems()
   }
   ngOnDestroy() {
     console.debug('NavigationComponent::ngOnDestroy')
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
   }
 
+  /**
+   * ToDo : move this to stats components
+   */
+  refreshStats() {
+    const chartists = document.querySelectorAll('x-chartist')
+    Array.prototype.forEach.call(chartists, (chart) => {
+      chart.__chartist__.update()
+    })
+  }
+
+  getNavigationItems() {
+    this.getUsers()
+  }
+
+  /**
+   * Get all global users list
+   */
   getUsers() {
     this.userService.getAllUsers().then(users => {
       console.debug('NavigationComponent::getUsers', { users })
