@@ -58,7 +58,7 @@ export class LoginViewComponent implements OnInit, OnChanges, AfterViewInit {
     console.debug('LoginView::onSubmit', {
       model: this.model
     })
-    this.router.navigate(['/dashboard'])
+    this.router.navigate(['/authenticated/dashboard'])
   }
 
 }

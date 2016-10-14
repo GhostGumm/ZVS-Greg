@@ -4,6 +4,8 @@ import { SharedModule } from './shared/shared.module'
 import { AuthenticationModule } from './authentication/authentication.module'
 import { DashboardModule } from './dashboard/dashboard.module'
 import { ContextModule } from './context/context.module'
+import { ConversationModule } from './conversation/conversation.module'
+
 
 import { AppRoutingModule } from './app-routing.module'
 // Components
@@ -19,6 +21,7 @@ import { RootComponent } from './root.component'
     AuthenticationModule,
     DashboardModule,
     ContextModule,
+    ConversationModule,
 
     AppRoutingModule
   ],

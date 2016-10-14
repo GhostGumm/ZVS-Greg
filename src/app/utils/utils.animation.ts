@@ -22,10 +22,14 @@ export const Animations = {
       bottom: 0
     })),
     transition('void => *', [
-        animate(`${delay} ${easingIn}`, style({opacity: 1}))
+      animate(`${delay} ${easingIn}`, style({
+        opacity: 1
+      }))
     ]),
     transition('* => void', [
-        animate(`${delay} ${easingOut}`, style({opacity: 0}))
+      animate(`${delay} ${easingOut}`, style({
+        opacity: 0
+      }))
     ])
   ]
 }

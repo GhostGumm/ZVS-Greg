@@ -21,7 +21,6 @@ import { Animations } from '../../utils/utils.animation'
       display: block;
       height: calc(100% - 74px);
       overflow: auto;
-      padding: 5px 20px;
     }
   `],
   templateUrl: './authenticated-layout.component.html'

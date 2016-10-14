@@ -1,0 +1,22 @@
+<md-toolbar class="zp-messages-toolbar">
+  <button md-mini-fab color="warn">
+      <md-icon class="md-24">message</md-icon>
+  </button>
+  <button md-mini-fab color="warn">
+      <md-icon class="md-24">phone</md-icon>
+  </button>
+</md-toolbar>
+
+<md-list>
+  <md-list-item *ngFor="let message of messages">
+    <img md-list-avatar src="/assets/zetapush_logo.png" alt="{{message.author}}">
+    <h3 md-line> {{message.author}} </h3>
+    <p md-line>
+      <span> {{message.raw}} </span>
+    </p>
+  </md-list-item>
+</md-list>
+
+<md-input placeholder="Character count (100 max)" maxlength="100" #characterCountHintExample>
+  <md-hint align="end">{{characterCountHintExample.characterCount}} / 100</md-hint>
+</md-input>
