@@ -1,11 +1,11 @@
 import { Component, HostBinding, AfterViewInit, OnChanges, OnInit, Input, trigger } from '@angular/core'
 import { Router } from '@angular/router'
 import { Animations } from '../../../utils/utils.animation'
+import { ZetaPushConnection } from '../../../zetapush'
 
-class LoginModel {
-  public firstname: string = 'John'
-  public lastname: string = 'Doe'
-  public email: string = 'john.doe@yopmail.com'
+class Credentials {
+  public login: string = 'yohan.letelier@yopmail.com'
+  public password: string = 'lowtaux'
 }
 
 @Component({
@@ -17,18 +17,21 @@ class LoginModel {
     trigger('routeAnimation', Animations.fadeInOutView())
   ]
 })
-export class LoginViewComponent implements OnInit, OnChanges, AfterViewInit {
+export class LoginViewComponent implements AfterViewInit, OnChanges, OnInit {
 
-  model: LoginModel
+  credentials: Credentials
+  error: string
+  handlers: Array<any> = []
 
   @Input() formIsVisible: boolean = false
 
   @HostBinding('class') classes = 'flex-centered flex-height'
 
   constructor(
-    private router: Router
+    private router: Router,
+    private connection: ZetaPushConnection
   ) {
-    this.model = new LoginModel()
+    this.credentials = new Credentials()
   }
 
   @HostBinding('@routeAnimation') get routeAnimation() {
@@ -56,9 +59,15 @@ export class LoginViewComponent implements OnInit, OnChanges, AfterViewInit {
 
   onSubmit() {
     console.debug('LoginView::onSubmit', {
-      model: this.model
+      credentials: this.credentials
     })
-    this.router.navigate(['/dashboard'])
+    this.connection
+        .connect(this.credentials)
+        .then(() => {
+          this.router.navigate(['/dashboard'])
+        }, () => {
+          this.error = 'Unable to connect'
+        })
   }
 
 }

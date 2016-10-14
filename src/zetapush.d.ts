@@ -102,7 +102,7 @@ declare module "zetapush-js" {
     new($publish: ServicePublisher): Service
   }
 
-  interface Macro extends Service {
+  interface Macro {
     $publish: MacroPublisher
     new($publish: MacroPublisher): Macro
   }
