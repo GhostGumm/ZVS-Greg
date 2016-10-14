@@ -7,14 +7,15 @@ import { AuthenticatedLayoutComponent } from '../shared/layouts'
 
 import { ConversationViewComponent } from './views'
 
-import { MessagesComponent } from './components'
+import { MessagesComponent, VideoComponent } from './components'
 
 export const conversationRoutes: any = {
   path: 'conversation/:id',
   component: ConversationViewComponent,
   canActivate: [AuthenticationService],
   children: [
-    { path: 'messages', component: MessagesComponent }
+    { path: 'messages', component: MessagesComponent },
+    { path: 'video', component: VideoComponent }
   ]
 }
 
