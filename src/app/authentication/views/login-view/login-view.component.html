@@ -3,8 +3,9 @@
   <md-toolbar color="primary">Login</md-toolbar>
   <md-card-content>
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm" id="loginForm">
-      <md-input type="text" placeholder="Login" [(ngModel)]="model.login" name="login" (ngModelChange)="model.login = $event" required></md-input>
-      <md-input type="password" placeholder="Password" [(ngModel)]="model.password" name="password" required></md-input>
+      <md-input type="type" placeholder="Login" [(ngModel)]="credentials.login" name="login" required></md-input>
+      <md-input type="password" placeholder="Password" [(ngModel)]="credentials.password" name="password" required></md-input>
+      <div *ngIf="error">{{error}}</div>
     </form>
   </md-card-content>
   <md-card-actions align="end">
