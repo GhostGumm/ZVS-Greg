@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core'
-
 import { Message } from './message.interface'
 import { MESSAGES } from './messages.mock'
 

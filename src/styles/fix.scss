@@ -39,3 +39,8 @@ md-card{
     transition: color 400ms;
   }
 }
+
+// flex support
+[md-mini-fab] {
+  min-width: 40px !important;
+}

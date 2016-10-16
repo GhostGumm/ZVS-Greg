@@ -1,4 +1,4 @@
-<md-toolbar class="zp-messages-toolbar">
+<md-toolbar class="zp-messages-actions flex-centered">
   <button md-mini-fab color="warn">
       <md-icon class="md-24">message</md-icon>
   </button>
@@ -7,7 +7,7 @@
   </button>
 </md-toolbar>
 
-<md-list>
+<md-list class="zp-messages-list" zp-scroll-glue>
   <md-list-item *ngFor="let message of messages">
     <img md-list-avatar src="/assets/zetapush_logo.png" alt="{{message.author}}">
     <h3 md-line> {{message.author}} </h3>
@@ -17,6 +17,14 @@
   </md-list-item>
 </md-list>
 
-<md-input placeholder="Character count (100 max)" maxlength="100" #characterCountHintExample>
-  <md-hint align="end">{{characterCountHintExample.characterCount}} / 100</md-hint>
-</md-input>
+<md-toolbar class="zp-messages-inputs flex-centered">
+  <button md-mini-fab color="warn"> 
+    <md-icon class="md-24">file_upload</md-icon>
+  </button>
+  <md-input class="zp-messages-inputs-text" maxlength="240" #zpInputText>
+    <md-hint align="end">{{zpInputText.characterCount}} / 240</md-hint>
+  </md-input>
+  <button md-mini-fab color="warn">
+    <md-icon class="md-24">tag_faces</md-icon>
+  </button>
+</md-toolbar>

@@ -1,8 +1,25 @@
-.zp-messages-toolbar{
+:host {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  height: 100%;
+}
+
+.zp-messages-actions {
   button {
     margin: 0 5px;
   }
+}
+
+.zp-messages-list{
+  height: 100%;
+  overflow: auto;
+}
+.zp-messages-inputs {
+  padding: 10px;
+}
+
+.zp-messages-inputs-text {
+  max-width: 600px;
+  width: 100%;
+  margin: 0 10px;
 }
