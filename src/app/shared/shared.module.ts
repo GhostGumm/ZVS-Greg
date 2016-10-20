@@ -14,10 +14,12 @@ import { LAYOUTS } from './layouts'
 
 import { AuthenticationService } from './authentication.service'
 
+import { ScrollGlueDirective } from '../utils/utils.scroll'
+
 const CORE_MODULES = [ CommonModule, BrowserModule, FormsModule, HttpModule ]
 
 @NgModule({
-  declarations: [ ...COMPONENTS, ...LAYOUTS ],
+  declarations: [ ...COMPONENTS, ...LAYOUTS, ScrollGlueDirective ],
   exports: [ ...CORE_MODULES, MaterialModule, ZetaPushModule ],
   imports: [ ...CORE_MODULES, MaterialModule.forRoot(), SharedRoutingModule, ZetaPushModule ],
   providers: [ AuthenticationService ]

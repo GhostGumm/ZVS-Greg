@@ -1,15 +1,12 @@
-import {Directive, ElementRef, AfterContentInit, OnDestroy} from 'angular2/core'
+import { Directive, ElementRef, AfterContentInit, OnDestroy, HostListener } from '@angular/core'
 
 @Directive({
-    selector: '[zpScrollGlue]',
-    host: {
-      '(scroll)': 'onScroll()'
-    }
+    selector: '[zpScrollGlue]'
 })
 
 export class ScrollGlueDirective implements AfterContentInit, OnDestroy{
     public el: any
-    public isLocked: boolean = false
+    public isLocked: boolean = true
     private _observer: any
     private _oldScrollHeight: number = 0
 
@@ -17,13 +14,8 @@ export class ScrollGlueDirective implements AfterContentInit, OnDestroy{
       this.el = _el.nativeElement
     }
 
+    @HostListener('scroll')
     onScroll() {
-      let percent = (this.el.scrollHeight / 100)
-      if (this.el.scrollHeight - this.el.scrollTop > (10 * percent)) {
-        this.isLocked = true
-      } else {
-        this.isLocked = false
-      }
     }
 
     ngAfterContentInit() {
@@ -31,7 +23,12 @@ export class ScrollGlueDirective implements AfterContentInit, OnDestroy{
 
       // create an observer instance
       this._observer = new MutationObserver((mutations) => {
-        if ( !this.isLocked ) {
+        console.debug('ScrollGlueDirective::MutationObserver', {
+          scrollHeight: this.el.scrollHeight,
+          scrollTop: this.el.scrollTop,
+          isLocked: this.isLocked
+        })
+        if ( this.isLocked ) {
           this._oldScrollHeight = this.el.scrollHeight
           this.el.scrollTop = this.el.scrollHeight
         }
@@ -43,9 +40,19 @@ export class ScrollGlueDirective implements AfterContentInit, OnDestroy{
 
       // pass in the target node, as well as the observer options
       this._observer.observe(target, config)
+
+      console.debug('ScrollGlueDirective::ngAfterContentInit', {
+        el: this.el,
+        observer: this._observer
+      })
     }
 
     ngOnDestroy() {
-      this._observer.disconnect()
+      /**
+       * To Fix
+       */
+      if (this._observer) {
+        this._observer.disconnect()
+      }
     }
 }

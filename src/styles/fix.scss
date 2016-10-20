@@ -44,3 +44,13 @@ md-card{
 [md-mini-fab] {
   min-width: 40px !important;
 }
+
+// Encapsulation emulation doesn't allow custom style on rendered elements
+.zp-messages-list {
+  .md-list-item {
+    height: auto !important;
+  }
+  .md-list-text {
+    overflow: initial !important;
+  }
+}
