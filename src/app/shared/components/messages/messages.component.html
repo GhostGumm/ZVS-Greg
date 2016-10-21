@@ -1,12 +1,3 @@
-<md-toolbar class="zp-messages-actions flex-centered">
-  <button md-mini-fab color="warn">
-      <md-icon class="md-24">message</md-icon>
-  </button>
-  <button md-mini-fab color="warn">
-      <md-icon class="md-24">phone</md-icon>
-  </button>
-</md-toolbar>
-
 <md-list class="zp-messages-list" zpScrollGlue>
   <md-list-item *ngFor="let message of messages" [class.owner]="message.owner" [class.precede]="message.precede">
     <img md-list-avatar src="/assets/zetapush_logo.png" alt="{{message.author}}">
