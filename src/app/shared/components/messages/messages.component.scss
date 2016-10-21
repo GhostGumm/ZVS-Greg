@@ -6,19 +6,12 @@
   height: calc(100% - 64px);
 }
 
-.zp-messages-actions {
-  box-shadow: $zp-shadow-1;
-  z-index: 1;
-  button {
-    margin: 0 5px;
-  }
-}
-
 md-list{
   height: 100%;
   overflow: auto;
   padding-bottom: 8px;
 }
+
 md-list-item{
   position: relative;
   display: block;
