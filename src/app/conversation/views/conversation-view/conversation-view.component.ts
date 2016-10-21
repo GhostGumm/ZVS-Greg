@@ -5,6 +5,7 @@ import { Animations } from '../../../utils/utils.animation'
 @Component({
   selector: 'zp-conversation-view',
   templateUrl: './conversation-view.component.html',
+  styleUrls:['./conversation-view.component.scss'],
   providers: [],
   animations: [
     trigger('routeAnimation', Animations.fadeInOutView())

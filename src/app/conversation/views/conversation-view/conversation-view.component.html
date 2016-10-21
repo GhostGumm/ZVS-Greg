@@ -1,1 +1,12 @@
+<h1>Conversation {{$params['id']}}</h1>
+
+<md-toolbar>
+  <button md-mini-fab color="warn" [routerLink]="['messages']">
+      <md-icon class="md-24">message</md-icon>
+  </button>
+  <button md-mini-fab color="warn" [routerLink]="['video']">
+      <md-icon class="md-24">phone</md-icon>
+  </button>
+</md-toolbar>
+
 <router-outlet></router-outlet>
