@@ -19,7 +19,8 @@ import { Animations } from '../../utils/utils.animation'
     .zp-content {
       position: relative;
       display: block;
-      height: calc(100% - 74px);
+      /* toolbar height : 64px */
+      height: calc(100% - 64px);
       overflow: auto;
     }
   `],

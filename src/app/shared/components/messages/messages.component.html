@@ -1,4 +1,4 @@
-<md-toolbar class="zp-messages-toolbar">
+<md-toolbar class="zp-messages-actions flex-centered">
   <button md-mini-fab color="warn">
       <md-icon class="md-24">message</md-icon>
   </button>
@@ -7,16 +7,31 @@
   </button>
 </md-toolbar>
 
-<md-list>
-  <md-list-item *ngFor="let message of messages">
+<md-list class="zp-messages-list" zpScrollGlue>
+  <md-list-item *ngFor="let message of messages" [class.owner]="message.owner" [class.precede]="message.precede">
     <img md-list-avatar src="/assets/zetapush_logo.png" alt="{{message.author}}">
     <h3 md-line> {{message.author}} </h3>
     <p md-line>
-      <span> {{message.raw}} </span>
+      <span> {{message.value}} </span>
     </p>
+    <span md-list-date>{{ message.date | date:"hh:mm" }}</span>
   </md-list-item>
 </md-list>
 
-<md-input placeholder="Character count (100 max)" maxlength="100" #characterCountHintExample>
-  <md-hint align="end">{{characterCountHintExample.characterCount}} / 100</md-hint>
-</md-input>
+<md-toolbar class="zp-messages-inputs flex-centered">   
+  <button class="zp-input-files" type="button" md-mini-fab color="warn"> 
+    <md-icon class="md-24">file_upload</md-icon>
+    <!--<input type="file" ng2FileSelect capture="camera" [uploader]="uploader" multiple/>-->
+  </button>
+  <form (ngSubmit)="onSend()" #messageForm="ngForm" id="messageForm">
+    <md-input #messageRaw [(ngModel)]="message.raw" class="zp-messages-inputs-text" maxlength="{{limits.message}}" name="messageRaw" id="messageRaw" required>
+      <md-hint align="end">{{messageRaw.characterCount || 0}} / {{limits.message}}</md-hint>
+    </md-input>
+  </form>
+  <button type="submit" md-mini-fab color="primary" form="messageForm">
+    <md-icon class="md-24">send</md-icon>
+  </button>  
+  <button type="button" md-mini-fab color="warn">
+    <md-icon class="md-24">sentiment_satisfied</md-icon>
+  </button> 
+</md-toolbar>
