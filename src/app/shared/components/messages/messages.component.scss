@@ -23,8 +23,7 @@ md-list-item{
   position: relative;
   display: block;
   background-color: $background;
-  max-width: 90%;
-  width: 100%;
+  width: 90%;
   border-radius: $zp-radius $zp-radius 0 0;
   margin: 0 8px;
   margin-top: 8px;
@@ -34,7 +33,7 @@ md-list-item{
   border-left-style: solid;
   border-left-color: md-color($primary);
   &.owner {
-    float: right;
+    // float: right;
     border-left-color: md-color($accent);
   }
   &.precede {
@@ -62,6 +61,9 @@ p[md-line]{
   padding-top: 10px;
   padding-bottom: 12px;
   line-height: 20px;
+}
+h3[md-line]{
+  overflow: visible;
 }
 [md-list-date]{
   position: absolute;

@@ -21,7 +21,7 @@
 <md-toolbar class="zp-messages-inputs flex-centered">   
   <button class="zp-input-files" type="button" md-mini-fab color="warn"> 
     <md-icon class="md-24">file_upload</md-icon>
-    <!--<input type="file" ng2FileSelect capture="camera" [uploader]="uploader" multiple  />-->
+    <!--<input type="file" ng2FileSelect capture="camera" [uploader]="uploader" multiple/>-->
   </button>
   <form (ngSubmit)="onSend()" #messageForm="ngForm" id="messageForm">
     <md-input #messageRaw [(ngModel)]="message.raw" class="zp-messages-inputs-text" maxlength="{{limits.message}}" name="messageRaw" id="messageRaw" required>

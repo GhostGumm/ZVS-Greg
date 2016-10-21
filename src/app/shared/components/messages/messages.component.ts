@@ -2,7 +2,8 @@ import { Component, ViewEncapsulation, OnInit } from '@angular/core'
 import { FileUploader } from 'ng2-file-upload';
 
 import { ScrollGlueDirective } from '../../../utils/utils.scroll'
-import { MessageInterface, MessageClass, MessageOrder } from './message.interface'
+import { MessageInterface, MessageClass } from './message.interface'
+import { MessageService } from './message.service'
 
 const message:MessageInterface = {
     id:'',
@@ -28,21 +29,21 @@ const messageTest:MessageInterface = {
   selector: 'zp-messages',
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.scss'],
-  providers: [ ScrollGlueDirective ]
+  providers: [ ScrollGlueDirective, MessageService ] // ng2FileSelect
 })
 
 export class MessagesComponent implements OnInit {
-  //public uploader:FileUploader = new FileUploader({url: ''});
+  //uploader:FileUploader = new FileUploader({url: 'https://evening-anchorage-3159.herokuapp.com/api/'});
   messages: MessageInterface[] = Array.from(new Array(20), () => new MessageClass(messageTest))
   message: MessageInterface = message
   files: any
   limits: any = {
-    message:1000,
+    message: 1000,
     upload: 20 * 1024 // 20mb
   }
 
-  constructor() {
-    MessageOrder(this.messages)
+  constructor(private messageService: MessageService) {
+    messageService.indexByAuthor(this.messages)
   }
 
   ngOnInit() {
@@ -56,9 +57,9 @@ export class MessagesComponent implements OnInit {
     this.resetForm()
   }
 
-  onSelectAttachment($event) {
-    console.log('', {
-      $event,
+  onSelectAttachment(event) {
+    console.log('MessagesComponent::onSelectAttachment', {
+      event,
       files: this.files
     })
   }
@@ -72,7 +73,7 @@ export class MessagesComponent implements OnInit {
     message.owner = true
     //
     this.messages.push(message)
-    MessageOrder(this.messages, message)
+    this.messageService.indexByAuthor(this.messages, message)
     console.debug('MessagesComponent::processMessage', { message })
   }
 

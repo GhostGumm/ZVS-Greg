@@ -51,37 +51,3 @@ export class MessageClass implements MessageInterface {
       }
   }
 }
-
-/**
- * Messages:MessageInterface[]
- * Message?:MessageInterface
- * if Message set
- *    Compare Message.author to previous message.author
- * else
- *    Check if message[n].author == message[n - 1].author an set message[n].precede at true 
- */
-export const MessageOrder = (Messages, Message?) => {
-  if (Message) {
-    const index = Messages.indexOf(Message)
-    const previous = Messages[index - 1]
-    if (Message.author === previous.author) {
-      Message.precede = true
-    }
-  }
-  else {
-    for (let index = 1; index < Messages.length; index++) {
-      let message = Messages[index]
-      let previous = Messages[index - 1]
-      
-      if (message.author === previous.author) {
-        message.precede = true
-      }
-      console.warn(index)
-    }
-  }
-      
-  console.debug('MessageOrder',{
-    Messages,
-    Message
-  })
-}
