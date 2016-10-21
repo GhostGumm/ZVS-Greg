@@ -1,5 +1,6 @@
-import { Component, ViewEncapsulation, OnInit } from '@angular/core'
-import { FileUploader } from 'ng2-file-upload';
+import { Component, HostBinding, ViewEncapsulation, OnInit, trigger } from '@angular/core'
+import { FileUploader } from 'ng2-file-upload'
+import { Animations } from '../../../utils/utils.animation'
 
 import { ScrollGlueDirective } from '../../../utils/utils.scroll'
 import { MessageInterface, MessageClass } from './message.interface'
@@ -29,7 +30,10 @@ const messageTest:MessageInterface = {
   selector: 'zp-messages',
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.scss'],
-  providers: [ ScrollGlueDirective, MessageService ] // ng2FileSelect
+  providers: [ ScrollGlueDirective, MessageService ], // ng2FileSelect
+  animations: [
+    trigger('routeAnimation', Animations.swipeOutView())
+  ]
 })
 
 export class MessagesComponent implements OnInit {
@@ -40,6 +44,10 @@ export class MessagesComponent implements OnInit {
   limits: any = {
     message: 1000,
     upload: 20 * 1024 // 20mb
+  }
+
+  @HostBinding('@routeAnimation') get routeAnimation() {
+    return true
   }
 
   constructor(private messageService: MessageService) {
