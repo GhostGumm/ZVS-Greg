@@ -32,7 +32,7 @@ const messageTest:MessageInterface = {
   styleUrls: ['./messages.component.scss'],
   providers: [ ScrollGlueDirective, MessageService ], // ng2FileSelect
   animations: [
-    trigger('routeAnimation', Animations.swipeOutView())
+    trigger('routeAnimation', Animations.swipeOutDownView())
   ]
 })
 

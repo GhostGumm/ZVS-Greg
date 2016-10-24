@@ -16,7 +16,7 @@ import { RootComponent } from './root.component'
     RootComponent,
   ],
   imports: [
-    SharedModule,
+    SharedModule.forRoot(),
 
     AuthenticationModule,
     DashboardModule,

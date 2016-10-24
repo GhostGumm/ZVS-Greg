@@ -18,11 +18,11 @@ export const Animations = {
       opacity: 0
     })),
     state('true', style({
-      position: 'absolute',
       top: 0,
       left: 0,
       right: 0,
-      bottom: 0
+      bottom: 0,
+      position: 'absolute'
     })),
     transition(':enter', [
       animate(`${delay} ${easingIn}`, style({
@@ -36,15 +36,15 @@ export const Animations = {
     ])
   ],
 
-  swipeOutView: ({ delay = '500ms', easingIn = 'ease-in-out', easingOut = 'ease-in-out' } = {}) => [
+  swipeOutDownView: ({ delay = '500ms', easingIn = 'ease-in-out', easingOut = 'ease-in-out' } = {}) => [
     state('void', style({
+      position: 'absolute',
       opacity: 0
     })),
     state('true', style({
       position: 'absolute',
       left: 0,
       right: 0,
-      bottom: 0,
       transform: 'translateX(0)'
     })),
     transition(':enter', [
@@ -55,7 +55,7 @@ export const Animations = {
     transition(':leave', [
       animate(`${delay} ${easingOut}`, style({
         opacity: 0,
-        transform: 'translateX(-100%)'
+        transform: 'translateY(10%)'
       }))
     ])
   ],
