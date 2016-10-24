@@ -28,7 +28,7 @@ export class NavigationComponent implements OnDestroy, OnInit {
     },
     {
       name: 'Context',
-      link: ['/context', 1]
+      link: ['context', 1]
     }
   ]
   subscriptions: Array<Subscription> = []

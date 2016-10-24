@@ -12,7 +12,7 @@ export const COMPONENTS = [
   NavigationComponent,
   ProfileComponent,
   SidenavComponent,
-  UserListComponent
+  UserListComponent,
   UsernameComponent,
   MessagesComponent,
   VideoComponent
