@@ -13,6 +13,7 @@ import { COMPONENTS, COMPONENTS_SERVICES } from './components'
 import { LAYOUTS } from './layouts'
 
 import { AuthenticationService } from './authentication.service'
+import { ApiUserService } from '../services/'
 
 import { ScrollGlueDirective } from '../utils/utils.scroll'
 

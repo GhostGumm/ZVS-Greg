@@ -3,8 +3,9 @@ import { Router } from '@angular/router'
 import { Animations } from '../../../utils/utils.animation'
 
 class RegisterModel {
-  public login: string = ''
-  public password: string = ''
+  public firstname: string = 'John'
+  public lastname: string = 'Doe'
+  public email: string = 'john.doe@yopmail.com'
 }
 
 @Component({

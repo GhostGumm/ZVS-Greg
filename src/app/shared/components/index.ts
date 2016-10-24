@@ -5,12 +5,14 @@ import { SidenavComponent } from './sidenav/sidenav.component'
 import { UsernameComponent } from './username/username.component'
 import { MessagesComponent } from './messages/messages.component'
 import { VideoComponent } from './video/video.component'
+import { UserListComponent } from './list/user.list.component'
 
 export const COMPONENTS = [
   AvatarComponent,
   NavigationComponent,
   ProfileComponent,
   SidenavComponent,
+  UserListComponent
   UsernameComponent,
   MessagesComponent,
   VideoComponent

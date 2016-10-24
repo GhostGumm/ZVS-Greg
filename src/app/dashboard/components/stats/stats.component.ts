@@ -30,6 +30,20 @@ export class StatsComponent implements OnInit, AfterViewInit {
   charts: Chart[]
 
   constructor() {
+  }
+
+  ngOnInit() {
+    this.createCharts()
+  }
+
+  ngAfterViewInit() {
+    this.statsIsVisible = true
+    console.debug('StatsComponent::ngAfterViewInit', {
+      statsIsVisible: this.statsIsVisible
+    })
+  }
+
+  createCharts() {
     this.charts = [{
         type: 'Bar',
         data: data['Bar']
@@ -100,11 +114,6 @@ export class StatsComponent implements OnInit, AfterViewInit {
         options: {
           donut: true,
           showLabel: false
-        },
-        events: {
-          draw(data: any): void {
-            console.log(data)
-          }
         }
       }
     ]

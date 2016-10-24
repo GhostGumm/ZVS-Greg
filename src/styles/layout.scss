@@ -7,10 +7,6 @@ body{
   font-family: 'Noto Sans', sans-serif !important; 
 }
 
-html{
-  background-color:$background;
-}
-
 html::before{
   opacity: 0.65;
   position: absolute;
@@ -21,6 +17,8 @@ html::before{
   z-index: -1;
   pointer-events: none;
   background-image: url('../assets/texture_01.jpg');
+  background-color:$background;
+  background-blend-mode: luminosity;
 }
 
 app-root{
