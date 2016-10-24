@@ -1,0 +1,27 @@
+@import '../../../../styles/_variables';
+
+:host{
+  display: block;
+  position: relative;
+  width: 100%;
+}
+[zp-video-container] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+[zp-video] {
+  width: 400px;
+  height: 400px;
+  margin: 5px;
+}
+
+video{
+  width: 100%;
+  height: 100%;
+  background-color: $background;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 4px $background-accent;
+}

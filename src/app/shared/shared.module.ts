@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core'
+import { NgModule,ModuleWithProviders } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
@@ -9,17 +9,27 @@ import { SharedRoutingModule } from './shared-routing.module'
 
 import { ZetaPushModule } from '../zetapush/zetapush.module'
 
-import { COMPONENTS } from './components'
+import { COMPONENTS, COMPONENTS_SERVICES } from './components'
 import { LAYOUTS } from './layouts'
 
 import { AuthenticationService } from './authentication.service'
 
+import { ScrollGlueDirective } from '../utils/utils.scroll'
+
 const CORE_MODULES = [ CommonModule, BrowserModule, FormsModule, HttpModule ]
 
 @NgModule({
-  declarations: [ ...COMPONENTS, ...LAYOUTS ],
-  exports: [ ...CORE_MODULES, MaterialModule, ZetaPushModule ],
+  declarations: [ ...COMPONENTS, ...LAYOUTS, ScrollGlueDirective ],
+  exports: [ ...COMPONENTS, ...LAYOUTS, ...CORE_MODULES, MaterialModule, ZetaPushModule ],
   imports: [ ...CORE_MODULES, MaterialModule.forRoot(), SharedRoutingModule, ZetaPushModule ],
-  providers: [ AuthenticationService ]
+  providers: [ AuthenticationService, ...COMPONENTS_SERVICES ]
 })
-export class SharedModule { }
+
+export class SharedModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: SharedModule,
+      providers: [ AuthenticationService, ...COMPONENTS_SERVICES ]
+    }
+  }
+ }

@@ -4,11 +4,13 @@ import { SharedModule } from '../shared/shared.module'
 import { COMPONENTS } from './components'
 import { VIEWS } from './views'
 
-import { ContextRoutingModule } from './context-routing.module'
+import { ConversationRoutingModule } from './conversation-routing.module'
+
+import { MessagesComponent, VideoComponent } from './components'
 
 @NgModule({
   declarations: [ ...COMPONENTS, ...VIEWS ],
-  imports: [ SharedModule.forRoot(), ContextRoutingModule ],
+  imports: [ SharedModule.forRoot(), ConversationRoutingModule ],
   providers: [ ]
 })
-export class ContextModule { }
+export class ConversationModule { }

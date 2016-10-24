@@ -7,16 +7,13 @@ import { AuthenticatedLayoutComponent } from '../shared/layouts'
 
 import { ContextViewComponent } from './views'
 
-const routes: Routes = [
-  {
-    path: 'context',
-    component: AuthenticatedLayoutComponent,
-    canActivate: [AuthenticationService],
-    children: [
-      { path: ':id', component: ContextViewComponent }
-    ]
-  }
-]
+export const contextRoutes: any = {
+  path: 'context/:id',
+  component: ContextViewComponent,
+  canActivate: [AuthenticationService]
+}
+
+const routes: Routes = [contextRoutes]
 
 @NgModule({
   imports: [

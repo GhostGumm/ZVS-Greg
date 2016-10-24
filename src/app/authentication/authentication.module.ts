@@ -8,7 +8,7 @@ import { AuthenticationRoutingModule } from './authentication-routing.module'
 
 @NgModule({
   declarations: [ ...COMPONENTS, ...VIEWS ],
-  imports: [ SharedModule, AuthenticationRoutingModule ],
+  imports: [ SharedModule.forRoot(), AuthenticationRoutingModule ],
   providers: [ ]
 })
 export class AuthenticationModule { }

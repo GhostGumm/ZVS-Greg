@@ -1,0 +1,17 @@
+@import '../../../../styles/_variables';
+
+:host{
+  overflow: hidden;
+}
+
+md-toolbar{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: $zp-shadow-1;
+  z-index: 1;
+  button {
+    margin: 0 5px;
+  }
+}

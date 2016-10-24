@@ -10,7 +10,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module'
 
 @NgModule({
   declarations: [ ...COMPONENTS, ...VIEWS, ChartistComponent ],
-  imports: [ SharedModule, DashboardRoutingModule ],
+  imports: [ SharedModule.forRoot(), DashboardRoutingModule ],
   providers: [ ]
 })
 export class DashboardModule { }

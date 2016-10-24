@@ -57,7 +57,7 @@ export class RegisterViewComponent implements AfterViewInit, OnChanges, OnInit {
     console.debug('RegisterView::onSubmit', {
       model: this.model
     })
-    this.router.navigate(['/dashboard'])
+    this.router.navigate(['/authenticated/dashboard'])
   }
 
 }

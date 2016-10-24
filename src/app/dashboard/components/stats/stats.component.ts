@@ -27,7 +27,6 @@ export interface Chart {
   ]
 })
 export class StatsComponent implements OnInit, AfterViewInit {
-  @Input() statsIsVisible: boolean = false
   charts: Chart[]
 
   constructor() {
@@ -115,10 +114,7 @@ export class StatsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.statsIsVisible = true
-    console.debug('StatsComponent::ngAfterViewInit', {
-      statsIsVisible: this.statsIsVisible
-    })
+    console.debug('StatsComponent::ngAfterViewInit')
   }
 
 }
