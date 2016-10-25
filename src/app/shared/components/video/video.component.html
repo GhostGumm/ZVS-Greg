@@ -8,6 +8,9 @@
 <div zp-video-container>
   <div zp-video *ngFor="let video of videos; trackBy:video?.id" [class.group]="group" [class.focus]="video.focus">
     <video [src]="video.stream"></video>
-    <p>{{video.id}}</p>
+    <div zp-video-placeholder>
+      <img [src]="video.user.avatar" alt="">
+      <p>{{video.user.firstname}}</p>
+    </div>
   </div>
 </div>

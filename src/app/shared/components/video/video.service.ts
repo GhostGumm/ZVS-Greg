@@ -26,18 +26,20 @@ export class VideoService {
   }
 
   zpMessaging:any
-  
-  constructor(public ZetaPushClient, public context) {
 
-    this.zpMessaging = ZetaPushClient.createService({
-      // type: services.Messaging,
-      listener: {
-        rtc: (e) => {
-          this.onMessage(e)
-        }
-      },
-      deploymentId: 'messaging_1'
-    })
+  context = null
+  
+  constructor() { // public ZetaPushClient, public context
+
+    // this.zpMessaging = ZetaPushClient.createService({
+    //   // type: services.Messaging,
+    //   listener: {
+    //     rtc: (e) => {
+    //       this.onMessage(e)
+    //     }
+    //   },
+    //   deploymentId: 'messaging_1'
+    // })
   }
 
   onMessage(msg) {
@@ -82,15 +84,15 @@ export class VideoService {
 
   startVideo(callback?: any) {
     console.debug('WebRtc::startVideo')
-    // navigator.mediaDevices.getUserMedia({
-    //   audio: true,
-    //   video: true
-    // })
-    // .then((stream) => {
-    //   this.local.stream = stream
-    //   this.local.source = window.URL.createObjectURL(stream)
-    //   callback() 
-    // })
+    navigator.mediaDevices.getUserMedia({
+      audio: true,
+      video: true
+    })
+    .then((stream) => {
+      this.local.stream = stream
+      this.local.source = window.URL.createObjectURL(stream)
+      callback() 
+    })
     // .catch((e) => {
     //   console.error('getUserMedia() error: ' + e.name, { error:e })
     //   callback(e)
@@ -282,7 +284,7 @@ export class VideoService {
   }
 
   destroy() {
-    this.ZetaPushClient.unsubscribe(this.zpMessaging)
+    // this.ZetaPushClient.unsubscribe(this.zpMessaging)
     this.closeTracks()
     this.hangup()
   }

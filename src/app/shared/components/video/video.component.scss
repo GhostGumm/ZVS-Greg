@@ -4,32 +4,56 @@
   display: block;
   position: relative;
   width: 100%;
-  height: calc(100% - 84px); // toolbar + video-container margin
+  height: calc(100% - 64px); // toolbar
+  overflow: auto;
 }
 [zp-video-container] {
   display: flex;
   position:relative;
-  height: 100%;
   margin: 0 auto;
   max-width: 1000px;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  margin: 10px auto;
-  overflow: auto;
+  margin: 0 auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  height: calc(100% - 40px);
 }
+
+$zp-video-width: 300px;
+$zp-video-focus-width: 480px;
 
 [zp-video] {
   position:relative;
   display: block;
   margin: 5px;
-  > p {
+  > [zp-video-placeholder] {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate3d(-50%, -50%, 0);
+    max-width: $zp-video-focus-width;
+    margin: 0 auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    > img{
+      width: 60%;
+    }
+    > p {
+    }
+  }
+  &:before {
+    content: "";
+    display: block;
+    margin-top: 100%;
   }
   video{
+    position: absolute;
+    top: 0;
     width: 100%;
     height: 100%;
     background-color: $background;
@@ -40,7 +64,7 @@
     &.focus{
       width: 98%;
       max-width: 80vh;
-      align-self: flex-start;   
+      align-self: flex-start;  
     }
     &:not(.focus){
       bottom: 0;
@@ -50,40 +74,29 @@
       position: absolute;
       align-self: flex-end;
     }
-    &:before {
-      content: "";
-      display: block;
-      margin-top: 100%;
-    }
-    video{
-      position: absolute;
-      top: 0;
-    }
   }
   &.group{
     video {
     }
     &.focus{
-      max-height:600px;
+      max-height:$zp-video-focus-width;
       margin-bottom: 5px;
       margin: 0;
       width: 100%;
       height: 100%;
       video{
         width:100%;
-        max-width: 600px;
+        max-width: $zp-video-focus-width;
         margin: 0 auto;
-        position: relative;
         display: block;
+        left: 50%;
+        margin-left: -($zp-video-focus-width * 0.5);
       }
     }
     &:not(.focus){
       float: left;
       margin: 5px;
-      video {
-        width: 200px;
-        height: 200px;
-      }
+      width: $zp-video-width;
     }
   }
 }
