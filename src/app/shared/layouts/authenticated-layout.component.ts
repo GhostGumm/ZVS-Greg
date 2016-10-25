@@ -8,9 +8,12 @@ import { Animations } from '../../utils/utils.animation'
     trigger('routeAnimation', Animations.fadeInOutView())
   ],
   providers: [ MdSnackBar ],
-  selector: 'zp-authenicated-layout',
+  selector: 'zp-authenticated-layout',
   styles: [`
     :host {
+      display:block;
+      position:relative;
+      width: 100%;
       height: 100%;
     }
     .md-sidenav-content{

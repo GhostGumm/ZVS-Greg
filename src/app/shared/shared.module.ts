@@ -30,7 +30,7 @@ export class SharedModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: SharedModule,
-      providers: [ AuthenticationService, ...COMPONENTS_SERVICES ]
+      providers: [ AuthenticationService, ApiUserService, ...COMPONENTS_SERVICES ]
     }
   }
  }

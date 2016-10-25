@@ -1,4 +1,6 @@
-import { Component, HostBinding, ViewEncapsulation, OnInit, trigger } from '@angular/core'
+import { Component, HostBinding, ViewEncapsulation, OnInit, OnDestroy, trigger } from '@angular/core'
+import { Router } from '@angular/router'
+import { Subscription } from 'rxjs/Subscription'
 import { FileUploader } from 'ng2-file-upload'
 import { Animations } from '../../../utils/utils.animation'
 
@@ -36,7 +38,7 @@ const messageTest:MessageInterface = {
   ]
 })
 
-export class MessagesComponent implements OnInit {
+export class MessagesComponent implements OnInit, OnDestroy {
   //uploader:FileUploader = new FileUploader({url: 'https://evening-anchorage-3159.herokuapp.com/api/'});
   messages: MessageInterface[] = Array.from(new Array(20), () => new MessageClass(messageTest))
   message: MessageInterface = message
@@ -45,12 +47,16 @@ export class MessagesComponent implements OnInit {
     message: 1000,
     upload: 20 * 1024 // 20mb
   }
+  subscriptions: Array<Subscription> = []
 
   @HostBinding('@routeAnimation') get routeAnimation() {
     return true
   }
 
-  constructor(private messageService: MessageService) {
+  constructor(
+    private router: Router,
+    private messageService: MessageService
+  ) {
     messageService.indexByAuthor(this.messages)
   }
 
@@ -87,5 +93,10 @@ export class MessagesComponent implements OnInit {
 
   resetForm() {
     this.message.raw = null
+  }  
+  
+  ngOnDestroy() {
+    console.debug('MessagesComponent::ngOnDestroy')
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe())
   }
 }

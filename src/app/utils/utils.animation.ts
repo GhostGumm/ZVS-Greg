@@ -3,67 +3,82 @@ import { state, animate, transition, style } from '@angular/core'
 export const Animations = {
 
   slideUpDown: ({ delay = '500ms', easingIn = 'ease-in-out', easingOut = 'ease-in-out' } = {}) => [
-    state('true', style({transform: 'translateY(0)', opacity: 1})),
+    state('true', style({
+      transform: 'translateY(0)',
+      opacity: 1
+    })),
     transition(':enter', [
-      style({transform: 'translateY(-50%)', opacity: 0}),
+      style({
+        transform: 'translateY(-50%)',
+         opacity:0
+      }),
       animate(`${delay} ${easingIn}`) // cubic-bezier(0.175, 0.885, 0.32, 1.275)
     ]),
     transition(':leave', [
-      animate(`${delay} ${easingOut}`, style({transform: 'translateY(50%)', opacity: 0}))
-    ])
-  ],
-
-  fadeInOutView: ({ delay = '500ms', easingIn = 'ease-in-out', easingOut = 'ease-in-out' } = {}) => [
-    state('void', style({
-      opacity: 0
-    })),
-    state('true', style({
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      position: 'absolute'
-    })),
-    transition(':enter', [
-      animate(`${delay} ${easingIn}`, style({
-        opacity: 1
-      }))
-    ]),
-    transition(':leave', [
       animate(`${delay} ${easingOut}`, style({
+        transform: 'translateY(50%)',
         opacity: 0
       }))
     ])
   ],
 
-  swipeOutDownView: ({ delay = '500ms', easingIn = 'ease-in-out', easingOut = 'ease-in-out' } = {}) => [
+  fadeInOutView: ({ delay = '500ms', easingIn = 'ease-in-out', easingOut = 'ease-in-out' } = {}) => [
+
     state('void', style({
-      position: 'absolute',
       opacity: 0,
-      transform: 'translateY(0)'
-    })),
-    state('false', style({
+      display: 'none',
       position: 'absolute',
-      opacity: 0
-    })),
-    state('true', style({
-      position: 'absolute',
+      top: 0,
       left: 0,
       right: 0,
-      transform: 'translateX(0)',
+      bottom: 0
+    })),
+    state('true', style({
       opacity: 1
     })),
-    transition('void <=> false', [
-      animate(`${delay} ${easingIn}`)
-    ]),
-    transition('false <=> true', [
-      animate(`${delay} ${easingIn}`)
-    ]),
     transition(':enter', [
-      animate(`${delay} ${easingIn}`)
+      animate(`${delay} ${easingIn}`, style({
+        opacity: 1,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+      }))
     ]),
     transition(':leave', [
-      animate(`${delay} ${easingOut}`)
+      animate(`${delay} ${easingOut}`, style({
+        opacity: 0,        
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+      }))
+    ])
+  ],
+
+  swipeOutDownView: ({ delay = '500ms', easingIn = 'ease-in-out', easingOut = 'ease-in-out' } = {}) => [
+
+    state('active', style({
+    })),
+    state('inactive', style({
+      position: 'absolute',
+      display: 'none',
+      opacity: 0
+    })),
+    transition('inactive => active', [
+      animate(`${delay} ${easingIn}`, style({
+        opacity: 1,
+        position: 'absolute'
+      }))
+    ]),
+    transition('active => inactive', [
+      animate(`${delay} ${easingIn}`, style({
+        opacity: 0,
+        transform: 'translate3d(-10%, 0, 0)',
+        position: 'absolute'
+      }))
     ])
   ],
 }

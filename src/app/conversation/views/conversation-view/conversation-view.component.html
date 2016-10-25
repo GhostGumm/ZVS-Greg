@@ -8,8 +8,8 @@
 </md-toolbar>
 
  
-<zp-messages *ngIf="messagesIsVisible"></zp-messages>
-<zp-video *ngIf="videoIsVisible"></zp-video>
+<zp-messages [@messagesAnimation]="messagesIsVisible"></zp-messages>
+<zp-video [@videoAnimation]="videoIsVisible"></zp-video>
 
 <!--<md-tab-group>
   <md-tab>
