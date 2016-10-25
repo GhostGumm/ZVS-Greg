@@ -7,5 +7,9 @@
 declare var System: any
 
 interface Window {
-  WebFont: any
+  WebFont: any,
+  RTCCertificate: any,
+  RTCIceCandidate: any,
+  RTCSessionDescription: any,
+  RTCPeerConnection: any
 }

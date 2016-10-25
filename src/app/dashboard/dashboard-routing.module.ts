@@ -3,26 +3,30 @@ import { RouterModule, Routes } from '@angular/router'
 
 import { AuthenticationService } from '../shared/authentication.service'
 
-import { AuthenticatedLayoutComponent } from '../shared/layouts'
+import { DashboardViewComponent } from './views'
 
-import { MessagesComponent, StatsComponent } from './components'
+import { StatsComponent, MessagesComponent } from './components'
 
-const routes: Routes = [
-  {
-    path: 'dashboard',
-    component: AuthenticatedLayoutComponent,
-    canActivate: [AuthenticationService],
-    children: [
-      { path: '', redirectTo: 'stats', pathMatch: 'full' },
-      { path: 'stats', component: StatsComponent },
-      { path: 'messages/:id', component: MessagesComponent }
-    ]
-  }
+export const dashboardRoutes: any = {
+  path: 'dashboard',
+  component: DashboardViewComponent,
+  canActivate: [AuthenticationService],
+  children: [
+    { path: '', redirectTo: 'stats', pathMatch: 'full' },
+    { path: 'stats', component: StatsComponent },
+    { path: 'messages', component: MessagesComponent }
+  ]
+}
+
+const routes: Routes = [ dashboardRoutes ]
+
+export const routes2 = [
+
 ]
 
 @NgModule({
   imports: [
-    RouterModule.forChild(routes)
+    //RouterModule.forChild(routes)
   ],
   exports: [ RouterModule ]
 })

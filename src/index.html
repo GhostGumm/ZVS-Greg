@@ -14,14 +14,11 @@
     <link rel="icon" type="image/png" href="assets/favicon-16x16.png" sizes="16x16">
     <link rel="icon" type="image/png" href="assets/zetapush_logo.png" sizes="192x192">-->
     <style>
-      html{
-        background-color:none;
-        transition:background-color 1.5s linear;
-      }
       html::before{
         content:'';
         opacity: 0;
         transition:opacity 1.5s linear;
+        will-change: opacity;
       }
       zp-loader{
         position: fixed;
@@ -30,8 +27,9 @@
         border:3px solid #3f51b5;
         border-radius:50%;
         pointer-events:none;
-        animation:zp-loader 1s infinite both ease-in-out;
+        animation:zp-loader 1.5s infinite both ease-in-out;
         transition:visiblity 0.5s;
+        will-change: visiblity;
       }
       @keyframes zp-loader{
         30%,70%{

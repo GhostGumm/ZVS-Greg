@@ -1,0 +1,27 @@
+<md-toolbar>
+  <button md-mini-fab color="warn" (click)="switchView('messages')">
+      <md-icon class="md-24">message</md-icon>
+  </button>
+  <button md-mini-fab color="warn" (click)="switchView('video')">
+      <md-icon class="md-24">phone</md-icon>
+  </button>
+</md-toolbar>
+
+ 
+<zp-messages *ngIf="messagesIsVisible"></zp-messages>
+<zp-video *ngIf="videoIsVisible"></zp-video>
+
+<!--<md-tab-group>
+  <md-tab>
+    <template md-tab-label>Messages</template>
+    <template md-tab-content>
+      <zp-messages></zp-messages>
+    </template>
+  </md-tab>
+  <md-tab>
+    <template md-tab-label>Video</template>
+    <template md-tab-content>
+      <zp-video></zp-video>
+    </template>
+  </md-tab>
+</md-tab-group>-->

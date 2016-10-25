@@ -8,7 +8,7 @@ import { ContextRoutingModule } from './context-routing.module'
 
 @NgModule({
   declarations: [ ...COMPONENTS, ...VIEWS ],
-  imports: [ SharedModule, ContextRoutingModule ],
+  imports: [ SharedModule.forRoot(), ContextRoutingModule ],
   providers: [ ]
 })
 export class ContextModule { }

@@ -26,16 +26,15 @@ export class LoginViewComponent implements AfterViewInit, OnChanges, OnInit {
   @Input() formIsVisible: boolean = false
 
   @HostBinding('class') classes = 'flex-centered flex-height'
+  @HostBinding('@routeAnimation') get routeAnimation() {
+    return true
+  }
 
   constructor(
     private router: Router,
     private connection: ZetaPushConnection
   ) {
     this.credentials = new Credentials()
-  }
-
-  @HostBinding('@routeAnimation') get routeAnimation() {
-    return true
   }
 
   ngOnInit() {

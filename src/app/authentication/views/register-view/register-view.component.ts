@@ -3,8 +3,9 @@ import { Router } from '@angular/router'
 import { Animations } from '../../../utils/utils.animation'
 
 class RegisterModel {
-  public login: string = ''
-  public password: string = ''
+  public firstname: string = 'John'
+  public lastname: string = 'Doe'
+  public email: string = 'john.doe@yopmail.com'
 }
 
 @Component({
@@ -57,7 +58,7 @@ export class RegisterViewComponent implements AfterViewInit, OnChanges, OnInit {
     console.debug('RegisterView::onSubmit', {
       model: this.model
     })
-    this.router.navigate(['/dashboard'])
+    this.router.navigate(['/authenticated/dashboard'])
   }
 
 }

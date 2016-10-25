@@ -1,0 +1,25 @@
+:host {
+  display: block;
+  width: 360px;
+}
+.zp-nav-close{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+md-nav-list{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 10px;
+  > button {
+    width: 100%;
+    margin: 5px 0;
+  }
+}
+
+[zp-nav-title] {
+  text-align: center;
+}
+
