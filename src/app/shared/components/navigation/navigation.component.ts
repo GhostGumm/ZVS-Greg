@@ -24,13 +24,14 @@ export class NavigationComponent implements OnDestroy, OnInit {
   routes: any[] = [
     {
       name: 'Stats',
-      link: ['/dashboard', 'stats']
+      link: ['dashboard', 'stats']
     },
     {
       name: 'Context',
       link: ['context', 1]
     }
   ]
+  lastRoute: string
   subscriptions: Array<Subscription> = []
 
   constructor(
@@ -39,20 +40,24 @@ export class NavigationComponent implements OnDestroy, OnInit {
   ) {
     /**
      * Route state listener
-     * NavigationStart -> RoutesRecognized -> NavigationEnd
      */
     this.subscriptions.push(router.events.subscribe((event) => {
-      console.debug('NavigationComponent::routeChange', { event })
       if (event.constructor.name === 'NavigationEnd') {
-        this.navigation.close()
+        console.debug('NavigationComponent::routeChange', { 
+          state: event.constructor.name,
+          url: event.url,
+          lastRoute: this.lastRoute
+        })
+        // Close navigation if route changed
+        if (this.lastRoute !== event.url) {
+          this.navigation.close()
+        }
+        this.lastRoute = event.url
       }
     }))
   }
 
   ngOnInit() {
-    console.debug('NavigationComponent::ngOnInit', {
-      navigation: this.navigation
-    })
     /**
      * Md-Sidenav state listeners
      */
@@ -64,11 +69,9 @@ export class NavigationComponent implements OnDestroy, OnInit {
       console.debug('NavigationComponent.navigation::onClose')
       this.refreshStats()
     }))
-    /**
-     * Fetch all navigation data
-     */
     this.getNavigationItems()
   }
+
   ngOnDestroy() {
     console.debug('NavigationComponent::ngOnDestroy')
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
@@ -84,6 +87,9 @@ export class NavigationComponent implements OnDestroy, OnInit {
     })
   }
 
+  /**
+   * Fetch all navigation data
+   */
   getNavigationItems() {
     this.getUsers()
   }
