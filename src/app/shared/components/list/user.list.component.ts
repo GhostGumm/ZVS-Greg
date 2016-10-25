@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs/Subscription'
 })
 export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @Input() users: any[]
+  @Input() link: string
   subscriptions: Array<Subscription> = []
 
   constructor() {
@@ -16,7 +17,8 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDe
 
   ngOnInit() {
     console.debug('UserListComponent::ngOnInit', {
-      users: this.users
+      users: this.users,
+      link:this.link
     })
   }
   ngAfterViewInit() {
@@ -27,12 +29,14 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDe
       users: this.users,
       event
     })
+    // Mock Purpose
     if (event.users.currentValue) {
       for (let user of this.users) {
-        console.debug('', user)
         user.message = 'coucou'
+        user.link = this.link ? `${this.link}${user.id}` : ''
       }
     }
+    //
   }
   ngOnDestroy() {
     console.debug('UserListComponent::ngOnDestroy')

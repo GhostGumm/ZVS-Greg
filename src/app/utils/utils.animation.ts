@@ -39,24 +39,31 @@ export const Animations = {
   swipeOutDownView: ({ delay = '500ms', easingIn = 'ease-in-out', easingOut = 'ease-in-out' } = {}) => [
     state('void', style({
       position: 'absolute',
+      opacity: 0,
+      transform: 'translateY(0)'
+    })),
+    state('false', style({
+      position: 'absolute',
       opacity: 0
     })),
     state('true', style({
       position: 'absolute',
       left: 0,
       right: 0,
-      transform: 'translateX(0)'
+      transform: 'translateX(0)',
+      opacity: 1
     })),
+    transition('void <=> false', [
+      animate(`${delay} ${easingIn}`)
+    ]),
+    transition('false <=> true', [
+      animate(`${delay} ${easingIn}`)
+    ]),
     transition(':enter', [
-      animate(`${delay} ${easingIn}`, style({
-        opacity: 1
-      }))
+      animate(`${delay} ${easingIn}`)
     ]),
     transition(':leave', [
-      animate(`${delay} ${easingOut}`, style({
-        opacity: 0,
-        transform: 'translateY(10%)'
-      }))
+      animate(`${delay} ${easingOut}`)
     ])
   ],
 }

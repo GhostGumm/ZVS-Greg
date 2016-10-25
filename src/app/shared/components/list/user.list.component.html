@@ -1,6 +1,6 @@
 
 <md-list dense>
-  <md-list-item *ngFor="let user of users | slice:0:5">
+  <md-list-item *ngFor="let user of users | slice:0:5" [routerLink]="user.link ? [user.link] : []">
     <img md-list-avatar src="{{user.avatar}}" alt="{{user.firstname}}">
     <h3 md-line>
       <zp-username [user]="user"></zp-username>

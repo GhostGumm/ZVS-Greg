@@ -8,7 +8,7 @@ import { AuthenticatedLayoutComponent } from '../shared/layouts'
 import { ConversationViewComponent } from './views'
 
 export const conversationRoutes: any = {
-  path: 'conversation/:id/:mode',
+  path: 'conversation/:mode/:id',
   component: ConversationViewComponent,
   canActivate: [AuthenticationService],
   // children: [
