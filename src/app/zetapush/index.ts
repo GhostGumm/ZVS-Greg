@@ -1,4 +1,6 @@
-import { client } from './client'
+import { client, ZetaPushClient, ZetaPushConnection } from './core'
+
+export { ZetaPushClient, ZetaPushConnection }
 
 /**
  * Initialise les composants zetapush
@@ -19,3 +21,4 @@ export const initialize: Promise<any> = new Promise((resolve, reject) => {
   // Catch server errors
   client.helper.servers.catch(reject)
 })
+
