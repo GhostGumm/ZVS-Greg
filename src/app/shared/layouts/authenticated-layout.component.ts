@@ -4,7 +4,7 @@ import { Animations } from '../../utils/utils.animation'
 
 @Component({
   animations: [
-    trigger('toolbarAnimation', Animations.slideUpDown({ delay: '250ms' })),
+    trigger('toolbarAnimation', Animations.slideUpDown({ duration: '250ms' })),
     trigger('routeAnimation', Animations.fadeInOutView())
   ],
   providers: [ MdSnackBar ],
@@ -15,6 +15,9 @@ import { Animations } from '../../utils/utils.animation'
       position:relative;
       width: 100%;
       height: 100%;
+    }
+    md-toolbar{
+      z-index: 1;
     }
     .md-sidenav-content{
       overflow: hidden;

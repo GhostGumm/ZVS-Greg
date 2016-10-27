@@ -69,11 +69,17 @@ h3[md-line]{
   box-shadow: $zp-shadow-1-up;
   padding: 20px 10px;
   z-index: 1;
+  position: relative;
   form {
     width: 100%;
   }
   button {
     margin: 0 5px;
+  }
+  md-progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 }
 
@@ -92,4 +98,24 @@ h3[md-line]{
   // max-width: 600px;
   // width: 100%;
   margin: 0 10px;
+}
+
+.zp-messages-dropzone{
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 2;
+  color: $zp-white;
+  background-color: $zp-shadow-light;
+  backface-visibility : hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.zp-messages-dropzone-content{
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

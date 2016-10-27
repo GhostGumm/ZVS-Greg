@@ -12,16 +12,28 @@ $warn:    md-palette($md-red);
 // Create the theme object (a Sass map containing all of the palettes).
 $theme: md-light-theme($primary, $accent, $warn);
 
-$background: #F5F5F5;
-$background-accent: #252525;
+$zp-white: #F5F5F5;
+$zp-black: #252525;
 
-$dark-background: #252525;
-$dark-background-accent: #F5F5F5;
+$background: $zp-white;
+$background-accent: $zp-black;
+
+$dark-background: $zp-black;
+$dark-background-accent: $zp-white;
 
 $zp-navigation-width: 360px;
 $zp-sidenav-width: 280px;
 
+$zp-shadow-light: rgba(0,0,0, .26);
 $zp-shadow-1: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
 $zp-shadow-1-up: 0px -3px 1px -2px rgba(0, 0, 0, 0.2), 0px -2px 2px 0px rgba(0, 0, 0, 0.14), 0px -1px 5px 0px rgba(0, 0, 0, 0.12);
 
 $zp-radius: 4px;
+
+$font-size-xxs: 12px;
+$font-size-xs: 18px;
+$font-size-sm: 24px;
+$font-size-md: 48px !default;
+$font-size-lg: 72px;
+$font-size-xl: 96px;
+$font-size-xxl: 120px;

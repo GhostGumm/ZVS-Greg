@@ -1,28 +1,47 @@
+
+
 <md-list class="zp-messages-list" zpScrollGlue>
   <md-list-item *ngFor="let message of messages" [class.owner]="message.owner" [class.precede]="message.precede">
     <img md-list-avatar src="/assets/zetapush_logo.png" alt="{{message.author}}">
+
     <h3 md-line> {{message.author}} </h3>
+
     <p md-line>
       <span> {{message.value}} </span>
     </p>
+
     <span md-list-date>{{ message.date | date:"hh:mm" }}</span>
   </md-list-item>
 </md-list>
 
-<md-toolbar class="zp-messages-inputs flex-centered">   
+
+<md-toolbar class="zp-messages-inputs flex-centered">  
+  <md-progress-bar mode="determinate" value="{{uploader.progress}}"></md-progress-bar>
+
   <button class="zp-input-files" type="button" md-mini-fab color="warn"> 
     <md-icon class="md-24">file_upload</md-icon>
-    <!--<input type="file" ng2FileSelect capture="camera" [uploader]="uploader" multiple/>-->
+    <input type="file" ng2FileSelect capture="camera" [uploader]="uploader" multiple (change)="onSelectAttachment($event)"/>
   </button>
+
   <form (ngSubmit)="onSend()" #messageForm="ngForm" id="messageForm">
     <md-input #messageRaw [(ngModel)]="message.raw" class="zp-messages-inputs-text" maxlength="{{limits.message}}" name="messageRaw" id="messageRaw" required>
       <md-hint align="end">{{messageRaw.characterCount || 0}} / {{limits.message}}</md-hint>
     </md-input>
   </form>
+
   <button type="submit" md-mini-fab color="primary" form="messageForm">
     <md-icon class="md-24">send</md-icon>
-  </button>  
+  </button> 
+
   <button type="button" md-mini-fab color="warn">
     <md-icon class="md-24">sentiment_satisfied</md-icon>
   </button> 
 </md-toolbar>
+
+<div class="zp-messages-dropzone" ng2FileDrop [uploader]="uploader" *ngIf="dropZoneActive" [@dropZoneAnimation]="dropZoneActive"
+  (fileOver)="onDropAttachment($event)" (dragleave)="onDropzoneLeave($event)">
+  <div class="zp-messages-dropzone-content">
+    <md-icon class="xl">file_upload</md-icon>
+    <h4>Drop your files.</h4>
+  </div>
+</div>

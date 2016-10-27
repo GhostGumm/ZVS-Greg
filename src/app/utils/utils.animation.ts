@@ -2,7 +2,7 @@ import { state, animate, transition, style } from '@angular/core'
 
 export const Animations = {
 
-  slideUpDown: ({ delay = '500ms', easingIn = 'ease-in-out', easingOut = 'ease-in-out' } = {}) => [
+  slideUpDown: ({ duration = '500ms', easingIn = 'ease-in-out', easingOut = 'ease-in-out' } = {}) => [
     state('true', style({
       transform: 'translateY(0)',
       opacity: 1
@@ -12,17 +12,34 @@ export const Animations = {
         transform: 'translateY(-50%)',
          opacity:0
       }),
-      animate(`${delay} ${easingIn}`) // cubic-bezier(0.175, 0.885, 0.32, 1.275)
+      animate(`${duration} ${easingIn}`) // cubic-bezier(0.175, 0.885, 0.32, 1.275)
     ]),
     transition(':leave', [
-      animate(`${delay} ${easingOut}`, style({
+      animate(`${duration} ${easingOut}`, style({
         transform: 'translateY(50%)',
         opacity: 0
       }))
     ])
   ],
 
-  fadeInOutView: ({ delay = '500ms', easingIn = 'ease-in-out', easingOut = 'ease-in-out' } = {}) => [
+  fadeIn: ({ duration = '500ms', easingIn = 'ease-in-out', easingOut = 'ease-in-out' } = {}) => [
+    state('true', style({
+      opacity: 1
+    })),
+    transition(':enter', [
+      style({
+         opacity:0
+      }),
+      animate(`${duration} ${easingIn}`) // cubic-bezier(0.175, 0.885, 0.32, 1.275)
+    ]),
+    transition(':leave', [
+      animate(`${duration} ${easingOut}`, style({
+        opacity: 0
+      }))
+    ])
+  ],
+
+  fadeInOutView: ({ duration = '500ms', easingIn = 'ease-in-out', easingOut = 'ease-in-out' } = {}) => [
 
     state('void', style({
       opacity: 0,
@@ -37,7 +54,7 @@ export const Animations = {
       opacity: 1
     })),
     transition(':enter', [
-      animate(`${delay} ${easingIn}`, style({
+      animate(`${duration} ${easingIn}`, style({
         opacity: 1,
         position: 'absolute',
         top: 0,
@@ -47,7 +64,7 @@ export const Animations = {
       }))
     ]),
     transition(':leave', [
-      animate(`${delay} ${easingOut}`, style({
+      animate(`${duration} ${easingOut}`, style({
         opacity: 0,        
         position: 'absolute',
         top: 0,
@@ -58,7 +75,7 @@ export const Animations = {
     ])
   ],
 
-  swipeOutDownView: ({ delay = '500ms', easingIn = 'ease-in-out', easingOut = 'ease-in-out' } = {}) => [
+  swipeOutDownView: ({ duration = '500ms', easingIn = 'ease-in-out', easingOut = 'ease-in-out' } = {}) => [
 
     state('active', style({
     })),
@@ -68,13 +85,13 @@ export const Animations = {
       opacity: 0
     })),
     transition('inactive => active', [
-      animate(`${delay} ${easingIn}`, style({
+      animate(`${duration} ${easingIn}`, style({
         opacity: 1,
         position: 'absolute'
       }))
     ]),
     transition('active => inactive', [
-      animate(`${delay} ${easingIn}`, style({
+      animate(`${duration} ${easingIn}`, style({
         opacity: 0,
         transform: 'translate3d(-10%, 0, 0)',
         position: 'absolute'
