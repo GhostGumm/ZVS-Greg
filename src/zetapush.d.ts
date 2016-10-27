@@ -95,6 +95,7 @@ declare module "zetapush-js" {
 
   interface Services {
     Macro: Macro
+    Messaging: Service
   }
 
   interface Service {

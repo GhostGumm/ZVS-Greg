@@ -24,5 +24,5 @@ import { VideoService } from './video/video.service'
 
 export const COMPONENTS_SERVICES = [
   MessageService,
-  //VideoService
+  VideoService
 ]

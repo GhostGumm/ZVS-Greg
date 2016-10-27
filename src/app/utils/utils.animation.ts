@@ -78,6 +78,7 @@ export const Animations = {
   swipeOutDownView: ({ duration = '500ms', easingIn = 'ease-in-out', easingOut = 'ease-in-out' } = {}) => [
 
     state('active', style({
+      position: 'absolute'
     })),
     state('inactive', style({
       position: 'absolute',

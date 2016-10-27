@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core'
 import { VideoInterface, VideoClass } from './video.interface'
 import { services } from 'zetapush-js'
-import 'webrtc-adapter'
+import { DomSanitizer } from '@angular/platform-browser'
+// import 'webrtc-adapter'
 
 import { ICE_SERVERS, RTC_CHANNEL } from '../../../utils/utils.rtc'
 
@@ -26,18 +27,20 @@ export class VideoService {
   }
 
   zpMessaging:any
-  
-  constructor(public ZetaPushClient, public context) {
 
-    this.zpMessaging = ZetaPushClient.createService({
-      // type: services.Messaging,
-      listener: {
-        rtc: (e) => {
-          this.onMessage(e)
-        }
-      },
-      deploymentId: 'messaging_1'
-    })
+  context = null
+  
+  constructor(private sanitizer:DomSanitizer) { // public ZetaPushClient, public context
+
+    // this.zpMessaging = ZetaPushClient.createService({
+    //   // type: services.Messaging,
+    //   listener: {
+    //     rtc: (e) => {
+    //       this.onMessage(e)
+    //     }
+    //   },
+    //   deploymentId: 'messaging_1'
+    // })
   }
 
   onMessage(msg) {
@@ -80,21 +83,26 @@ export class VideoService {
     }
   }
 
-  startVideo(callback?: any) {
+  startVideo():Promise<any> {
     console.debug('WebRtc::startVideo')
-    // navigator.mediaDevices.getUserMedia({
-    //   audio: true,
-    //   video: true
-    // })
-    // .then((stream) => {
-    //   this.local.stream = stream
-    //   this.local.source = window.URL.createObjectURL(stream)
-    //   callback() 
-    // })
-    // .catch((e) => {
-    //   console.error('getUserMedia() error: ' + e.name, { error:e })
-    //   callback(e)
-    // })
+    return new Promise((resolve, reject) => {
+      const getUserMedia = navigator.mediaDevices.getUserMedia({
+        audio: true,
+        video: true
+      }) as Promise<any>
+
+      getUserMedia.then((stream) => {
+        this.local.stream = stream
+        this.local.source = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(stream))
+        resolve({
+          stream,
+          source: this.local.source
+        })
+      })
+      .catch((error) => {
+        reject(error)
+      })
+    })
   }
 
   getConnection(userId) {
@@ -282,7 +290,7 @@ export class VideoService {
   }
 
   destroy() {
-    this.ZetaPushClient.unsubscribe(this.zpMessaging)
+    // this.ZetaPushClient.unsubscribe(this.zpMessaging)
     this.closeTracks()
     this.hangup()
   }

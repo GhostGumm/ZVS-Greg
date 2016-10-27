@@ -9,9 +9,11 @@ if (environment.production) {
   enableProdMode()
 }
 
-initialize.then(() => {
-  platformBrowserDynamic().bootstrapModule(AppModule)
-})
+//initialize.then(() => {
+  document.addEventListener('DOMContentLoaded', function () {
+    platformBrowserDynamic().bootstrapModule(AppModule, [])
+  })
+//})
 
 window.WebFont.load({
   google: {

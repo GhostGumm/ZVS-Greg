@@ -1,24 +1,20 @@
-import { Component, HostBinding, OnInit, trigger } from '@angular/core'
+import { Component, HostBinding, OnInit, OnDestroy, trigger } from '@angular/core'
 import { Animations } from '../../../utils/utils.animation'
 
 import { VideoInterface, VideoClass } from './video.interface'
 import { ApiUserService, User } from '../../../services/'
-// import { VideoService } from './video.service'
-
-export const randomId = () => {
-  return Math.random().toString(36).substring(7)
-}
+import { VideoService } from './video.service'
 
 @Component({
   selector: 'zp-video',
   templateUrl: './video.component.html',
   styleUrls: ['./video.component.scss'],
-  providers: [ ApiUserService ],
+  providers: [ ApiUserService, VideoService ],
   animations: [
     trigger('routeAnimation', Animations.swipeOutDownView())
   ]
 })
-export class VideoComponent implements OnInit {
+export class VideoComponent implements OnInit, OnDestroy {
   users: User[]
   group:boolean = false
   videos: VideoInterface[] = []
@@ -27,48 +23,74 @@ export class VideoComponent implements OnInit {
     return true
   }
 
-  constructor(private userService: ApiUserService) {
-  }
-
-  switchLayout() {
-    this.group = !this.group
-  }
-
-  updateVideo(add) {
-    console.warn(add)
-    if (add) {
-      this.videos.push(new VideoClass({
-        id:`${randomId()}`
-      }))
-    }
-    else {
-      this.videos.pop()
-    }
-    this.checkLayout()
+  constructor(
+    private userService: ApiUserService,
+    private videoService: VideoService
+  ) {
   }
 
   ngOnInit() {
     console.debug('VideoComponent::ngOnInit')
-    this.getUsers()
-  }
 
-  getUsers() {
-    this.userService.getAllUsers().then(users => {
-      console.debug('VideoComponent::getUsers', { users })
-      this.users = users
-      this.initVideo()
+    this.videoService.startVideo().then((data) => {
+      const { stream, source } = data
+      // Mock Purpose        
+        this.getUsers().then(() => {
+          this.initVideo(stream, source)
+        })
+      //
+      console.debug('VideoComponent::startVideo:success',{ data })
+    }).catch((error) => {
+      console.debug('VideoComponent::startVideo:error',{ error })
     })
   }
 
-  initVideo() {
+  getUsers(): Promise<User[]> {
+    return new Promise((resolve, reject) => {
+      this.userService.getAllUsers()
+      .then(users => {
+        console.debug('VideoComponent::getUsers', { users })
+        this.users = users
+        resolve(this.users)
+      })
+      .catch((error) => {
+        reject(error)
+      })
+    })
+  }
+
+  // Mock Purpose
+    switchLayout() {
+      this.group = !this.group
+    }
+
+    updateVideo(add) {
+      if (add) {
+        this.videos.push(new VideoClass({
+          id:`${this.videos.length + 1}`,
+          user:this.users[this.videos.length + 1]
+        }))
+      }
+      else {
+        this.videos.pop()
+      }
+      this.checkLayout()
+    }
+  //
+
+  initVideo(stream?, source?) {
+    console.debug('VideoComponent::initVideo', { stream, source })
     // Mock Purpose
       for (let user of this.users) { 
-        console.warn(user)
-        this.videos.push(new VideoClass({ id:user.id }))
+        this.videos.push(new VideoClass({
+          id:user.id,
+          user  
+        }))
       }
       this.videos[0].focus = true
-      this.checkLayout()
+      this.videos[0].source = source
     //
+    this.checkLayout()
   }
 
   checkLayout() {
@@ -76,7 +98,11 @@ export class VideoComponent implements OnInit {
       this.group = true
     }
     else {
-      this.group =false
+      this.group = false
     }
+  }
+
+  ngOnDestroy() {
+    this.videoService.destroy()
   }
 }
