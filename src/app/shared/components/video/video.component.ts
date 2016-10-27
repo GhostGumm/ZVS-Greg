@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit, trigger } from '@angular/core'
+import { Component, HostBinding, OnInit, OnDestroy, trigger } from '@angular/core'
 import { Animations } from '../../../utils/utils.animation'
 
 import { VideoInterface, VideoClass } from './video.interface'
@@ -14,7 +14,7 @@ import { VideoService } from './video.service'
     trigger('routeAnimation', Animations.swipeOutDownView())
   ]
 })
-export class VideoComponent implements OnInit {
+export class VideoComponent implements OnInit, OnDestroy {
   users: User[]
   group:boolean = false
   videos: VideoInterface[] = []
@@ -29,37 +29,57 @@ export class VideoComponent implements OnInit {
   ) {
   }
 
-  switchLayout() {
-    this.group = !this.group
-  }
-
-  updateVideo(add) {
-    if (add) {
-      this.videos.push(new VideoClass({
-        id:`${this.videos.length + 1}`,
-        user:this.users[this.videos.length + 1]
-      }))
-    }
-    else {
-      this.videos.pop()
-    }
-    this.checkLayout()
-  }
-
   ngOnInit() {
     console.debug('VideoComponent::ngOnInit')
-    this.getUsers()
-  }
 
-  getUsers() {
-    this.userService.getAllUsers().then(users => {
-      console.debug('VideoComponent::getUsers', { users })
-      this.users = users
-      this.initVideo()
+    this.videoService.startVideo().then((data) => {
+      const { stream, source } = data
+      // Mock Purpose        
+        this.getUsers().then(() => {
+          this.initVideo(stream, source)
+        })
+      //
+      console.debug('VideoComponent::startVideo:success',{ data })
+    }).catch((error) => {
+      console.debug('VideoComponent::startVideo:error',{ error })
     })
   }
 
-  initVideo() {
+  getUsers(): Promise<User[]> {
+    return new Promise((resolve, reject) => {
+      this.userService.getAllUsers()
+      .then(users => {
+        console.debug('VideoComponent::getUsers', { users })
+        this.users = users
+        resolve(this.users)
+      })
+      .catch((error) => {
+        reject(error)
+      })
+    })
+  }
+
+  // Mock Purpose
+    switchLayout() {
+      this.group = !this.group
+    }
+
+    updateVideo(add) {
+      if (add) {
+        this.videos.push(new VideoClass({
+          id:`${this.videos.length + 1}`,
+          user:this.users[this.videos.length + 1]
+        }))
+      }
+      else {
+        this.videos.pop()
+      }
+      this.checkLayout()
+    }
+  //
+
+  initVideo(stream?, source?) {
+    console.debug('VideoComponent::initVideo', { stream, source })
     // Mock Purpose
       for (let user of this.users) { 
         this.videos.push(new VideoClass({
@@ -68,8 +88,9 @@ export class VideoComponent implements OnInit {
         }))
       }
       this.videos[0].focus = true
-      this.checkLayout()
+      this.videos[0].source = source
     //
+    this.checkLayout()
   }
 
   checkLayout() {
@@ -79,5 +100,9 @@ export class VideoComponent implements OnInit {
     else {
       this.group = false
     }
+  }
+
+  ngOnDestroy() {
+    this.videoService.destroy()
   }
 }
