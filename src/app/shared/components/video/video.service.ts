@@ -293,7 +293,7 @@ export class VideoService {
   }
 
   destroy() {
-    this.client.unsubscribe(this.zpMessaging)
+    //this.client.unsubscribe(this.zpMessaging)
     this.closeTracks()
     this.hangup()
   }
