@@ -1,12 +1,14 @@
-import { Component, HostBinding, ViewEncapsulation, OnInit, OnDestroy, trigger } from '@angular/core'
+import { Component, HostBinding, HostListener, Renderer, ViewEncapsulation, OnInit, OnDestroy, trigger } from '@angular/core'
 import { Router } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
-import { FileUploader } from 'ng2-file-upload'
 import { Animations } from '../../../utils/utils.animation'
 
 import { ScrollGlueDirective } from '../../../utils/utils.scroll'
-import { MessageInterface, MessageClass } from './message.interface'
+import { FileUploader, FileDropDirective, FileSelectDirective } from 'ng2-file-upload'
 import { MessageService } from './message.service'
+const PROVIDERS = [ ScrollGlueDirective, MessageService, FileDropDirective, FileSelectDirective ]
+
+import { MessageInterface, MessageClass } from './message.interface'
 
 const message:MessageInterface = {
     id:'',
@@ -32,22 +34,23 @@ const messageTest:MessageInterface = {
   selector: 'zp-messages',
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.scss'],
-  providers: [ ScrollGlueDirective, MessageService ], // ng2FileSelect
+  providers: [ ...PROVIDERS ],
   animations: [
-    trigger('routeAnimation', Animations.swipeOutDownView())
+    trigger('routeAnimation', Animations.swipeOutDownView()),
+    trigger('dropZoneAnimation', Animations.fadeIn({ duration:'250ms' }))
   ]
 })
 
 export class MessagesComponent implements OnInit, OnDestroy {
-  //uploader:FileUploader = new FileUploader({url: 'https://evening-anchorage-3159.herokuapp.com/api/'});
   messages: MessageInterface[] = Array.from(new Array(20), () => new MessageClass(messageTest))
   message: MessageInterface = message
-  files: any
   limits: any = {
     message: 1000,
     upload: 20 * 1024 // 20mb
   }
   subscriptions: Array<Subscription> = []
+  dropZoneActive:boolean = false
+  uploader: FileUploader = new FileUploader({})
 
   @HostBinding('@routeAnimation') get routeAnimation() {
     return true
@@ -55,10 +58,25 @@ export class MessagesComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private renderer: Renderer
   ) {
     messageService.indexByAuthor(this.messages)
   }
+
+  /**
+   * Drag & Drop listener
+   */
+  @HostListener('dragenter', ['$event'])
+  onDragEnter(event) {
+    console.debug('MessagesComponent::onDragEnter',{ event })
+    this.dropZoneActive = true
+  }
+  onDropzoneLeave(event) {
+    console.debug('MessagesComponent::onDropzoneLeave',{ event })
+    this.dropZoneActive = false
+  }
+
 
   ngOnInit() {
     console.debug('MessagesComponent::ngOnInit', {
@@ -71,13 +89,28 @@ export class MessagesComponent implements OnInit, OnDestroy {
     this.resetForm()
   }
 
-  onSelectAttachment(event) {
+  onSelectAttachment(event?) {
     console.log('MessagesComponent::onSelectAttachment', {
       event,
-      files: this.files
+      uploader: this.uploader
     })
+    this.uploader.setOptions({
+      url: 'https://evening-anchorage-3159.herokuapp.com/api/'
+    })
+    this.uploader.uploadAll()
+    this.uploader.clearQueue()
   }
 
+  onDropAttachment(event) {
+    console.log('MessagesComponent::onDropAttachment', {
+      event,
+      queue: this.uploader.queue
+    })
+    this.dropZoneActive = event
+    if (this.uploader.queue.length > 0) {
+      this.onSelectAttachment()
+    }
+  }
   processMessage() {
     const message = new MessageClass(this.message)
 

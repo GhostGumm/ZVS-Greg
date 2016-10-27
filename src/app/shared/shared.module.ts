@@ -16,11 +16,13 @@ import { AuthenticationService } from './authentication.service'
 import { ApiUserService } from '../services/'
 
 import { ScrollGlueDirective } from '../utils/utils.scroll'
+import { FileDropDirective, FileSelectDirective } from 'ng2-file-upload'
 
 const CORE_MODULES = [ CommonModule, BrowserModule, FormsModule, HttpModule ]
+const DIRECTIVES = [ ScrollGlueDirective, FileDropDirective, FileSelectDirective]
 
 @NgModule({
-  declarations: [ ...COMPONENTS, ...LAYOUTS, ScrollGlueDirective ],
+  declarations: [ ...COMPONENTS, ...LAYOUTS, ...DIRECTIVES ],
   exports: [ ...COMPONENTS, ...LAYOUTS, ...CORE_MODULES, MaterialModule, ZetaPushModule ],
   imports: [ ...CORE_MODULES, MaterialModule.forRoot(), SharedRoutingModule, ZetaPushModule ],
   providers: [ AuthenticationService, ...COMPONENTS_SERVICES ]

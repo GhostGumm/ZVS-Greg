@@ -41,7 +41,6 @@ app-root{
 .flex-fill{
     flex: 1 1 auto;
 }
-
 md-sidenav{
   background-color: rgba($background,.87);
 }
@@ -52,6 +51,9 @@ md-sidenav-layout{
 .md-sidenav-content{
   overflow: hidden !important;
   background-color: transparent;
+}
+.zp-color-white{
+  color: $zp-white;
 }
 
 .zp-mockup-infos{
