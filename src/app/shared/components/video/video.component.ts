@@ -104,5 +104,6 @@ export class VideoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.videoService.destroy()
+    console.debug('VideoComponent::ngOnDestroy')
   }
 }

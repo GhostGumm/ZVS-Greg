@@ -1,4 +1,4 @@
-import { Component, HostBinding, HostListener, Renderer, ViewEncapsulation, OnInit, OnDestroy, trigger } from '@angular/core'
+import { Component, HostBinding, HostListener, ViewEncapsulation, OnInit, OnDestroy, trigger } from '@angular/core'
 import { Router } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
 import { Animations } from '../../../utils/utils.animation'
@@ -50,7 +50,10 @@ export class MessagesComponent implements OnInit, OnDestroy {
   }
   subscriptions: Array<Subscription> = []
   dropZoneActive:boolean = false
-  uploader: FileUploader = new FileUploader({})
+  uploader: FileUploader = new FileUploader({
+    // maxFileSize:this.limits.upload,
+    // removeAfterUpload: true
+  })
 
   @HostBinding('@routeAnimation') get routeAnimation() {
     return true
@@ -58,8 +61,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private messageService: MessageService,
-    private renderer: Renderer
+    private messageService: MessageService
   ) {
     messageService.indexByAuthor(this.messages)
   }
@@ -98,7 +100,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
       url: 'https://evening-anchorage-3159.herokuapp.com/api/'
     })
     this.uploader.uploadAll()
-    this.uploader.clearQueue()
+    // this.uploader.clearQueue()
   }
 
   onDropAttachment(event) {

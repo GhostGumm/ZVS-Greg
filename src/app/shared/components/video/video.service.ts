@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 import { VideoInterface, VideoClass } from './video.interface'
 import { services } from 'zetapush-js'
+import { ZetaPushClient } from '../../../zetapush'
 import { DomSanitizer } from '@angular/platform-browser'
 // import 'webrtc-adapter'
 
@@ -27,13 +28,15 @@ export class VideoService {
   }
 
   zpMessaging:any
+  client:ZetaPushClient
+  context:string = 'rtc'
 
-  context = null
-  
-  constructor(private sanitizer:DomSanitizer) { // public ZetaPushClient, public context
+  constructor(
+    private sanitizer:DomSanitizer
+  ) {
 
-    // this.zpMessaging = ZetaPushClient.createService({
-    //   // type: services.Messaging,
+    // this.zpMessaging = this.client.createService({
+    //   Type: services.Messaging,
     //   listener: {
     //     rtc: (e) => {
     //       this.onMessage(e)
@@ -290,7 +293,7 @@ export class VideoService {
   }
 
   destroy() {
-    // this.ZetaPushClient.unsubscribe(this.zpMessaging)
+    this.client.unsubscribe(this.zpMessaging)
     this.closeTracks()
     this.hangup()
   }
