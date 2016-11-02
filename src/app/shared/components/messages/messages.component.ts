@@ -1,4 +1,4 @@
-import { Component, HostBinding, HostListener, ViewEncapsulation, OnInit, OnDestroy, trigger } from '@angular/core'
+import { Component, HostBinding, HostListener, Input, ViewChild, ElementRef, OnInit, AfterViewInit, OnDestroy, trigger } from '@angular/core'
 import { Router } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
 import { Animations } from '../../../utils/utils.animation'
@@ -6,29 +6,10 @@ import { Animations } from '../../../utils/utils.animation'
 import { ScrollGlueDirective } from '../../../utils/utils.scroll'
 import { FileUploader, FileDropDirective, FileSelectDirective } from 'ng2-file-upload'
 import { MessageService } from './message.service'
-const PROVIDERS = [ ScrollGlueDirective, MessageService, FileDropDirective, FileSelectDirective ]
 
 import { MessageInterface, MessageClass } from './message.interface'
 
-const message:MessageInterface = {
-    id:'',
-    author:'Raphaël',
-    metadata:{},
-    type:'',
-    value:'',
-    raw:'',
-    date:null
-}
-
-const messageTest:MessageInterface = {
-  id:'1',
-  author:'toto',
-  metadata:{},
-  type:'text',
-  value:'http://google.fr regarde ça raphael @toto',
-  raw:'http://google.fr regarde ça raphael @toto',
-  date:Date.now()
-}
+const PROVIDERS = [ ScrollGlueDirective, MessageService, FileDropDirective, FileSelectDirective]
 
 @Component({
   selector: 'zp-messages',
@@ -37,13 +18,29 @@ const messageTest:MessageInterface = {
   providers: [ ...PROVIDERS ],
   animations: [
     trigger('routeAnimation', Animations.swipeOutDownView()),
-    trigger('dropZoneAnimation', Animations.fadeIn({ duration:'250ms' }))
+    trigger('dropZoneAnimation', Animations.fadeIn({ duration:'250ms' })),
+    trigger('timestampAnimation', Animations.fadeIn({ duration:'250ms' }))
   ]
 })
 
-export class MessagesComponent implements OnInit, OnDestroy {
-  messages: MessageInterface[] = Array.from(new Array(20), () => new MessageClass(messageTest))
-  message: MessageInterface = message
+export class MessagesComponent implements OnInit, AfterViewInit, OnDestroy {
+  indexMessageTest = 0
+  messages: MessageInterface[] = Array.from(new Array(20), () => {
+    this.indexMessageTest++
+    return new MessageClass({
+      id:`${this.indexMessageTest}`,
+      author:'toto',
+      metadata:{},
+      isHovered:false,
+      type:'text',
+      value:'http://google.fr regarde ça raphael @toto',
+      raw:'http://google.fr regarde ça raphael @toto',
+      date:Date.now()
+    })
+  })
+  messageModel: any = {
+    raw:null
+  }
   limits: any = {
     message: 1000,
     upload: 20 * 1024 // 20mb
@@ -52,7 +49,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
   dropZoneActive:boolean = false
   uploader: FileUploader = new FileUploader({
     // maxFileSize:this.limits.upload,
-    // removeAfterUpload: true
+    removeAfterUpload: true
   })
 
   @HostBinding('@routeAnimation') get routeAnimation() {
@@ -69,66 +66,142 @@ export class MessagesComponent implements OnInit, OnDestroy {
   /**
    * Drag & Drop listener
    */
-  @HostListener('dragenter', ['$event'])
-  onDragEnter(event) {
+  @HostListener('document:dragenter', ['$event'])
+  onDragEnter(event:MouseEvent) {
     console.debug('MessagesComponent::onDragEnter',{ event })
     this.dropZoneActive = true
   }
-  onDropzoneLeave(event) {
+  onDropzoneLeave(event:MouseEvent) {
     console.debug('MessagesComponent::onDropzoneLeave',{ event })
     this.dropZoneActive = false
   }
 
+  onMouseEnterMessage(event:MouseEvent, message, index) {
+    message.isHovered = true
+  }
+  onMouseLeaveMessage(event:MouseEvent, message, index) {
+    message.isHovered = false
+  }
 
   ngOnInit() {
     console.debug('MessagesComponent::ngOnInit', {
       messages: this.messages
     })
   }
-
-  onSend({ type = 'text' } = {}) {
-    this.processMessage()
-    this.resetForm()
+  
+  // Custom Track By
+  trackByMessageId(index: number, message: MessageInterface) {
+    return message.id
   }
 
-  onSelectAttachment(event?) {
-    console.log('MessagesComponent::onSelectAttachment', {
-      event,
-      uploader: this.uploader
-    })
-    this.uploader.setOptions({
-      url: 'https://evening-anchorage-3159.herokuapp.com/api/'
-    })
-    this.uploader.uploadAll()
-    // this.uploader.clearQueue()
+  // uploader dom ref
+  @ViewChild('uploadInput') uploadInputRef: ElementRef
+  ngAfterViewInit() {
+  this.uploader.onAfterAddingFile = (item => {
+    this.uploadInputRef.nativeElement.value = ''
+    });
   }
 
-  onDropAttachment(event) {
-    console.log('MessagesComponent::onDropAttachment', {
-      event,
-      queue: this.uploader.queue
-    })
-    this.dropZoneActive = event
-    if (this.uploader.queue.length > 0) {
-      this.onSelectAttachment()
+  // Click on md-list-item
+  onClickMessage(event:MouseEvent, message, index) {
+    console.debug('MessagesComponent::onClickMessage', { message, event, index })
+    const { type } = message
+    switch(type) {
+    // case 'text':
+    //   this.onImageClicked()
+    //   break
+    // case 'attachment':
+    //   this.onImageClicked()
+    //   break
+    case 'image':
+      this.onImageClicked()
+      break
     }
   }
-  processMessage() {
-    const message = new MessageClass(this.message)
+  onImageClicked() {
+    
+  }
+  /**
+   * Select files with input
+   */
+  onSelectAttachment(event) {
+    let target = event.target || event.srcElement
+    this.uploader.addToQueue(target.files);
+    const { uploader, uploader:{ queue } } = this
+    console.warn('MessagesComponent::onSelectAttachment', { event, uploader:this.uploader })
+    // this.uploader.setOptions({
+    //   url: 'https://evening-anchorage-3159.herokuapp.com/api/'
+    // })
+    // this.uploader.uploadAll()
+    // this.uploader.clearQueue()
+    
+    this.addFiles(queue)
+  }
+  /**
+   * Select files with drag & drop
+   */
+  onDropAttachment(event) {
+    if (event === false) {
+      const { queue } = this.uploader
+      this.dropZoneActive = event
+      this.addFiles(queue)
+    }
+  }
+  addFiles(queue) {
+    console.debug('MessagesComponent::addFiles', { queue:queue.length, uploader:this.uploader })
+    if (queue.length > 0) {
+      for (let file of queue) {
+        this.processInput({ type:'attachment', file })
+      }
+    }
+  }
+  /** 
+   * Process input by type
+   */
+  processInput({ type = 'text', file = null } = {}) {
+    const { raw } = this.messageModel
+    const uploader = this.uploader
 
-    // Mock Purpose
-    message.value = message.raw
-    message.date = Date.now()
-    message.owner = true
-    //
+    const message = new MessageClass({
+      id:`${this.messages.length}`,
+      type:type,
+      author: 'Raphaël',
+      date: Date.now(),
+      raw,
+      owner: true,
+      isHovered:false,
+      metadata:{}
+    })
+
+    console.log('MessagesComponent::processInput', {
+      type,
+      file,
+      message
+    })
+
+    switch(type){
+    case 'text':
+      this.messageService.processMessage(message)
+      this.resetForm()
+      break
+    case 'attachment':
+      this.messageService.processAttachment({
+        message,
+        file
+      })
+      break
+    }
     this.messages.push(message)
     this.messageService.indexByAuthor(this.messages, message)
-    console.debug('MessagesComponent::processMessage', { message })
+    
+    if (uploader.queue.length == 0) {
+      uploader.clearQueue()
+    }
   }
 
   resetForm() {
-    this.message.raw = null
-  }  
+    this.messageModel.raw = null
+  }
   
   ngOnDestroy() {
     console.debug('MessagesComponent::ngOnDestroy')

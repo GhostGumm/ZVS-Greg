@@ -9,6 +9,11 @@ export class ScrollGlueDirective implements AfterContentInit, OnDestroy{
     public isLocked: boolean = true
     private _observer: any
     private _oldScrollHeight: number = 0
+    private observerConfig = {
+      attributes: false, 
+      childList: true, 
+      characterData: false 
+    }
 
     constructor(private _el: ElementRef) {
       this.el = _el.nativeElement
@@ -29,17 +34,17 @@ export class ScrollGlueDirective implements AfterContentInit, OnDestroy{
           isLocked: this.isLocked
         })
         if ( this.isLocked ) {
-          this._oldScrollHeight = this.el.scrollHeight
-          this.el.scrollTop = this.el.scrollHeight
+          setTimeout(() => {
+            this._oldScrollHeight = this.el.scrollHeight
+            this.el.scrollTop = this.el.scrollHeight
+          }, 100)
         }
       })
 
-      // configuration of the observer:
-      let config = { childList: true, subtree: true }
       let target = this.el
 
       // pass in the target node, as well as the observer options
-      this._observer.observe(target, config)
+      this._observer.observe(target, this.observerConfig)
 
       console.debug('ScrollGlueDirective::ngAfterContentInit', {
         el: this.el,

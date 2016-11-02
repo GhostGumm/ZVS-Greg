@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   height: calc(100% - 64px);
+  width: 100%;
 }
 
 md-list{
@@ -15,54 +16,67 @@ md-list{
 md-list-item{
   position: relative;
   display: block;
-  background-color: $background;
-  width: 90%;
+  //background-color: $background;
+  width: calc(100% - #{($md-list-avatar-computed-size + 16)});
   border-radius: $zp-radius $zp-radius 0 0;
-  margin: 0 8px;
+  margin-right: 8px;
   margin-top: 8px;
+  margin-left: $md-list-avatar-computed-size;
   padding-top: 10px;
   float: left;
   border-left-width: 6px;
   border-left-style: solid;
   border-left-color: md-color($primary);
+  transition: background-color 250ms ease-in-out;
+  cursor: pointer;
   &.owner {
     // float: right;
     border-left-color: md-color($accent);
   }
   &.precede {
-    margin-top: 0;
+    margin-top: 2px;
     padding-top: 0;
     border-radius: 0;
     &:last-child {
       border-radius: 0 0 $zp-radius $zp-radius;
     }
     [md-list-avatar] {
-      opacity: 0;
+      display: none;
     }
     h3[md-line] {
-      opacity: 0;
-    }
-    p[md-line] {
-      padding-top: 0;
+      display: none;
     }
   }
+  &.hovered{
+    background-color: $zp-whiter;
+  }
+}
+[md-list-avatar]{
+  position: absolute;
+  left:-$md-list-avatar-computed-size;
+  top: 5px;
 }
 p[md-line]{
   white-space: normal;
-  word-break: break-all;
   overflow: visible;
-  padding-top: 10px;
-  padding-bottom: 12px;
-  line-height: 20px;
+  padding-top: 8px;
+  padding-bottom: 16px;
+  line-height: 16px;
 }
 h3[md-line]{
   overflow: visible;
+  font-weight: 600;
 }
 [md-list-date]{
   position: absolute;
   bottom: 4px;
   right: 8px;
   font-size: 10px;
+}
+[md-list-image]{
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: $zp-radius;
 }
 
 .zp-messages-inputs {

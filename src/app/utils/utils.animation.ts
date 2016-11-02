@@ -23,14 +23,21 @@ export const Animations = {
   ],
 
   fadeIn: ({ duration = '500ms', easingIn = 'ease-in-out', easingOut = 'ease-in-out' } = {}) => [
-    state('true', style({
-      opacity: 1
-    })),
+
+    transition('false => true', [
+      animate(`${duration} ${easingIn}`, style({
+        opacity: 1
+      }))
+    ]),
+    transition('true => false', [
+      animate(`${duration} ${easingIn}`, style({
+        opacity: 0
+      }))
+    ]),
     transition(':enter', [
-      style({
-         opacity:0
-      }),
-      animate(`${duration} ${easingIn}`) // cubic-bezier(0.175, 0.885, 0.32, 1.275)
+      animate(`${duration} ${easingIn}`, style({
+        opacity: 1
+      }))
     ]),
     transition(':leave', [
       animate(`${duration} ${easingOut}`, style({

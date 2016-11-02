@@ -93,6 +93,13 @@ export class NavigationComponent implements OnDestroy, OnInit {
   getNavigationItems() {
     this.getUsers()
   }
+  
+  onNavigationLoaded() {
+    // Wired timeout needed to open nav on start
+    setTimeout(() => {
+      this.navigation.open()
+    }, 100)
+  }
 
   /**
    * Get all global users list
@@ -102,5 +109,6 @@ export class NavigationComponent implements OnDestroy, OnInit {
       console.debug('NavigationComponent::getUsers', { users })
       this.users = users
     })
+    this.onNavigationLoaded()
   }
 }

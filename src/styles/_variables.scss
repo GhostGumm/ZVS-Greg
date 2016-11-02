@@ -3,8 +3,78 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
-$primary: md-palette($md-indigo);
-$accent:  md-palette($md-cyan);
+
+$black-87-opacity: rgba(black, 0.87);
+$white-87-opacity: rgba(white, 0.87);
+$md-custom-blue: (
+  50: #13213C,
+  100: #13213C,
+  200: #13213C,
+  300: #13213C,
+  400: #13213C,
+  500: #13213C,
+  600: #13213C,
+  700: #13213C,
+  800: #13213C,
+  900: #13213C,
+  A100: #13213C,
+  A200: #13213C,
+  A400: #13213C,
+  A700: #13213C,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: white,
+    600: white,
+    700: white,
+    800: $white-87-opacity,
+    900: $white-87-opacity,
+    A100: $black-87-opacity,
+    A200: white,
+    A400: white,
+    A700: white,
+  )
+);
+$black-87-opacity: rgba(black, 0.87);
+$white-87-opacity: rgba(white, 0.87);
+$md-custom-accent: (
+  50: #F5F5F5,
+  100: #F5F5F5,
+  200: #F5F5F5,
+  300: #F5F5F5,
+  400: #F5F5F5,
+  500: #F5F5F5,
+  600: #F5F5F5,
+  700: #F5F5F5,
+  800: #F5F5F5,
+  900: #F5F5F5,
+  A100: #F5F5F5,
+  A200: #F5F5F5,
+  A400: #F5F5F5,
+  A700: #F5F5F5,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: white,
+    600: white,
+    700: white,
+    800: $white-87-opacity,
+    900: $white-87-opacity,
+    A100: $black-87-opacity,
+    A200: white,
+    A400: white,
+    A700: white,
+  )
+);
+
+$primary: md-palette($md-custom-blue);
+$accent:  md-palette($md-blue);
 
 // The warn palette is optional (defaults to red).
 $warn:    md-palette($md-red);
@@ -12,6 +82,7 @@ $warn:    md-palette($md-red);
 // Create the theme object (a Sass map containing all of the palettes).
 $theme: md-light-theme($primary, $accent, $warn);
 
+$zp-whiter: #FFF;
 $zp-white: #F5F5F5;
 $zp-black: #252525;
 
@@ -23,6 +94,11 @@ $dark-background-accent: $zp-white;
 
 $zp-navigation-width: 360px;
 $zp-sidenav-width: 280px;
+
+$md-list-avatar-size: 36px;
+$md-list-avatar-margin: 5px;
+$md-list-avatar-computed-size: $md-list-avatar-size + ($md-list-avatar-margin * 4);
+
 
 $zp-shadow-light: rgba(0,0,0, .26);
 
