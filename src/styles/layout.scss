@@ -6,9 +6,11 @@ body {
 body{
   font-family: 'Noto Sans', sans-serif !important; 
 }
-
+html{
+  background-color:#fff;
+}
 html::before{
-  opacity: 0.65;
+  opacity: 0.3;
   position: absolute;
   top:0;
   left: 0;
@@ -17,7 +19,7 @@ html::before{
   z-index: -1;
   pointer-events: none;
   background-image: url('../assets/texture_01.jpg');
-  background-color:$background;
+  background-color:#fff;
   background-blend-mode: luminosity;
 }
 

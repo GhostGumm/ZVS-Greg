@@ -46,12 +46,12 @@ md-card{
 }
 
 // flex support
-[md-mini-fab] {
+[md-mini-fab],
+[md-icon-button] {
   min-width: 40px !important;
 }
 
 // Encapsulation emulation doesn't allow custom style on rendered elements
-
 zp-messages{
   .md-progress-bar-buffer{
     background-color: transparent;
@@ -59,36 +59,10 @@ zp-messages{
   .zp-messages-list {
     .md-list-item {
       height: auto !important;
+      padding: 0;
     }
     .md-list-text {
       overflow: initial !important;
     }
-  }
-}
-
-// No custom icon size
-md-icon {    
-  &.md{
-    width: $font-size-lg;
-    height: $font-size-lg;
-    font-size: $font-size-lg;
-  }
-  &.lg{
-    width: $font-size-lg;
-    height: $font-size-lg;
-    font-size: $font-size-lg;
-  }
-  &.xl{
-    width: $font-size-xl;
-    height: $font-size-xl;
-    font-size: $font-size-xl;
-  }
-  &.xxl{
-    width: $font-size-xxl;
-    height: $font-size-xxl;
-    font-size: $font-size-xxl;
-  }
-  &.white{
-    color: $zp-white;
   }
 }
