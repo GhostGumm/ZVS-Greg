@@ -109,6 +109,6 @@ export class NavigationComponent implements OnDestroy, OnInit {
       console.debug('NavigationComponent::getUsers', { users })
       this.users = users
     })
-    this.onNavigationLoaded()
+    // this.onNavigationLoaded()
   }
 }

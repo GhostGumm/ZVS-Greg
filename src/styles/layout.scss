@@ -7,10 +7,10 @@ body{
   font-family: 'Noto Sans', sans-serif !important; 
 }
 html{
-  background-color:#fff;
+  background-color:$zp-white;
 }
 html::before{
-  opacity: 0.3;
+  opacity: 1;
   position: absolute;
   top:0;
   left: 0;
@@ -19,8 +19,8 @@ html::before{
   z-index: -1;
   pointer-events: none;
   background-image: url('../assets/texture_01.jpg');
-  background-color:#fff;
-  background-blend-mode: luminosity;
+  // background-color:#fff;
+  // background-blend-mode: luminosity;
 }
 
 app-root{
@@ -44,7 +44,7 @@ app-root{
     flex: 1 1 auto;
 }
 md-sidenav{
-  background-color: rgba($background,.87);
+  background-color: transparent !important;
 }
 md-sidenav-layout{
   height: 100%;
@@ -52,7 +52,10 @@ md-sidenav-layout{
 }
 .md-sidenav-content{
   overflow: hidden !important;
-  background-color: transparent;
+  background-color:rgba($background ,.87);
+}
+md-toolbar{
+  background: $background;
 }
 .zp-color-white{
   color: $zp-white;

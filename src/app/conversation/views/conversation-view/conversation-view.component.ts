@@ -13,21 +13,26 @@ import { MessagesComponent, VideoComponent } from '../../components'
   animations: [
     trigger('routeAnimation', Animations.fadeInOutView()),
     trigger('messagesAnimation', Animations.swipeOutDownView()),
-    trigger('videoAnimation', Animations.swipeOutDownView())
+    trigger('videoAnimation', Animations.swipeOutDownView()),
+    trigger('audioAnimation', Animations.swipeOutDownView())
   ]
 })
 export class ConversationViewComponent implements OnInit, AfterViewInit, AfterContentInit {
   private $params: any
-  @Input() messagesIsVisible: string
-  @Input() videoIsVisible: string
+  private mode: string
+  @Input() messagesIsVisible: boolean
+  @Input() videoIsVisible: boolean
+  @Input() audioIsVisible: boolean
+  
 
   @HostBinding('@routeAnimation') get routeAnimation() {
     return true
   }
   
   constructor(private route: ActivatedRoute, private router: Router) {
-    this.messagesIsVisible = 'inactive'
-    this.videoIsVisible = 'inactive'
+    this.messagesIsVisible = true
+    this.videoIsVisible = false
+    this.audioIsVisible = false
     this.addRouteListener()
   }
 
@@ -49,10 +54,24 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
     })
   }
 
-  switchView(mode) {
+  openView(mode) {
     const id = this.$params.id
-    this.router.navigate(['authenticated/conversation', mode, id])
-    console.debug('ConversationViewComponent::switchView', {
+    this.mode = mode
+    //this.router.navigate(['authenticated/conversation', mode, id])
+
+    switch(mode) {
+    case 'video':
+      this.videoIsVisible = true
+      this.audioIsVisible = false
+      break
+    case 'audio':
+      this.videoIsVisible = false
+      this.audioIsVisible = true
+      break
+    }
+
+    console.debug('ConversationViewComponent::openView', {
+      id,
       mode,
       params: this.$params
     })
@@ -69,22 +88,8 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
         return
       }
 
-      if (params['mode'] == 'messages') {
-        this.messagesIsVisible = 'active'
-        this.videoIsVisible = 'inactive'
-      }
-      else {
-        this.messagesIsVisible = 'inactive'
-        this.videoIsVisible = 'active'
-      }
       this.$params = params
-      console.debug('ConversationViewComponent::paramsChanged', {
-        id:params['id'],
-        oldId,
-        params,
-        messagesIsVisible: this.messagesIsVisible,
-        videoIsVisible: this.videoIsVisible
-      })
+      console.debug('ConversationViewComponent::paramsChanged')
     })
   }
 }

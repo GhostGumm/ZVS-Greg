@@ -1,17 +1,22 @@
 <md-toolbar>
-  <button md-icon-button (click)="switchView('messages')">
+  <!--<button md-icon-button (click)="switchView('messages')">
       <md-icon class="md-24">message</md-icon>
-  </button>
-  <button md-icon-button (click)="switchView('video')">
+  </button>-->
+  <button md-icon-button (click)="openView('audio')" md-tooltip="Start audio">
       <md-icon class="md-24">phone</md-icon>
+  </button>
+  <button md-icon-button (click)="openView('video')" md-tooltip="Start video">
+      <md-icon class="md-24">videocam</md-icon>
   </button>
 </md-toolbar>
 
  
-<zp-messages [@messagesAnimation]="messagesIsVisible"></zp-messages>
+<zp-messages [@messagesAnimation]="messagesIsVisible" [class.video]="videoIsVisible" [class.audio]="audioIsVisible"></zp-messages>
+<zp-audio [@audioAnimation]="audioIsVisible"></zp-audio>
 <zp-video [@videoAnimation]="videoIsVisible"></zp-video>
 
-<!--<md-tab-group>
+<!--
+<md-tab-group>
   <md-tab>
     <template md-tab-label>Messages</template>
     <template md-tab-content>
@@ -24,4 +29,5 @@
       <zp-video></zp-video>
     </template>
   </md-tab>
-</md-tab-group>-->
+</md-tab-group>
+-->

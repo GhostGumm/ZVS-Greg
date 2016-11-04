@@ -15,3 +15,23 @@ md-toolbar{
     margin: 0 5px;
   }
 }
+
+zp-messages{
+  &.audio{
+    width: 60%;
+  }
+  &.video{
+    width: 40%;
+  }
+}
+zp-audio,
+zp-video{
+  right: 0;
+}
+zp-audio{
+  width: 40%;
+}
+
+zp-video{
+  width: 60%;
+}

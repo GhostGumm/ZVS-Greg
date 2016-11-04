@@ -3,16 +3,23 @@
     <zp-navigation [navigation]="navigation"></zp-navigation>
   </md-sidenav>
 
-  <md-sidenav #sidenav align="end">
+  <!--<md-sidenav #sidenav align="end">
     <zp-sidenav [sidenav]="sidenav"></zp-sidenav>
-  </md-sidenav>
+  </md-sidenav>-->
 
   <md-toolbar color="primary" *ngIf="toolbarIsVisible" [@toolbarAnimation]="toolbarIsVisible">
     <button md-icon-button (click)="navigation.toggle()"><md-icon>menu</md-icon></button>
     <span>ZeTalk</span>
     <span class="flex-fill"></span>
-    <button md-icon-button (click)="sidenav.open()"><md-icon>more_vert</md-icon></button>
+    <button md-icon-button [md-menu-trigger-for]="menu"><md-icon>more_vert</md-icon></button>
   </md-toolbar>
+
+  <md-menu #menu="mdMenu" x-position="before">
+    <button md-menu-item> Refresh </button>
+    <button md-menu-item> Settings </button>
+    <button md-menu-item> Help </button>
+    <button md-menu-item disabled> Sign Out </button>
+  </md-menu>
 
   <div class="zp-content">
     <router-outlet></router-outlet>

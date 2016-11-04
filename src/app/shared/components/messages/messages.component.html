@@ -31,7 +31,7 @@
 
   <form (ngSubmit)="processInput()" #messageForm="ngForm" id="messageForm">
     <md-input #messageRaw [(ngModel)]="messageModel.raw" class="zp-messages-inputs-text" maxlength="{{limits.message}}" name="messageRaw" id="messageRaw" required>
-      <md-hint align="end">{{messageRaw.characterCount || 0}} / {{limits.message}}</md-hint>
+      <!--<md-hint align="end">{{messageRaw.characterCount || 0}} / {{limits.message}}</md-hint>-->
     </md-input>
   </form>
 
