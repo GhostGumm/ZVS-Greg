@@ -2,11 +2,11 @@
   <!--<button md-icon-button (click)="switchView('messages')">
       <md-icon class="md-24">message</md-icon>
   </button>-->
-  <button md-icon-button (click)="openView('audio')" md-tooltip="Start audio">
-      <md-icon class="md-24">phone</md-icon>
+  <button md-icon-button (click)="openView('audio')" [class.on]="audioIsVisible"> <!-- md-tooltip="{{audioIsVisible ? 'Stop audio' : 'Start audio'}}" -->
+      <md-icon class="md-24">{{audioIsVisible ? 'call_end' : 'call'}}</md-icon>
   </button>
-  <button md-icon-button (click)="openView('video')" md-tooltip="Start video">
-      <md-icon class="md-24">videocam</md-icon>
+  <button md-icon-button (click)="openView('video')" [class.on]="videoIsVisible"> <!-- md-tooltip="{{videoIsVisible ? 'Stop video' : 'Start video'}}" -->
+      <md-icon class="md-24">{{videoIsVisible ? 'videocam_off' : 'videocam'}}</md-icon>
   </button>
 </md-toolbar>
 
