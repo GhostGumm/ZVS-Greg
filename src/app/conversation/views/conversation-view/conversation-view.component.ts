@@ -61,12 +61,12 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
 
     switch(mode) {
     case 'video':
-      this.videoIsVisible = true
+      this.videoIsVisible = !this.videoIsVisible
       this.audioIsVisible = false
       break
     case 'audio':
+      this.audioIsVisible = !this.audioIsVisible
       this.videoIsVisible = false
-      this.audioIsVisible = true
       break
     }
 

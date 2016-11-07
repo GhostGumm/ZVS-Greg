@@ -13,10 +13,20 @@ md-toolbar{
   z-index: 1;
   button {
     margin: 0 5px;
+    md-icon{
+      transition: color 500ms ease-in-out;
+    }
+    &.on{
+      md-icon{
+        color: $md-error;
+      }
+    }
   }
 }
 
 zp-messages{
+  transition: width 500ms ease-in-out;
+  will-change: width;
   &.audio{
     width: 60%;
   }
