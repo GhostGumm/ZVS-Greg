@@ -1,11 +1,12 @@
 import { Component, HostBinding, AfterViewInit, OnChanges, OnInit, Input, trigger } from '@angular/core'
 import { Router } from '@angular/router'
 import { Animations } from '../../../utils/utils.animation'
+import { ApiUser } from '../../../zetapush/api'
 
 class RegisterModel {
-  public firstname: string = 'John'
-  public lastname: string = 'Doe'
-  public email: string = 'john.doe@yopmail.com'
+  public login: string = 'User'
+  public password: string = 'zetalk'
+  public email: string = 'user.zetalk@yopmail.com'
 }
 
 @Component({
@@ -27,6 +28,7 @@ export class RegisterViewComponent implements AfterViewInit, OnChanges, OnInit {
 
   constructor(
     private router: Router,
+    private api: ApiUser
   ) {
     this.model = new RegisterModel()
   }
@@ -58,7 +60,9 @@ export class RegisterViewComponent implements AfterViewInit, OnChanges, OnInit {
     console.debug('RegisterView::onSubmit', {
       model: this.model
     })
-    this.router.navigate(['/authenticated/dashboard'])
+    this.api
+        .createUser(this.model)
+        .then(console.log, console.error)
   }
 
 }

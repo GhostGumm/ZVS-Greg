@@ -59,7 +59,9 @@ declare namespace Handshake {
 
 declare module "zetapush-js" {
 
-  type MacroPublisher = (method: string, parameters: any, hardFail?: boolean, debug?: number) => void
+  type AsyncMacroServicePublisher = (method: string, parameters: any, hardFail?: boolean, debug?: number) => Promise<any>
+
+  type MacroServicePublisher = (method: string, parameters: any, hardFail?: boolean, debug?: number) => void
   
   type ServicePublisher = (method: string, parameters: any) => void
 
@@ -94,18 +96,26 @@ declare module "zetapush-js" {
   }
 
   interface Services {
-    Macro: Macro
+    Macro: AsyncMacroService
     Messaging: Service
   }
 
   interface Service {
+    DEFAULT_DEPLOYMENT_ID: string
     $publish: ServicePublisher
     new($publish: ServicePublisher): Service
   }
 
-  interface Macro {
-    $publish: MacroPublisher
-    new($publish: MacroPublisher): Macro
+  interface AsyncMacroService {
+    DEFAULT_DEPLOYMENT_ID: string
+    $publish: AsyncMacroServicePublisher
+    new($publish: AsyncMacroServicePublisher): AsyncMacroService
+  }
+
+  interface MacroService {
+    DEFAULT_DEPLOYMENT_ID: string
+    $publish: MacroServicePublisher
+    new($publish: MacroServicePublisher): MacroService
   }
 
   interface ServiceDeclaration {
@@ -134,6 +144,7 @@ declare module "zetapush-js" {
     addConnectionStatusListener(listener: ConnectionStatusListener): ConnectionStatusHandler
     connect(): void
     createService(ServiceDeclaration): Service
+    createAsyncMacroService(ServiceDeclaration): AsyncMacroService
     disconnect(): void
     isConnected(): boolean
     getSandboxId(): string

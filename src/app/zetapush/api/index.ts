@@ -4,6 +4,7 @@ import 'rxjs/add/operator/publish'
 import { client } from '../core'
 import { Api } from './api'
 import { ApiConfig } from './api-config'
+import { ApiUser } from './api-user'
 
 const toPascalCase = (word = '') => `${word.charAt(0).toUpperCase()}${word.substring(1)}`
 
@@ -23,14 +24,16 @@ export const apiFactory = (Api: Api) => {
     published.connect()
     return reducer
   }, {})
-  const service = client.createService({
+  const service = client.createAsyncMacroService({
     Type: Api,
     listener
   })
   return Object.assign(service, extensions)
 }
-export { ApiConfig }
+
+export { ApiConfig, ApiUser }
 
 export const API_PROVIDERS = [
-  { provide: ApiConfig, useFactory: () => apiFactory(ApiConfig)}
+  { provide: ApiConfig, useFactory: () => apiFactory(ApiConfig)},
+  { provide: ApiUser, useFactory: () => apiFactory(ApiUser)}
 ]

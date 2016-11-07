@@ -2,36 +2,36 @@ import { Api } from './api'
 
 export class ApiGroup extends Api {
   getAllUserGroups() {
-    this.$publish('getAllUserGroups', {})
+    return this.$publish('getAllUserGroups', {})
   }
   getAllGlobalGroups() {
-    this.$publish('getAllGlobalGroups', {})
+    return this.$publish('getAllGlobalGroups', {})
   }
   getGlobalGroupInfos({ id }) {
-    this.$publish('getGlobalGroupInfos', { id })
+    return this.$publish('getGlobalGroupInfos', { id })
   }
   getUserGroupInfos({ id }) {
-    this.$publish('getUserGroupInfos', { id })
+    return this.$publish('getUserGroupInfos', { id })
   }
   addUserInGlobalGroup({ id, user }) {
-    this.$publish('addUserInGlobalGroup', { id, user })
+    return this.$publish('addUserInGlobalGroup', { id, user })
   }
   addUserInGroup({ id, user }) {
-    this.$publish('addUserInGroup', { id, user })
+    return this.$publish('addUserInGroup', { id, user })
   }
   createGlobalGroup({ name }) {
-    this.$publish('createGlobalGroup', { name })
+    return this.$publish('createGlobalGroup', { name })
   }
   createUserGroup({ name }) {
-    this.$publish('createUserGroup', { name })
+    return this.$publish('createUserGroup', { name })
   }
   removeUserFromGlobalGroup({ id, user }) {
-    this.$publish('removeUserFromGlobalGroup', { id, user })
+    return this.$publish('removeUserFromGlobalGroup', { id, user })
   }
   deleteGlobalGroup({ id }) {
-    this.$publish('deleteGlobalGroup', { id })
+    return this.$publish('deleteGlobalGroup', { id })
   }
   deleteUserGroup({ id }) {
-    this.$publish('deleteUserGroup', { id })
+    return this.$publish('deleteUserGroup', { id })
   }
 }

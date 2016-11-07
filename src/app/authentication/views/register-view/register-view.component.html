@@ -3,8 +3,8 @@
   <md-toolbar color="primary">Register</md-toolbar>
   <md-card-content>
     <form (ngSubmit)="onSubmit()" #registerForm="ngForm" id="registerForm">
-      <md-input type="text" placeholder="Firstname" [(ngModel)]="model.firstname" name="firstname" (ngModelChange)="model.firstname = $event" required></md-input>
-      <md-input type="text" placeholder="Lastname" [(ngModel)]="model.lastname" name="lastname" required></md-input>
+      <md-input type="text" placeholder="Login" [(ngModel)]="model.login" name="login" required></md-input>
+      <md-input type="password" placeholder="Password" [(ngModel)]="model.password" name="password" required></md-input>
       <md-input type="email" placeholder="Email" [(ngModel)]="model.email" name="email" required></md-input>
     </form>
   </md-card-content>
