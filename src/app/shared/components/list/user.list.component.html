@@ -13,7 +13,7 @@
 </md-list>
 
 <div md-list-actions>
-  <button (click)="toggleList()" type="button" md-mini-fab color="primary">
-    <md-icon>{{options.expanded ? options.icons.reduce : options.icons.expand}}</md-icon>
+  <button (click)="toggleList()" type="button" md-mini-fab color="primary"> <!--md-tooltip="{{isExpanded ? 'reduce list' : 'expand list'}}"-->
+    <md-icon>{{isExpanded ? options.icons.reduce : options.icons.expand}}</md-icon>
   </button> 
 </div>

@@ -15,6 +15,7 @@
 [zp-nav-overflow]{
   height: calc(100% - #{$zp-profile-height});
   overflow: auto;
+  overflow: overlay;
 }
 
 md-nav-list{

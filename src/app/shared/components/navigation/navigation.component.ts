@@ -25,7 +25,7 @@ export class NavigationComponent implements OnDestroy, OnInit {
     },
     {
       name: 'Context',
-      icon: 'business',
+      icon: 'view_carousel',
       link: ['context', 1]
     }
   ]

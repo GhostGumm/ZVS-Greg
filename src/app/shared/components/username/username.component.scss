@@ -8,8 +8,12 @@
 
 [zp-user-presence]{
   position: absolute;
-  right: 0;
+  left: 0;
   margin-right: -($zp-user-presence-size * 1.5);
   top: 50%;
   margin-top: -($zp-user-presence-size * 0.5);
+}
+
+[zp-user-firstname]{
+  margin-left: $zp-user-presence-size * 1.5;
 }

@@ -17,9 +17,9 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDe
       expand:'add',
       reduce:'remove'
     },
-    limit:5,
-    expanded:false
+    limit:5
   }
+  isExpanded:boolean = false
 
   constructor() {
   }
@@ -54,7 +54,7 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   }
 
   toggleList() {
-    this.options.expanded = !this.options.expanded
-    this.options.expanded ? this.options.limit = -1 : this.options.limit = 5
+    this.isExpanded = !this.isExpanded
+    this.isExpanded ? this.options.limit = -1 : this.options.limit = 5
   }
 }

@@ -34,6 +34,7 @@ export class ScrollGlueDirective implements AfterContentInit, OnDestroy{
           isLocked: this.isLocked
         })
         if ( this.isLocked ) {
+          this.el.scrollTop = this.el.scrollHeight
           setTimeout(() => {
             this._oldScrollHeight = this.el.scrollHeight
             this.el.scrollTop = this.el.scrollHeight
