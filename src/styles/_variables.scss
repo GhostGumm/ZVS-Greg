@@ -48,7 +48,7 @@ $warn:    md-palette($md-red);
 // Create the theme object (a Sass map containing all of the palettes).
 $theme: md-light-theme($primary, $accent, $warn);
 
-$zp-whiter: #FFF;
+$zp-whiter: #FAFAFA;
 $zp-white: #F5F5F5;
 $zp-black: #252525;
 $zp-green: #80cd3d;
@@ -59,6 +59,7 @@ $md-success: $zp-green;
 
 $background: $zp-white;
 $background-accent: $zp-black;
+$background-fade: rgba($zp-whiter, 0.75);
 
 $dark-background: $zp-black;
 $dark-background-accent: $zp-white;

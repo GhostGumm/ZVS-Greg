@@ -10,7 +10,7 @@ html{
   background-color:$zp-white;
 }
 html::before{
-  opacity: 0.75;
+  opacity: 0.5;
   position: absolute;
   top:0;
   left: 0;
@@ -18,9 +18,10 @@ html::before{
   bottom: 0;
   z-index: -1;
   pointer-events: none;
-  background-image: url('../assets/texture_01.jpg');
-  // background-color:#fff;
-  // background-blend-mode: luminosity;
+  // background-image: url('../assets/texture_01.jpg');
+  background-image: url('../assets/texture_02.png');
+  background-color:$background-fade;
+  background-blend-mode: luminosity;
 }
 
 app-root{
