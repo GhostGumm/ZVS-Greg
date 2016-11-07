@@ -26,10 +26,12 @@ export class NavigationComponent implements OnDestroy, OnInit {
   routes: any[] = [
     {
       name: 'Stats',
+      icon: 'timeline',
       link: ['dashboard', 'stats']
     },
     {
       name: 'Context',
+      icon: 'business',
       link: ['context', 1]
     }
   ]

@@ -15,7 +15,7 @@ import { LAYOUTS } from './layouts'
 import { AuthenticationService } from './authentication.service'
 import { ApiUserService } from '../services/'
 
-import { ScrollGlueDirective } from '../utils/utils.scroll'
+import { ScrollGlueDirective } from '../utils'
 import { FileDropDirective, FileSelectDirective } from 'ng2-file-upload'
 
 const CORE_MODULES = [ CommonModule, BrowserModule, FormsModule, HttpModule ]

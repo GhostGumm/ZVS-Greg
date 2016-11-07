@@ -25,7 +25,7 @@
   <md-progress-bar mode="determinate" value="{{uploader.progress}}"></md-progress-bar>
 
   <button class="zp-input-files" type="button" md-icon-button color="primary"> 
-    <md-icon class="md-24">file_upload</md-icon>
+    <md-icon>file_upload</md-icon>
     <input #uploadInput type="file" ng2FileSelect capture="camera" [uploader]="uploader" [multiple]="multiple" (change)="onSelectAttachment($event)"/>
   </button>
 
@@ -36,11 +36,11 @@
   </form>
 
   <button type="submit" md-icon-button color="primary" form="messageForm">
-    <md-icon class="md-24">send</md-icon>
+    <md-icon>send</md-icon>
   </button> 
 
   <button type="button" md-icon-button color="primary">
-    <md-icon class="md-24">sentiment_satisfied</md-icon>
+    <md-icon>sentiment_satisfied</md-icon>
   </button> 
 </md-toolbar>
 

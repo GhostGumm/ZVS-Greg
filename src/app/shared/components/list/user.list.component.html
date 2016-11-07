@@ -1,6 +1,6 @@
 
 <md-list dense>
-  <md-list-item *ngFor="let user of users | slice:0:5" [routerLink]="user.link ? [user.link] : []">
+  <md-list-item *ngFor="let user of users | slice:0:options.limit" [routerLink]="user.link ? [user.link] : []">
     <img md-list-avatar src="{{user.avatar}}" alt="{{user.firstname}}">
     <h3 md-line>
       <zp-username [user]="user"></zp-username>
@@ -11,3 +11,9 @@
     </p>
   </md-list-item>
 </md-list>
+
+<div md-list-actions>
+  <button (click)="toggleList()" type="button" md-mini-fab color="primary">
+    <md-icon>{{options.expanded ? options.icons.reduce : options.icons.expand}}</md-icon>
+  </button> 
+</div>

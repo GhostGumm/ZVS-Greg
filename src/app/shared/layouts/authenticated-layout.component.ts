@@ -1,6 +1,6 @@
 import { Component, ViewContainerRef, Input, trigger, AfterViewInit, HostBinding } from '@angular/core'
 import { MdSnackBar, MdSnackBarConfig } from '@angular/material'
-import { Animations } from '../../utils/utils.animation'
+import { Animations } from '../../utils/'
 
 @Component({
   animations: [
@@ -9,27 +9,7 @@ import { Animations } from '../../utils/utils.animation'
   ],
   providers: [ MdSnackBar ],
   selector: 'zp-authenticated-layout',
-  styles: [`
-    :host {
-      display:block;
-      position:relative;
-      width: 100%;
-      height: 100%;
-    }
-    md-toolbar{
-      z-index: 1;
-    }
-    .md-sidenav-content{
-      overflow: hidden;
-    }
-    .zp-content {
-      position: relative;
-      display: block;
-      /* toolbar height : 64px */
-      height: calc(100% - 64px);
-      overflow: auto;
-    }
-  `],
+  styleUrls: ['./authenticated-layout.component.scss'],
   templateUrl: './authenticated-layout.component.html'
 })
 export class AuthenticatedLayoutComponent implements AfterViewInit {
@@ -44,9 +24,7 @@ export class AuthenticatedLayoutComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.toolbarIsVisible = true
-    console.debug('DashboardViewComponent::ngAfterViewInit', {
-      toolbarIsVisible: this.toolbarIsVisible
-    })
+    console.debug('DashboardViewComponent::ngAfterViewInit')
   }
 
   toast() {

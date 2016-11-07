@@ -1,13 +1,14 @@
 <zp-profile [user]="user"></zp-profile>
-<!--<button class="zp-nav-close" md-icon-button color="invert" (click)="navigation.close()">
-  <md-icon>close</md-icon>
-</button>-->
 
+<div zp-nav-overflow>
+  <md-nav-list>
+    <button color="primary" *ngFor="let route of routes" md-button [routerLink]="route.link">
+      <md-icon>{{route.icon}}</md-icon>
+      {{route.name}}    
+    </button>
+  </md-nav-list>
 
-<md-nav-list>
-  <button color="primary" *ngFor="let route of routes" md-raised-button [routerLink]="route.link">{{route.name}}</button>
-</md-nav-list>
+  <h4 text-center>Contacts</h4>
 
-<h4 text-center>Contacts</h4>
-
-<zp-user-list [users]="users" [link]="'conversation/'"></zp-user-list>
+  <zp-user-list [users]="users" [link]="'conversation/'"></zp-user-list>  
+</div>

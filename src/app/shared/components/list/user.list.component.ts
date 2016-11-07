@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, OnChanges, Input } from '@angular/core'
 // import { User } from '../../../services/'
+import { OrderBy } from '../../../utils/'
 import { Subscription } from 'rxjs/Subscription'
 
 @Component({
@@ -11,6 +12,14 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   @Input() users: any[]
   @Input() link: string
   subscriptions: Array<Subscription> = []
+  options:any = {
+    icons:{
+      expand:'add',
+      reduce:'remove'
+    },
+    limit:5,
+    expanded:false
+  }
 
   constructor() {
   }
@@ -31,6 +40,7 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     })
     // Mock Purpose
     if (event.users.currentValue) {
+      OrderBy(this.users, 'online')
       for (let user of this.users) {
         user.message = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error temporibus quaerat repellendus incidunt recusandae aut quia ullam reprehenderit iure.'
         user.link = this.link ? `${this.link}${user.id}` : ''
@@ -41,5 +51,10 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   ngOnDestroy() {
     console.debug('UserListComponent::ngOnDestroy')
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
+  }
+
+  toggleList() {
+    this.options.expanded = !this.options.expanded
+    this.options.expanded ? this.options.limit = -1 : this.options.limit = 5
   }
 }

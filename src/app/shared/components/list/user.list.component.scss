@@ -1,6 +1,5 @@
 @import '../../../../styles/_variables';
 md-list{
-  overflow: hidden;
 }
 md-list-item{
   display: block;
@@ -15,9 +14,13 @@ md-list-item{
 }
 
 [md-list-avatar]{
-  width: 28px !important;
-  height: 28px !important;
   padding: 2px;
   background-color: $background;
   border: 2px solid $background-accent;
+}
+
+[md-list-actions]{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }

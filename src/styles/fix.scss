@@ -71,3 +71,11 @@ zp-messages{
 .md-menu-click-catcher{
   z-index: 9;
 }
+
+// aligned icon inner md-button
+[md-button] > .md-button-wrapper{
+  > md-icon{
+    vertical-align: middle;
+    margin-bottom: 2px;
+  }
+}

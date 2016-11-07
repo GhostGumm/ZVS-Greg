@@ -1,0 +1,24 @@
+  @import '../../../styles/_variables';
+  
+  :host {
+    display:block;
+    position:relative;
+    width: 100%;
+    height: 100%;
+  }
+  md-toolbar{
+    z-index: 1;
+  }
+  md-sidenav{
+    overflow:hidden;
+  }
+  .md-sidenav-content{
+    overflow: hidden;
+  }
+  .zp-content {
+    position: relative;
+    display: block;
+    /* toolbar height : 64px */
+    height: calc(100% - 64px);
+    overflow: auto;
+  }

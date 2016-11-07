@@ -2,12 +2,19 @@
 
 :host {
   display: block;
-  width: 360px;
+  width: $zp-navigation-width;
+  max-width: 80vw;
+  height: 100%;
 }
 .zp-nav-close{
   position: absolute;
   top: 0;
   right: 0;
+}
+
+[zp-nav-overflow]{
+  height: calc(100% - #{$zp-profile-height});
+  overflow: auto;
 }
 
 md-nav-list{
