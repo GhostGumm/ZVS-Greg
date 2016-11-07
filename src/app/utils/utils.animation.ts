@@ -6,15 +6,19 @@ export const Animations = {
     state('true', style({
       transform: 'translateY(0)',
       opacity: 1
+    })),    
+    state('false', style({
+      transform: 'translateY(-50%)',
+      opacity: 0
     })),
-    transition(':enter', [
+    transition(':enter, 0 => 1', [
       style({
         transform: 'translateY(-50%)',
          opacity:0
       }),
       animate(`${duration} ${easingIn}`) // cubic-bezier(0.175, 0.885, 0.32, 1.275)
     ]),
-    transition(':leave', [
+    transition(':leave, 1 => 0', [
       animate(`${duration} ${easingOut}`, style({
         transform: 'translateY(50%)',
         opacity: 0
@@ -23,13 +27,18 @@ export const Animations = {
   ],
 
   fadeIn: ({ duration = '500ms', easingIn = 'ease-in-out', easingOut = 'ease-in-out' } = {}) => [
-
-    transition('false => true', [
+    state('true', style({
+      opacity: 1
+    })),    
+    state('false', style({
+      opacity: 0
+    })),
+    transition('0 => 1', [
       animate(`${duration} ${easingIn}`, style({
         opacity: 1
       }))
     ]),
-    transition('true => false', [
+    transition('1 => 0', [
       animate(`${duration} ${easingIn}`, style({
         opacity: 0
       }))
@@ -92,13 +101,13 @@ export const Animations = {
       display: 'none',
       opacity: 0
     })),
-    transition('false => true', [
+    transition('0 => 1', [
       animate(`${duration} ${easingIn}`, style({
         opacity: 1,
         position: 'absolute'
       }))
     ]),
-    transition('true => false', [
+    transition('1 => 0', [
       animate(`${duration} ${easingIn}`, style({
         opacity: 0,
         transform: 'translate3d(-10%, 0, 0)',

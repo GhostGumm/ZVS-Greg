@@ -1,6 +1,6 @@
 <md-sidenav-layout>
   <md-sidenav #navigation mode="side">
-    <zp-navigation [navigation]="navigation"></zp-navigation>
+    <zp-navigation [navigation]="navigation" [user]="user"></zp-navigation>
   </md-sidenav>
 
   <!--<md-sidenav #sidenav align="end">
@@ -9,8 +9,8 @@
 
   <md-toolbar color="primary" *ngIf="toolbarIsVisible" [@toolbarAnimation]="toolbarIsVisible">
     <button md-icon-button (click)="navigation.toggle()"><md-icon>menu</md-icon></button>
-    <zp-avatar [user]="user" [size]="40" presence="true"></zp-avatar>
-    <span>ZeTalk</span>
+    <zp-avatar [user]="user" [size]="40" presence="true" [@profileAnimation]="!navigationOpened"></zp-avatar>
+    <span [@profileAnimation]="!navigationOpened">{{ user.firstname }}</span>
     <span class="flex-fill"></span>
     <button md-icon-button [md-menu-trigger-for]="menu"><md-icon>more_vert</md-icon></button>
   </md-toolbar>

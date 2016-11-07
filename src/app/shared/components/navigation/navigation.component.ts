@@ -14,15 +14,9 @@ import { ApiUserService, User } from '../../../services/'
 })
 export class NavigationComponent implements OnDestroy, OnInit {
   @Input() navigation: any // md-sidenav reference
+  @Input() user: User
+  
   users: User[]
-  user: User = {
-    id:'1',
-    login: 'john.doe@yopmail.com',
-    firstname: 'John',
-    lastname: 'Doe',
-    avatar: './assets/zetalk_logo.png',
-    online:true
-  }
   routes: any[] = [
     {
       name: 'Stats',

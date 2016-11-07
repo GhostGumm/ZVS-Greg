@@ -10,7 +10,7 @@ html{
   background-color:$zp-white;
 }
 html::before{
-  opacity: 1;
+  opacity: 0.75;
   position: absolute;
   top:0;
   left: 0;
@@ -50,12 +50,8 @@ md-sidenav-layout{
   height: 100%;
   background-color: transparent !important;
 }
-.md-sidenav-content{
-  overflow: hidden !important;
-  background-color:rgba($background ,.87);
-}
 md-toolbar{
-  background: $background;
+  background-color: transparent;
 }
 .zp-color-white{
   color: $zp-white;
@@ -64,9 +60,9 @@ md-toolbar{
 .zp-mockup-infos{
   position: fixed;
   background: white;
-  left: 0;
+  right: 0;
   padding: 5px 10px;
   bottom: 0;
-  opacity: 0.7;
+  z-index: 9;
   border: 2px solid red;
 }
