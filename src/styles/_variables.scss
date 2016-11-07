@@ -85,6 +85,11 @@ $theme: md-light-theme($primary, $accent, $warn);
 $zp-whiter: #FFF;
 $zp-white: #F5F5F5;
 $zp-black: #252525;
+$zp-green: #80cd3d;
+$zp-red: #f1452a;
+
+$md-error: $zp-red;
+$md-success: $zp-green;
 
 $background: $zp-white;
 $background-accent: $zp-black;
@@ -99,6 +104,7 @@ $md-list-avatar-size: 36px;
 $md-list-avatar-margin: 5px;
 $md-list-avatar-computed-size: $md-list-avatar-size + ($md-list-avatar-margin * 4);
 
+$zp-user-presence-size: 10px;
 
 $zp-shadow-light: rgba(0,0,0, .26);
 

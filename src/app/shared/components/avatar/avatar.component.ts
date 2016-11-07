@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core'
+import { Component, ElementRef, Renderer, OnInit, Input } from '@angular/core'
+import { User } from '../../../services/'
 
 @Component({
   selector: 'zp-avatar',
@@ -6,10 +7,24 @@ import { Component, OnInit, Input } from '@angular/core'
   templateUrl: './avatar.component.html'
 })
 export class AvatarComponent implements OnInit {
-  @Input() avatar: string
+  @Input() user: User
+  @Input() size: number
+  @Input() presence: boolean = false
+  avatar: string
 
-  constructor() { }
+  constructor(public elementRef: ElementRef, private renderer: Renderer) {
+  }
 
   ngOnInit() {
+    if (!this.user) {
+      this.avatar = './assets/zetalk_logo.png'
+    }
+    else {
+      this.avatar = this.user.avatar
+    }
+    if (!this.size) {
+      this.size = 120
+    }
+    this.elementRef.nativeElement.style.maxWidth = `${this.size}px`
   }
 }

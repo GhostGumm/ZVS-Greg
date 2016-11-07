@@ -32,7 +32,7 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     // Mock Purpose
     if (event.users.currentValue) {
       for (let user of this.users) {
-        user.message = 'coucou'
+        user.message = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error temporibus quaerat repellendus incidunt recusandae aut quia ullam reprehenderit iure.'
         user.link = this.link ? `${this.link}${user.id}` : ''
       }
     }

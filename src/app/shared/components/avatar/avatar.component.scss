@@ -1,13 +1,29 @@
 @import '../../../../styles/_variables';
 
 :host {
+  position: relative;
   display: block;
-  width: 40%;    
+  width: 100%;
+  max-width: 120px;  
   border-radius: 50%;
   background: $background;
   border: 2px solid $background-accent;
-  margin: 10px;  
+  margin: 10px; 
+  &:before{
+    content: '';
+    display: block;
+    margin-top: 100%;
+  } 
 }
 img {
-    width: 100%;
+  position: absolute;
+  width: 80%;
+  top: 10%;
+  left: 10%;  
+}
+
+[zp-user-presence]{
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }

@@ -15,11 +15,13 @@ import { ApiUserService, User } from '../../../services/'
 export class NavigationComponent implements OnDestroy, OnInit {
   @Input() navigation: any // md-sidenav reference
   users: User[]
-  user: any = {
+  user: User = {
+    id:'1',
+    login: 'john.doe@yopmail.com',
     firstname: 'John',
     lastname: 'Doe',
-    mail: 'john.doe@yopmail.com',
-    avatar: './assets/zetapush_logo.png'
+    avatar: './assets/zetalk_logo.png',
+    online:true
   }
   routes: any[] = [
     {

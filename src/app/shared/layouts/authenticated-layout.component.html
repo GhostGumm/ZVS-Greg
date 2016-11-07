@@ -9,6 +9,7 @@
 
   <md-toolbar color="primary" *ngIf="toolbarIsVisible" [@toolbarAnimation]="toolbarIsVisible">
     <button md-icon-button (click)="navigation.toggle()"><md-icon>menu</md-icon></button>
+    <zp-avatar [user]="user" [size]="40" presence="true"></zp-avatar>
     <span>ZeTalk</span>
     <span class="flex-fill"></span>
     <button md-icon-button [md-menu-trigger-for]="menu"><md-icon>more_vert</md-icon></button>

@@ -1,0 +1,13 @@
+
+[zp-user-presence]{
+  width: $zp-user-presence-size;
+  height: $zp-user-presence-size;
+  background-color: $md-error;
+  border-radius: 50%;
+  animation: user-presence 2500ms ease-in-out infinite both;
+  box-shadow: 0 0 2px 0 $md-error;
+  &.on{
+    background-color: $md-success;
+    box-shadow: 0 0 2px 0 $md-success;
+  }
+}

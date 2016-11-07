@@ -4,7 +4,9 @@
 @import 'fix.scss';
 @import 'custom.material.scss';
 
+@import 'shared/index';
+
+
 @import 'text.scss';
 @import 'theme.scss';
 @import 'layout.scss';
-@import 'form.scss';

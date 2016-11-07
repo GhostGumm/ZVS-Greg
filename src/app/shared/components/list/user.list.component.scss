@@ -1,7 +1,17 @@
 @import '../../../../styles/_variables';
-
+md-list{
+  overflow: hidden;
+}
 md-list-item{
-  height: 48px !important;
+  display: block;
+  cursor: pointer;
+  transition-property: background-color, padding;
+  transition-duration: 250ms;
+  transition-timing-function: ease-in-out;
+  &:hover{
+    padding-left: 10px;
+    background-color: $zp-white;
+  }
 }
 
 [md-list-avatar]{

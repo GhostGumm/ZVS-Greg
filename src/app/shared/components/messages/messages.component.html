@@ -6,7 +6,7 @@
       (mouseleave)="onMouseLeaveMessage($event, message, $index)"
       (click)="onClickMessage($event, message, $index)"
       [class.owner]="message.owner" [class.precede]="message.precede" [class.hovered]="message.isHovered">
-    <img md-list-avatar src="/assets/zetapush_logo.png" alt="{{message.author}}">
+    <span md-list-avatar [ngStyle]="{'background-image': 'url(/assets/zetalk_logo.png)'}"></span>
 
     <h3 md-line> {{message.author}} </h3>
 

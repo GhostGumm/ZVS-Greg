@@ -55,6 +55,9 @@ md-list-item{
   position: absolute;
   left:-$md-list-avatar-computed-size;
   top: 5px;
+  background-repeat: no-repeat;
+  background-size: 80%;
+  background-position: center;
 }
 p[md-line]{
   white-space: normal;
