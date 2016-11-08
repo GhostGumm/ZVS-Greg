@@ -1,15 +1,16 @@
-import { Component, HostBinding, Input, OnInit, AfterViewInit, AfterContentInit, trigger } from '@angular/core'
+import { ApiUserService, User } from './../../../services/';
+import { Component, HostBinding, Input, OnInit, AfterViewInit, AfterContentInit, trigger, ChangeDetectionStrategy } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { Animations } from '../../../utils/utils.animation'
 
 import { MessagesComponent, VideoComponent } from '../../components'
 
 @Component({
-
   selector: 'zp-conversation-view',
   templateUrl: './conversation-view.component.html',
   styleUrls:['./conversation-view.component.scss'],
   providers: [ MessagesComponent, VideoComponent ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('routeAnimation', Animations.fadeInOutView()),
     trigger('messagesAnimation', Animations.swipeOutDownView()),
@@ -20,6 +21,7 @@ import { MessagesComponent, VideoComponent } from '../../components'
 export class ConversationViewComponent implements OnInit, AfterViewInit, AfterContentInit {
   private $params: any
   private mode: string
+  private users: User[]
   @Input() messagesIsVisible: boolean
   @Input() videoIsVisible: boolean
   @Input() audioIsVisible: boolean
@@ -29,7 +31,10 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
     return true
   }
   
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(
+    private route: ActivatedRoute, 
+    private router: Router,
+    private userService: ApiUserService) {
     this.messagesIsVisible = true
     this.videoIsVisible = false
     this.audioIsVisible = false
@@ -42,15 +47,19 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
     })
   }
 
-  ngAfterViewInit() {
-    console.log('ConversationViewComponent::ngAfterViewInit', { 
+  ngAfterContentInit() {
+    console.log('ConversationViewComponent::ngAfterContentInit', { 
       params: this.$params
     })
   }
 
-  ngAfterContentInit() {
-    console.log('ConversationViewComponent::ngAfterContentInit', { 
+  ngAfterViewInit() {
+    console.log('ConversationViewComponent::ngAfterViewInit', { 
       params: this.$params
+    })
+    // Mock purpose
+    this.userService.getAllUsers().then((users) => {
+      this.users = users.slice(0,5)
     })
   }
 

@@ -13,13 +13,14 @@ import { COMPONENTS, COMPONENTS_SERVICES } from './components'
 import { LAYOUTS } from './layouts'
 
 import { AuthenticationService } from './authentication.service'
-import { ApiUserService } from '../services/'
+import { ApiUserService, RtcService } from '../services/'
 
 import { ScrollGlueDirective } from '../utils'
 import { FileDropDirective, FileSelectDirective } from 'ng2-file-upload'
 
 const CORE_MODULES = [ CommonModule, BrowserModule, FormsModule, HttpModule ]
 const DIRECTIVES = [ ScrollGlueDirective, FileDropDirective, FileSelectDirective]
+const SERVICES = [ AuthenticationService, ApiUserService, RtcService ]
 
 @NgModule({
   declarations: [ ...COMPONENTS, ...LAYOUTS, ...DIRECTIVES ],
@@ -32,7 +33,7 @@ export class SharedModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: SharedModule,
-      providers: [ AuthenticationService, ApiUserService, ...COMPONENTS_SERVICES ]
+      providers: [ ...SERVICES, ...COMPONENTS_SERVICES ]
     }
   }
  }

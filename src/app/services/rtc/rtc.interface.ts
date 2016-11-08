@@ -1,7 +1,7 @@
 
-import { User } from '../../../services/'
+import { User } from '../'
 
-export interface VideoInterface {
+export interface RtcInterface {
   id: string
   user: User
   stream?: any
@@ -12,7 +12,7 @@ export interface VideoInterface {
 }
 
 
-export class VideoClass implements VideoInterface {
+export class RtcClass implements RtcInterface {
   id
   stream
   source
@@ -42,7 +42,7 @@ export class VideoClass implements VideoInterface {
   }
 
   init() {
-    console.debug('VideoClass::init', {
+    console.debug('RtcClass::init', {
       id: this.id
     })
   }

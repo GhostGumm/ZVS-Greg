@@ -22,9 +22,7 @@ export const COMPONENTS = [
 
 
 import { MessageService } from './messages/message.service'
-import { VideoService } from './video/video.service'
 
 export const COMPONENTS_SERVICES = [
-  MessageService,
-  VideoService
+  MessageService
 ]

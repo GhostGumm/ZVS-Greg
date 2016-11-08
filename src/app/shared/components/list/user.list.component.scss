@@ -1,15 +1,23 @@
 @import '../../../../styles/_variables';
-md-list{
+
+:host{
+  display: block;
+  position: relative;
 }
+
 md-list-item{
   display: block;
   cursor: pointer;
-  transition-property: background-color, padding;
-  transition-duration: 250ms;
-  transition-timing-function: ease-in-out;
+  h3{
+    transition-property: transform;
+    will-change: transform;
+    transition-duration: 250ms;
+    transition-timing-function: ease-in-out;
+  }
   &:hover{
-    padding-left: 10px;
-    background-color: $zp-white;
+    h3{
+      transform: translateX(10px);
+    }
   }
 }
 
