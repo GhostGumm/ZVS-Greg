@@ -1,4 +1,4 @@
-import { NgModule,ModuleWithProviders } from '@angular/core'
+import { NgModule, ModuleWithProviders } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
@@ -8,6 +8,8 @@ import { MaterialModule } from '@angular/material'
 import { SharedRoutingModule } from './shared-routing.module'
 
 import { ZetaPushModule } from '../zetapush/zetapush.module'
+
+import { OrganizationDialogComponent } from './components/organization/organization.component'
 
 import { COMPONENTS, COMPONENTS_SERVICES } from './components'
 import { LAYOUTS } from './layouts'
@@ -24,6 +26,7 @@ const SERVICES = [ AuthenticationService, ApiUserService, RtcService ]
 
 @NgModule({
   declarations: [ ...COMPONENTS, ...LAYOUTS, ...DIRECTIVES ],
+  entryComponents: [ OrganizationDialogComponent ],
   exports: [ ...COMPONENTS, ...LAYOUTS, ...CORE_MODULES, MaterialModule, ZetaPushModule ],
   imports: [ ...CORE_MODULES, MaterialModule.forRoot(), SharedRoutingModule, ZetaPushModule ],
   providers: [ AuthenticationService, ...COMPONENTS_SERVICES ]

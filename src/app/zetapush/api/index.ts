@@ -5,10 +5,11 @@ import { client } from '../core'
 import { Api } from './api'
 import { ApiConfig } from './api-config'
 import { ApiUser } from './api-user'
+import { ApiZetalk } from './api-zetalk'
 
 const toPascalCase = (word = '') => `${word.charAt(0).toUpperCase()}${word.substring(1)}`
 
-export const apiFactory = (Api: Api) => {
+const factory = (Api: Api) => {
   const filter = (element) => element !== 'constructor'
   const methods = Object.getOwnPropertyNames(Api.prototype).filter(filter)
   const extensions = {}
@@ -31,9 +32,8 @@ export const apiFactory = (Api: Api) => {
   return Object.assign(service, extensions)
 }
 
-export { ApiConfig, ApiUser }
+const provider = (provide) => ({ provide, useFactory: () => factory(provide) })
 
-export const API_PROVIDERS = [
-  { provide: ApiConfig, useFactory: () => apiFactory(ApiConfig)},
-  { provide: ApiUser, useFactory: () => apiFactory(ApiUser)}
-]
+export { ApiConfig, ApiUser, ApiZetalk }
+
+export const API_PROVIDERS = [ApiConfig, ApiUser, ApiZetalk].map(provider)

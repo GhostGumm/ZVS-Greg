@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
 import { ApiUserService, User } from '../../../services/'
+import { ApiZetalk } from '../../../zetapush/api'
 
 /** 
  * Main navigation component
@@ -15,7 +16,7 @@ import { ApiUserService, User } from '../../../services/'
 export class NavigationComponent implements OnDestroy, OnInit {
   @Input() navigation: any // md-sidenav reference
   @Input() user: User
-  
+
   users: User[]
   routes: any[] = [
     {
@@ -34,7 +35,8 @@ export class NavigationComponent implements OnDestroy, OnInit {
 
   constructor(
     private router: Router,
-    private userService: ApiUserService
+    private userService: ApiUserService,
+    private api: ApiZetalk
   ) {
     /**
      * Route state listener
@@ -53,6 +55,8 @@ export class NavigationComponent implements OnDestroy, OnInit {
         this.lastRoute = event.url
       }
     }))
+
+    window['ApiZetalk'] = api
   }
 
   ngOnInit() {

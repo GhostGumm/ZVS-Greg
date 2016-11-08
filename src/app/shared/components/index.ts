@@ -7,6 +7,7 @@ import { UsernameComponent } from './username/username.component'
 import { MessagesComponent } from './messages/messages.component'
 import { VideoComponent } from './video/video.component'
 import { AudioComponent } from './audio/audio.component'
+import { OrganizationComponent, OrganizationDialogComponent } from './organization/organization.component'
 
 export const COMPONENTS = [
   AvatarComponent,
@@ -17,7 +18,9 @@ export const COMPONENTS = [
   UsernameComponent,
   MessagesComponent,
   VideoComponent,
-  AudioComponent
+  AudioComponent,
+  OrganizationComponent,
+  OrganizationDialogComponent
 ]
 
 

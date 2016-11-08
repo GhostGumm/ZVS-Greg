@@ -9,7 +9,9 @@ const guid = uuid()
 class RegisterModel {
   public login: string = `user-${guid}`
   public password: string = 'zetalk'
-  public email: string = `zetalk.user+${guid}@yopmail.com`
+  public email: string = `zetalk.user.${guid}@yopmail.com`
+  public firstname: string = `John-${guid}`
+  public lastname: string = `Doe Von ${guid}`
 }
 
 @Component({
@@ -65,7 +67,12 @@ export class RegisterViewComponent implements AfterViewInit, OnChanges, OnInit {
     })
     this.api
         .createUser(this.model)
-        .then(console.log, console.error)
+        .then((result) => this.onCreateUserSuccess(result), console.error)
+  }
+
+  onCreateUserSuccess({ user }) {
+    // window.open(`http://yopmail.com/${user.email}`)
+    this.router.navigate(['/login'])
   }
 
 }

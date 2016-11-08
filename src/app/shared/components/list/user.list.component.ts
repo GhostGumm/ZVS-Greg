@@ -15,14 +15,14 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   @Input() zpTitle: string
   
   subscriptions: Array<Subscription> = []
-  options:any = {
-    icons:{
-      expand:'add',
-      reduce:'remove'
+  options: any = {
+    icons: {
+      expand: 'add',
+      reduce: 'remove'
     },
-    limit:5
+    limit: 5
   }
-  isExpanded:boolean = false
+  isExpanded: boolean = false
 
   constructor() {
   }

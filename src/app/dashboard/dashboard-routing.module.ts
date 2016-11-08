@@ -20,13 +20,9 @@ export const dashboardRoutes: any = {
 
 const routes: Routes = [ dashboardRoutes ]
 
-export const routes2 = [
-
-]
-
 @NgModule({
   imports: [
-    //RouterModule.forChild(routes)
+    RouterModule.forChild(routes)
   ],
   exports: [ RouterModule ]
 })

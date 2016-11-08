@@ -2,9 +2,7 @@
 <div md-list-actions>
   <h4 *ngIf="zpTitle">{{zpTitle}}({{users?.length}})</h4>
   <span class="flex-fill"></span>
-  <button *ngIf="users?.length > options.limit" (click)="toggleList()" type="button" md-icon-button color="primary"> <!--md-tooltip="{{isExpanded ? 'reduce list' : 'expand list'}}"-->
-    <md-icon>{{isExpanded ? options.icons.reduce : options.icons.expand}}</md-icon>
-  </button> 
+  <zp-add-contact></zp-add-contact>
 </div>
 
 <md-list dense>

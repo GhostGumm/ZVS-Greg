@@ -7,8 +7,8 @@ export class ApiUser extends Api {
   getDashboard() {
     return this.$publish('getDashboard', {})
   }
-  createUser({ login, password, email }) {
-    return this.$publish('createUser', { login, password, email })
+  createUser({ login, password, email, firstname, lastname }) {
+    return this.$publish('createUser', { login, password, email, firstname, lastname })
   }
   isNewUser({ user }) {
     return this.$publish('isNewUser', { user })

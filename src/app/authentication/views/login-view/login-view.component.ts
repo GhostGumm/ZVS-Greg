@@ -62,11 +62,15 @@ export class LoginViewComponent implements AfterViewInit, OnChanges, OnInit {
     })
     this.connection
         .connect(this.credentials)
-        .then(() => {
-          this.router.navigate(['/dashboard'])
-        }, () => {
-          this.error = 'Unable to connect'
-        })
+        .then(() => this.onConnectionSuccess(), () => this.onConnectionError())
+  }
+
+  onConnectionSuccess() {
+    this.router.navigate(['/authenticated/dashboard'])
+  }
+
+  onConnectionError() {
+    this.error = 'Unable to connect'
   }
 
 }

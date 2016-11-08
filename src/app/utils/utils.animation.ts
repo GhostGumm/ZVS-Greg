@@ -6,7 +6,7 @@ export const Animations = {
     state('true', style({
       transform: 'translateY(0)',
       opacity: 1
-    })),    
+    })),
     state('false', style({
       transform: 'translateY(-50%)',
       opacity: 0
@@ -14,7 +14,7 @@ export const Animations = {
     transition(':enter, 0 => 1', [
       style({
         transform: 'translateY(-50%)',
-         opacity:0
+         opacity: 0
       }),
       animate(`${duration} ${easingIn}`) // cubic-bezier(0.175, 0.885, 0.32, 1.275)
     ]),
@@ -29,7 +29,7 @@ export const Animations = {
   fadeIn: ({ duration = '500ms', easingIn = 'ease-in-out', easingOut = 'ease-in-out' } = {}) => [
     state('true', style({
       opacity: 1
-    })),    
+    })),
     state('false', style({
       opacity: 0
     })),
@@ -81,7 +81,7 @@ export const Animations = {
     ]),
     transition(':leave', [
       animate(`${duration} ${easingOut}`, style({
-        opacity: 0,        
+        opacity: 0,
         position: 'absolute',
         top: 0,
         left: 0,
