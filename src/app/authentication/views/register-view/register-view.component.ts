@@ -1,12 +1,15 @@
 import { Component, HostBinding, AfterViewInit, OnChanges, OnInit, Input, trigger } from '@angular/core'
 import { Router } from '@angular/router'
 import { Animations } from '../../../utils/utils.animation'
+import { uuid } from '../../../utils/utils.string'
 import { ApiUser } from '../../../zetapush/api'
 
+const guid = uuid()
+
 class RegisterModel {
-  public login: string = 'User'
+  public login: string = `user-${guid}`
   public password: string = 'zetalk'
-  public email: string = 'user.zetalk@yopmail.com'
+  public email: string = `zetalk.user+${guid}@yopmail.com`
 }
 
 @Component({
