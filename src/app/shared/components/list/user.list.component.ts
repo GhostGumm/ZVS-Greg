@@ -6,13 +6,14 @@ import { Subscription } from 'rxjs/Subscription'
 @Component({
   selector: 'zp-user-list',
   templateUrl: './user.list.component.html',
-  styleUrls: ['./user.list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./user.list.component.scss']
 })
 export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @Input() users: any[]
   @Input() link: string
   @Input() lastMessage: boolean = false
+  @Input() zpTitle: string
+  
   subscriptions: Array<Subscription> = []
   options:any = {
     icons:{

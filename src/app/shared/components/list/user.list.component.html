@@ -1,4 +1,12 @@
 
+<div md-list-actions>
+  <h4 *ngIf="zpTitle">{{zpTitle}}({{users?.length}})</h4>
+  <span class="flex-fill"></span>
+  <button *ngIf="users?.length > options.limit" (click)="toggleList()" type="button" md-icon-button color="primary"> <!--md-tooltip="{{isExpanded ? 'reduce list' : 'expand list'}}"-->
+    <md-icon>{{isExpanded ? options.icons.reduce : options.icons.expand}}</md-icon>
+  </button> 
+</div>
+
 <md-list dense>
   <md-list-item *ngFor="let user of users | slice:0:options.limit" [routerLink]="user.link ? [user.link] : []">
     <img md-list-avatar src="{{user.avatar}}" alt="{{user.firstname}}">
@@ -7,13 +15,7 @@
     </h3>
     <p md-line *ngIf="lastMessage">
       <span> {{user.message}} </span>
-      <!--<span class="demo-2"> -- {{message.message}} </span>-->
+      <!--<span class="demo-2"> {{message.message}} </span>-->
     </p>
   </md-list-item>
 </md-list>
-
-<div md-list-actions>
-  <button *ngIf="users?.length > options.limit" (click)="toggleList()" type="button" md-mini-fab color="primary"> <!--md-tooltip="{{isExpanded ? 'reduce list' : 'expand list'}}"-->
-    <md-icon>{{isExpanded ? options.icons.reduce : options.icons.expand}}</md-icon>
-  </button> 
-</div>

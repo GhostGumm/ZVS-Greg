@@ -30,5 +30,6 @@ md-list-item{
 [md-list-actions]{
   display: flex;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
+  padding: 0 20px;
 }
