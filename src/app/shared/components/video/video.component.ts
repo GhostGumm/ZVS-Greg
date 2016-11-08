@@ -1,23 +1,24 @@
-import { Component, HostBinding, OnInit, OnDestroy, trigger } from '@angular/core'
+import { Component, Input, HostBinding, OnInit, OnDestroy, trigger } from '@angular/core'
 import { Animations } from '../../../utils/utils.animation'
 
-import { VideoInterface, VideoClass } from './video.interface'
-import { ApiUserService, User } from '../../../services/'
-import { VideoService } from './video.service'
+import { 
+  RtcService, RtcInterface, RtcClass,
+  ApiUserService, User
+} from '../../../services/'
 
 @Component({
   selector: 'zp-video',
   templateUrl: './video.component.html',
   styleUrls: ['./video.component.scss'],
-  providers: [ ApiUserService, VideoService ],
+  providers: [ ApiUserService, RtcService ],
   animations: [
     trigger('routeAnimation', Animations.swipeOutDownView())
   ]
 })
 export class VideoComponent implements OnInit, OnDestroy {
-  users: User[]
+  @Input() users: User[]
   group:boolean = false
-  videos: VideoInterface[] = []
+  videos: RtcInterface[] = []
 
   @HostBinding('@routeAnimation') get routeAnimation() {
     return true
@@ -25,14 +26,14 @@ export class VideoComponent implements OnInit, OnDestroy {
 
   constructor(
     private userService: ApiUserService,
-    private videoService: VideoService
+    private rtcService: RtcService
   ) {
   }
 
   ngOnInit() {
     console.debug('VideoComponent::ngOnInit')
 
-    this.videoService.startVideo().then((data) => {
+    this.rtcService.startVideo().then((data) => {
       const { stream, source } = data
       // Mock Purpose        
         this.getUsers().then(() => {
@@ -66,7 +67,7 @@ export class VideoComponent implements OnInit, OnDestroy {
 
     updateVideo(add) {
       if (add) {
-        this.videos.push(new VideoClass({
+        this.videos.push(new RtcClass({
           id:`${this.videos.length + 1}`,
           user:this.users[this.videos.length + 1]
         }))
@@ -82,7 +83,7 @@ export class VideoComponent implements OnInit, OnDestroy {
     console.debug('VideoComponent::initVideo', { stream, source })
     // Mock Purpose
       for (let user of this.users) { 
-        this.videos.push(new VideoClass({
+        this.videos.push(new RtcClass({
           id:user.id,
           user  
         }))
@@ -103,7 +104,7 @@ export class VideoComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.videoService.destroy()
+    this.rtcService.destroy()
     console.debug('VideoComponent::ngOnDestroy')
   }
 }

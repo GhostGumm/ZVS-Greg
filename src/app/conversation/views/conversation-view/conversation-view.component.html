@@ -12,8 +12,8 @@
 
  
 <zp-messages [@messagesAnimation]="messagesIsVisible" [class.video]="videoIsVisible" [class.audio]="audioIsVisible"></zp-messages>
-<zp-audio [@audioAnimation]="audioIsVisible"></zp-audio>
-<zp-video [@videoAnimation]="videoIsVisible"></zp-video>
+<zp-audio [users]="users" [@audioAnimation]="audioIsVisible"></zp-audio>
+<zp-video [users]="users" [@videoAnimation]="videoIsVisible"></zp-video>
 
 <!--
 <md-tab-group>

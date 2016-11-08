@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core'
-import { VideoInterface, VideoClass } from './video.interface'
+import { RtcInterface, RtcClass } from './rtc.interface'
 import { services } from 'zetapush-js'
-import { ZetaPushClient } from '../../../zetapush'
+import { ZetaPushClient } from '../../zetapush'
 import { DomSanitizer } from '@angular/platform-browser'
 // import 'webrtc-adapter'
 
-import { ICE_SERVERS, RTC_CHANNEL } from '../../../utils/utils.rtc'
+import { ICE_SERVERS, RTC_CHANNEL } from '../../utils/utils.rtc'
 
 @Injectable()
-export class VideoService {
+export class RtcService {
   
   peers:any = {}
   iceServers:any = ICE_SERVERS

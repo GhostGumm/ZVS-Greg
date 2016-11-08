@@ -1,104 +1,16 @@
 @import '../../../../styles/_variables';
 
 :host{
-  display: block;
   position: relative;
   width: 100%;
   height: calc(100% - 64px); // toolbar
   overflow: auto;
-}
-[zp-video-container] {
+
   display: flex;
-  position:relative;
-  margin: 0 auto;
-  max-width: 1000px;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
-  margin: 0 auto;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  height: calc(100% - 40px);
 }
 
-$zp-video-width: 300px;
-$zp-video-focus-width: 480px;
-
-[zp-video] {
-  position:relative;
-  display: block;
-  margin: 5px;
-  > [zp-video-placeholder],
-  > video {
-    position: absolute;
-    top: 0;
-    background-color: $background;
-    box-shadow: $zp-shadow-1;
-    border-radius: 50%;
-  }
-  > [zp-video-placeholder] {
-    max-width: $zp-video-focus-width;
-    margin: 0 auto;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    > img{
-      width: 60%;
-    }
-    > p {
-    }
-  }
-  &:before {
-    content: "";
-    display: block;
-    margin-top: 100%;
-  }
-  > video{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 1;
-  }
-  &:not(.group){
-    &.focus{
-      width: 98%;
-      max-width: 80vh;
-      align-self: flex-start;  
-    }
-    &:not(.focus){
-      bottom: 0;
-      right: 0;
-      width: 60%;
-      max-width: 400px;
-      position: absolute;
-      align-self: flex-end;
-    }
-  }
-  &.group{
-    video {
-    }
-    &.focus{
-      max-height:$zp-video-focus-width;
-      margin-bottom: 5px;
-      margin: 0;
-      width: 100%;
-      video{
-        width:100%;
-        max-width: $zp-video-focus-width;
-        margin: 0 auto;
-        display: block;
-        left: 50%;
-        transform: translateX(-50%);
-      }
-    }
-    &:not(.focus){
-      float: left;
-      margin: 5px;
-      width: $zp-video-width;
-    }
-  }
+md-list{
+  opacity: 0.5;
 }

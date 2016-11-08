@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, OnChanges, Input } from '@angular/core'
+import { Component, OnInit, AfterViewInit, OnDestroy, OnChanges, Input, ChangeDetectionStrategy } from '@angular/core'
 // import { User } from '../../../services/'
 import { OrderBy } from '../../../utils/'
 import { Subscription } from 'rxjs/Subscription'
@@ -7,10 +7,12 @@ import { Subscription } from 'rxjs/Subscription'
   selector: 'zp-user-list',
   templateUrl: './user.list.component.html',
   styleUrls: ['./user.list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @Input() users: any[]
   @Input() link: string
+  @Input() lastMessage: boolean = false
   subscriptions: Array<Subscription> = []
   options:any = {
     icons:{

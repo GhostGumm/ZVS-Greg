@@ -5,7 +5,7 @@
     <h3 md-line>
       <zp-username [user]="user"></zp-username>
     </h3>
-    <p md-line>
+    <p md-line *ngIf="lastMessage">
       <span> {{user.message}} </span>
       <!--<span class="demo-2"> -- {{message.message}} </span>-->
     </p>
@@ -13,7 +13,7 @@
 </md-list>
 
 <div md-list-actions>
-  <button (click)="toggleList()" type="button" md-mini-fab color="primary"> <!--md-tooltip="{{isExpanded ? 'reduce list' : 'expand list'}}"-->
+  <button *ngIf="users?.length > options.limit" (click)="toggleList()" type="button" md-mini-fab color="primary"> <!--md-tooltip="{{isExpanded ? 'reduce list' : 'expand list'}}"-->
     <md-icon>{{isExpanded ? options.icons.reduce : options.icons.expand}}</md-icon>
   </button> 
 </div>

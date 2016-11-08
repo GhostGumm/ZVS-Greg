@@ -70,7 +70,7 @@ $zp-profile-height: 200px;
 
 $md-list-avatar-size: 36px;
 $md-list-avatar-margin: 5px;
-$md-list-avatar-computed-size: $md-list-avatar-size + ($md-list-avatar-margin * 4);
+$md-list-avatar-computed-size: $md-list-avatar-size + ($md-list-avatar-margin * 2);
 
 $zp-user-presence-size: 10px;
 
@@ -85,10 +85,10 @@ $zp-shadow-1-up: 0px -3px 1px -2px rgba(0, 0, 0, 0.2), 0px -2px 2px 0px rgba(0, 
 
 $zp-radius: 4px;
 
-$font-size-xxs: 12px;
-$font-size-xs: 18px;
-$font-size-sm: 24px !default;
-$font-size-md: 36px;
-$font-size-lg: 48px;
-$font-size-xl: 60px;
-$font-size-xxl: 72px;
+$font-size-xxs: 8px;
+$font-size-xs: 12px;
+$font-size-sm: 18px !default;
+$font-size-md: 24px;
+$font-size-lg: 36px;
+$font-size-xl: 48px;
+$font-size-xxl: 60px;
