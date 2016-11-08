@@ -8,3 +8,50 @@
   padding: 10px 0;
   height: $zp-profile-height;
 }
+
+[zp-profile-username]{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  > button {
+    min-width: 20px !important;
+    width: 20px !important;
+    margin: 0 5px;
+    transition-property: transform;
+    will-change: transform;
+    transition-duration: 250ms;
+    transition-timing-function: ease-in-out;
+  }
+  &:hover{
+    > button {
+      transform: translateX(5px);
+    }
+  }
+}
+
+[md-menu-item]{
+  [zp-user-presence]{
+    margin: 7px;
+  }
+  &:nth-child(1){
+    [zp-user-presence]{
+      background-color: $md-success;
+      box-shadow: 0 0 2px 0 $md-success;
+    }
+  }
+  &:nth-child(2){
+    [zp-user-presence]{
+      background-color: $md-warning;
+      box-shadow: 0 0 2px 0 $md-warning;
+    }
+  }
+  &:nth-child(3){
+    [zp-user-presence]{
+      background-color: $md-error;
+      box-shadow: 0 0 2px 0 $md-error;
+    }
+  }
+  span{
+    margin-left: 8px;
+  }
+}
