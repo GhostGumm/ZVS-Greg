@@ -12,7 +12,7 @@
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@angular-cli/base-href-webpack/-/base-href-webpack-1.0.2.tgz#1253fe9b31df5c37969ed992356430c5837e06a8"
 
-"@angular/common@^2.0.0", "@angular/common@^2.1.0":
+"@angular/common@^2.0.0", "@angular/common@2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@angular/common/-/common-2.1.0.tgz#159037ee8ea5b75951cbcb371749504b535f2c2d"
 
@@ -25,19 +25,19 @@
     parse5 "^2.2.1"
     reflect-metadata "^0.1.2"
 
-"@angular/compiler@^2.0.0", "@angular/compiler@^2.1.0":
+"@angular/compiler@^2.0.0", "@angular/compiler@2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-2.1.0.tgz#1388e1b6adadb4495e1cb5f0fa5322728de0d003"
 
-"@angular/core@^2.0.0", "@angular/core@^2.1.0":
+"@angular/core@^2.0.0", "@angular/core@2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@angular/core/-/core-2.1.0.tgz#a2fdb0f76f72e5ac521feadd4d119f60afff2bd3"
 
-"@angular/forms@^2.1.0":
+"@angular/forms@2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-2.1.0.tgz#89b2684c176c32e954bf78ce15dffad269138c25"
 
-"@angular/http@^2.1.0":
+"@angular/http@2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@angular/http/-/http-2.1.0.tgz#19aad01f791aa1e3794863d21b35bc377ce76987"
 
@@ -47,11 +47,11 @@
   dependencies:
     "@types/hammerjs" "^2.0.30"
 
-"@angular/platform-browser-dynamic@^2.1.0":
+"@angular/platform-browser-dynamic@2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-2.1.0.tgz#05de532f46bbfdf80a603768e994f33c2ddf73e7"
 
-"@angular/platform-browser@^2.0.0", "@angular/platform-browser@^2.1.0":
+"@angular/platform-browser@^2.0.0", "@angular/platform-browser@2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-2.1.0.tgz#f53b2234a460def5f9e718bb812b91a0a5f6c1e7"
 
@@ -61,7 +61,7 @@
   dependencies:
     parse5 "^2.2.1"
 
-"@angular/router@^3.1.0":
+"@angular/router@3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@angular/router/-/router-3.1.0.tgz#14a496411142d29744b85996b4c4dd7e0eb76029"
 
@@ -71,23 +71,13 @@
   dependencies:
     tsickle "^0.1.7"
 
-"@angularclass/hmr-loader@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@angularclass/hmr-loader/-/hmr-loader-3.0.2.tgz#c789182411f09d0b98929e6acbfd3e4aeaace597"
-  dependencies:
-    loader-utils "^0.2.15"
-
-"@angularclass/hmr@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@angularclass/hmr/-/hmr-1.2.1.tgz#991314ee4e9babeb0908dee25ee7c1b0aa31d44f"
-
 "@ngtools/webpack@latest":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-1.1.0.tgz#89d8d5b7614babb0015992ec7123dceb2e189357"
   dependencies:
     "@angular-cli/ast-tools" "^1.0.0"
 
-"@types/chartist@^0.9.33":
+"@types/chartist@0.9.33":
   version "0.9.33"
   resolved "https://registry.yarnpkg.com/@types/chartist/-/chartist-0.9.33.tgz#669de759f0dc4f2be31aef7875d8a51166276ef6"
 
@@ -95,9 +85,13 @@
   version "2.0.33"
   resolved "https://registry.yarnpkg.com/@types/hammerjs/-/hammerjs-2.0.33.tgz#45f57352474181425bb4b65f7313a60426d54bab"
 
-"@types/jasmine@^2.2.30", "@types/jasmine@^2.2.31":
+"@types/jasmine@^2.2.31":
   version "2.5.35"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-2.5.35.tgz#5566406dc8417d380d6c2f9562ec3c71ec28ef78"
+
+"@types/jasmine@2.2.30":
+  version "2.2.30"
+  resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-2.2.30.tgz#754be39255479731ad841478bd29772d71cf5996"
 
 "@types/node@^6.0.35":
   version "6.0.45"
@@ -263,25 +257,9 @@ angular-cli@1.0.0-beta.16:
     webpack-merge "^0.14.0"
     zone.js "^0.6.23"
 
-angular2-chartist@^0.9.5:
+angular2-chartist@0.9.5:
   version "0.9.5"
   resolved "https://registry.yarnpkg.com/angular2-chartist/-/angular2-chartist-0.9.5.tgz#53f644241599d646f9184517d3f1b69357e91a14"
-
-angular2-scroll-glue@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/angular2-scroll-glue/-/angular2-scroll-glue-1.0.7.tgz#194ab31b444ef5112cf5909124bccdd837c9bb70"
-  dependencies:
-    angular2 "2.0.0-beta.9"
-    angular2-scroll-glue "1.0.0"
-    es6-promise "3.1.2"
-    es6-shim "0.33.13"
-    path "0.12.7"
-    reflect-metadata "0.1.2"
-    rxjs "5.0.0-beta.2"
-    ts-loader "0.8.1"
-    typescript "1.8.7"
-    webpack "1.12.14"
-    zone.js "0.5.15"
 
 angular2-scroll-glue@1.0.0:
   version "1.0.0"
@@ -290,6 +268,22 @@ angular2-scroll-glue@1.0.0:
     angular2 "2.0.0-beta.9"
     es6-promise "3.1.2"
     es6-shim "0.33.13"
+    reflect-metadata "0.1.2"
+    rxjs "5.0.0-beta.2"
+    ts-loader "0.8.1"
+    typescript "1.8.7"
+    webpack "1.12.14"
+    zone.js "0.5.15"
+
+angular2-scroll-glue@1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/angular2-scroll-glue/-/angular2-scroll-glue-1.0.7.tgz#194ab31b444ef5112cf5909124bccdd837c9bb70"
+  dependencies:
+    angular2 "2.0.0-beta.9"
+    angular2-scroll-glue "1.0.0"
+    es6-promise "3.1.2"
+    es6-shim "0.33.13"
+    path "0.12.7"
     reflect-metadata "0.1.2"
     rxjs "5.0.0-beta.2"
     ts-loader "0.8.1"
@@ -1333,7 +1327,7 @@ charm@^1.0.0:
   dependencies:
     inherits "^2.0.1"
 
-chartist@^0.9.8:
+chartist@0.9.8:
   version "0.9.8"
   resolved "https://registry.yarnpkg.com/chartist/-/chartist-0.9.8.tgz#08040365c27843811343f008b0bbe9933c780677"
 
@@ -1752,7 +1746,7 @@ core-js@^1.0.0:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
 
-core-js@^2.2.0, core-js@^2.4.0, core-js@^2.4.1:
+core-js@^2.2.0, core-js@^2.4.0, core-js@2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.4.1.tgz#4de911e667b0eae9124e34254b53aea6fc618d3e"
 
@@ -2118,13 +2112,9 @@ did_it_work@0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/did_it_work/-/did_it_work-0.0.6.tgz#5180cb9e16ebf9a8753a0cc6b4af9ccdff71ec05"
 
-diff@^2.2.1, diff@^2.2.2:
+diff@^2.1.1, diff@^2.2.1, diff@^2.2.2:
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/diff/-/diff-2.2.3.tgz#60eafd0d28ee906e4e8ff0a52c1229521033bf99"
-
-diff@^3.0.0:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/diff/-/diff-3.0.1.tgz#a52d90cc08956994be00877bff97110062582c35"
 
 diffie-hellman@^5.0.0:
   version "5.0.2"
@@ -3276,7 +3266,7 @@ gulplog@^1.0.0:
   dependencies:
     glogg "^1.0.0"
 
-hammerjs@^2.0.8:
+hammerjs@2.0.8:
   version "2.0.8"
   resolved "https://registry.yarnpkg.com/hammerjs/-/hammerjs-2.0.8.tgz#04ef77862cff2bb79d30f7692095930222bf60f1"
 
@@ -3925,15 +3915,15 @@ istextorbinary@2.1.0:
     editions "^1.1.1"
     textextensions "1 || 2"
 
-jasmine-core@^2.5.2, jasmine-core@~2.5.2:
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-2.5.2.tgz#6f61bd79061e27f43e6f9355e44b3c6cab6ff297"
-
 jasmine-core@~2.4.0:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-2.4.1.tgz#6f83ab3a0f16951722ce07d206c773d57cc838be"
 
-jasmine-spec-reporter@^2.7.0:
+jasmine-core@~2.5.2, jasmine-core@2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-2.5.2.tgz#6f61bd79061e27f43e6f9355e44b3c6cab6ff297"
+
+jasmine-spec-reporter@2.7.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/jasmine-spec-reporter/-/jasmine-spec-reporter-2.7.0.tgz#42907ff889952a129c0afc2929e195f4e74c98ff"
   dependencies:
@@ -4058,24 +4048,24 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.3.6"
 
-karma-chrome-launcher@^2.0.0:
+karma-chrome-launcher@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/karma-chrome-launcher/-/karma-chrome-launcher-2.0.0.tgz#c2790c5a32b15577d0fff5a4d5a2703b3b439c25"
   dependencies:
     fs-access "^1.0.0"
     which "^1.2.1"
 
-karma-cli@^1.0.1:
+karma-cli@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/karma-cli/-/karma-cli-1.0.1.tgz#ae6c3c58a313a1d00b45164c455b9b86ce17f960"
   dependencies:
     resolve "^1.1.6"
 
-karma-jasmine@^1.0.2:
+karma-jasmine@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/karma-jasmine/-/karma-jasmine-1.0.2.tgz#c0b3ab327bf207db60e17fa27db37cfdef5d8e6c"
 
-karma-remap-istanbul@^0.2.1:
+karma-remap-istanbul@0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/karma-remap-istanbul/-/karma-remap-istanbul-0.2.1.tgz#04ce35ae4bfa7c710d37afe910d9cc11b5e5d7cf"
   dependencies:
@@ -4098,7 +4088,7 @@ karma-webpack@^1.8.0:
     source-map "^0.1.41"
     webpack-dev-middleware "^1.0.11"
 
-karma@^1.3.0:
+karma@1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/karma/-/karma-1.3.0.tgz#b2b94e8f499fadd0069d54f9aef4a4d48ec5cc1f"
   dependencies:
@@ -4941,7 +4931,7 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
-ng2-file-upload@^1.1.2:
+ng2-file-upload@1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/ng2-file-upload/-/ng2-file-upload-1.1.2.tgz#63467dcc2a92cf4af1d141bad2b78dbed9564723"
 
@@ -6594,7 +6584,7 @@ ripemd160@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/ripemd160/-/ripemd160-0.2.0.tgz#2bf198bde167cacfa51c0a928e84b68bbe171fce"
 
-rollup-plugin-node-resolve@^2.0.0:
+rollup-plugin-node-resolve@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/rollup-plugin-node-resolve/-/rollup-plugin-node-resolve-2.0.0.tgz#07e0ae94ac002a3ea36e8f33ca121d9f836b1309"
   dependencies:
@@ -6615,12 +6605,6 @@ run-async@^0.1.0:
 rx-lite@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/rx-lite/-/rx-lite-3.1.2.tgz#19ce502ca572665f3b647b10939f97fd1615f102"
-
-rxjs@^5.0.0-beta.12:
-  version "5.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.0.0-rc.1.tgz#9e02b7044da81a2d5e138908d22af77e22d96973"
-  dependencies:
-    symbol-observable "^1.0.1"
 
 rxjs@5.0.0-beta.11:
   version "5.0.0-beta.11"
@@ -7454,7 +7438,7 @@ tryor@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/tryor/-/tryor-0.1.2.tgz#8145e4ca7caff40acde3ccf946e8b8bb75b4172b"
 
-ts-helpers@^1.1.1:
+ts-helpers@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ts-helpers/-/ts-helpers-1.1.1.tgz#89553d2b8d313e7f0e3e0c85c08d6d3f03401f57"
 
@@ -7480,13 +7464,13 @@ ts-loader@0.8.1:
     object-assign "^2.0.0"
     semver "^5.0.1"
 
-ts-node@^1.3.0:
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-1.4.3.tgz#d96399b6257d6ab0f0c61487e23c6713594666be"
+ts-node@1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-1.3.0.tgz#0a68aa0800b7df7a2b8ad6e7e34b0f9612387a52"
   dependencies:
     arrify "^1.0.0"
     chalk "^1.1.1"
-    diff "^3.0.0"
+    diff "^2.1.1"
     make-error "^1.1.1"
     minimist "^1.2.0"
     mkdirp "^0.5.1"
@@ -7494,7 +7478,6 @@ ts-node@^1.3.0:
     source-map-support "^0.4.0"
     tsconfig "^5.0.2"
     xtend "^4.0.0"
-    yn "^1.2.0"
 
 tsconfig@^5.0.2:
   version "5.0.3"
@@ -7524,7 +7507,7 @@ tslint-loader@^2.1.4:
     rimraf "^2.4.4"
     strip-json-comments "^1.0.2"
 
-tslint@^3.15.1:
+tslint@^3.15.1, tslint@3.15.1:
   version "3.15.1"
   resolved "https://registry.yarnpkg.com/tslint/-/tslint-3.15.1.tgz#da165ca93d8fdc2c086b51165ee1bacb48c98ea5"
   dependencies:
@@ -7879,7 +7862,7 @@ webdriver-manager@^10.2.2:
     request "^2.69.0"
     rimraf "^2.5.2"
 
-webfontloader@^1.6.26:
+webfontloader@1.6.26:
   version "1.6.26"
   resolved "https://registry.yarnpkg.com/webfontloader/-/webfontloader-1.6.26.tgz#04909e273e913c9d7e4856f42c4e69fd7b3d5f28"
 
@@ -8179,15 +8162,11 @@ yeast@0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/yeast/-/yeast-0.1.2.tgz#008e06d8094320c372dbc2f8ed76a0ca6c8ac419"
 
-yn@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/yn/-/yn-1.2.0.tgz#d237a4c533f279b2b89d3acac2db4b8c795e4a63"
-
 zetapush-cometd@^3.0.13:
   version "3.0.13"
   resolved "https://registry.yarnpkg.com/zetapush-cometd/-/zetapush-cometd-3.0.13.tgz#7bd6fc9bc491a7db3535e772369818d82031cc56"
 
-zetapush-js@^3.1.0-alpha.1:
+zetapush-js@3.1.0-alpha.1:
   version "3.1.0-alpha.1"
   resolved "https://registry.yarnpkg.com/zetapush-js/-/zetapush-js-3.1.0-alpha.1.tgz#4fc9edb822168afb2d2985ee3af482a194c83117"
   dependencies:
@@ -8202,4 +8181,8 @@ zone.js@0.5.15:
   resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.5.15.tgz#f195b56ad0b7874c3060c3a5e61b4e234ea1b059"
   dependencies:
     es6-promise "^3.0.2"
+
+zone.js@0.6.23:
+  version "0.6.23"
+  resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.6.23.tgz#78fff1e27425e5f82fb875c8da435681850b7018"
 
