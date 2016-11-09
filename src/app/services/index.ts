@@ -1,11 +1,11 @@
 import { ApiUserService } from './api/user/user.service'
-import { User } from './api/user/user.interface'
+import { UserInterface, UserClass } from './api/user/user.interface'
 
 import { RtcService } from './rtc/rtc.service'
 import { RtcClass, RtcInterface } from './rtc/rtc.interface'
 
 export { 
-  User, ApiUserService,
+  UserInterface, UserClass, ApiUserService,
   RtcClass, RtcInterface, RtcService
 }
 

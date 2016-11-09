@@ -8,6 +8,10 @@
 md-list-item{
   display: block;
   cursor: pointer;
+  transition-property: background-color;
+  will-change: background-color;
+  transition-duration: 250ms;
+  transition-timing-function: ease-in-out;
   h3{
     transition-property: transform;
     will-change: transform;
@@ -15,6 +19,7 @@ md-list-item{
     transition-timing-function: ease-in-out;
   }
   &:hover{
+    background-color: $zp-whiter;
     h3{
       transform: translateX(10px);
     }
@@ -27,9 +32,10 @@ md-list-item{
   border: 2px solid $background-accent;
 }
 
-[md-list-actions]{
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  padding: 0 20px;
+md-spinner{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -($md-spinner-size * 0.5);
+  margin-top: -($md-spinner-size * 0.5);
 }

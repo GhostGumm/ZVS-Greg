@@ -1,0 +1,13 @@
+<!--<ul>
+  <li *ngFor="let member of members;">
+    <span>{{member.login}}</span>
+    
+  </li>
+</ul>-->
+<zp-user-list [users]="members">
+  <template class="zp-user-list-user-action" let-user="user">
+    <button type="button" md-icon-button (click)="dialogRef.close(user)" color="primary">
+      <md-icon>add</md-icon>
+    </button>
+  </template>
+</zp-user-list>

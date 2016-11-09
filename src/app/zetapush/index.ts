@@ -1,6 +1,6 @@
 import { client, ZetaPushClient, ZetaPushConnection } from './core'
 
-export { ZetaPushClient, ZetaPushConnection }
+export { client, ZetaPushClient, ZetaPushConnection }
 
 /**
  * Initialise les composants zetapush

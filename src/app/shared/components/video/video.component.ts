@@ -3,7 +3,7 @@ import { Animations } from '../../../utils/utils.animation'
 
 import { 
   RtcService, RtcInterface, RtcClass,
-  ApiUserService, User
+  ApiUserService, UserInterface
 } from '../../../services/'
 
 @Component({
@@ -16,7 +16,7 @@ import {
   ]
 })
 export class VideoComponent implements OnInit, OnDestroy {
-  @Input() users: User[]
+  @Input() users: UserInterface[]
   group:boolean = false
   videos: RtcInterface[] = []
 
@@ -46,7 +46,7 @@ export class VideoComponent implements OnInit, OnDestroy {
     })
   }
 
-  getUsers(): Promise<User[]> {
+  getUsers(): Promise<UserInterface[]> {
     return new Promise((resolve, reject) => {
       this.userService.getAllUsers()
       .then(users => {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { User } from '../../../services/'
+import { UserInterface } from '../../../services/'
 
 @Component({
   selector: 'zp-username',
@@ -7,7 +7,7 @@ import { User } from '../../../services/'
   templateUrl: './username.component.html'
 })
 export class UsernameComponent implements OnInit {
-  @Input() user: User
+  @Input() user: UserInterface
 
   constructor() { }
 

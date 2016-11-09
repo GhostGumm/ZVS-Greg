@@ -1,30 +1,30 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, OnChanges, Input, ChangeDetectionStrategy } from '@angular/core'
-// import { User } from '../../../services/'
-import { OrderBy } from '../../../utils/'
+
+import { Component, OnInit, AfterViewInit, OnDestroy, OnChanges, Input, ContentChild, TemplateRef, trigger, ChangeDetectionStrategy } from '@angular/core'
+import { UserInterface } from '../../../services/'
+import { OrderBy, Animations } from '../../../utils/'
 import { Subscription } from 'rxjs/Subscription'
 
 @Component({
   selector: 'zp-user-list',
   templateUrl: './user.list.component.html',
-  styleUrls: ['./user.list.component.scss']
+  styleUrls: ['./user.list.component.scss'],
+  animations: [
+    trigger('loadingAnimation', Animations.fadeIn())
+  ]
+  
 })
 export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
-  @Input() users: any[]
+  @ContentChild(TemplateRef) templateUserAction;
+  @Input() users: UserInterface[]
   @Input() link: string
   @Input() lastMessage: boolean = false
-  @Input() zpTitle: string
   
   subscriptions: Array<Subscription> = []
-  options: any = {
-    icons: {
-      expand: 'add',
-      reduce: 'remove'
-    },
-    limit: 5
-  }
+  loading: boolean = true
   isExpanded: boolean = false
 
   constructor() {
+    console.debug('UserListComponent::constructor', this)
   }
 
   ngOnInit() {
@@ -45,19 +45,19 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     if (event.users.currentValue) {
       OrderBy(this.users, 'online')
       for (let user of this.users) {
-        user.message = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error temporibus quaerat repellendus incidunt recusandae aut quia ullam reprehenderit iure.'
-        user.link = this.link ? `${this.link}${user.id}` : ''
+        user.metadata = {
+          message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error temporibus quaerat repellendus incidunt recusandae aut quia ullam reprehenderit iure.',
+          link: this.link ? `${this.link}${user.id}` : ''
+        }
       }
+      setTimeout(() => {
+        this.loading = false
+      },0)
     }
     //
   }
   ngOnDestroy() {
     console.debug('UserListComponent::ngOnDestroy')
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
-  }
-
-  toggleList() {
-    this.isExpanded = !this.isExpanded
-    this.isExpanded ? this.options.limit = -1 : this.options.limit = 5
   }
 }

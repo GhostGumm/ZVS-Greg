@@ -5,6 +5,7 @@ import { client } from '../core'
 import { Api } from './api'
 import { ApiConfig } from './api-config'
 import { ApiUser } from './api-user'
+import { ApiConversation } from './api-conversation'
 import { ApiZetalk } from './api-zetalk'
 
 const toPascalCase = (word = '') => `${word.charAt(0).toUpperCase()}${word.substring(1)}`
@@ -34,6 +35,6 @@ const factory = (Api: Api) => {
 
 const provider = (provide) => ({ provide, useFactory: () => factory(provide) })
 
-export { ApiConfig, ApiUser, ApiZetalk }
+export { ApiConfig, ApiUser, ApiConversation, ApiZetalk }
 
-export const API_PROVIDERS = [ApiConfig, ApiUser, ApiZetalk].map(provider)
+export const API_PROVIDERS = [ApiConfig, ApiUser, ApiConversation, ApiZetalk].map(provider)

@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core'
 import { Subscription } from 'rxjs/Subscription'
 
-import { User } from './user.interface'
+import { UserInterface } from './user.interface'
 import { USERS } from './user.mock'
 
 @Injectable()

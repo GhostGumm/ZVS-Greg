@@ -3,7 +3,7 @@ import { Animations } from '../../../utils/utils.animation'
 
 import { 
   RtcService, RtcInterface, RtcClass,
-  ApiUserService, User
+  ApiUserService, UserInterface
 } from '../../../services/'
 
 @Component({
@@ -16,7 +16,7 @@ import {
   ]
 })
 export class AudioComponent implements OnInit, OnDestroy {
-  @Input() users: User[]
+  @Input() users: UserInterface[]
   group:boolean = false
   audios: RtcInterface[] = []
 

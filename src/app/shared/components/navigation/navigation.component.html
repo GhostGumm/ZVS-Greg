@@ -8,5 +8,11 @@
     </button>
   </md-nav-list>
 
-  <zp-user-list [users]="users" [link]="'conversation/'" [lastMessage]="true" [zpTitle]="'Contacts'"></zp-user-list>  
+  <zp-user-list [users]="users" [link]="'conversation/'" [lastMessage]="true">
+    <div class="zp-user-list-actions">
+      <h4>Contacts({{users?.length}})</h4>
+      <span class="flex-fill"></span>
+      <zp-add-contact></zp-add-contact>
+    </div>    
+  </zp-user-list>  
 </div>

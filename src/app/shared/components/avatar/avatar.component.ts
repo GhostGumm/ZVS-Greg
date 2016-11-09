@@ -1,5 +1,5 @@
 import { Component, ElementRef, Renderer, OnInit, Input } from '@angular/core'
-import { User } from '../../../services/'
+import { UserInterface } from '../../../services/'
 
 @Component({
   selector: 'zp-avatar',
@@ -7,7 +7,7 @@ import { User } from '../../../services/'
   templateUrl: './avatar.component.html'
 })
 export class AvatarComponent implements OnInit {
-  @Input() user: User
+  @Input() user: UserInterface
   @Input() size: number
   @Input() presence: boolean = false
   avatar: string

@@ -2,7 +2,7 @@ import { Component, ViewContainerRef, ViewChild, ElementRef, OnInit, OnDestroy, 
 import { MdSnackBar, MdSnackBarConfig } from '@angular/material'
 import { Subscription } from 'rxjs/Subscription'
 import { Animations } from '../../utils/'
-import { User } from '../../services/'
+import { UserInterface } from '../../services/'
 
 @Component({
   animations: [
@@ -24,7 +24,7 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
   snackBar: any = MdSnackBar
   viewContainerRef: any = ViewContainerRef
   subscriptions: Array<Subscription> = []
-  user: User = {
+  user: UserInterface = {
     id:'1',
     login: 'john.doe@yopmail.com',
     firstname: 'John',

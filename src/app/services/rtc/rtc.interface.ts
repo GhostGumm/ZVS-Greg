@@ -1,9 +1,9 @@
 
-import { User } from '../'
+import { UserInterface } from '../'
 
 export interface RtcInterface {
   id: string
-  user: User
+  user: UserInterface
   stream?: any
   source?: any
   focus?: boolean
@@ -22,7 +22,7 @@ export class RtcClass implements RtcInterface {
   constructor(
     parameters: {
       id: string,
-      user: User,
+      user: UserInterface,
       stream?: any,
       source?: any,
       focus?: boolean

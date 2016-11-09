@@ -1,15 +1,14 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core'
 import { MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material'
+import { ApiUserService, UserInterface, UserClass } from '../../../services/'
 
-import { ApiZetalk } from '../../../zetapush/api'
+import { client } from '../../../zetapush/'
+import { ApiZetalk, ApiConversation } from '../../../zetapush/api'
 
 @Component({
   selector: 'zp-add-contact',
-  template: `
-    <button (click)="openDialog()" type="button" md-icon-button color="primary">
-      <md-icon>add</md-icon>
-    </button>
-  `
+  styleUrls: ['./organization.component.scss'],
+  templateUrl: './organization.component.html'
 })
 export class OrganizationComponent implements OnInit {
 
@@ -17,7 +16,8 @@ export class OrganizationComponent implements OnInit {
 
   constructor(
     public dialog: MdDialog,
-    public viewContainerRef: ViewContainerRef) { }
+    public viewContainerRef: ViewContainerRef,
+    private apiConversation: ApiConversation) { }
 
   openDialog() {
     const config = new MdDialogConfig()
@@ -27,32 +27,51 @@ export class OrganizationComponent implements OnInit {
     this.dialogRef = this.dialog.open(OrganizationDialogComponent, config)
 
     this.dialogRef.afterClosed().subscribe((result) => {
-      console.log('result: ' + result)
+      if (result) {
+        this.createConversation(result)
+      }
+
       this.dialogRef = null
     })
   }
 
   ngOnInit() {
+  }
 
+  createConversation(result) {
+    const interlocutors = [result.id, client.getUserId()]
+
+    console.log('OrganizationComponent::createDirectConversation',{
+      result,
+      interlocutors
+    })
+    
+    this.apiConversation.createDirectConversation({
+      name:'direct',
+      interlocutors
+    }).then(result => {
+      console.debug('OrganizationComponent::onCreateDirectConversation', { result })
+    }).catch(error => {
+      console.error('OrganizationComponent::onCreateDirectConversation', { error })
+    })
   }
 }
 
 @Component({
   selector: 'zp-organization-dialog',
-  template: `
-    <ul>
-      <li *ngFor="let member of members;">
-        <span>{{member.login}}</span>
-        <button type="button" (click)="dialogRef.close(member.userKey)">Start</button>
-      </li>
-    </ul>
-  `
+  styleUrls: ['./organization.dialog.component.scss'],
+  templateUrl: './organization.dialog.component.html'
 })
 export class OrganizationDialogComponent implements OnInit {
 
-  members: Array<any> = []
+  members: UserInterface[] = []
 
-  constructor(public dialogRef: MdDialogRef<OrganizationDialogComponent>, private api: ApiZetalk) {}
+  constructor(
+    public dialogRef: MdDialogRef<OrganizationDialogComponent>,
+    private api: ApiZetalk,
+    private conversation : ApiConversation) {
+
+  }
 
   ngOnInit() {
     this.api
@@ -62,6 +81,13 @@ export class OrganizationDialogComponent implements OnInit {
 
   onGetOrganisation({ organization }) {
     console.debug('OrganizationDialogComponent::onGetOrganisation', organization)
-    this.members = organization.members
+    for (let member of organization.members) {
+      const { login, email, userKey, firstname, lastName, online } = member
+      this.members.push(new UserClass({
+        id:userKey,
+        login,
+        firstname:firstname? firstname : userKey
+      }))
+    }
   }
 }

@@ -1,19 +1,17 @@
 
-<div md-list-actions>
-  <h4 *ngIf="zpTitle">{{zpTitle}}({{users?.length}})</h4>
-  <span class="flex-fill"></span>
-  <zp-add-contact></zp-add-contact>
-</div>
+<ng-content select=".zp-user-list-actions"></ng-content>
 
-<md-list dense>
-  <md-list-item *ngFor="let user of users | slice:0:options.limit" [routerLink]="user.link ? [user.link] : []">
+<md-list dense *ngIf="!loading" [@loadingAnimation]="!loading">
+  <md-list-item *ngFor="let user of users" [routerLink]="[]">
     <img md-list-avatar src="{{user.avatar}}" alt="{{user.firstname}}">
     <h3 md-line>
       <zp-username [user]="user"></zp-username>
     </h3>
     <p md-line *ngIf="lastMessage">
-      <span> {{user.message}} </span>
-      <!--<span class="demo-2"> {{message.message}} </span>-->
-    </p>
+      <span> {{user.metadata.message}} </span>
+    </p>      
+    <template [ngTemplateOutlet]="templateUserAction" [ngOutletContext]="{user:user}" select=".zp-user-list-user-action"></template>
   </md-list-item>
 </md-list>
+
+<md-spinner *ngIf="loading" [@loadingAnimation]="loading"></md-spinner>

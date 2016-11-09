@@ -1,4 +1,4 @@
-import { ApiUserService, User } from './../../../services/';
+import { ApiUserService, UserInterface } from './../../../services/';
 import { Component, HostBinding, Input, OnInit, AfterViewInit, AfterContentInit, trigger, ChangeDetectionStrategy } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { Animations } from '../../../utils/utils.animation'
@@ -21,7 +21,7 @@ import { MessagesComponent, VideoComponent } from '../../components'
 export class ConversationViewComponent implements OnInit, AfterViewInit, AfterContentInit {
   private $params: any
   private mode: string
-  private users: User[]
+  private users: UserInterface[]
   @Input() messagesIsVisible: boolean
   @Input() videoIsVisible: boolean
   @Input() audioIsVisible: boolean

@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
-import { ApiUserService, User } from '../../../services/'
+import { ApiUserService, UserInterface, UserClass } from '../../../services/'
 import { ApiZetalk } from '../../../zetapush/api'
 
 /** 
@@ -15,9 +15,9 @@ import { ApiZetalk } from '../../../zetapush/api'
 })
 export class NavigationComponent implements OnDestroy, OnInit {
   @Input() navigation: any // md-sidenav reference
-  @Input() user: User
+  @Input() user: UserInterface
 
-  users: User[]
+  users: Array<UserInterface> = []
   routes: any[] = [
     {
       name: 'Stats',
@@ -109,7 +109,9 @@ export class NavigationComponent implements OnDestroy, OnInit {
   getUsers() {
     this.userService.getAllUsers().then(users => {
       console.debug('NavigationComponent::getUsers', { users })
-      this.users = users
+      for (let user of users) {
+        this.users.push(new UserClass(user))
+      }
     })
     // this.onNavigationLoaded()
   }

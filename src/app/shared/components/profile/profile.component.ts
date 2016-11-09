@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, HostBinding } from '@angular/core'
-import { User } from '../../../services/'
+import { UserInterface } from '../../../services/'
 
 @Component({
   selector: 'zp-profile',
@@ -7,7 +7,7 @@ import { User } from '../../../services/'
   templateUrl: './profile.component.html'
 })
 export class ProfileComponent implements OnInit {
-  @Input() user: User
+  @Input() user: UserInterface
 
   constructor() {
   }
