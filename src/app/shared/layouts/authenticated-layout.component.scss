@@ -12,6 +12,9 @@ md-toolbar{
 md-sidenav{
   overflow:hidden;
   // box-shadow: none !important;
+  &.md-sidenav-over{
+    background-color: $zp-white !important;
+  }
 }
 .md-sidenav-content{
   overflow: hidden !important;

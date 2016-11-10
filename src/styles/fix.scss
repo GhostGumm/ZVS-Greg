@@ -66,6 +66,16 @@ zp-messages{
     }
   }
 }
+// Encapsulation doesn't allow inner component tweak :(
+zp-organization-dialog{
+  zp-user-list{
+    md-list{
+      max-height: 60vh;
+      overflow: auto;
+      overflow: overlay;
+    }
+  }
+}
 
 // md-menu catcher below
 .md-menu-click-catcher{

@@ -1,5 +1,5 @@
 <md-sidenav-layout>
-  <md-sidenav #navigation mode="side">
+  <md-sidenav #navigation mode="{{isMobile ? 'over' : 'side'}}">
     <zp-navigation [navigation]="navigation" [user]="user"></zp-navigation>
   </md-sidenav>
 

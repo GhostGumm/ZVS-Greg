@@ -1,5 +1,5 @@
 
-import { Component, OnInit, AfterViewInit, OnDestroy, OnChanges, Input, ContentChild, TemplateRef, trigger, ChangeDetectionStrategy } from '@angular/core'
+import { Component, OnInit, AfterViewInit, OnDestroy, OnChanges, Input, Output, EventEmitter, ContentChild, TemplateRef, trigger, ChangeDetectionStrategy } from '@angular/core'
 import { UserInterface } from '../../../services/'
 import { OrderBy, Animations } from '../../../utils/'
 import { Subscription } from 'rxjs/Subscription'
@@ -18,6 +18,7 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   @Input() users: UserInterface[]
   @Input() link: string
   @Input() lastMessage: boolean = false
+  @Output() userClickedEmitter = new EventEmitter()
   
   subscriptions: Array<Subscription> = []
   loading: boolean = true
@@ -64,5 +65,9 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   ngOnDestroy() {
     console.debug('UserListComponent::ngOnDestroy')
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
+  }
+
+  onUserClicked(user) {
+    this.userClickedEmitter.emit({ value: user })
   }
 }

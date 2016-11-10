@@ -104,6 +104,13 @@ export class OrganizationDialogComponent implements OnInit {
     }
   }
 
+  onMemberClicked(event) {
+    console.debug('OrganizationDialogComponent::onMemberClicked', { event })
+    let user = event.value
+    user.metadata.checked = !user.metadata.checked
+    this.userSelected(user)
+  }
+
   selectAll() {
     const { allUsers } = this
     console.debug('OrganizationDialogComponent::selectAll', { allUsers })

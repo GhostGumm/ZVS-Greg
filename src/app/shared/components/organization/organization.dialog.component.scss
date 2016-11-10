@@ -1,8 +1,9 @@
 zp-user-list{
   width: 300px;
-  max-height: 60vh;
-  overflow: auto;
   margin: -22px;
+  md-checkbox.user-checkbox{
+    pointer-events: none;
+  }
 }
 
 .zp-user-list-actions,

@@ -4,7 +4,7 @@
     
   </li>
 </ul>-->
-<zp-user-list [users]="members">
+<zp-user-list [users]="members" (userClickedEmitter)="onMemberClicked($event)">
   <div class="zp-user-list-actions">
     <h4>Contacts({{members?.length}})</h4>
     <span class="flex-fill"></span>
@@ -18,7 +18,7 @@
     <!--<button type="button" md-icon-button (click)="dialogRef.close(user)" color="primary">
       <md-icon>add</md-icon>
     </button>-->
-    <md-checkbox [(ngModel)]="user.metadata.checked" (change)="userSelected(user)"></md-checkbox>
+    <md-checkbox class="user-checkbox" [(ngModel)]="user.metadata.checked" (change)="userSelected(user)"></md-checkbox>
   </template>
 
   <div class="zp-user-list-actions-bottom">

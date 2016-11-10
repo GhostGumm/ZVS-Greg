@@ -12,6 +12,13 @@ md-nav-list a[md-list-item] [md-list-avatar]{
   // box-shadow: $zp-shadow-1;
   padding: 5px;
 }
+// Custom font cause overflow-y
+md-list[dense] md-list-item [md-line],
+md-list[dense] a[md-list-item] [md-line],
+md-nav-list[dense] md-list-item [md-line],
+md-nav-list[dense] a[md-list-item] [md-line]{
+  line-height: 15px;
+}
 
 md-icon {    
   &.md{

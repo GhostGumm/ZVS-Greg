@@ -1,4 +1,4 @@
-import { Component, ViewContainerRef, ViewChild, ElementRef, OnInit, OnDestroy, Input, Output, trigger, AfterViewInit, HostBinding } from '@angular/core'
+import { Component, ViewContainerRef, ViewChild, ElementRef, HostListener, OnInit, OnDestroy, Input, Output, trigger, AfterViewInit, HostBinding } from '@angular/core'
 import { MdSnackBar, MdSnackBarConfig } from '@angular/material'
 import { Subscription } from 'rxjs/Subscription'
 import { Animations } from '../../utils/'
@@ -21,6 +21,15 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
   @Input() toolbarIsVisible: boolean = false
   @Input() navigationOpened: boolean = false
 
+  @HostBinding('@routeAnimation') get routeAnimation() {
+    return true
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.updateWindowSize(event.target.innerWidth)
+  }
+
+  isMobile: boolean
   snackBar: any = MdSnackBar
   viewContainerRef: any = ViewContainerRef
   subscriptions: Array<Subscription> = []
@@ -33,11 +42,8 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
     online:true
   }
 
-  @HostBinding('@routeAnimation') get routeAnimation() {
-    return true
-  }
-
   ngOnInit() {
+    this.updateWindowSize(window.innerWidth)
     this.subscriptions.push(this.navigation.onOpenStart.subscribe(() => {
       this.navigationOpened = true
     }))
@@ -48,17 +54,25 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
 
   ngAfterViewInit() {
     this.toolbarIsVisible = true
-    console.debug('DashboardViewComponent::ngAfterViewInit', this.navigation)
+    console.debug('AuthenticatedLayoutComponent::ngAfterViewInit', this.navigation)
   }
 
   ngOnDestroy() {
-    console.debug('NavigationComponent::ngOnDestroy')
+    console.debug('AuthenticatedLayoutComponent::ngOnDestroy')
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
+  }
+
+  updateWindowSize(width) {
+    this.isMobile = width<800 ? true : false
+    console.debug('AuthenticatedLayoutComponent::updateWindowSize',{
+      width,
+      isMobile:this.isMobile
+    })
   }
 
   toast() {
     let config = new MdSnackBarConfig(this.viewContainerRef)
-    console.debug('DashboardViewComponent::toast', {
+    console.debug('AuthenticatedLayoutComponent::toast', {
       snack: this.snackBar,
       config
     })
