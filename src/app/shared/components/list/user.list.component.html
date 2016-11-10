@@ -1,17 +1,36 @@
 
 <ng-content select=".zp-user-list-actions"></ng-content>
 
-<md-list dense *ngIf="!loading" [@loadingAnimation]="!loading">
-  <md-list-item *ngFor="let user of users" [routerLink]="[]">
+
+<!-- User link list -->
+<md-list dense *ngIf="!loading && link" [@loadingAnimation]="!loading">
+  <md-list-item *ngFor="let user of users; let $index = index; trackBy: trackById;" [routerLink]="user.metadata.link">
     <img md-list-avatar src="{{user.avatar}}" alt="{{user.firstname}}">
     <h3 md-line>
       <zp-username [user]="user"></zp-username>
     </h3>
-    <p md-line *ngIf="lastMessage">
+    <p md-line md-line-last-message *ngIf="lastMessage">
+      <span> {{user.metadata.message}} </span>
+    </p>      
+    <template [ngTemplateOutlet]="templateUserAction" [ngOutletContext]="{user:user}" select=".zp-user-list-user-action"></template>
+  </md-list-item>
+
+</md-list>
+
+<!-- User action list -->
+<md-list dense *ngIf="!loading && !link" [@loadingAnimation]="!loading">
+  <md-list-item *ngFor="let user of users; let $index = index; trackBy: trackById;">
+    <img md-list-avatar src="{{user.avatar}}" alt="{{user.firstname}}">
+    <h3 md-line>
+      <zp-username [user]="user"></zp-username>
+    </h3>
+    <p md-line md-line-last-message *ngIf="lastMessage">
       <span> {{user.metadata.message}} </span>
     </p>      
     <template [ngTemplateOutlet]="templateUserAction" [ngOutletContext]="{user:user}" select=".zp-user-list-user-action"></template>
   </md-list-item>
 </md-list>
+
+<ng-content select=".zp-user-list-actions-bottom"></ng-content>
 
 <md-spinner *ngIf="loading" [@loadingAnimation]="loading"></md-spinner>

@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core'
 import { MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material'
+
+import { ZetaPushClient } from './../../../zetapush';
 import { ApiUserService, UserInterface, UserClass } from '../../../services/'
 
-import { client } from '../../../zetapush/'
 import { ApiZetalk, ApiConversation } from '../../../zetapush/api'
 
 @Component({
@@ -17,7 +18,8 @@ export class OrganizationComponent implements OnInit {
   constructor(
     public dialog: MdDialog,
     public viewContainerRef: ViewContainerRef,
-    private apiConversation: ApiConversation) { }
+    private apiConversation: ApiConversation,
+    private client: ZetaPushClient) { }
 
   openDialog() {
     const config = new MdDialogConfig()
@@ -27,10 +29,16 @@ export class OrganizationComponent implements OnInit {
     this.dialogRef = this.dialog.open(OrganizationDialogComponent, config)
 
     this.dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.createConversation(result)
+      console.debug('OrganizationComponent::dialogRef:afterClosed', { result })
+      if (result) {   
+        // Create conversation for each checked user in result     
+        for (let user of result) {
+          const { id, metadata:{ checked } } = user
+          if (checked) {
+            this.createConversation(id)
+          }
+        }
       }
-
       this.dialogRef = null
     })
   }
@@ -38,14 +46,14 @@ export class OrganizationComponent implements OnInit {
   ngOnInit() {
   }
 
-  createConversation(result) {
-    const interlocutors = [result.id, client.getUserId()]
+  createConversation(id) {
+    const interlocutors = [id, this.client.getUserId()]
 
     console.log('OrganizationComponent::createDirectConversation',{
-      result,
+      id,
       interlocutors
     })
-    
+
     this.apiConversation.createDirectConversation({
       name:'direct',
       interlocutors
@@ -65,6 +73,8 @@ export class OrganizationComponent implements OnInit {
 export class OrganizationDialogComponent implements OnInit {
 
   members: UserInterface[] = []
+  allUsers: boolean
+  selected: number = 0
 
   constructor(
     public dialogRef: MdDialogRef<OrganizationDialogComponent>,
@@ -86,8 +96,34 @@ export class OrganizationDialogComponent implements OnInit {
       this.members.push(new UserClass({
         id:userKey,
         login,
-        firstname:firstname? firstname : userKey
+        firstname:firstname? firstname : userKey,
+        metadata:{
+          checked:false
+        }
       }))
+    }
+  }
+
+  selectAll() {
+    const { allUsers } = this
+    console.debug('OrganizationDialogComponent::selectAll', { allUsers })
+    for(let member of this.members) {
+      member.metadata.checked = allUsers ? true : false
+    }
+    allUsers ? this.selected = this.members.length : this.selected = 0
+  }
+
+  userSelected(member:UserInterface) {
+    console.debug('OrganizationDialogComponent::userSelected', { member })
+    if (member.metadata.checked === true) {
+      this.selected++
+      if (this.selected === this.members.length) {
+        this.allUsers = true
+      }
+    }
+    else {
+      this.selected--
+      this.allUsers = false
     }
   }
 }

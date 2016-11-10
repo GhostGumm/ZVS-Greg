@@ -23,6 +23,10 @@ md-list-item{
     h3{
       transform: translateX(10px);
     }
+    [md-line-last-message] > span{
+      display: inline-block;
+      animation-name: last-message-hover;
+    }
   }
 }
 
@@ -30,6 +34,33 @@ md-list-item{
   padding: 2px;
   background-color: $background;
   border: 2px solid $background-accent;
+}
+
+[md-line-last-message]{
+  span{
+    animation-duration: 16s;
+    animation-timing-function: linear;
+  }
+}
+@keyframes last-message-hover{
+  0%, 100%{
+    transform: translateX(0);
+  }
+  49%{
+    transform: translateX(-100%);
+    opacity: 1;
+  }
+  50%{
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  51%{
+    opacity: 0;
+    transform: translateX(0);
+  }
+  60%{
+    opacity: 1;
+  }
 }
 
 md-spinner{

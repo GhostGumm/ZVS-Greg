@@ -27,6 +27,11 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     console.debug('UserListComponent::constructor', this)
   }
 
+    // Custom Track By
+  trackById(index: number, user: UserInterface) {
+    return user.id
+  }
+
   ngOnInit() {
     console.debug('UserListComponent::ngOnInit', {
       users: this.users,

@@ -1,4 +1,4 @@
-import { ApiUserService, UserInterface } from './../../../services/';
+import { ApiUserService, UserInterface, UserClass } from './../../../services/';
 import { Component, HostBinding, Input, OnInit, AfterViewInit, AfterContentInit, trigger, ChangeDetectionStrategy } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { Animations } from '../../../utils/utils.animation'
@@ -21,7 +21,7 @@ import { MessagesComponent, VideoComponent } from '../../components'
 export class ConversationViewComponent implements OnInit, AfterViewInit, AfterContentInit {
   private $params: any
   private mode: string
-  private users: UserInterface[]
+  private users: UserInterface[] = []
   @Input() messagesIsVisible: boolean
   @Input() videoIsVisible: boolean
   @Input() audioIsVisible: boolean
@@ -59,7 +59,11 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
     })
     // Mock purpose
     this.userService.getAllUsers().then((users) => {
-      this.users = users.slice(0,5)
+      let users_tmp: UserInterface[] = []
+      for (let user of users) {
+        users_tmp.push(new UserClass(user))
+      }
+      this.users = users_tmp.slice(0,5)
     })
   }
 

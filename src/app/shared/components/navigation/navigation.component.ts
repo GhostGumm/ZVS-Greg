@@ -109,9 +109,11 @@ export class NavigationComponent implements OnDestroy, OnInit {
   getUsers() {
     this.userService.getAllUsers().then(users => {
       console.debug('NavigationComponent::getUsers', { users })
+      let users_tmp: UserInterface[] = []
       for (let user of users) {
-        this.users.push(new UserClass(user))
+        users_tmp.push(new UserClass(user))
       }
+      this.users = users_tmp
     })
     // this.onNavigationLoaded()
   }

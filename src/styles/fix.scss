@@ -79,3 +79,14 @@ zp-messages{
     margin-bottom: 2px;
   }
 }
+
+// Checkbox unaligned
+
+md-checkbox{
+  display:flex;
+}
+.md-list-item{
+  md-checkbox{
+    margin-right: 4px;
+  }
+}
