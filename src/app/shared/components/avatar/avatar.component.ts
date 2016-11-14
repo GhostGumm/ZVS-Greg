@@ -10,18 +10,11 @@ export class AvatarComponent implements OnInit {
   @Input() user: UserInterface
   @Input() size: number
   @Input() presence: boolean = false
-  avatar: string
 
   constructor(public elementRef: ElementRef, private renderer: Renderer) {
   }
 
   ngOnInit() {
-    if (!this.user) {
-      this.avatar = './assets/zetalk_logo.png'
-    }
-    else {
-      this.avatar = this.user.avatar
-    }
     if (!this.size) {
       this.size = 120
     }
