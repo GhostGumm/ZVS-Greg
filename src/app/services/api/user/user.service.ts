@@ -5,13 +5,13 @@ import { UserInterface } from './user.interface'
 import { USERS } from './user.mock'
 
 @Injectable()
-export class ApiUserService implements OnDestroy {
+export class UserService implements OnDestroy {
   subscriptions: Array<Subscription> = []
 
   constructor() {
   }
   ngOnDestroy() {
-    console.debug('ApiUserService::ngOnDestroy')
+    console.debug('UserService::ngOnDestroy')
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
   }
 

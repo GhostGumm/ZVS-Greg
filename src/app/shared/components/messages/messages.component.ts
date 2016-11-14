@@ -1,13 +1,16 @@
-import { Component, HostBinding, HostListener, Input, ViewChild, ElementRef, OnInit, AfterViewInit, OnDestroy, trigger } from '@angular/core'
+
+
+import { Component, HostBinding, HostListener, ChangeDetectionStrategy, Input, ViewChild, ElementRef, OnInit, OnChanges, AfterViewInit, OnDestroy, trigger } from '@angular/core'
 import { Router } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
 import { Animations } from '../../../utils/utils.animation'
 
 import { ScrollGlueDirective } from '../../../utils/utils.scroll'
 import { FileUploader, FileDropDirective, FileSelectDirective } from 'ng2-file-upload'
-import { MessageService } from './message.service'
-
-import { MessageInterface, MessageClass } from './message.interface'
+import { 
+  UserInterface,
+  MessageService, MessageInterface, MessageClass
+} from './../../../services';
 
 const PROVIDERS = [ ScrollGlueDirective, MessageService, FileDropDirective, FileSelectDirective]
 
@@ -23,21 +26,10 @@ const PROVIDERS = [ ScrollGlueDirective, MessageService, FileDropDirective, File
   ]
 })
 
-export class MessagesComponent implements OnInit, AfterViewInit, OnDestroy {
-  indexMessageTest = 0
-  messages: MessageInterface[] = Array.from(new Array(20), () => {
-    this.indexMessageTest++
-    return new MessageClass({
-      id:`${this.indexMessageTest}`,
-      author:'toto',
-      metadata:{},
-      isHovered:false,
-      type:'text',
-      value:'http://google.fr regarde ça raphael @toto',
-      raw:'http://google.fr regarde ça raphael @toto',
-      date:Date.now()
-    })
-  })
+export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+  @Input() messages: MessageInterface[]
+  @Input() users: UserInterface[]
+
   messageModel: any = {
     raw:null
   }
@@ -60,7 +52,6 @@ export class MessagesComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private messageService: MessageService
   ) {
-    messageService.indexByAuthor(this.messages)
   }
 
   /**
@@ -87,6 +78,17 @@ export class MessagesComponent implements OnInit, AfterViewInit, OnDestroy {
     console.debug('MessagesComponent::ngOnInit', {
       messages: this.messages
     })
+  }  
+  ngOnChanges(changes) {
+    console.debug('MessagesComponent::ngOnChanges', {
+      users: this.users,
+      messages: this.messages,
+      changes
+    })
+    // Mock Purpose
+    if (changes.messages.currentValue) {
+      this.messageService.indexByAuthor(this.messages)
+    }
   }
   
   // Custom Track By

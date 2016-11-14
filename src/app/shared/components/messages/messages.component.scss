@@ -54,7 +54,7 @@ md-list-item{
 }
 [md-list-avatar]{
   position: absolute;
-  left:-$md-list-avatar-computed-size;
+  left:-($md-list-avatar-computed-size + 10);
   top: 5px;
   background-repeat: no-repeat;
   background-size: 80%;

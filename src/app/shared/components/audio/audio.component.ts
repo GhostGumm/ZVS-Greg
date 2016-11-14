@@ -3,14 +3,14 @@ import { Animations } from '../../../utils/utils.animation'
 
 import { 
   RtcService, RtcInterface, RtcClass,
-  ApiUserService, UserInterface
+  UserService, UserInterface
 } from '../../../services/'
 
 @Component({
   selector: 'zp-audio',
   templateUrl: './audio.component.html',
   styleUrls: ['./audio.component.scss'],
-  providers: [ ApiUserService, RtcService ],
+  providers: [ UserService, RtcService ],
   animations: [
     trigger('routeAnimation', Animations.swipeOutDownView())
   ]
@@ -25,7 +25,7 @@ export class AudioComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private userService: ApiUserService,
+    private userService: UserService,
     private videoService: RtcService
   ) {
   }

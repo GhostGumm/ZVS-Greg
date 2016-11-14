@@ -2,7 +2,9 @@ import { Component, ViewContainerRef, ViewChild, ElementRef, HostListener, OnIni
 import { MdSnackBar, MdSnackBarConfig } from '@angular/material'
 import { Subscription } from 'rxjs/Subscription'
 import { Animations } from '../../utils/'
-import { UserInterface } from '../../services/'
+
+import { ApiUser } from './../../zetapush/api';
+import { UserClass, UserInterface } from '../../services/'
 
 @Component({
   animations: [
@@ -33,13 +35,17 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
   snackBar: any = MdSnackBar
   viewContainerRef: any = ViewContainerRef
   subscriptions: Array<Subscription> = []
-  user: UserInterface = {
-    id:'1',
-    login: 'john.doe@yopmail.com',
-    firstname: 'John',
-    lastname: 'Doe',
-    avatar: './assets/zetalk_logo.png',
-    online:true
+  user: UserInterface
+
+  constructor(private apiUser: ApiUser) {
+    this.user = new UserClass({
+      id:'1',
+      login: 'john.doe@yopmail.com',
+      firstname: 'John',
+      lastname: 'Doe',
+      avatar: './assets/zetalk_logo.png',
+      online:true
+    })
   }
 
   ngOnInit() {
@@ -54,7 +60,7 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
 
   ngAfterViewInit() {
     this.toolbarIsVisible = true
-    console.debug('AuthenticatedLayoutComponent::ngAfterViewInit', this.navigation)
+    console.debug('AuthenticatedLayoutComponent::ngAfterViewInit')
   }
 
   ngOnDestroy() {
@@ -63,7 +69,7 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
   }
 
   updateWindowSize(width) {
-    this.isMobile = width<800 ? true : false
+    this.isMobile = width < 800 ? true : false
     console.debug('AuthenticatedLayoutComponent::updateWindowSize',{
       width,
       isMobile:this.isMobile

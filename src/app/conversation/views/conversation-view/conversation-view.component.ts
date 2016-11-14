@@ -1,4 +1,8 @@
-import { ApiUserService, UserInterface, UserClass } from './../../../services/';
+import {
+  UserService, UserInterface, UserClass,
+  MessageInterface, MessageClass
+} from './../../../services/';
+
 import { Component, HostBinding, Input, OnInit, AfterViewInit, AfterContentInit, trigger, ChangeDetectionStrategy } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { Animations } from '../../../utils/utils.animation'
@@ -22,6 +26,7 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
   private $params: any
   private mode: string
   private users: UserInterface[] = []
+  private messages: MessageInterface[] = []
   @Input() messagesIsVisible: boolean
   @Input() videoIsVisible: boolean
   @Input() audioIsVisible: boolean
@@ -31,10 +36,9 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
     return true
   }
   
-  constructor(
-    private route: ActivatedRoute, 
-    private router: Router,
-    private userService: ApiUserService) {
+  constructor(private route: ActivatedRoute, 
+              private router: Router,
+              private userService: UserService) {
     this.messagesIsVisible = true
     this.videoIsVisible = false
     this.audioIsVisible = false
@@ -57,14 +61,45 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
     console.log('ConversationViewComponent::ngAfterViewInit', { 
       params: this.$params
     })
-    // Mock purpose
-    this.userService.getAllUsers().then((users) => {
-      let users_tmp: UserInterface[] = []
-      for (let user of users) {
-        users_tmp.push(new UserClass(user))
+    this.getConversationDetails(this.$params.id)
+  }
+
+  getConversationDetails(id) {    
+    
+    // Mock purpose 
+    const getMessages = () => {
+      let messages = 20
+      let messages_tmp: MessageInterface[] = []
+      for (let i = 0; i <= messages; i++) {
+        const author = this.users[0].id
+        messages_tmp.push(new MessageClass({
+          id:`${i}`,
+          author,
+          metadata:{},
+          isHovered:false,
+          type:'text',
+          value:'http://google.fr regarde ça raphael @toto',
+          raw:'http://google.fr regarde ça raphael @toto',
+          date:Date.now(),
+          user: this.users.find(u => u.id == author)
+        }))
       }
-      this.users = users_tmp.slice(0,5)
-    })
+      this.messages = messages_tmp
+      console.debug('ConversationViewComponent::onGetConversationDetails')
+    }
+
+    const getUsers = () => {
+      this.userService.getAllUsers().then((users) => {
+        let users_tmp: UserInterface[] = []
+        for (let user of users) {
+          users_tmp.push(new UserClass(user))
+        }
+        this.users = users_tmp.slice(0,5)
+        getMessages()
+      })
+    }
+
+    getUsers()
   }
 
   openView(mode) {
@@ -93,16 +128,17 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
   addRouteListener() {
     this.route.params.subscribe((params) => {
       let oldId = this.$params ? this.$params.id : params['id']
-      
+      console.debug('ConversationViewComponent::paramsChanged', { 
+        id: params['id'],
+        oldId
+       })      
+      this.$params = params
       if (params['id'] !== oldId){
         /**
          * TODO : reload component on param changed
          */
-        return
+        this.getConversationDetails(this.$params.id)
       }
-
-      this.$params = params
-      console.debug('ConversationViewComponent::paramsChanged')
     })
   }
 }

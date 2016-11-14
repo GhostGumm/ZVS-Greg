@@ -22,10 +22,3 @@ export const COMPONENTS = [
   OrganizationComponent,
   OrganizationDialogComponent
 ]
-
-
-import { MessageService } from './messages/message.service'
-
-export const COMPONENTS_SERVICES = [
-  MessageService
-]

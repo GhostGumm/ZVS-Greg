@@ -2,7 +2,7 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core'
 import { MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material'
 
 import { ZetaPushClient } from './../../../zetapush';
-import { ApiUserService, UserInterface, UserClass } from '../../../services/'
+import { UserService, UserInterface, UserClass } from '../../../services/'
 
 import { ApiZetalk, ApiConversation } from '../../../zetapush/api'
 

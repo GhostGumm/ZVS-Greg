@@ -24,6 +24,6 @@ export class DashboardViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.$params)
+    console.debug('DashboardViewComponent::ngOnInit')
   }
 }

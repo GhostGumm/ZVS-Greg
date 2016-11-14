@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
-import { ApiUserService, UserInterface, UserClass } from '../../../services/'
+import { UserService, UserInterface, UserClass } from '../../../services/'
 import { ApiZetalk } from '../../../zetapush/api'
 
 /** 
@@ -11,7 +11,7 @@ import { ApiZetalk } from '../../../zetapush/api'
   selector: 'zp-navigation',
   styleUrls: ['./navigation.component.scss'],
   templateUrl: './navigation.component.html',
-  providers: [ ApiUserService ]
+  providers: [ UserService ]
 })
 export class NavigationComponent implements OnDestroy, OnInit {
   @Input() navigation: any // md-sidenav reference
@@ -35,7 +35,7 @@ export class NavigationComponent implements OnDestroy, OnInit {
 
   constructor(
     private router: Router,
-    private userService: ApiUserService,
+    private userService: UserService,
     private api: ApiZetalk
   ) {
     /**
