@@ -30,8 +30,8 @@ export class OrganizationComponent implements OnInit {
 
     this.dialogRef.afterClosed().subscribe((result) => {
       console.debug('OrganizationComponent::dialogRef:afterClosed', { result })
-      if (result) {   
-        // Create conversation for each checked user in result     
+      if (result) {
+        // Create conversation for each checked user in result
         for (let user of result) {
           const { id, metadata:{ checked } } = user
           if (checked) {
@@ -43,25 +43,16 @@ export class OrganizationComponent implements OnInit {
     })
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  createConversation(id) {
-    const interlocutors = [id, this.client.getUserId()]
-
-    console.log('OrganizationComponent::createDirectConversation',{
-      id,
-      interlocutors
-    })
-
-    this.apiConversation.createDirectConversation({
-      name:'direct',
-      interlocutors
-    }).then(result => {
-      console.debug('OrganizationComponent::onCreateDirectConversation', { result })
-    }).catch(error => {
-      console.error('OrganizationComponent::onCreateDirectConversation', { error })
-    })
+  createConversation(interlocutor) {
+    this.apiConversation
+        .createOneToOneConversation({ interlocutor })
+        .then(({ conversation }) => {
+          console.debug('OrganizationComponent::onCreateOneToOneConversation', { conversation })
+        }, (message) => {
+          console.error('OrganizationComponent::onCreateOneToOneConversation', message)
+        })
   }
 }
 
@@ -91,17 +82,18 @@ export class OrganizationDialogComponent implements OnInit {
 
   onGetOrganisation({ organization }) {
     console.debug('OrganizationDialogComponent::onGetOrganisation', organization)
-    for (let member of organization.members) {
-      const { login, email, userKey, firstname, lastName, online } = member
-      this.members.push(new UserClass({
-        id:userKey,
+    this.members = organization.members.map((member) => {
+      const { login, email, userKey, firstname = member.login, lastname } = member
+      return new UserClass({
+        id: userKey,
         login,
-        firstname:firstname? firstname : userKey,
-        metadata:{
-          checked:false
+        firstname,
+        lastname,
+        metadata: {
+          checked: false
         }
-      }))
-    }
+      })
+    })
   }
 
   onMemberClicked(event) {
@@ -112,15 +104,13 @@ export class OrganizationDialogComponent implements OnInit {
   }
 
   selectAll() {
-    const { allUsers } = this
+    const { allUsers, members } = this
     console.debug('OrganizationDialogComponent::selectAll', { allUsers })
-    for(let member of this.members) {
-      member.metadata.checked = allUsers ? true : false
-    }
-    allUsers ? this.selected = this.members.length : this.selected = 0
+    members.forEach(({ metadata }) => metadata.checked = allUsers ? true : false)
+    this.selected = allUsers ? members.length : 0
   }
 
-  userSelected(member:UserInterface) {
+  userSelected(member: UserInterface) {
     console.debug('OrganizationDialogComponent::userSelected', { member })
     if (member.metadata.checked === true) {
       this.selected++
