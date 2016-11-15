@@ -3,7 +3,7 @@ import {
   MessageInterface, MessageClass
 } from './../../../services/';
 
-import { Component, HostBinding, Input, OnInit, AfterViewInit, AfterContentInit, trigger, ChangeDetectionStrategy } from '@angular/core'
+import { Component, HostBinding, Input, OnInit, AfterViewInit, AfterContentInit, trigger, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { Animations } from '../../../utils/utils.animation'
 
@@ -14,7 +14,6 @@ import { MessagesComponent, VideoComponent } from '../../components'
   templateUrl: './conversation-view.component.html',
   styleUrls:['./conversation-view.component.scss'],
   providers: [ MessagesComponent, VideoComponent ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('routeAnimation', Animations.fadeInOutView()),
     trigger('messagesAnimation', Animations.swipeOutDownView()),
@@ -36,9 +35,11 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
     return true
   }
   
-  constructor(private route: ActivatedRoute, 
-              private router: Router,
-              private userService: UserService) {
+  constructor(
+    private route: ActivatedRoute, 
+    private router: Router,
+    private userService: UserService
+  ){
     this.messagesIsVisible = true
     this.videoIsVisible = false
     this.audioIsVisible = false
@@ -85,7 +86,10 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
         }))
       }
       this.messages = messages_tmp
-      console.debug('ConversationViewComponent::onGetConversationDetails')
+      console.debug('ConversationViewComponent::onGetConversationDetails', {
+        messages: this.messages,
+        users: this.users
+      })
     }
 
     const getUsers = () => {

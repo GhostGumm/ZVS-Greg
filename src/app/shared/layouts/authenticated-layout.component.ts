@@ -32,12 +32,14 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
   }
 
   isMobile: boolean
-  snackBar: any = MdSnackBar
   viewContainerRef: any = ViewContainerRef
   subscriptions: Array<Subscription> = []
   user: UserInterface
 
-  constructor(private apiUser: ApiUser) {
+  constructor(
+    private apiUser: ApiUser,    
+    private snackBar: MdSnackBar
+  ) {
     this.user = new UserClass({
       id:'1',
       login: 'john.doe@yopmail.com',
@@ -77,7 +79,7 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
   }
 
   toast() {
-    let config = new MdSnackBarConfig(this.viewContainerRef)
+    let config = new MdSnackBarConfig()
     console.debug('AuthenticatedLayoutComponent::toast', {
       snack: this.snackBar,
       config
