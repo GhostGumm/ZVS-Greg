@@ -19,9 +19,10 @@ md-card{
   transition-duration: 400ms;
 }
 
-// navigation mode="side" not animated :(
+// navigation mode="side" not animated :( && overflow-x visible on load
 .md-sidenav-content {
     transition: transform 400ms cubic-bezier(0.25, 0.8, 0.25, 1), margin-left 400ms cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    overflow-x: hidden !important;
 }
 
 // improved hover effect transition
@@ -73,6 +74,7 @@ zp-organization-dialog{
       max-height: 60vh;
       overflow: auto;
       overflow: overlay;
+      padding-bottom: 4px;
     }
   }
 }
