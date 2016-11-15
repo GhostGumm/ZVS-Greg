@@ -4,7 +4,7 @@
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
-    "start": "ng serve",
+    "start": "ng serve --port 3000 --host 0.0.0.0",
     "lint": "tslint \"src/**/*.ts\"",
     "serve": "(cd dist && python ../python-gzip.py)"
   },

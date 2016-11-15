@@ -2,9 +2,9 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
 import { UserService, UserInterface, UserClass } from '../../../services/'
-import { ApiZetalk } from '../../../zetapush/api'
+import { ApiConversation } from '../../../zetapush/api'
 
-/** 
+/**
  * Main navigation component
  */
 @Component({
@@ -18,6 +18,7 @@ export class NavigationComponent implements OnDestroy, OnInit {
   @Input() user: UserInterface
 
   users: Array<UserInterface> = []
+  contacts: Array<any> = []
   routes: any[] = [
     {
       name: 'Stats',
@@ -36,14 +37,14 @@ export class NavigationComponent implements OnDestroy, OnInit {
   constructor(
     private router: Router,
     private userService: UserService,
-    private api: ApiZetalk
+    private api : ApiConversation
   ) {
     /**
      * Route state listener
      */
     this.subscriptions.push(router.events.subscribe((event) => {
       if (event.constructor.name === 'NavigationEnd') {
-        console.debug('NavigationComponent::routeChange', { 
+        console.debug('NavigationComponent::routeChange', {
           state: event.constructor.name,
           url: event.url,
           lastRoute: this.lastRoute
@@ -55,8 +56,12 @@ export class NavigationComponent implements OnDestroy, OnInit {
         this.lastRoute = event.url
       }
     }))
-
-    window['ApiZetalk'] = api
+    /**
+     * Handle create one to one conversation
+     */
+    this.subscriptions.push(api.onCreateOneToOneConversation.subscribe(({ conversation }) => {
+      this.getNavigationItems()
+    }))
   }
 
   ngOnInit() {
@@ -95,7 +100,7 @@ export class NavigationComponent implements OnDestroy, OnInit {
   getNavigationItems() {
     this.getUsers()
   }
-  
+
   onNavigationLoaded() {
     // Wired timeout needed to open nav on start
     setTimeout(() => {
@@ -109,12 +114,15 @@ export class NavigationComponent implements OnDestroy, OnInit {
   getUsers() {
     this.userService.getAllUsers().then(users => {
       console.debug('NavigationComponent::getUsers', { users })
-      let users_tmp: UserInterface[] = []
-      for (let user of users) {
-        users_tmp.push(new UserClass(user))
-      }
-      this.users = users_tmp
+      this.users = users
     })
     // this.onNavigationLoaded()
+  }
+
+  getContact() {
+    this.userService.getContact().then(contacts => {
+      console.debug('getContact', contacts)
+      this.contacts = contacts
+    })
   }
 }

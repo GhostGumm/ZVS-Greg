@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs/Subscription'
   animations: [
     trigger('loadingAnimation', Animations.fadeIn())
   ]
-  
+
 })
 export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @ContentChild(TemplateRef) templateUserAction;
@@ -19,7 +19,7 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   @Input() link: string
   @Input() lastMessage: boolean = false
   @Output() userClickedEmitter = new EventEmitter()
-  
+
   subscriptions: Array<Subscription> = []
   loading: boolean = true
   isExpanded: boolean = false
@@ -51,10 +51,9 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     if (event.users.currentValue) {
       OrderBy(this.users, 'online')
       for (let user of this.users) {
-        user.metadata = {
-          message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error temporibus quaerat repellendus incidunt recusandae aut quia ullam reprehenderit iure.',
+        user.metadata = Object.assign(user.metadata, {
           link: this.link ? `${this.link}${user.id}` : ''
-        }
+        })
       }
       setTimeout(() => {
         this.loading = false
