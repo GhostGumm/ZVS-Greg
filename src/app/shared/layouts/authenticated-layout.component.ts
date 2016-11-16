@@ -1,14 +1,18 @@
-import { Component, ViewContainerRef, ViewChild, ElementRef, HostListener, OnInit, OnDestroy, Input, Output, trigger, AfterViewInit, HostBinding } from '@angular/core'
+import {
+  Component, ViewContainerRef, ViewChild, HostListener, OnInit, OnDestroy,
+  Input, trigger, AfterViewInit, HostBinding
+} from '@angular/core'
+import { Router } from '@angular/router'
 import { MdSnackBar, MdSnackBarConfig } from '@angular/material'
 import { Subscription } from 'rxjs/Subscription'
-import { Animations } from '../../utils/'
 
-import { ApiUser } from './../../zetapush/api';
-import { UserClass, UserInterface } from '../../services/'
+import { Animations } from '../../utils/'
+import { UserService, UserClass, UserInterface } from '../../services/'
+import { ZetaPushConnection } from '../../zetapush'
 
 @Component({
   animations: [
-    trigger('toolbarAnimation', Animations.slideUpDown({ duration:'250ms' })),
+    trigger('toolbarAnimation', Animations.slideUpDown({ duration: '250ms' })),
     trigger('profileAnimation', Animations.slideUpDown()),
     trigger('routeAnimation', Animations.fadeIn())
   ],
@@ -23,29 +27,36 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
   @Input() toolbarIsVisible: boolean = false
   @Input() navigationOpened: boolean = false
 
-  @HostBinding('@routeAnimation') get routeAnimation() {
-    return true
-  }
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.updateWindowSize(event.target.innerWidth)
-  }
-
   isMobile: boolean
   snackBar: any = MdSnackBar
   viewContainerRef: any = ViewContainerRef
   subscriptions: Array<Subscription> = []
   user: UserInterface
 
-  constructor(private apiUser: ApiUser) {
+  constructor(
+    private connecion: ZetaPushConnection,
+    private router: Router,
+    private userService: UserService
+  ) {
+    // TODO FIXME Need an non empty object
     this.user = new UserClass({
-      id:'1',
-      login: 'john.doe@yopmail.com',
-      firstname: 'John',
-      lastname: 'Doe',
+      id: '0',
+      login: 'anonymous',
+      firstname: '',
+      lastname: '',
       avatar: './assets/zetalk_logo.png',
-      online:true
+      online: false
     })
+  }
+
+  @HostBinding('@routeAnimation')
+  get routeAnimation() {
+    return true
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.updateWindowSize(event.target.innerWidth)
   }
 
   ngOnInit() {
@@ -56,6 +67,10 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
     this.subscriptions.push(this.navigation.onCloseStart.subscribe(() => {
       this.navigationOpened = false
     }))
+    this.userService.getUser().then(user => {
+      console.debug('AuthenticatedLayoutComponent::onGetUser', user)
+      this.user = user
+    })
   }
 
   ngAfterViewInit() {
@@ -70,18 +85,25 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
 
   updateWindowSize(width) {
     this.isMobile = width < 800 ? true : false
-    console.debug('AuthenticatedLayoutComponent::updateWindowSize',{
+    console.debug('AuthenticatedLayoutComponent::updateWindowSize', {
       width,
-      isMobile:this.isMobile
+      isMobile: this.isMobile
     })
   }
 
   toast() {
-    let config = new MdSnackBarConfig(this.viewContainerRef)
+    const config = new MdSnackBarConfig(this.viewContainerRef)
     console.debug('AuthenticatedLayoutComponent::toast', {
       snack: this.snackBar,
       config
     })
     this.snackBar.open('It didn\'t quite work!', 'Try Again', config)
+  }
+
+  onLogout() {
+    console.debug('AuthenticatedLayoutComponent::onLogout')
+    this.connecion.disconnect().then(() => {
+      this.router.navigate(['/login'])
+    })
   }
 }

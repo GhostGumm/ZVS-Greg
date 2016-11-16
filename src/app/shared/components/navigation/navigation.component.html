@@ -1,10 +1,10 @@
-<zp-profile [user]="user"></zp-profile>
+<zp-profile [user]="user" (logout)="onLogout()"></zp-profile>
 
 <div zp-nav-overflow>
   <md-nav-list>
     <button color="primary" *ngFor="let route of routes" md-button [routerLink]="route.link">
       <md-icon>{{route.icon}}</md-icon>
-      {{route.name}}    
+      {{route.name}}
     </button>
   </md-nav-list>
 
@@ -13,6 +13,6 @@
       <h4>Contacts({{users?.length}})</h4>
       <span class="flex-fill"></span>
       <zp-add-contact></zp-add-contact>
-    </div>    
-  </zp-user-list>  
+    </div>
+  </zp-user-list>
 </div>
