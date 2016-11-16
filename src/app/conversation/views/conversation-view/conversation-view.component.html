@@ -15,6 +15,9 @@
 <zp-audio [users]="users" [@audioAnimation]="audioIsVisible"></zp-audio>
 <zp-video [users]="users" [@videoAnimation]="videoIsVisible"></zp-video>
 
+<md-spinner class="centered" *ngIf="loading" [@loadingAnimation]="loading"></md-spinner>
+
+
 <!--
 <md-tab-group>
   <md-tab>

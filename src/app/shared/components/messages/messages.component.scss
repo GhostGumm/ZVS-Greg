@@ -12,6 +12,14 @@ md-list{
   overflow: auto;
   padding-bottom: 8px;
   background-color: $background-fade;
+  &.empty{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+[md-list-empty]{
+  color: md-color($primary);
 }
 
 md-list-item{

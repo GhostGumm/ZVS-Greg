@@ -1,6 +1,8 @@
 
 
-<md-list class="zp-messages-list" zpScrollGlue>
+<md-list class="zp-messages-list" zpScrollGlue [class.empty]="messages.length === 0">
+  <h4 md-list-empty *ngIf="messages.length === 0">0 messages</h4>
+
   <md-list-item *ngFor="let message of messages; let $index = index; trackBy: trackByMessageId;"
       (mouseenter)="onMouseEnterMessage($event, message, $index)"
       (mouseleave)="onMouseLeaveMessage($event, message, $index)"

@@ -49,4 +49,11 @@ md-icon {
 md-spinner{
   width: $md-spinner-size !important;
   height: $md-spinner-size !important;
+  &.centered{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -($md-spinner-size * 0.5);
+    margin-top: -($md-spinner-size * 0.5);
+  }
 }

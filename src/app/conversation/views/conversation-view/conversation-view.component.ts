@@ -16,12 +16,14 @@ import { MessagesComponent, VideoComponent } from '../../components'
   providers: [ MessagesComponent, VideoComponent ],
   animations: [
     trigger('routeAnimation', Animations.fadeInOutView()),
+    trigger('loadingAnimation', Animations.fadeIn()),
     trigger('messagesAnimation', Animations.swipeOutDownView()),
     trigger('videoAnimation', Animations.swipeOutDownView()),
     trigger('audioAnimation', Animations.swipeOutDownView())
   ]
 })
 export class ConversationViewComponent implements OnInit, AfterViewInit, AfterContentInit {
+  private loading: boolean = false
   private $params: any
   private mode: string
   private users: UserInterface[] = []
@@ -65,11 +67,16 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
     this.getConversationDetails(this.$params.id)
   }
 
-  getConversationDetails(id) {    
+  getConversationDetails(id) {  
+    this.loading = true  
     
     // Mock purpose 
     const getMessages = () => {
-      let messages = 20
+      /**
+       * TODO : Fetch messages and create MessageClass array
+       */
+
+      /*let messages = 20
       let messages_tmp: MessageInterface[] = []
       for (let i = 0; i <= messages; i++) {
         const author = this.users[0].id
@@ -85,20 +92,21 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
           user: this.users.find(u => u.id == author)
         }))
       }
-      this.messages = messages_tmp
+      this.messages = messages_tmp*/
       console.debug('ConversationViewComponent::onGetConversationDetails', {
         messages: this.messages,
         users: this.users
       })
+      this.loading = false
     }
 
     const getUsers = () => {
       this.userService.getAllUsers().then((users) => {
-        let users_tmp: UserInterface[] = []
-        for (let user of users) {
-          users_tmp.push(new UserClass(user))
-        }
-        this.users = users_tmp.slice(0,5)
+        // let users_tmp: UserInterface[] = []
+        // for (let user of users) {
+        //   users_tmp.push(new UserClass(user))
+        // }
+        // this.users = users_tmp.slice(0,5)
         getMessages()
       })
     }
@@ -138,9 +146,7 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
        })      
       this.$params = params
       if (params['id'] !== oldId){
-        /**
-         * TODO : reload component on param changed
-         */
+        // reload child component inputs
         this.getConversationDetails(this.$params.id)
       }
     })
