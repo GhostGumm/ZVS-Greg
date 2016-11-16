@@ -102,8 +102,8 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
 
   onLogout() {
     console.debug('AuthenticatedLayoutComponent::onLogout')
-    this.connecion.disconnect().then(() => {
-      this.router.navigate(['/login'])
-    })
+    this.connecion.disconnect()
+      .then(() => this.connecion.connect({}))
+      .then(() => this.router.navigate(['/login']))
   }
 }
