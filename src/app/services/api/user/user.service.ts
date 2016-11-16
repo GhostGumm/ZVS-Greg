@@ -40,7 +40,7 @@ export class UserService implements OnDestroy {
         online: true,
         metadata: {
           message: contact.conversations
-            .filter(({ conversation }) => conversation.name === 'I18N.ONE_TO_ONE_CONVERSATION')
+            .filter(({ details }) => details.name === 'I18N.ONE_TO_ONE_CONVERSATION')
             .reduce((value, { messages }) => {
               const [ message = { data: { value: '' } } ] = messages
               return message.data.value

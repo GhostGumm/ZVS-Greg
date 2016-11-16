@@ -125,4 +125,8 @@ export class NavigationComponent implements OnDestroy, OnInit {
       this.contacts = contacts
     })
   }
+
+  logout() {
+    console.debug('NavigationComponent::logout')
+  }
 }

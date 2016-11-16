@@ -15,14 +15,14 @@ import { COMPONENTS } from './components'
 import { LAYOUTS } from './layouts'
 
 import { AuthenticationService } from './authentication.service'
-import { UserService, MessageService, RtcService } from '../services/'
+import { SERVICES as DATA_SERVICES } from '../services/'
 
 import { ScrollGlueDirective } from '../utils'
 import { FileDropDirective, FileSelectDirective } from 'ng2-file-upload'
 
 const CORE_MODULES = [ CommonModule, BrowserModule, FormsModule, HttpModule ]
 const DIRECTIVES = [ ScrollGlueDirective, FileDropDirective, FileSelectDirective]
-const SERVICES = [ AuthenticationService, UserService, MessageService, RtcService ]
+const SERVICES = [ AuthenticationService, ...DATA_SERVICES ]
 
 @NgModule({
   declarations: [ ...COMPONENTS, ...LAYOUTS, ...DIRECTIVES ],
