@@ -1,13 +1,14 @@
-
-
-import { Component, HostBinding, HostListener, ChangeDetectionStrategy, Input, ViewChild, ElementRef, OnInit, OnChanges, AfterViewInit, OnDestroy, trigger } from '@angular/core'
+import {
+  Component, HostBinding, HostListener, Input,
+  ViewChild, ElementRef, AfterViewInit, OnInit, OnChanges, OnDestroy, trigger
+} from '@angular/core'
 import { Router } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
 import { Animations } from '../../../utils/utils.animation'
 
 import { ScrollGlueDirective } from '../../../utils/utils.scroll'
 import { FileUploader, FileDropDirective, FileSelectDirective } from 'ng2-file-upload'
-import { 
+import {
   UserInterface,
   MessageService, MessageInterface, MessageClass
 } from './../../../services';
@@ -31,7 +32,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   @Input() users: UserInterface[]
 
   messageModel: any = {
-    raw:null
+    raw: null
   }
   limits: any = {
     message: 1000,
@@ -48,6 +49,11 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     return true
   }
 
+  @HostListener('document:dragenter', ['$event'])
+
+  // uploader dom ref
+  @ViewChild('uploadInput') uploadInputRef: ElementRef
+
   constructor(
     private router: Router,
     private messageService: MessageService
@@ -57,7 +63,6 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   /**
    * Drag & Drop listener
    */
-  @HostListener('document:dragenter', ['$event'])
   onDragEnter(event:MouseEvent) {
     console.debug('MessagesComponent::onDragEnter',{ event })
     this.dropZoneActive = true
@@ -78,7 +83,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     console.debug('MessagesComponent::ngOnInit', {
       messages: this.messages
     })
-  }  
+  }
   ngOnChanges(changes) {
     console.debug('MessagesComponent::ngOnChanges', {
       users: this.users,
@@ -90,14 +95,12 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
       this.messageService.indexByAuthor(this.messages)
     }
   }
-  
+
   // Custom Track By
   trackByMessageId(index: number, message: MessageInterface) {
     return message.id
   }
 
-  // uploader dom ref
-  @ViewChild('uploadInput') uploadInputRef: ElementRef
   ngAfterViewInit() {
   this.uploader.onAfterAddingFile = (item => {
     this.uploadInputRef.nativeElement.value = ''
@@ -105,7 +108,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   }
 
   // Click on md-list-item
-  onClickMessage(event:MouseEvent, message, index) {
+  onClickMessage(event: MouseEvent, message, index) {
     console.debug('MessagesComponent::onClickMessage', { message, event, index })
     const { type } = message
     switch(type) {
@@ -121,7 +124,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     }
   }
   onImageClicked() {
-    
+
   }
   /**
    * Select files with input
@@ -136,7 +139,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     // })
     // this.uploader.uploadAll()
     // this.uploader.clearQueue()
-    
+
     this.addFiles(queue)
   }
   /**
@@ -157,7 +160,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
       }
     }
   }
-  /** 
+  /**
    * Process input by type
    */
   processInput({ type = 'text', file = null } = {}) {
@@ -165,14 +168,14 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     const uploader = this.uploader
 
     const message = new MessageClass({
-      id:`${this.messages.length}`,
-      type:type,
+      id: `${this.messages.length}`,
+      type: type,
       author: 'Raphaël',
       date: Date.now(),
       raw,
       owner: true,
-      isHovered:false,
-      metadata:{}
+      isHovered: false,
+      metadata: {}
     })
 
     console.log('MessagesComponent::processInput', {
@@ -181,7 +184,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
       message
     })
 
-    switch(type){
+    switch (type) {
     case 'text':
       this.messageService.processMessage(message)
       this.resetForm()
@@ -195,8 +198,8 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     }
     this.messages.push(message)
     this.messageService.indexByAuthor(this.messages, message)
-    
-    if (uploader.queue.length == 0) {
+
+    if (uploader.queue.length === 0) {
       uploader.clearQueue()
     }
   }
@@ -204,7 +207,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   resetForm() {
     this.messageModel.raw = null
   }
-  
+
   ngOnDestroy() {
     console.debug('MessagesComponent::ngOnDestroy')
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())

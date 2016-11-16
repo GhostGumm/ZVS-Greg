@@ -1,5 +1,3 @@
-
-
 <md-list class="zp-messages-list" zpScrollGlue>
   <md-list-item *ngFor="let message of messages; let $index = index; trackBy: trackByMessageId;"
       (mouseenter)="onMouseEnterMessage($event, message, $index)"
@@ -20,11 +18,10 @@
   </md-list-item>
 </md-list>
 
-
-<md-toolbar class="zp-messages-inputs flex-centered">  
+<md-toolbar class="zp-messages-inputs flex-centered">
   <md-progress-bar mode="determinate" value="{{uploader.progress}}"></md-progress-bar>
 
-  <button class="zp-input-files" type="button" md-icon-button color="primary"> 
+  <button class="zp-input-files" type="button" md-icon-button color="primary">
     <md-icon>file_upload</md-icon>
     <input #uploadInput type="file" ng2FileSelect capture="camera" [uploader]="uploader" [multiple]="multiple" (change)="onSelectAttachment($event)"/>
   </button>
@@ -37,11 +34,11 @@
 
   <button type="submit" md-icon-button color="primary" form="messageForm">
     <md-icon>send</md-icon>
-  </button> 
+  </button>
 
   <button type="button" md-icon-button color="primary">
     <md-icon>sentiment_satisfied</md-icon>
-  </button> 
+  </button>
 </md-toolbar>
 
 <div class="zp-messages-dropzone" ng2FileDrop [uploader]="uploader" *ngIf="dropZoneActive" [@dropZoneAnimation]="dropZoneActive"

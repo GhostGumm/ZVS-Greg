@@ -1,4 +1,5 @@
 import {
+  ConversationService,
   UserService, UserInterface, UserClass,
   MessageInterface, MessageClass
 } from './../../../services/';
@@ -27,46 +28,61 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
   private mode: string
   private users: UserInterface[] = []
   private messages: MessageInterface[] = []
-  @Input() messagesIsVisible: boolean
-  @Input() videoIsVisible: boolean
-  @Input() audioIsVisible: boolean
-  
+
+  @Input() messagesIsVisible: boolean = true
+  @Input() videoIsVisible: boolean = false
+  @Input() audioIsVisible: boolean = false
 
   @HostBinding('@routeAnimation') get routeAnimation() {
     return true
   }
-  
-  constructor(private route: ActivatedRoute, 
+
+  constructor(private route: ActivatedRoute,
               private router: Router,
+              private conversationService: ConversationService,
               private userService: UserService) {
-    this.messagesIsVisible = true
-    this.videoIsVisible = false
-    this.audioIsVisible = false
     this.addRouteListener()
   }
 
   ngOnInit() {
-    console.log('ConversationViewComponent::ngOnInit', { 
+    console.log('ConversationViewComponent::ngOnInit', {
       params: this.$params
     })
   }
 
   ngAfterContentInit() {
-    console.log('ConversationViewComponent::ngAfterContentInit', { 
+    console.log('ConversationViewComponent::ngAfterContentInit', {
       params: this.$params
     })
   }
 
   ngAfterViewInit() {
-    console.log('ConversationViewComponent::ngAfterViewInit', { 
+    console.log('ConversationViewComponent::ngAfterViewInit', {
       params: this.$params
     })
-    this.getConversationDetails(this.$params.id)
+    this.getConversation(this.$params.id)
   }
 
-  getConversationDetails(id) {    
-    
-    // Mock purpose 
+  getConversation(interlocutor) {
+    this.conversationService.getOneToOneConversation(interlocutor).then((conversation) => {
+      console.log('getConversation', conversation)
+      //
+      this.messages = conversation.messages.map((message) => {
+        return new MessageClass({
+          id: message.guid,
+          author: message.data.author,
+          metadata: {},
+          isHovered: false,
+          type: 'text',
+          value: 'http://google.fr regarde ça raphael @toto',
+          raw: 'http://google.fr regarde ça raphael @toto',
+          date: Date.now(),
+          user: this.users.find(u => u.id === message.data.author)
+        })
+      })
+    })
+/*
+    // Mock purpose
     const getMessages = () => {
       let messages = 20
       let messages_tmp: MessageInterface[] = []
@@ -85,7 +101,7 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
         }))
       }
       this.messages = messages_tmp
-      console.debug('ConversationViewComponent::onGetConversationDetails')
+      console.debug('ConversationViewComponent::onGetConversation')
     }
 
     const getUsers = () => {
@@ -100,6 +116,7 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
     }
 
     getUsers()
+*/
   }
 
   openView(mode) {
@@ -127,18 +144,9 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
 
   addRouteListener() {
     this.route.params.subscribe((params) => {
-      let oldId = this.$params ? this.$params.id : params['id']
-      console.debug('ConversationViewComponent::paramsChanged', { 
-        id: params['id'],
-        oldId
-       })      
+      this.getConversation(params['id'])
+      console.debug('ConversationViewComponent::params', params)
       this.$params = params
-      if (params['id'] !== oldId){
-        /**
-         * TODO : reload component on param changed
-         */
-        this.getConversationDetails(this.$params.id)
-      }
     })
   }
 }
