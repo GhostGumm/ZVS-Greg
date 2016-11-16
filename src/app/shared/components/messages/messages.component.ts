@@ -102,16 +102,16 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   }
 
   ngAfterViewInit() {
-  this.uploader.onAfterAddingFile = (item => {
-    this.uploadInputRef.nativeElement.value = ''
-    });
+    this.uploader.onAfterAddingFile = (item => {
+      this.uploadInputRef.nativeElement.value = ''
+    })
   }
 
   // Click on md-list-item
   onClickMessage(event: MouseEvent, message, index) {
     console.debug('MessagesComponent::onClickMessage', { message, event, index })
     const { type } = message
-    switch(type) {
+    switch (type) {
     // case 'text':
     //   this.onImageClicked()
     //   break
