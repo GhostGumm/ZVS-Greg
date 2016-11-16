@@ -31,7 +31,7 @@ export class UserService implements OnDestroy {
 
   getContact(): Promise<UserInterface[]> {
     return this.api.listContact().then(({ contacts }) => contacts.map(contact => {
-      console.debug('getContact', contacts)
+      console.debug('UserService::getContact', contacts)
       return new UserClass({
         id: contact.user.userKey,
         firstname: contact.user.firstname,

@@ -102,9 +102,10 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   }
 
   ngAfterViewInit() {
-  this.uploader.onAfterAddingFile = (item => {
-    this.uploadInputRef.nativeElement.value = ''
-    });
+    // Clear input on adding file
+    this.uploader.onAfterAddingFile = (item => {
+      this.uploadInputRef.nativeElement.value = ''
+    })
   }
 
   // Click on md-list-item

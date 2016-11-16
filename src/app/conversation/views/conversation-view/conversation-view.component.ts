@@ -61,70 +61,21 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
     console.log('ConversationViewComponent::ngAfterViewInit', {
       params: this.$params
     })
-    this.getConversation(this.$params.id)
   }
 
   getConversation(interlocutor) {
-    this.conversationService.getOneToOneConversation(interlocutor).then((conversation) => {
-      console.log('getConversation', conversation)
-      //
-      this.messages = conversation.messages.map((message) => {
-        return new MessageClass({
-          id: message.guid,
-          author: message.data.author,
-          metadata: {},
-          isHovered: false,
-          type: 'text',
-          value: 'http://google.fr regarde ça raphael @toto',
-          raw: 'http://google.fr regarde ça raphael @toto',
-          date: Date.now(),
-          user: this.users.find(u => u.id === message.data.author)
-        })
-      })
-    })
-/*
-    const getMessages = () => {
-      /**
-       * TODO : Fetch messages and create MessageClass array
-       */
+    console.log('ConversationViewComponent::getConversation', interlocutor)
+    this.loading = true
 
-      /*let messages = 20
-      let messages_tmp: MessageInterface[] = []
-      for (let i = 0; i <= messages; i++) {
-        const author = this.users[0].id
-        messages_tmp.push(new MessageClass({
-          id:`${i}`,
-          author,
-          metadata:{},
-          isHovered:false,
-          type:'text',
-          value:'http://google.fr regarde ça raphael @toto',
-          raw:'http://google.fr regarde ça raphael @toto',
-          date:Date.now(),
-          user: this.users.find(u => u.id == author)
-        }))
-      }
-      this.messages = messages_tmp*/
-      console.debug('ConversationViewComponent::onGetConversationDetails', {
+    this.conversationService.getOneToOneConversation(interlocutor).then((result) => {
+      const { messages, users } = result
+
+      this.loading = false
+      console.log('ConversationViewComponent::getConversation:success', {
         messages: this.messages,
         users: this.users
       })
-      this.loading = false
-    }
-
-    const getUsers = () => {
-      this.userService.getAllUsers().then((users) => {
-        // let users_tmp: UserInterface[] = []
-        // for (let user of users) {
-        //   users_tmp.push(new UserClass(user))
-        // }
-        // this.users = users_tmp.slice(0,5)
-        getMessages()
-      })
-    }
-
-    getUsers()
-*/
+    })
   }
 
   openView(mode) {
@@ -152,8 +103,8 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
 
   addRouteListener() {
     this.route.params.subscribe((params) => {
-      this.getConversation(params['id'])
       console.debug('ConversationViewComponent::params', params)
+      this.getConversation(params['id'])
       this.$params = params
     })
   }
