@@ -1,8 +1,7 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core'
+import { Component, Input, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core'
 import { Router } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
-import { UserService, UserInterface, UserClass } from '../../../services/'
-import { ApiConversation } from '../../../zetapush/api'
+import { ConversationService, UserService, UserInterface, UserClass } from '../../../services/'
 
 /**
  * Main navigation component
@@ -16,6 +15,7 @@ import { ApiConversation } from '../../../zetapush/api'
 export class NavigationComponent implements OnDestroy, OnInit {
   @Input() navigation: any // md-sidenav reference
   @Input() user: UserInterface
+  @Output() logout = new EventEmitter()
 
   users: Array<UserInterface> = []
   contacts: Array<any> = []
@@ -36,8 +36,8 @@ export class NavigationComponent implements OnDestroy, OnInit {
 
   constructor(
     private router: Router,
-    private userService: UserService,
-    private api : ApiConversation
+    private conversationService: ConversationService,
+    private userService: UserService
   ) {
     /**
      * Route state listener
@@ -59,9 +59,7 @@ export class NavigationComponent implements OnDestroy, OnInit {
     /**
      * Handle create one to one conversation
      */
-    this.subscriptions.push(api.onCreateOneToOneConversation.subscribe(({ conversation }) => {
-      this.getNavigationItems()
-    }))
+    this.subscriptions.push(conversationService.onCreateOneToOneConversation.subscribe(() => this.getNavigationItems()))
   }
 
   ngOnInit() {
@@ -121,12 +119,12 @@ export class NavigationComponent implements OnDestroy, OnInit {
 
   getContact() {
     this.userService.getContact().then(contacts => {
-      console.debug('getContact', contacts)
       this.contacts = contacts
     })
   }
 
-  logout() {
-    console.debug('NavigationComponent::logout')
+  onLogout() {
+    this.logout.emit()
   }
+
 }

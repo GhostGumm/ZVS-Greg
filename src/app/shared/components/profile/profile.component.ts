@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostBinding } from '@angular/core'
+import { Component, OnInit, Input, HostBinding, Output, EventEmitter } from '@angular/core'
 import { UserInterface } from '../../../services/'
 
 @Component({
@@ -8,9 +8,7 @@ import { UserInterface } from '../../../services/'
 })
 export class ProfileComponent implements OnInit {
   @Input() user: UserInterface
-
-  constructor() {
-  }
+  @Output() logout = new EventEmitter()
 
   @HostBinding('class.flex-centered')
 
@@ -18,5 +16,8 @@ export class ProfileComponent implements OnInit {
     console.debug('ProfileComponent::ngOnInit', {
       user: this.user
     })
+  }
+  onLogoutClick() {
+    this.logout.emit()
   }
 }

@@ -112,7 +112,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   onClickMessage(event: MouseEvent, message, index) {
     console.debug('MessagesComponent::onClickMessage', { message, event, index })
     const { type } = message
-    switch(type) {
+    switch (type) {
     // case 'text':
     //   this.onImageClicked()
     //   break

@@ -7,20 +7,20 @@
 </div>
 
 <md-menu #menuProfile="mdMenu" x-position="after" y-position="below">
-  <button md-menu-item>
-    <div zp-user-presence></div> 
-    <span> Online </span>
+  <button md-menu-item disabled>
+    <div zp-user-presence></div>
+    <span>Online</span>
   </button>
-  <button md-menu-item>
-    <div zp-user-presence></div> 
-    <span> Occupied </span>
+  <button md-menu-item disabled>
+    <div zp-user-presence></div>
+    <span>Occupied</span>
   </button>
-  <button md-menu-item>
-    <div zp-user-presence></div> 
-    <span> Offline </span>
+  <button md-menu-item disabled>
+    <div zp-user-presence></div>
+    <span>Offline</span>
   </button>
-  <button md-menu-item> 
-    <md-icon> lock_open </md-icon>
-    <span> Logout </span>
+  <button md-menu-item (click)="onLogoutClick()">
+    <md-icon>lock_open</md-icon>
+    <span>Logout</span>
   </button>
 </md-menu>
