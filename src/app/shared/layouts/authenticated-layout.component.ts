@@ -1,5 +1,5 @@
 import {
-  Component, ViewContainerRef, ViewChild, HostListener, OnInit, OnDestroy,
+  Component, ViewChild, HostListener, OnInit, OnDestroy,
   Input, trigger, AfterViewInit, HostBinding
 } from '@angular/core'
 import { Router } from '@angular/router'
@@ -28,14 +28,13 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
   @Input() navigationOpened: boolean = false
 
   isMobile: boolean
-  viewContainerRef: any = ViewContainerRef
   subscriptions: Array<Subscription> = []
   user: UserInterface
 
   constructor(
     private connecion: ZetaPushConnection,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
     private snackBar: MdSnackBar
   ) {
     this.user = new UserClass({

@@ -34,9 +34,9 @@ export class ConversationService implements OnDestroy {
     private api: ApiConversation,
     private http: Http
   ) {
-    this.onCreateOneToOneConversation = api.onCreateOneToOneConversation.map(map)
-    this.onGetOneToOneConversation = api.onGetOneToOneConversation.map(map)
-    this.onAddConversationMarkup = api.onAddConversationMarkup.map(map)
+    this.onCreateOneToOneConversation = api.onCreateOneToOneConversation
+    this.onGetOneToOneConversation = api.onGetOneToOneConversation
+    this.onAddConversationMarkup = api.onAddConversationMarkup
   }
 
   createOneToOneConversation(interlocutor) : Promise<Conversation> {
@@ -73,12 +73,7 @@ export class ConversationService implements OnDestroy {
   }
 
   addConversationMarkup(id, owner, value) : Promise<Conversation> {
-    return wrap(this.api.addConversationMarkup({ id, owner, value }))
-  }
-
-  ngOnDestroy() {
-    console.debug('ConversationService::ngOnDestroy')
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe())
+    return this.api.addConversationMarkup({ id, owner, value })
   }
 
   addConversationAttachment({ id, owner, attachment }): Promise<any> {
@@ -87,5 +82,10 @@ export class ConversationService implements OnDestroy {
     return new Promise((resolve, reject) => {
 
     })
+  }
+
+  ngOnDestroy() {
+    console.debug('ConversationService::ngOnDestroy')
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe())
   }
 }
