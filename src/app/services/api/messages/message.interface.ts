@@ -10,8 +10,9 @@ export interface MessageInterface {
   metadata?: any
   value?: any
   date?: number
-  owner?: boolean
-  precede?: boolean
+  
+  isOwner?: boolean
+  isPrecede?: boolean
   isHovered?: boolean
 }
 
@@ -26,8 +27,9 @@ export class MessageClass implements MessageInterface {
   metadata
   value
   date
-  owner= false
-  precede= false
+
+  isOwner= false
+  isPrecede= false
   isHovered= false
 
   constructor(parameters: MessageInterface) {

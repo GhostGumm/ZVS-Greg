@@ -1,9 +1,18 @@
 import { Injectable } from '@angular/core'
-import { MessageInterface, MessageClass } from './message.interface'
+import { 
+  UserInterface,
+  MessageInterface, MessageClass
+} from '../..'
+import { ZetaPushClient } from '../../../zetapush'
 
 @Injectable()
 export class MessageService {
+  private userKey = this.zpClient.getUserId()
 
+  constructor(
+    private zpClient: ZetaPushClient
+  ) {
+  }
   /**
    * Messages: List of messages to index on init
    * Message? : Message to index once added
@@ -14,7 +23,7 @@ export class MessageService {
       const index = Messages.indexOf(Message)
       const previous = Messages[index - 1]
       if (Message.author === previous.author) {
-        Message.precede = true
+        Message.isPrecede = true
       }
     }
     else {
@@ -23,7 +32,7 @@ export class MessageService {
         let previous = Messages[index - 1]
         
         if (message.author === previous.author) {
-          message.precede = true
+          message.isPrecede = true
         }
       }
     }
@@ -34,9 +43,32 @@ export class MessageService {
     })
   }
 
-  processMessage(message) {
-    console.debug('MessageService::processMessage', { message })
-    message.value = message.raw 
+  processMessage({ message, users } : { message: any, users:Array<UserInterface> }) {
+    /**
+     * TOFIX : Unify message signature on macro
+     */
+    console.warn(message)
+    let data: any = {}
+    if (message.data) {
+      message.data.id = message.guid
+      Object.assign(data, message.data)
+    }
+    else {
+      Object.assign(data, message)
+    }
+    let { id, author, type, value, raw, date } = data
+    value = raw
+
+    return new MessageClass({
+      id,
+      author,
+      type,
+      value,
+      raw,
+      date,
+      isOwner: author === this.userKey ? true : false,
+      user: users.find(u => u.id === author)
+    })
   }
 
   processAttachment({message, file}) {
@@ -95,5 +127,6 @@ export class MessageService {
       message.type = 'image' 
       message.value = `assets/img/test/${name}`
     //
+    return message
   }
 }

@@ -1,17 +1,17 @@
-<md-list class="zp-messages-list" zpScrollGlue [class.empty]="messages.length === 0">
-  <h4 md-list-empty *ngIf="messages.length === 0">0 messages</h4>
+<md-list class="zp-messages-list" zpScrollGlue [class.empty]="conversation?.messages.length === 0">
+  <h4 md-list-empty *ngIf="conversation?.messages.length === 0">0 messages</h4>
 
-  <md-list-item *ngFor="let message of messages; let $index = index; trackBy: trackByMessageId;"
+  <md-list-item *ngFor="let message of conversation?.messages; let $index = index; trackBy: trackByMessageId;"
       (mouseenter)="onMouseEnterMessage($event, message, $index)"
       (mouseleave)="onMouseLeaveMessage($event, message, $index)"
       (click)="onClickMessage($event, message, $index)"
-      [class.owner]="message.owner" [class.precede]="message.precede" [class.hovered]="message.isHovered">
+      [class.owner]="message.isOwner" [class.precede]="message.isPrecede" [class.hovered]="message.isHovered">
     <zp-avatar md-list-avatar [user]="message.user" [size]="40"></zp-avatar>
 
-    <h3 md-line> {{message.author}} </h3>
+    <h3 md-line> {{message.user.firstname}} </h3>
 
     <p md-line [ngSwitch]="message.type">
-      <span *ngSwitchCase="'text'"> {{message.value}}</span>
+      <span *ngSwitchCase="'markup'"> {{message.value}}</span>
       <img md-list-image *ngSwitchCase="'image'" [src]="message.value">
       <span md-list-attachment *ngSwitchCase="'attachment'" class="fa {{message.metadata.class}}">{{message.metadata.type}}</span>
     </p>
@@ -28,7 +28,7 @@
     <input #uploadInput type="file" ng2FileSelect capture="camera" [uploader]="uploader" [multiple]="multiple" (change)="onSelectAttachment($event)"/>
   </button>
 
-  <form (ngSubmit)="processInput()" #messageForm="ngForm" id="messageForm">
+  <form (ngSubmit)="addMessage()" #messageForm="ngForm" id="messageForm">
     <md-input #messageRaw [(ngModel)]="messageModel.raw" class="zp-messages-inputs-text" maxlength="{{limits.message}}" name="messageRaw" id="messageRaw" required>
       <!--<md-hint align="end">{{messageRaw.characterCount || 0}} / {{limits.message}}</md-hint>-->
     </md-input>

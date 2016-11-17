@@ -3,6 +3,7 @@ export interface UserInterface {
   id: string
   login: string
 
+  email?: string
   firstname?: string
   lastname?: string
   online?: boolean
@@ -12,9 +13,11 @@ export interface UserInterface {
 
 export class UserClass implements UserInterface {
   id
+  login
+
+  email
   firstname
   lastname
-  login
   online = false
   avatar = './assets/zetalk_logo.png'
   metadata = {}

@@ -86,12 +86,12 @@ export class RtcService {
     }
   }
 
-  startVideo():Promise<any> {
+  startRtc({ audio=true, video=true } = {}):Promise<any> {
     console.debug('WebRtc::startVideo')
     return new Promise((resolve, reject) => {
       const getUserMedia = navigator.mediaDevices.getUserMedia({
-        audio: true,
-        video: true
+        audio,
+        video
       }) as Promise<any>
 
       getUserMedia.then((stream) => {

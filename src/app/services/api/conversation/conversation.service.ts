@@ -4,10 +4,11 @@ import { Observable } from 'rxjs/Observable'
 import { Subscription } from 'rxjs/Subscription'
 
 import { ApiConversation } from '../../../zetapush/api'
+import { ZetaPushClient } from '../../../zetapush'
 
 import {
   UserClass, UserInterface,
-  MessageClass, MessageInterface
+  MessageService, MessageClass, MessageInterface
 } from './../../../services/';
 
 export interface Conversation {
@@ -16,7 +17,9 @@ export interface Conversation {
   messages: Array<any>
   unread
 }
-export interface ConversationViewModel {
+export interface ConversationViewInterface {
+  id: string
+  owner: string
   users: Array<UserInterface>
   messages: Array<MessageInterface>
 }
@@ -29,10 +32,13 @@ export class ConversationService implements OnDestroy {
   public onCreateOneToOneConversation: Observable<Conversation>
   public onGetOneToOneConversation: Observable<Conversation>
   public onAddConversationMarkup: Observable<Conversation>
+  private userKey = this.zpClient.getUserId()
 
   constructor(
+    private zpClient: ZetaPushClient,
     private api: ApiConversation,
-    private http: Http
+    private http: Http,
+    //public messageService: MessageService
   ) {
     this.onCreateOneToOneConversation = api.onCreateOneToOneConversation
     this.onGetOneToOneConversation = api.onGetOneToOneConversation
@@ -43,37 +49,62 @@ export class ConversationService implements OnDestroy {
     return this.api.createOneToOneConversation({ interlocutor })
   }
 
-  getOneToOneConversation(interlocutor) : Promise<ConversationViewModel> {
-   return this.api.getOneToOneConversation({ interlocutor }).then((conversation) => {
-     console.debug('ConversationService::getOneToOneConversation', { conversation })
-      let result:ConversationViewModel = {
+  getOneToOneConversation(interlocutor) : Promise<ConversationViewInterface> {
+    return this.api.getOneToOneConversation({ interlocutor }).then((conversation) => {
+      const { messages, group:{ members }, details:{ id, owner } } = conversation
+      const result:ConversationViewInterface = {
+        id,
+        owner,
         users:[],
         messages:[]
       }
-      let { messages, group:{ members } } = conversation
+
       result.users = members.map((user) => {
-        return new UserClass(user)
+        const { userKey, firstname, lastname, email, login } = user
+        return new UserClass({
+          id:userKey,
+          login,
+          firstname,
+          lastname,
+          email
+        })
       })
 
       result.messages = messages.map((message) => {
+        // return this.messageService.processMessage({
+        //   message,
+        //   users:result.users
+        // })
+        const { guid, data:{ author, date, owner, raw, type, value } } = message
         return new MessageClass({
-          id: message.guid,
-          author: message.data.author,
-          metadata: {},
-          isHovered: false,
-          type: 'text',
-          value: 'http://google.fr regarde ça raphael @toto',
-          raw: 'http://google.fr regarde ça raphael @toto',
-          date: Date.now(),
-          user: result.users.find(u => u.id === message.data.author)
+          id: guid,
+          author,
+          type,
+          value,
+          raw,
+          date,
+          isOwner: author === this.userKey ? true : false,
+          user: result.users.find(u => u.id === author)
         })
       })
+      console.debug('ConversationService::getOneToOneConversation', { conversation, result })
       return result
-   })
+    })
   }
 
-  addConversationMarkup(id, owner, value) : Promise<Conversation> {
-    return this.api.addConversationMarkup({ id, owner, value })
+  addConversationMarkup(id, owner, value) : Promise<MessageInterface> {
+    return this.api.addConversationMarkup({ id, owner, value }).then((result) => {
+      const { id, message } = result
+      const { author, date, owner, raw, type, value } = message
+      return new MessageClass({
+        id,
+        type,
+        author,
+        date,
+        raw,
+        isOwner: author === this.userKey ? true : false
+      })
+    })
   }
 
   addConversationAttachment({ id, owner, attachment }): Promise<any> {

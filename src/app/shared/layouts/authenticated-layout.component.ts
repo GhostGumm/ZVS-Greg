@@ -32,7 +32,7 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
   user: UserInterface
 
   constructor(
-    private connecion: ZetaPushConnection,
+    private connection: ZetaPushConnection,
     private router: Router,
     private userService: UserService,
     private snackBar: MdSnackBar
@@ -100,8 +100,8 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
 
   onLogout() {
     console.debug('AuthenticatedLayoutComponent::onLogout')
-    this.connecion.disconnect()
-      .then(() => this.connecion.connect({}))
+    this.connection.disconnect()
+      .then(() => this.connection.connect({}))
       .then(() => this.router.navigate(['/login']))
   }
 }

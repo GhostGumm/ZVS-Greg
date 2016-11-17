@@ -1,5 +1,5 @@
 import {
-  ConversationService,
+  ConversationService, ConversationViewInterface,
   UserService, UserInterface, UserClass,
   MessageInterface, MessageClass
 } from './../../../services/';
@@ -27,8 +27,8 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
   private loading: boolean = false
   private $params: any
   private mode: string
-  private users: UserInterface[] = []
-  private messages: MessageInterface[] = []
+  private conversation: ConversationViewInterface
+  private owner: string
 
   @Input() messagesIsVisible: boolean = true
   @Input() videoIsVisible: boolean = false
@@ -38,10 +38,12 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
     return true
   }
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private conversationService: ConversationService,
-              private userService: UserService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private conversationService: ConversationService,
+    private userService: UserService
+  ) {
     this.addRouteListener()
   }
 
@@ -68,12 +70,10 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
     this.loading = true
 
     this.conversationService.getOneToOneConversation(interlocutor).then((result) => {
-      const { messages, users } = result
-
+      this.conversation = result
       this.loading = false
       console.log('ConversationViewComponent::getConversation:success', {
-        messages: this.messages,
-        users: this.users
+        conversation:this.conversation
       })
     })
   }

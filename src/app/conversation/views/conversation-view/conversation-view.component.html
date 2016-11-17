@@ -11,9 +11,14 @@
 </md-toolbar>
 
  
-<zp-messages [messages]="messages" [users]="users" [@messagesAnimation]="messagesIsVisible" [class.video]="videoIsVisible" [class.audio]="audioIsVisible"></zp-messages>
-<zp-audio [users]="users" [@audioAnimation]="audioIsVisible"></zp-audio>
-<zp-video [users]="users" [@videoAnimation]="videoIsVisible"></zp-video>
+<zp-messages
+  [conversation]="conversation"
+  [@messagesAnimation]="messagesIsVisible" [class.video]="videoIsVisible" [class.audio]="audioIsVisible">
+</zp-messages>
+
+<zp-audio [conversation]="conversation" [@audioAnimation]="audioIsVisible"></zp-audio>
+
+<zp-video [conversation]="conversation" [@videoAnimation]="videoIsVisible"></zp-video>
 
 <md-spinner class="centered" *ngIf="loading" [@loadingAnimation]="loading"></md-spinner>
 

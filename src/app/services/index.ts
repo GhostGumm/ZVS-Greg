@@ -1,4 +1,4 @@
-import { ConversationService } from './api/conversation/conversation.service'
+import { ConversationService, ConversationViewInterface } from './api/conversation/conversation.service'
 
 import { UserService } from './api/user/user.service'
 import { UserInterface, UserClass } from './api/user/user.interface'
@@ -10,7 +10,7 @@ import { RtcService } from './rtc/rtc.service'
 import { RtcClass, RtcInterface } from './rtc/rtc.interface'
 
 export {
-  ConversationService,
+  ConversationService, ConversationViewInterface,
   UserInterface, UserClass, UserService,
   MessageInterface, MessageClass, MessageService,
   RtcClass, RtcInterface, RtcService,
