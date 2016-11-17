@@ -41,9 +41,9 @@
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@angular/http/-/http-2.1.0.tgz#19aad01f791aa1e3794863d21b35bc377ce76987"
 
-"@angular/material":
-  version "2.0.0-alpha.9-3"
-  resolved "https://registry.yarnpkg.com/@angular/material/-/material-2.0.0-alpha.9-3.tgz#77e0f6a790069b2b9d48bff3eab78b5a59d244a0"
+"@angular/material@2.0.0-alpha.10":
+  version "2.0.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-2.0.0-alpha.10.tgz#c9f28b52aa9d0f71670e6ce163e22052ef63fcc2"
   dependencies:
     "@types/hammerjs" "^2.0.30"
 
@@ -81,7 +81,7 @@
   version "0.9.33"
   resolved "https://registry.yarnpkg.com/@types/chartist/-/chartist-0.9.33.tgz#669de759f0dc4f2be31aef7875d8a51166276ef6"
 
-"@types/hammerjs@^2.0.30":
+"@types/hammerjs@^2.0.30", "@types/hammerjs@^2.0.33":
   version "2.0.33"
   resolved "https://registry.yarnpkg.com/@types/hammerjs/-/hammerjs-2.0.33.tgz#45f57352474181425bb4b65f7313a60426d54bab"
 

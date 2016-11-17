@@ -69,31 +69,14 @@ export class OrganizationDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MdDialogRef<OrganizationDialogComponent>,
-    private api: ApiZetalk,
-    private conversation : ApiConversation) {
+    private userService: UserService) {
 
   }
 
   ngOnInit() {
-    this.api
-        .getOrganization()
-        .then((result) => this.onGetOrganisation(result))
-  }
-
-  onGetOrganisation({ organization }) {
-    console.debug('OrganizationDialogComponent::onGetOrganisation', organization)
-    this.members = organization.members.map((member) => {
-      const { login, email, userKey, firstname = member.login, lastname } = member
-      return new UserClass({
-        id: userKey,
-        login,
-        firstname,
-        lastname,
-        metadata: {
-          checked: false
-        }
-      })
-    })
+    this.userService
+        .getPotentialContact()
+        .then((members) => this.members = members)
   }
 
   onMemberClicked(event) {
@@ -117,8 +100,7 @@ export class OrganizationDialogComponent implements OnInit {
       if (this.selected === this.members.length) {
         this.allUsers = true
       }
-    }
-    else {
+    } else {
       this.selected--
       this.allUsers = false
     }

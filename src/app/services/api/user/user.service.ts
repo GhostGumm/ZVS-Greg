@@ -4,6 +4,22 @@ import { Subscription } from 'rxjs/Subscription'
 import { UserClass, UserInterface } from './user.interface'
 import { ApiUser, ApiZetalk } from '../../../zetapush/api'
 
+const transformContactsToUserList = ({ contacts }) => contacts.map(contact => new UserClass({
+  id: contact.user.userKey,
+  firstname: contact.user.firstname,
+  lastname: contact.user.lastname,
+  login: contact.user.login,
+  online: true,
+  metadata: {
+    message: contact.conversations
+      .filter(({ details }) => details.name === 'I18N.ONE_TO_ONE_CONVERSATION')
+      .reduce((value, { messages }) => {
+        const [ message = { data: { value: '' } } ] = messages
+        return message.data.value
+      }, '')
+  }
+}))
+
 @Injectable()
 export class UserService implements OnDestroy {
   subscriptions: Array<Subscription> = []
@@ -36,23 +52,11 @@ export class UserService implements OnDestroy {
     return this.getContact()
   }
 
+  getPotentialContact(): Promise<UserInterface[]> {
+    return this.apiZetalk.listPotentialContact().then(transformContactsToUserList)
+  }
+
   getContact(): Promise<UserInterface[]> {
-    return this.apiZetalk.listContact().then(({ contacts }) => contacts.map(contact => {
-      return new UserClass({
-        id: contact.user.userKey,
-        firstname: contact.user.firstname,
-        lastname: contact.user.lastname,
-        login: contact.user.login,
-        online: true,
-        metadata: {
-          message: contact.conversations
-            .filter(({ details }) => details.name === 'I18N.ONE_TO_ONE_CONVERSATION')
-            .reduce((value, { messages }) => {
-              const [ message = { data: { value: '' } } ] = messages
-              return message.data.value
-            }, '')
-        }
-      })
-    }))
+    return this.apiZetalk.listContact().then(transformContactsToUserList)
   }
 }
