@@ -39,6 +39,11 @@ export class ConversationService implements OnDestroy {
     this.onAddConversationMarkup = api.onAddConversationMarkup
   }
 
+  ngOnDestroy() {
+    console.debug('ConversationService::ngOnDestroy')
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe())
+  }
+
   createOneToOneConversation(interlocutor) : Promise<Conversation> {
     return this.api.createOneToOneConversation({ interlocutor })
   }
@@ -72,20 +77,21 @@ export class ConversationService implements OnDestroy {
    })
   }
 
-  addConversationMarkup(id, owner, value) : Promise<Conversation> {
-    return this.api.addConversationMarkup({ id, owner, value })
-  }
 
   addConversationAttachment({ id, owner, attachment }): Promise<any> {
-    this.api.uploadConversationAttachment({ id, owner })
-        .then(() => ({}))
-    return new Promise((resolve, reject) => {
-
-    })
+    return this.api.uploadConversationAttachment({ id, owner })
+        .then(({ guid, httpMethod, url }) => this.upload({ attachment, guid, httpMethod, url }))
+        .then((value) => this.api.addConversationAttachment({ id, owner, value }))
   }
 
-  ngOnDestroy() {
-    console.debug('ConversationService::ngOnDestroy')
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe())
+  private upload({ attachment, guid, httpMethod, url }): Promise<string> {
+    return new Promise((resolve, reject) => {
+      this.http.request(url, {
+        method: httpMethod,
+        body: attachment
+      })
+      .map(response => response.json())
+      .subscribe(() => resolve(guid), reject)
+    })
   }
 }

@@ -7,4 +7,7 @@ export class ApiZetalk extends Api {
   listContact() {
     return this.$publish('zetalk__listContact', {})
   }
+  listPotentialContact() {
+    return this.$publish('zetalk__listPotentialContact', {})
+  }
 }
