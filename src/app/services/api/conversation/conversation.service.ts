@@ -32,17 +32,19 @@ export class ConversationService implements OnDestroy {
   public onCreateOneToOneConversation: Observable<Conversation>
   public onGetOneToOneConversation: Observable<Conversation>
   public onAddConversationMarkup: Observable<Conversation>
+  public onAddConversationAttachment: Observable<Conversation>
   private userKey = this.zpClient.getUserId()
 
   constructor(
     private zpClient: ZetaPushClient,
     private api: ApiConversation,
     private http: Http,
-    //public messageService: MessageService
+    //private messageService: MessageService
   ) {
     this.onCreateOneToOneConversation = api.onCreateOneToOneConversation
     this.onGetOneToOneConversation = api.onGetOneToOneConversation
     this.onAddConversationMarkup = api.onAddConversationMarkup
+    this.onAddConversationAttachment = api.onAddConversationAttachment
   }
 
   ngOnDestroy() {
@@ -110,6 +112,7 @@ export class ConversationService implements OnDestroy {
         isOwner: author === this.userKey ? true : false
       })
     })
+  }
 
   addConversationAttachment({ id, owner, attachment }): Promise<any> {
     return this.api.uploadConversationAttachment({ id, owner })

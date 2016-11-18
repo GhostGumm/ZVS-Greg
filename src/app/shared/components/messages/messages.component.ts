@@ -61,6 +61,16 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     private messageService: MessageService,
     private conversationService: ConversationService,
   ) {
+    this.addApiObservable()
+  }
+
+  addApiObservable() {
+    this.subscriptions.push(this.conversationService.onAddConversationMarkup.subscribe((result) => {
+      this.onAddMessage(result)
+    }))
+    this.subscriptions.push(this.conversationService.onAddConversationAttachment.subscribe((result) => {
+      this.onAddFiles(result)
+    }))
   }
 
   /**
@@ -157,12 +167,15 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     }
   }
   addFiles(queue) {
-    console.debug('MessagesComponent::addFiles', { queue:queue.length, uploader:this.uploader })
+    console.debug('MessagesComponent::addFiles', { queue, uploader:this.uploader })
     if (queue.length > 0) {
       for (let file of queue) {
         this.processInput({ file })
       }
     }
+  }
+  onAddFiles(result) {
+    console.debug('MessagesComponent::onAddFiles', { result })
   }
 
   addMessage() {
@@ -174,6 +187,9 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
       this.processInput({ message })
       this.resetForm()
     })
+  }
+  onAddMessage(result) {
+    console.debug('MessagesComponent::onAddMessage', { result })
   }
 
   /**
