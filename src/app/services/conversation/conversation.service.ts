@@ -1,35 +1,23 @@
 import { Injectable, OnDestroy } from '@angular/core'
-import { Http, Response } from '@angular/http'
+import { Http } from '@angular/http'
 import { Observable } from 'rxjs/Observable'
 import { Subscription } from 'rxjs/Subscription'
 
-import { ApiConversation } from '../../../zetapush/api'
-import { ZetaPushClient } from '../../../zetapush'
+import { ApiConversation } from '../../zetapush/api'
+import { ZetaPushClient } from '../../zetapush'
 
-import { MessageService } from '../messages/message.service'
-import { MessageClass, MessageInterface } from '../messages/message.interface'
-import { UserClass, UserInterface } from '../user/user.interface'
+import { ConversationInterface, ConversationViewInterface } from './conversation.interface'
 
-export interface Conversation {
-  details: any
-  group: any
-  messages: Array<any>
-  unread
-}
-export interface ConversationViewInterface {
-  id: string
-  owner: string
-  users: Array<UserInterface>
-  messages: Array<MessageInterface>
-}
+import { MessageClass, MessageInterface, MessageService } from '../message'
+import { UserClass } from '../user'
 
 @Injectable()
 export class ConversationService implements OnDestroy {
 
   subscriptions: Array<Subscription> = []
 
-  public onCreateOneToOneConversation: Observable<Conversation>
-  public onGetOneToOneConversation: Observable<Conversation>
+  public onCreateOneToOneConversation: Observable<ConversationInterface>
+  public onGetOneToOneConversation: Observable<ConversationInterface>
   public onAddConversationMarkup: Observable<any>
   public onAddConversationAttachment: Observable<any>
   private userKey = this.zpClient.getUserId()
@@ -51,14 +39,14 @@ export class ConversationService implements OnDestroy {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
   }
 
-  createOneToOneConversation(interlocutor) : Promise<Conversation> {
+  createOneToOneConversation(interlocutor) : Promise<ConversationInterface> {
     return this.api.createOneToOneConversation({ interlocutor })
   }
 
   getOneToOneConversation(interlocutor) : Promise<ConversationViewInterface> {
     return this.api.getOneToOneConversation({ interlocutor }).then((conversation) => {
       const { messages, group:{ members }, details:{ id, owner } } = conversation
-      const result:ConversationViewInterface = {
+      const result: ConversationViewInterface = {
         id,
         owner,
         users:[],

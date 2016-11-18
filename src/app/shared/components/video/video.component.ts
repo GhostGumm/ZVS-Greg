@@ -1,11 +1,9 @@
 import { Component, Input, HostBinding, OnInit, OnChanges, OnDestroy, trigger } from '@angular/core'
 import { Animations } from '../../../utils/utils.animation'
 
-import { 
-  ConversationViewInterface,
-  RtcService, RtcInterface, RtcClass,
-  UserService, UserInterface
-} from '../../../services/'
+import { ConversationViewInterface } from '../../../services/conversation'
+import { RtcService, RtcInterface, RtcClass } from '../../../services/rtc'
+import { UserService } from '../../../services/user'
 
 @Component({
   selector: 'zp-video',
@@ -44,7 +42,7 @@ export class VideoComponent implements OnInit, OnChanges, OnDestroy {
     if (changes.conversation.currentValue) {
       this.rtcService.startRtc().then((data) => {
         const { stream, source } = data
-        // Mock Purpose        
+        // Mock Purpose
           this.initVideo(stream, source)
         //
         console.debug('VideoComponent::startVideo:success',{ data })
@@ -58,10 +56,10 @@ export class VideoComponent implements OnInit, OnChanges, OnDestroy {
     const { users } = this.conversation
     console.debug('VideoComponent::initVideo', { stream, source })
     // Mock Purpose
-    for (let user of users) { 
+    for (let user of users) {
       this.videos.push(new RtcClass({
         id:user.id,
-        user  
+        user
       }))
     }
     this.videos[0].focus = true

@@ -1,7 +1,9 @@
 import { Component, Input, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core'
 import { Router } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
-import { ConversationService, UserService, UserInterface, UserClass } from '../../../services/'
+
+import { ConversationService } from '../../../services/conversation'
+import { UserService, UserInterface } from '../../../services/user'
 
 /**
  * Main navigation component

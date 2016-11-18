@@ -1,6 +1,9 @@
+import {
+  Component, AfterViewInit, OnInit, OnDestroy, OnChanges, Input,
+  Output, EventEmitter, ContentChild, TemplateRef, trigger
+} from '@angular/core'
 
-import { Component, OnInit, AfterViewInit, OnDestroy, OnChanges, Input, Output, EventEmitter, ContentChild, TemplateRef, trigger, ChangeDetectionStrategy } from '@angular/core'
-import { UserInterface } from '../../../services/'
+import { UserInterface } from '../../../services/user'
 import { OrderBy, Animations } from '../../../utils/'
 import { Subscription } from 'rxjs/Subscription'
 
@@ -14,7 +17,7 @@ import { Subscription } from 'rxjs/Subscription'
 
 })
 export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
-  @ContentChild(TemplateRef) templateUserAction;
+  @ContentChild(TemplateRef) templateUserAction
   @Input() users: UserInterface[]
   @Input() link: string
   @Input() lastMessage: boolean = false

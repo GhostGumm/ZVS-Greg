@@ -1,17 +1,15 @@
-import {
-  ConversationService, ConversationViewInterface,
-  UserService, UserInterface, UserClass,
-  MessageInterface, MessageClass
-} from './../../../services/';
-
-import { Component, HostBinding, Input, OnInit, AfterViewInit, AfterContentInit, trigger, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
+import { Component, HostBinding, Input, OnInit, AfterViewInit, AfterContentInit, trigger } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
+
 import { Animations } from '../../../utils/utils.animation'
+
+import { ConversationService, ConversationViewInterface } from '../../../services/conversation'
+import { UserService } from '../../../services/user'
 
 @Component({
   selector: 'zp-conversation-view',
   templateUrl: './conversation-view.component.html',
-  styleUrls:['./conversation-view.component.scss'],
+  styleUrls: ['./conversation-view.component.scss'],
   animations: [
     trigger('routeAnimation', Animations.fadeInOutView()),
     trigger('loadingAnimation', Animations.fadeIn()),

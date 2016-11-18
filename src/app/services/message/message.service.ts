@@ -1,24 +1,25 @@
 import { Inject, Injectable } from '@angular/core'
-import {
-  UserInterface,
-  MessageInterface, MessageClass
-} from '../..'
-import { ZetaPushClient } from '../../../zetapush'
-import { ENVIRONMENT } from '../../../app-config.module'
+
+import { UserInterface } from '../user'
+import { MessageInterface, MessageClass } from '../message'
+
+import { ZetaPushClient } from '../../zetapush'
+import { ENVIRONMENT } from '../../app-config.module'
 
 @Injectable()
 export class MessageService {
   private userKey = this.zpClient.getUserId()
-  private proxy:string
+  private proxy: string
 
   constructor(
     @Inject(ENVIRONMENT) private environment,
     private zpClient: ZetaPushClient
   ) {
-    if (this.environment.production === true)
+    if (environment.production) {
       this.proxy = `http://file.zpush.io/${this.environment.ZETAPUSH_SANDBOX_ID}/cnvrst_hdfs/`
-    else
+    } else {
       this.proxy = `http://hq.zpush.io:9082/str/rest/deployed/${this.environment.ZETAPUSH_SANDBOX_ID}/cnvrst_hdfs/`
+    }
   }
   /**
    * Messages: List of messages to index on init

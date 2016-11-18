@@ -2,12 +2,15 @@ import {
   Component, ViewChild, HostListener, OnInit, OnDestroy,
   Input, trigger, AfterViewInit, HostBinding
 } from '@angular/core'
+
 import { Router } from '@angular/router'
+
 import { MdSnackBar, MdSnackBarConfig } from '@angular/material'
 import { Subscription } from 'rxjs/Subscription'
 
 import { Animations } from '../../utils/'
-import { UserService, UserClass, UserInterface } from '../../services/'
+
+import { UserService, UserClass, UserInterface } from '../../services/user'
 import { ZetaPushConnection } from '../../zetapush'
 
 @Component({

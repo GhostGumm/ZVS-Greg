@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core'
 import { MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material'
 
-import { ZetaPushClient } from './../../../zetapush';
-import { UserService, UserInterface, UserClass } from '../../../services/'
+import { ZetaPushClient } from './../../../zetapush'
+import { UserService, UserInterface } from '../../../services/user'
 
-import { ApiZetalk, ApiConversation } from '../../../zetapush/api'
+import { ApiConversation } from '../../../zetapush/api'
 
 @Component({
   selector: 'zp-add-contact',

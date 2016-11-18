@@ -1,5 +1,6 @@
 import { Component, ElementRef, Renderer, OnInit, Input } from '@angular/core'
-import { UserInterface } from '../../../services/'
+
+import { UserInterface } from '../../../services/user'
 
 @Component({
   selector: 'zp-avatar',

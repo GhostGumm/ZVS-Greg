@@ -1,8 +1,8 @@
 import { Injectable, OnDestroy } from '@angular/core'
 import { Subscription } from 'rxjs/Subscription'
 
-import { UserClass, UserInterface } from './user.interface'
-import { ApiUser, ApiZetalk } from '../../../zetapush/api'
+import { UserClass, UserInterface } from '../user'
+import { ApiUser, ApiZetalk } from '../../zetapush/api'
 
 const transformContactsToUserList = ({ contacts }) => contacts.map(contact => new UserClass({
   id: contact.user.userKey,
