@@ -170,15 +170,17 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   }
   // File select by user
   addFiles(queue) {
+    const uploader = this.uploader
     const { owner, id } = this.conversation
     console.debug('MessagesComponent::addFiles', { queue, uploader:this.uploader })
     if (queue.length > 0) {
       for (let attachment of queue) {
         this.conversationService.addConversationAttachment({ id, owner, attachment }).then((result) => {
           console.debug('onAddConversationAttachment', result)
-          //this.processFile(file)
+          //this.processFile(file) 
         })
       }
+      uploader.clearQueue()
     }
   }
   // On file uploaded
@@ -196,6 +198,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     this.messageService.indexByAuthor(messages, fileProcessed)
 
     console.log('MessagesComponent::processFile', {
+      queue: uploader.queue,
       message,
       fileProcessed
     })   
