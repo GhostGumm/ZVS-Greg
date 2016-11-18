@@ -1,7 +1,9 @@
-import { Component, OnInit, trigger, AfterViewInit, Input } from '@angular/core'
+import { Component, OnInit, trigger, AfterViewInit, Inject, Input } from '@angular/core'
 import * as Chartist from 'chartist'
 import { ChartType, ChartEvent } from 'angular2-chartist'
 import { Animations } from '../../../utils/utils.animation'
+
+import { ENVIRONMENT } from '../../../app-config.module'
 
 const data: any = require('./data.json')
 
@@ -30,7 +32,10 @@ export class StatsComponent implements OnInit, AfterViewInit {
   @Input() statsIsVisible: boolean = false
   charts: Chart[]
 
-  constructor() {
+  constructor(
+    @Inject(ENVIRONMENT) env
+  ) {
+    console.log('StatsComponent::constructor', env)
   }
 
   ngOnInit() {
