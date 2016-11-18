@@ -9,7 +9,7 @@ import { ZetaPushClient } from '../../../zetapush'
 import {
   UserClass, UserInterface,
   MessageService, MessageClass, MessageInterface
-} from './../../../services/';
+} from './../../../services/'
 
 export interface Conversation {
   details: any
@@ -31,8 +31,8 @@ export class ConversationService implements OnDestroy {
 
   public onCreateOneToOneConversation: Observable<Conversation>
   public onGetOneToOneConversation: Observable<Conversation>
-  public onAddConversationMarkup: Observable<Conversation>
-  public onAddConversationAttachment: Observable<Conversation>
+  public onAddConversationMarkup: Observable<any>
+  public onAddConversationAttachment: Observable<any>
   private userKey = this.zpClient.getUserId()
 
   constructor(
@@ -117,17 +117,35 @@ export class ConversationService implements OnDestroy {
   addConversationAttachment({ id, owner, attachment }): Promise<any> {
     return this.api.uploadConversationAttachment({ id, owner })
         .then(({ guid, httpMethod, url }) => this.upload({ attachment, guid, httpMethod, url }))
-        .then((value) => this.api.addConversationAttachment({ id, owner, value }))
+        .then((value) => {
+          console.debug('ConversationService::addConversationAttachment', { id, owner, value })
+          this.api.addConversationAttachment({ id, owner, value })
+        })
   }
 
   private upload({ attachment, guid, httpMethod, url }): Promise<string> {
+    console.debug('ConversationService::upload', { attachment, guid, httpMethod, url })
     return new Promise((resolve, reject) => {
-      this.http.request(url, {
-        method: httpMethod,
-        body: attachment
-      })
-      .map(response => response.json())
-      .subscribe(() => resolve(guid), reject)
+      // this.http.request(url, {
+      //   method: httpMethod,
+      //   body: attachment
+      // })
+      // .map(response => response.json())
+      // .subscribe(() => resolve(guid), reject)
+      var formData: any = new FormData()
+      var xhr = new XMLHttpRequest()
+      
+      xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4) {
+              if (xhr.status == 200) {
+                  resolve(guid)
+              } else {
+                  reject()
+              }
+          }
+      }
+      xhr.open("POST", url, true)
+      xhr.send(attachment._file)
     })
   }
 }

@@ -65,11 +65,13 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   }
 
   addApiObservable() {
-    this.subscriptions.push(this.conversationService.onAddConversationMarkup.subscribe((result) => {
-      this.onAddMessage(result)
+    const self = this
+    this.subscriptions.push(this.conversationService.onAddConversationMarkup.subscribe(({ result }) => {
+      const { message } = result
+      self.onAddMessage(message)
     }))
-    this.subscriptions.push(this.conversationService.onAddConversationAttachment.subscribe((result) => {
-      this.onAddFiles(result)
+    this.subscriptions.push(this.conversationService.onAddConversationAttachment.subscribe(({ result }) => {
+      self.onAddFiles(result)
     }))
   }
 
@@ -167,10 +169,14 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     }
   }
   addFiles(queue) {
+    const { owner, id } = this.conversation
     console.debug('MessagesComponent::addFiles', { queue, uploader:this.uploader })
     if (queue.length > 0) {
-      for (let file of queue) {
-        this.processInput({ file })
+      for (let attachment of queue) {
+        this.conversationService.addConversationAttachment({ id, owner, attachment }).then((result) => {
+          console.debug('onAddConversationAttachment', result)
+          //this.processFile(file)
+        })
       }
     }
   }
@@ -184,18 +190,19 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     console.debug('MessagesComponent::addMessage', { id, owner, value })
     this.conversationService.addConversationMarkup(id, owner, value).then((message) => {
       console.debug('MessagesComponent::addMessage:success', { message })
-      this.processInput({ message })
+      this.processMessage(message)
       this.resetForm()
     })
   }
-  onAddMessage(result) {
-    console.debug('MessagesComponent::onAddMessage', { result })
+  onAddMessage(message) {
+    console.debug('MessagesComponent::onAddMessage', { message })
+    this.processMessage(message)
   }
 
   /**
-   * Process input by type
+   * Process message
    */
-  processInput({ file = null, message } : { file?: any, message?: MessageInterface}) {
+  processMessage(message: MessageInterface) {
     const { messages, users } = this.conversation
     const uploader = this.uploader
     let messageProcessed: MessageInterface = this.messageService.processMessage({ message, users })
@@ -207,11 +214,14 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
       uploader.clearQueue()
     }
 
-    console.log('MessagesComponent::processInput', {
-      file,
+    console.log('MessagesComponent::processMessage', {
       message,
       messageProcessed
     })
+  }
+  processFile(file:any) {
+    console.log('MessagesComponent::processFile', { file })
+    
   }
 
   resetForm() {
