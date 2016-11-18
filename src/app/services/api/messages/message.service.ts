@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { 
+import {
   UserInterface,
   MessageInterface, MessageClass
 } from '../..'
@@ -18,32 +18,32 @@ export class MessageService {
    * Message? : Message to index once added
    * Toggle class 'precede' if messages[n].author == messages[n - 1].author
    */
-  indexByAuthor(Messages:MessageInterface[], Message?:MessageInterface) {
-    if (Message) {
-      const index = Messages.indexOf(Message)
-      const previous = Messages[index - 1]
-      if (Message.author === previous.author) {
-        Message.isPrecede = true
-      }
-    }
-    else {
-      for (let index = 1; index < Messages.length; index++) {
-        let message = Messages[index]
-        let previous = Messages[index - 1]
-        
-        if (message.author === previous.author) {
-          message.isPrecede = true
+  indexByAuthor(Messages: MessageInterface[], Message?: MessageInterface) {
+    if (Messages.length > 1) {
+      if (Message) {
+        const index = Messages.indexOf(Message)
+        const previous = Messages[index - 1]
+        if (Message.author === previous.author) {
+          Message.isPrecede = true
+        }
+      } else {
+        for (let index = 1; index < Messages.length; index++) {
+          let message = Messages[index]
+          let previous = Messages[index - 1]
+
+          if (message.author === previous.author) {
+            message.isPrecede = true
+          }
         }
       }
     }
-        
-    console.debug('MessageOrder',{
+    console.debug('MessageOrder', {
       Messages,
       Message
     })
   }
 
-  processMessage({ message, users } : { message: any, users:Array<UserInterface> }) {
+  processMessage({ message, users }: { message: any, users: Array<UserInterface> }) {
     console.debug('MessageService::processMessage', { message, users })
     let { author, type, value, raw, date } = message.data
     const id = message.guid
@@ -60,7 +60,7 @@ export class MessageService {
     })
   }
 
-  processAttachment({ message, users } : { message: any, users:Array<UserInterface> }) {
+  processAttachment({ message, users }: { message: any, users: Array<UserInterface> }) {
 
     console.debug('MessageService::processAttachment', { message, users })
     let { author, type, value, raw, date } = message.data
@@ -77,11 +77,11 @@ export class MessageService {
       user: users.find(u => u.id === author)
     })
     // const { metadata:{ contentType } } = message
-    // console.debug('MessageService::processAttachment', { 
+    // console.debug('MessageService::processAttachment', {
     //   message,
     //   file,
     //   contentType
-    // }) 
+    // })
 
     // /**
     //  * Add font-awesome icon based on contentType
@@ -108,11 +108,11 @@ export class MessageService {
     //     message.metadata.type = 'powerpoint'
     //   }
     //   else if (contentType.match(/video/g)) {
-    //     message.metadata.class='fa-file-video-o'    
+    //     message.metadata.class='fa-file-video-o'
     //     message.metadata.type = 'video'
     //   }
     //   else if (contentType.match(/byte/g)) {
-    //     message.metadata.class='fa-file-code-o'     
+    //     message.metadata.class='fa-file-code-o'
     //     message.metadata.type = 'code'
     //   }
     //   else if (contentType.match(/audio/g)) {
@@ -126,8 +126,8 @@ export class MessageService {
     // else {
     //   message.metadata.class='fa-file-o'
     // }
-    // // Mock purpose  
-    //   message.type = 'image' 
+    // // Mock purpose
+    //   message.type = 'image'
     //   message.value = `assets/img/test/${name}`
     // //
     // return message
