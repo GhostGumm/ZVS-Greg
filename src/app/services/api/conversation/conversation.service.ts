@@ -6,10 +6,9 @@ import { Subscription } from 'rxjs/Subscription'
 import { ApiConversation } from '../../../zetapush/api'
 import { ZetaPushClient } from '../../../zetapush'
 
-import {
-  UserClass, UserInterface,
-  MessageService, MessageClass, MessageInterface
-} from './../../../services/'
+import { MessageService } from '../messages/message.service'
+import { MessageClass, MessageInterface } from '../messages/message.interface'
+import { UserClass, UserInterface } from '../user/user.interface'
 
 export interface Conversation {
   details: any
@@ -39,7 +38,7 @@ export class ConversationService implements OnDestroy {
     private zpClient: ZetaPushClient,
     private api: ApiConversation,
     private http: Http,
-    //private messageService: MessageService
+    private messageService: MessageService
   ) {
     this.onCreateOneToOneConversation = api.onCreateOneToOneConversation
     this.onGetOneToOneConversation = api.onGetOneToOneConversation
@@ -125,7 +124,7 @@ export class ConversationService implements OnDestroy {
       // .subscribe(() => resolve(guid), reject)
       var formData: any = new FormData()
       var xhr = new XMLHttpRequest()
-      
+
       xhr.onreadystatechange = () => {
           if (xhr.readyState == 4) {
               if (xhr.status == 200) {
