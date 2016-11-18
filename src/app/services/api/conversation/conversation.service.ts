@@ -101,16 +101,7 @@ export class ConversationService implements OnDestroy {
 
   addConversationMarkup(id, owner, value) : Promise<MessageInterface> {
     return this.api.addConversationMarkup({ id, owner, value }).then((result) => {
-      const { id, message } = result
-      const { author, date, owner, raw, type, value } = message
-      return new MessageClass({
-        id,
-        type,
-        author,
-        date,
-        raw,
-        isOwner: author === this.userKey ? true : false
-      })
+      return result
     })
   }
 

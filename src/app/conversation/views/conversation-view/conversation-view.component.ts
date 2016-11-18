@@ -8,13 +8,10 @@ import { Component, HostBinding, Input, OnInit, AfterViewInit, AfterContentInit,
 import { Router, ActivatedRoute } from '@angular/router'
 import { Animations } from '../../../utils/utils.animation'
 
-import { MessagesComponent, VideoComponent } from '../../components'
-
 @Component({
   selector: 'zp-conversation-view',
   templateUrl: './conversation-view.component.html',
   styleUrls:['./conversation-view.component.scss'],
-  providers: [ MessagesComponent, VideoComponent ],
   animations: [
     trigger('routeAnimation', Animations.fadeInOutView()),
     trigger('loadingAnimation', Animations.fadeIn()),

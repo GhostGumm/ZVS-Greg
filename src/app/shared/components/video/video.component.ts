@@ -36,7 +36,7 @@ export class VideoComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes) {
-    console.debug('MessagesComponent::ngOnChanges', {
+    console.debug('VideoComponent::ngOnChanges', {
       conversation: this.conversation,
       changes
     })

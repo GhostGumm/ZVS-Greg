@@ -11,10 +11,7 @@
 </md-toolbar>
 
  
-<zp-messages
-  [conversation]="conversation"
-  [@messagesAnimation]="messagesIsVisible" [class.video]="videoIsVisible" [class.audio]="audioIsVisible">
-</zp-messages>
+<zp-messages [conversation]="conversation" [@messagesAnimation]="messagesIsVisible" [class.video]="videoIsVisible" [class.audio]="audioIsVisible"></zp-messages>
 
 <zp-audio [conversation]="conversation" [@audioAnimation]="audioIsVisible"></zp-audio>
 

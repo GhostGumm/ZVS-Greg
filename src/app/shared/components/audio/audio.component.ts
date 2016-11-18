@@ -36,7 +36,7 @@ export class AudioComponent implements OnInit, OnDestroy {
   }
 
   ngOnChanges(changes) {
-    console.debug('MessagesComponent::ngOnChanges', {
+    console.debug('AudioComponent::ngOnChanges', {
       conversation: this.conversation,
       changes
     })

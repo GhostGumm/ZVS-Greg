@@ -1,5 +1,5 @@
 import {
-  Component, HostBinding, HostListener, Input,
+  Component, HostBinding, HostListener, Input, ChangeDetectorRef,
   ViewChild, ElementRef, AfterViewInit, OnInit, OnChanges, OnDestroy, trigger
 } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
@@ -46,38 +46,37 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     removeAfterUpload: true
   })
 
-  @HostBinding('@routeAnimation') get routeAnimation() {
-    return true
-  }
-
-  @HostListener('document:dragenter', ['$event'])
-
-  // uploader dom ref
-  @ViewChild('uploadInput') uploadInputRef: ElementRef
 
   constructor(
     private zpClient : ZetaPushClient,
     private route: ActivatedRoute,
     private messageService: MessageService,
     private conversationService: ConversationService,
+    private changeRef: ChangeDetectorRef
   ) {
     this.addApiObservable()
   }
 
+  @ViewChild('uploadInput') uploadInputRef: ElementRef // uploader dom ref
+  @HostBinding('@routeAnimation') get routeAnimation() { return true }
+
   addApiObservable() {
-    const self = this
     this.subscriptions.push(this.conversationService.onAddConversationMarkup.subscribe(({ result }) => {
       const { message } = result
-      self.onAddMessage(message)
+      this.onAddMessage(message)
+      this.changeRef.detectChanges()
     }))
     this.subscriptions.push(this.conversationService.onAddConversationAttachment.subscribe(({ result }) => {
-      self.onAddFiles(result)
+      const { message } = result
+      this.onAddFiles(message)
+      this.changeRef.detectChanges()
     }))
   }
 
   /**
    * Drag & Drop listener
    */
+  @HostListener('document:dragenter', ['$event'])
   onDragEnter(event:MouseEvent) {
     console.debug('MessagesComponent::onDragEnter',{ event })
     this.dropZoneActive = true
@@ -87,6 +86,9 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     this.dropZoneActive = false
   }
 
+  /**
+   * Mouse over message listener
+   */
   onMouseEnterMessage(event:MouseEvent, message, index) {
     message.isHovered = true
   }
@@ -158,9 +160,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     this.addFiles(queue)
   }
 
-  /**
-   * Select files with drag & drop
-   */
+  // File drop by user
   onDropAttachment(event) {
     if (event === false) {
       const { queue } = this.uploader
@@ -168,6 +168,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
       this.addFiles(queue)
     }
   }
+  // File select by user
   addFiles(queue) {
     const { owner, id } = this.conversation
     console.debug('MessagesComponent::addFiles', { queue, uploader:this.uploader })
@@ -180,28 +181,41 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
       }
     }
   }
-  onAddFiles(result) {
-    console.debug('MessagesComponent::onAddFiles', { result })
+  // On file uploaded
+  onAddFiles(message) {
+    console.debug('MessagesComponent::onAddFiles', { message })
+    this.processFile(message)
+  }
+  // Process received file
+  processFile(message:any) {
+    const { messages, users } = this.conversation
+    const uploader = this.uploader
+    let fileProcessed: MessageInterface = this.messageService.processAttachment({ message, users })
+
+    messages.push(fileProcessed)
+    this.messageService.indexByAuthor(messages, fileProcessed)
+
+    console.log('MessagesComponent::processFile', {
+      message,
+      fileProcessed
+    })   
   }
 
+  // User add message
   addMessage() {
     const { owner, id } = this.conversation
     const value = this.messageModel.raw
     console.debug('MessagesComponent::addMessage', { id, owner, value })
     this.conversationService.addConversationMarkup(id, owner, value).then((message) => {
-      console.debug('MessagesComponent::addMessage:success', { message })
-      this.processMessage(message)
       this.resetForm()
     })
   }
+  // On user add message
   onAddMessage(message) {
     console.debug('MessagesComponent::onAddMessage', { message })
     this.processMessage(message)
   }
-
-  /**
-   * Process message
-   */
+  // Process received message
   processMessage(message: MessageInterface) {
     const { messages, users } = this.conversation
     const uploader = this.uploader
@@ -210,20 +224,12 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     messages.push(messageProcessed)
     this.messageService.indexByAuthor(messages, messageProcessed)
 
-    if (uploader.queue.length === 0) {
-      uploader.clearQueue()
-    }
-
-    console.log('MessagesComponent::processMessage', {
+    console.debug('MessagesComponent::processMessage', {
       message,
       messageProcessed
     })
   }
-  processFile(file:any) {
-    console.log('MessagesComponent::processFile', { file })
-    
-  }
-
+  // Reset message form
   resetForm() {
     this.messageModel.raw = null
   } 

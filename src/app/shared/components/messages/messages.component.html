@@ -12,8 +12,10 @@
 
     <p md-line [ngSwitch]="message.type">
       <span *ngSwitchCase="'markup'"> {{message.value}}</span>
-      <img md-list-image *ngSwitchCase="'image'" [src]="message.value">
-      <span md-list-attachment *ngSwitchCase="'attachment'" class="fa {{message.metadata.class}}">{{message.metadata.type}}</span>
+      <!-- ONLY IMAGE FOR NOW -->
+      <img md-list-image *ngSwitchCase="'attachment'" [src]="message.value">
+      <!--<img md-list-image *ngSwitchCase="'image'" [src]="message.value">
+      <span md-list-attachment *ngSwitchCase="'attachment'" class="fa {{message.metadata?.class}}">{{message.metadata?.type}}</span>-->
     </p>
 
     <span md-list-date *ngIf="message.isHovered" [@timestampAnimation]="message.isHovered">{{ message.date | date:"hh:mm" }}</span>

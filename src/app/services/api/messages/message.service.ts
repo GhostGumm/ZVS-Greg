@@ -44,20 +44,9 @@ export class MessageService {
   }
 
   processMessage({ message, users } : { message: any, users:Array<UserInterface> }) {
-    /**
-     * TOFIX : Unify message signature on macro
-     */
-    console.warn(message)
-    let data: any = {}
-    if (message.data) {
-      message.data.id = message.guid
-      Object.assign(data, message.data)
-    }
-    else {
-      Object.assign(data, message)
-    }
-    let { id, author, type, value, raw, date } = data
-    value = raw
+    console.debug('MessageService::processMessage', { message, users })
+    let { author, type, value, raw, date } = message.data
+    const id = message.guid
 
     return new MessageClass({
       id,
@@ -71,62 +60,76 @@ export class MessageService {
     })
   }
 
-  processAttachment({message, file}) {
-    const { _file:{ name } } = file
-    const { metadata:{ contentType } } = message
-    console.debug('MessageService::processAttachment', { 
-      message,
-      file,
-      contentType
-    }) 
+  processAttachment({ message, users } : { message: any, users:Array<UserInterface> }) {
 
-    /**
-     * Add font-awesome icon based on contentType
-     */
-    if (contentType) {
-      if (contentType.match(/pdf/g)) {
-        message.metadata.class='fa-file-pdf-o'
-        message.metadata.type = 'pdf'
-      }
-      else if (contentType.match(/msword/g)) {
-        message.metadata.class='fa-file-word-o'
-        message.metadata.type = 'word'
-      }
-      else if (contentType.match(/excel/g)) {
-        message.metadata.class='fa-file-excel-o'
-        message.metadata.type = 'excel'
-      }
-      else if (contentType.match(/zip|compressed|bzip/g)) {
-        message.metadata.class='fa-file-zip-o'
-        message.metadata.type = 'zip'
-      }
-      else if (contentType.match(/powerpoint/g)) {
-        message.metadata.class='fa-file-powerpoint-o'
-        message.metadata.type = 'powerpoint'
-      }
-      else if (contentType.match(/video/g)) {
-        message.metadata.class='fa-file-video-o'    
-        message.metadata.type = 'video'
-      }
-      else if (contentType.match(/byte/g)) {
-        message.metadata.class='fa-file-code-o'     
-        message.metadata.type = 'code'
-      }
-      else if (contentType.match(/audio/g)) {
-        message.metadata.class='fa-file-audio-o'
-        message.metadata.type = 'audio'
-      }
-      else {
-        message.metadata.class='fa-file-o'
-      }
-    }
-    else {
-      message.metadata.class='fa-file-o'
-    }
-    // Mock purpose  
-      message.type = 'image' 
-      message.value = `assets/img/test/${name}`
-    //
-    return message
+    console.debug('MessageService::processAttachment', { message, users })
+    let { author, type, value, raw, date } = message.data
+    const id = message.guid
+
+    return new MessageClass({
+      id,
+      author,
+      type,
+      value,
+      raw,
+      date,
+      isOwner: author === this.userKey ? true : false,
+      user: users.find(u => u.id === author)
+    })
+    // const { metadata:{ contentType } } = message
+    // console.debug('MessageService::processAttachment', { 
+    //   message,
+    //   file,
+    //   contentType
+    // }) 
+
+    // /**
+    //  * Add font-awesome icon based on contentType
+    //  */
+    // if (contentType) {
+    //   if (contentType.match(/pdf/g)) {
+    //     message.metadata.class='fa-file-pdf-o'
+    //     message.metadata.type = 'pdf'
+    //   }
+    //   else if (contentType.match(/msword/g)) {
+    //     message.metadata.class='fa-file-word-o'
+    //     message.metadata.type = 'word'
+    //   }
+    //   else if (contentType.match(/excel/g)) {
+    //     message.metadata.class='fa-file-excel-o'
+    //     message.metadata.type = 'excel'
+    //   }
+    //   else if (contentType.match(/zip|compressed|bzip/g)) {
+    //     message.metadata.class='fa-file-zip-o'
+    //     message.metadata.type = 'zip'
+    //   }
+    //   else if (contentType.match(/powerpoint/g)) {
+    //     message.metadata.class='fa-file-powerpoint-o'
+    //     message.metadata.type = 'powerpoint'
+    //   }
+    //   else if (contentType.match(/video/g)) {
+    //     message.metadata.class='fa-file-video-o'    
+    //     message.metadata.type = 'video'
+    //   }
+    //   else if (contentType.match(/byte/g)) {
+    //     message.metadata.class='fa-file-code-o'     
+    //     message.metadata.type = 'code'
+    //   }
+    //   else if (contentType.match(/audio/g)) {
+    //     message.metadata.class='fa-file-audio-o'
+    //     message.metadata.type = 'audio'
+    //   }
+    //   else {
+    //     message.metadata.class='fa-file-o'
+    //   }
+    // }
+    // else {
+    //   message.metadata.class='fa-file-o'
+    // }
+    // // Mock purpose  
+    //   message.type = 'image' 
+    //   message.value = `assets/img/test/${name}`
+    // //
+    // return message
   }
 }
