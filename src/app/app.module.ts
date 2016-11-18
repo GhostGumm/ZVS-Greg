@@ -5,8 +5,8 @@ import { AuthenticationModule } from './authentication/authentication.module'
 import { DashboardModule } from './dashboard/dashboard.module'
 import { ContextModule } from './context/context.module'
 import { ConversationModule } from './conversation/conversation.module'
-
-
+// App Routing
+import { AppConfigModule } from './app-config.module'
 import { AppRoutingModule } from './app-routing.module'
 // Components
 import { RootComponent } from './root.component'
@@ -18,14 +18,14 @@ import { RootComponent } from './root.component'
   imports: [
     SharedModule.forRoot(),
 
+    AppConfigModule,
+    AppRoutingModule,
+
     AuthenticationModule,
     DashboardModule,
     ContextModule,
-    ConversationModule,
-
-    AppRoutingModule
+    ConversationModule
   ],
-  providers: [],
   bootstrap: [ RootComponent ]
 })
 export class AppModule { }
