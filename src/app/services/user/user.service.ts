@@ -14,8 +14,9 @@ const transformContactsToUserList = ({ contacts }) => contacts.map(contact => ne
     message: contact.conversations
       .filter(({ details }) => details.name === 'I18N.ONE_TO_ONE_CONVERSATION')
       .reduce((value, { messages }) => {
-        const [ message = { data: { value: '' } } ] = messages
-        return message.data.value
+        const [ message = { data: { type: 'text', value: '' } } ] = messages
+        // TODO: Choisir une implémentation I18N
+        return 'text' === message.data.type ? message.data.value  : `Pièce jointe (${message.data.value})`
       }, '')
   }
 }))
