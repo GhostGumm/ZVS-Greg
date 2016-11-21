@@ -15,11 +15,7 @@ export class MessageService {
     @Inject(ENVIRONMENT) private environment,
     private zpClient: ZetaPushClient
   ) {
-    if (environment.production) {
-      this.proxy = `http://file.zpush.io/${this.environment.ZETAPUSH_SANDBOX_ID}/cnvrst_hdfs/`
-    } else {
-      this.proxy = `http://hq.zpush.io:9082/str/rest/deployed/${this.environment.ZETAPUSH_SANDBOX_ID}/cnvrst_hdfs/`
-    }
+    this.proxy = environment.ZETAPUSH_PROXY_URL
   }
   /**
    * Messages: List of messages to index on init
