@@ -64,9 +64,11 @@ export class ConversationService implements OnDestroy {
         })
       })
 
+      // Reverse messages list
       for (var i = messages.length - 1; i >= 0; i--) {
         let message
         const type = messages[i].data.type
+
         switch(type) {
         case 'markup':
           message = this.messageService.processMessage({

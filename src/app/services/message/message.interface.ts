@@ -5,11 +5,12 @@ export interface MessageInterface {
   type: string
   author: string
   raw: string
+  value: any
+  date: number
 
   user?: UserInterface
   metadata?: any
-  value?: any
-  date?: number
+  dateFromNow?: string
 
   isOwner?: boolean
   isPrecede?: boolean
@@ -22,11 +23,10 @@ export class MessageClass implements MessageInterface {
   type
   author
   raw
-
-  user
-  metadata
   value
   date
+
+  metadata= {}
 
   isOwner= false
   isPrecede= false

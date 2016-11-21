@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@angular/core'
+import * as moment from 'moment'
 
 import { UserInterface } from '../user'
 import { MessageInterface, MessageClass } from '../message'
@@ -51,8 +52,7 @@ export class MessageService {
     })
   }
 
-  processMessage({ message, users }: { message: any, users: Array<UserInterface> }) {
-    console.debug('MessageService::processMessage', { message, users })
+  processData({ message, users }: { message: any, users: Array<UserInterface> }) {
     let { author, type, value, raw, date } = message.data
     const id = message.guid
 
@@ -63,26 +63,23 @@ export class MessageService {
       value,
       raw,
       date,
+      dateFromNow:moment(date).fromNow(),
       isOwner: author === this.userKey ? true : false,
       user: users.find(u => u.id === author)
     })
   }
 
+  processMessage({ message, users }: { message: any, users: Array<UserInterface> }) {
+    console.debug('MessageService::processMessage', { message, users })
+    return this.processData({ message, users })
+  }
+
   processAttachment({ message, users }: { message: any, users: Array<UserInterface> }) {
 
-    console.debug('MessageService::processAttachment', { message, users })
-    let { author, type, value, raw, date } = message.data
-    const id = message.guid
-    return new MessageClass({
-      id,
-      author,
-      type,
-      value: `${this.proxy}${value}`,
-      raw,
-      date,
-      isOwner: author === this.userKey ? true : false,
-      user: users.find(u => u.id === author)
-    })
+    console.debug('MessageService::processAttachment', { message, users }) 
+    let processedMessage = this.processData({ message, users })
+    processedMessage.value = `${this.proxy}${processedMessage.value}`
+    return processedMessage
     // const { metadata:{ contentType } } = message
     // console.debug('MessageService::processAttachment', {
     //   message,

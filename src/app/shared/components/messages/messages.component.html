@@ -18,7 +18,7 @@
       <span md-list-attachment *ngSwitchCase="'attachment'" class="fa {{message.metadata?.class}}">{{message.metadata?.type}}</span>-->
     </p>
 
-    <span md-list-date *ngIf="message.isHovered" [@timestampAnimation]="message.isHovered" title="{{ message.date | date:'dd MMM' }}">{{ message.date | date:'HH:mm:ss' }}</span>
+    <span md-list-date *ngIf="message.isHovered" [@timestampAnimation]="message.isHovered" title="{{ message.dateFromNow }}">{{ message.date | date:'HH:mm:ss' }}</span>
   </md-list-item>
 </md-list>
 
