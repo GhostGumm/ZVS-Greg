@@ -2,13 +2,14 @@ import { Injectable, OnDestroy } from '@angular/core'
 import { Http } from '@angular/http'
 import { Observable } from 'rxjs/Observable'
 import { Subscription } from 'rxjs/Subscription'
+import 'rxjs/add/operator/map'
+import * as Rx from 'rxjs'
 
 import { ApiConversation } from '../../zetapush/api'
-import { ZetaPushClient } from '../../zetapush'
 
 import { ConversationInterface, ConversationViewInterface } from './conversation.interface'
 
-import { MessageClass, MessageInterface, MessageService } from '../message'
+import { MessageInterface, MessageService } from '../message'
 import { UserClass } from '../user'
 
 @Injectable()
@@ -16,22 +17,29 @@ export class ConversationService implements OnDestroy {
 
   subscriptions: Array<Subscription> = []
 
+  public onAddConversationAttachment: Observable<any>
+  public onAddConversationMarkup: Observable<any>
   public onCreateOneToOneConversation: Observable<ConversationInterface>
   public onGetOneToOneConversation: Observable<ConversationInterface>
-  public onAddConversationMarkup: Observable<any>
-  public onAddConversationAttachment: Observable<any>
-  private userKey = this.zpClient.getUserId()
 
   constructor(
-    private zpClient: ZetaPushClient,
     private api: ApiConversation,
     private http: Http,
     private messageService: MessageService
   ) {
+    this.onAddConversationAttachment = api.onAddConversationAttachment
+    this.onAddConversationMarkup = api.onAddConversationMarkup
     this.onCreateOneToOneConversation = api.onCreateOneToOneConversation
     this.onGetOneToOneConversation = api.onGetOneToOneConversation
-    this.onAddConversationMarkup = api.onAddConversationMarkup
-    this.onAddConversationAttachment = api.onAddConversationAttachment
+  }
+
+  onAddConversationMessage(id) {
+    return Rx.Observable.merge(
+      this.onAddConversationAttachment,
+      this.onAddConversationMarkup
+    ).filter(({ result }) => {
+      return result.id === id
+    })
   }
 
   ngOnDestroy() {
@@ -39,24 +47,24 @@ export class ConversationService implements OnDestroy {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
   }
 
-  createOneToOneConversation(interlocutor) : Promise<ConversationInterface> {
+  createOneToOneConversation(interlocutor): Promise<ConversationInterface> {
     return this.api.createOneToOneConversation({ interlocutor })
   }
 
-  getOneToOneConversation(interlocutor) : Promise<ConversationViewInterface> {
+  getOneToOneConversation(interlocutor): Promise<ConversationViewInterface> {
     return this.api.getOneToOneConversation({ interlocutor }).then((conversation) => {
-      const { messages, group:{ members }, details:{ id, owner } } = conversation
+      const { messages, group: { members }, details: { id, owner } } = conversation
       const result: ConversationViewInterface = {
         id,
         owner,
-        users:[],
-        messages:[]
+        users: [],
+        messages: []
       }
 
       result.users = members.map((user) => {
         const { userKey, firstname, lastname, email, login } = user
         return new UserClass({
-          id:userKey,
+          id: userKey,
           login,
           firstname,
           lastname,
@@ -64,10 +72,10 @@ export class ConversationService implements OnDestroy {
         })
       })
 
-      for (var i = messages.length - 1; i >= 0; i--) {
+      for (let i = messages.length - 1; i >= 0; i--) {
         let message
         const type = messages[i].data.type
-        switch(type) {
+        switch (type) {
         case 'markup':
           message = this.messageService.processMessage({
             message: messages[i],
@@ -88,7 +96,7 @@ export class ConversationService implements OnDestroy {
     })
   }
 
-  addConversationMarkup(id, owner, value) : Promise<MessageInterface> {
+  addConversationMarkup(id, owner, value): Promise<MessageInterface> {
     return this.api.addConversationMarkup({ id, owner, value }).then((result) => {
       return result
     })
@@ -112,19 +120,18 @@ export class ConversationService implements OnDestroy {
       // })
       // .map(response => response.json())
       // .subscribe(() => resolve(guid), reject)
-      var formData: any = new FormData()
-      var xhr = new XMLHttpRequest()
+      const xhr = new XMLHttpRequest()
 
       xhr.onreadystatechange = () => {
-          if (xhr.readyState == 4) {
-              if (xhr.status == 200) {
+          if (xhr.readyState === 4) {
+              if (xhr.status === 200) {
                   resolve(guid)
               } else {
                   reject()
               }
           }
       }
-      xhr.open("POST", url, true)
+      xhr.open('POST', url, true)
       xhr.send(attachment._file)
     })
   }
