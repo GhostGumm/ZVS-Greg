@@ -18,7 +18,7 @@
       <span md-list-attachment *ngSwitchCase="'attachment'" class="fa {{message.metadata?.class}}">{{message.metadata?.type}}</span>-->
     </p>
 
-    <span md-list-date *ngIf="message.isHovered" [@timestampAnimation]="message.isHovered">{{ message.date | date:"hh:mm" }}</span>
+    <span md-list-date *ngIf="message.isHovered" [@timestampAnimation]="message.isHovered" title="{{ message.date | date:'dd MMM' }}">{{ message.date | date:'HH:mm:ss' }}</span>
   </md-list-item>
 </md-list>
 
@@ -27,7 +27,7 @@
 
   <button class="zp-input-files" type="button" md-icon-button color="primary">
     <md-icon>file_upload</md-icon>
-    <input #uploadInput type="file" ng2FileSelect capture="camera" [uploader]="uploader" [multiple]="multiple" (change)="onSelectAttachment($event)"/>
+    <input #uploadInput type="file" accept="image/*" ng2FileSelect capture="camera" [uploader]="uploader" [multiple]="multiple" (change)="onSelectAttachment($event)"/>
   </button>
 
   <form (ngSubmit)="addMessage()" #messageForm="ngForm" id="messageForm">

@@ -65,17 +65,23 @@ export class ConversationService implements OnDestroy {
       })
 
       for (var i = messages.length - 1; i >= 0; i--) {
-        const { guid, data:{ author, date, owner, raw, type, value } } = messages[i]
-        result.messages.push(new MessageClass({
-          id: guid,
-          author,
-          type,
-          value,
-          raw,
-          date,
-          isOwner: author === this.userKey ? true : false,
-          user: result.users.find(u => u.id === author)
-        }))
+        let message
+        const type = messages[i].data.type
+        switch(type) {
+        case 'markup':
+          message = this.messageService.processMessage({
+            message: messages[i],
+            users: result.users
+          })
+          break
+        case 'attachment':
+          message = this.messageService.processAttachment({
+            message: messages[i],
+            users: result.users
+          })
+          break
+        }
+        result.messages.push(message)
       }
       console.debug('ConversationService::getOneToOneConversation', { conversation, result })
       return result
