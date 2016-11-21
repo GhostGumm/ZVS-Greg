@@ -63,14 +63,14 @@ export class MessageService {
     })
   }
 
-  processMessage({ message, users }: { message: any, users: Array<UserInterface> }) {
-    console.debug('MessageService::processMessage', { message, users })
+  processMarkup({ message, users }: { message: any, users: Array<UserInterface> }) {
+    console.debug('MessageService::processMarkup', { message, users })
     return this.processData({ message, users })
   }
 
   processAttachment({ message, users }: { message: any, users: Array<UserInterface> }) {
 
-    console.debug('MessageService::processAttachment', { message, users }) 
+    console.debug('MessageService::processAttachment', { message, users })
     let processedMessage = this.processData({ message, users })
     processedMessage.value = `${this.proxy}${processedMessage.value}`
     return processedMessage

@@ -1,6 +1,6 @@
 import {
   Component, HostBinding, HostListener, Input, ChangeDetectorRef,
-  ViewChild, ElementRef, AfterViewInit, OnInit, OnChanges, OnDestroy, trigger
+  ViewChild, ElementRef, AfterViewInit, OnChanges, OnDestroy, trigger
 } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
@@ -11,9 +11,8 @@ import { ScrollGlueDirective } from '../../../utils/utils.scroll'
 import { FileUploader, FileDropDirective, FileSelectDirective } from 'ng2-file-upload'
 import {
   ConversationService, ConversationViewInterface,
-  UserInterface,
   MessageService, MessageInterface, MessageClass
-} from './../../../services';
+} from './../../../services'
 
 const PROVIDERS = [ ScrollGlueDirective, MessageService, FileDropDirective, FileSelectDirective]
 
@@ -154,36 +153,15 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   addFiles(queue) {
     const uploader = this.uploader
     const { owner, id } = this.conversation
-    console.debug('MessagesComponent::addFiles', { queue, uploader:this.uploader })
+    console.debug('MessagesComponent::addFiles', { queue, uploader })
     if (queue.length > 0) {
       for (let attachment of queue) {
         this.conversationService.addConversationAttachment({ id, owner, attachment }).then((result) => {
           console.debug('onAddConversationAttachment', result)
-          //this.processFile(file)
         })
       }
       uploader.clearQueue()
     }
-  }
-  // On file uploaded
-  onAddFiles(message) {
-    console.debug('MessagesComponent::onAddFiles', { message })
-    this.processFile(message)
-  }
-  // Process received file
-  processFile(message:any) {
-    const { messages, users } = this.conversation
-    const uploader = this.uploader
-    let fileProcessed: MessageInterface = this.messageService.processAttachment({ message, users })
-
-    messages.push(fileProcessed)
-    this.messageService.indexByAuthor(messages, fileProcessed)
-
-    console.log('MessagesComponent::processFile', {
-      queue: uploader.queue,
-      message,
-      fileProcessed
-    })
   }
 
   // User add message
@@ -198,13 +176,38 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   // On user add message
   onAddMessage(message) {
     console.debug('MessagesComponent::onAddMessage', { message })
-    this.processMessage(message)
+    const { data } = message
+    switch (data.type) {
+      case MessageClass.TYPE_ATTACHMENT:
+        this.processAttachment(message)
+      break
+      case MessageClass.TYPE_MARKUP:
+        this.processMarkup(message)
+      break
+    }
   }
-  // Process received message
-  processMessage(message: MessageInterface) {
+
+  // Process received attachment
+  processAttachment(message: any) {
     const { messages, users } = this.conversation
     const uploader = this.uploader
-    let messageProcessed: MessageInterface = this.messageService.processMessage({ message, users })
+    let fileProcessed: MessageInterface = this.messageService.processAttachment({ message, users })
+
+    messages.push(fileProcessed)
+    this.messageService.indexByAuthor(messages, fileProcessed)
+
+    console.log('MessagesComponent::processFile', {
+      queue: uploader.queue,
+      message,
+      fileProcessed
+    })
+  }
+
+  // Process received message
+  processMarkup(message: MessageInterface) {
+    const { messages, users } = this.conversation
+
+    let messageProcessed: MessageInterface = this.messageService.processMarkup({ message, users })
 
     messages.push(messageProcessed)
     this.messageService.indexByAuthor(messages, messageProcessed)
@@ -214,6 +217,7 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
       messageProcessed
     })
   }
+
   // Reset message form
   resetForm() {
     this.messageModel.raw = null

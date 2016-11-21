@@ -9,7 +9,7 @@ import { ApiConversation } from '../../zetapush/api'
 
 import { ConversationInterface, ConversationViewInterface } from './conversation.interface'
 
-import { MessageInterface, MessageService } from '../message'
+import { MessageClass, MessageInterface, MessageService } from '../message'
 import { UserClass } from '../user'
 
 @Injectable()
@@ -73,18 +73,18 @@ export class ConversationService implements OnDestroy {
       })
 
       // Reverse messages list
-      for (var i = messages.length - 1; i >= 0; i--) {
+      for (let i = messages.length - 1; i >= 0; i--) {
         let message
         const type = messages[i].data.type
 
-        switch(type) {
-        case 'markup':
-          message = this.messageService.processMessage({
+        switch (type) {
+        case MessageClass.TYPE_MARKUP:
+          message = this.messageService.processMarkup({
             message: messages[i],
             users: result.users
           })
           break
-        case 'attachment':
+        case MessageClass.TYPE_ATTACHMENT:
           message = this.messageService.processAttachment({
             message: messages[i],
             users: result.users
