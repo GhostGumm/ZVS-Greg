@@ -29,7 +29,7 @@ const PROVIDERS = [ ScrollGlueDirective, MessageService, FileDropDirective, File
   ]
 })
 
-export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() conversation: ConversationViewInterface
   private subscriptions: Array<Subscription> = []
 
@@ -40,12 +40,13 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     message: 1000,
     upload: 20 * 1024 // 20mb
   }
-  public dropZoneActive:boolean = false
+  public dropZoneActive: boolean = false
   public uploader: FileUploader = new FileUploader({
     // maxFileSize:this.limits.upload,
     removeAfterUpload: true
   })
 
+  @ViewChild('uploadInput') uploadInputRef: ElementRef // uploader dom ref
 
   constructor(
     private zpClient : ZetaPushClient,
@@ -53,25 +54,9 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     private messageService: MessageService,
     private conversationService: ConversationService,
     private changeRef: ChangeDetectorRef
-  ) {
-    this.addApiObservable()
-  }
+  ) {}
 
-  @ViewChild('uploadInput') uploadInputRef: ElementRef // uploader dom ref
   @HostBinding('@routeAnimation') get routeAnimation() { return true }
-
-  addApiObservable() {
-    this.subscriptions.push(this.conversationService.onAddConversationMarkup.subscribe(({ result }) => {
-      const { message } = result
-      this.onAddMessage(message)
-      this.changeRef.detectChanges()
-    }))
-    this.subscriptions.push(this.conversationService.onAddConversationAttachment.subscribe(({ result }) => {
-      const { message } = result
-      this.onAddFiles(message)
-      this.changeRef.detectChanges()
-    }))
-  }
 
   /**
    * Drag & Drop listener
@@ -96,18 +81,15 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     message.isHovered = false
   }
 
-  ngOnInit() {
-    console.debug('MessagesComponent::ngOnInit', {
-      conversation: this.conversation
-    })
-  }
   ngOnChanges(changes) {
-    console.debug('MessagesComponent::ngOnChanges', {
-      conversation: this.conversation,
-      changes
-    })
-    // Mock Purpose
     if (changes.conversation.currentValue) {
+      const onAddConversationMessage = this.conversationService.onAddConversationMessage(changes.conversation.currentValue.id)
+      this.subscriptions.forEach((subscription) => subscription.unsubscribe())
+      this.subscriptions.push(onAddConversationMessage.subscribe(({ result }) => {
+        const { message } = result
+        this.onAddMessage(message)
+        this.changeRef.detectChanges()
+      }))
       this.messageService.indexByAuthor(this.conversation.messages)
     }
   }
@@ -177,7 +159,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
       for (let attachment of queue) {
         this.conversationService.addConversationAttachment({ id, owner, attachment }).then((result) => {
           console.debug('onAddConversationAttachment', result)
-          //this.processFile(file) 
+          //this.processFile(file)
         })
       }
       uploader.clearQueue()
@@ -201,7 +183,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
       queue: uploader.queue,
       message,
       fileProcessed
-    })   
+    })
   }
 
   // User add message
@@ -235,7 +217,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   // Reset message form
   resetForm() {
     this.messageModel.raw = null
-  } 
+  }
 
   ngOnDestroy() {
     console.debug('MessagesComponent::ngOnDestroy')

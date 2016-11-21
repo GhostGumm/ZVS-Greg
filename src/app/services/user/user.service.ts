@@ -45,13 +45,6 @@ export class UserService implements OnDestroy {
     }))
   }
 
-  /**
-   * Return global users list
-   */
-  getAllUsers(): Promise<UserInterface[]> {
-    return this.getContact()
-  }
-
   getPotentialContact(): Promise<UserInterface[]> {
     return this.apiZetalk.listPotentialContact().then(transformContactsToUserList)
   }

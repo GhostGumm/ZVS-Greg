@@ -19,8 +19,7 @@ export class NavigationComponent implements OnDestroy, OnInit {
   @Input() user: UserInterface
   @Output() logout = new EventEmitter()
 
-  users: Array<UserInterface> = []
-  contacts: Array<any> = []
+  contacts: Array<UserInterface> = []
   routes: any[] = [
     {
       name: 'Stats',
@@ -61,7 +60,7 @@ export class NavigationComponent implements OnDestroy, OnInit {
     /**
      * Handle create one to one conversation
      */
-    this.subscriptions.push(conversationService.onCreateOneToOneConversation.subscribe(() => this.getNavigationItems()))
+    this.subscriptions.push(conversationService.onCreateOneToOneConversation.subscribe(() => this.getContact()))
   }
 
   ngOnInit() {
@@ -76,7 +75,7 @@ export class NavigationComponent implements OnDestroy, OnInit {
       console.debug('NavigationComponent.navigation::onClose')
       this.refreshStats()
     }))
-    this.getNavigationItems()
+    this.getContact()
   }
 
   ngOnDestroy() {
@@ -92,31 +91,6 @@ export class NavigationComponent implements OnDestroy, OnInit {
     Array.prototype.forEach.call(chartists, (chart) => {
       chart.__chartist__.update()
     })
-  }
-
-  /**
-   * Fetch all navigation data
-   */
-  getNavigationItems() {
-    this.getUsers()
-  }
-
-  onNavigationLoaded() {
-    // Wired timeout needed to open nav on start
-    setTimeout(() => {
-      this.navigation.open()
-    }, 100)
-  }
-
-  /**
-   * Get all global users list
-   */
-  getUsers() {
-    this.userService.getAllUsers().then(users => {
-      console.debug('NavigationComponent::getUsers', { users })
-      this.users = users
-    })
-    // this.onNavigationLoaded()
   }
 
   getContact() {
