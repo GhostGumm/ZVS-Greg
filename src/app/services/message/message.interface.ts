@@ -1,3 +1,5 @@
+import * as moment from 'moment'
+
 import { UserInterface } from '../user'
 
 export interface MessageInterface {
@@ -10,7 +12,7 @@ export interface MessageInterface {
 
   user?: UserInterface
   metadata?: any
-  dateFromNow?: string
+  timeFromNow?: string
 
   isOwner?: boolean
   isPrecede?: boolean
@@ -27,6 +29,7 @@ export class MessageClass implements MessageInterface {
   date
 
   metadata= {}
+  timeFromNow
 
   isOwner= false
   isPrecede= false
@@ -34,5 +37,10 @@ export class MessageClass implements MessageInterface {
 
   constructor(parameters: MessageInterface) {
     Object.assign(this, parameters)
+  }
+
+  getTimeFromNow() {
+    this.timeFromNow = moment(this.date).fromNow()
+    console.warn(this.timeFromNow)
   }
 }

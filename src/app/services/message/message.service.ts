@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@angular/core'
-import * as moment from 'moment'
 
 import { UserInterface } from '../user'
 import { MessageInterface, MessageClass } from '../message'
@@ -59,7 +58,6 @@ export class MessageService {
       value,
       raw,
       date,
-      dateFromNow:moment(date).fromNow(),
       isOwner: author === this.userKey ? true : false,
       user: users.find(u => u.id === author)
     })
