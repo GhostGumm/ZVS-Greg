@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, HostBinding, Output, EventEmitter } from '@angular/core'
-import { UserInterface } from '../../../services/'
+import { UserInterface } from '../../../services/user'
 
 @Component({
   selector: 'zp-profile',

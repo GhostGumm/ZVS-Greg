@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { UserInterface } from '../../../services/'
+import { UserInterface } from '../../../services/user'
 
 @Component({
   selector: 'zp-username',

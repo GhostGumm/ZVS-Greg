@@ -1,4 +1,4 @@
-import { UserInterface } from './../../../services';
+import { UserInterface } from '../user'
 
 export interface MessageInterface {
   id: string
@@ -6,11 +6,11 @@ export interface MessageInterface {
   author: string
   raw: string
 
-  user? : UserInterface
+  user?: UserInterface
   metadata?: any
   value?: any
   date?: number
-  
+
   isOwner?: boolean
   isPrecede?: boolean
   isHovered?: boolean

@@ -1,36 +1,23 @@
 import { Injectable, OnDestroy } from '@angular/core'
-import { Http, Response } from '@angular/http'
+import { Http } from '@angular/http'
 import { Observable } from 'rxjs/Observable'
 import { Subscription } from 'rxjs/Subscription'
 
-import { ApiConversation } from '../../../zetapush/api'
-import { ZetaPushClient } from '../../../zetapush'
+import { ApiConversation } from '../../zetapush/api'
+import { ZetaPushClient } from '../../zetapush'
 
-import {
-  UserClass, UserInterface,
-  MessageService, MessageClass, MessageInterface
-} from './../../../services/'
+import { ConversationInterface, ConversationViewInterface } from './conversation.interface'
 
-export interface Conversation {
-  details: any
-  group: any
-  messages: Array<any>
-  unread
-}
-export interface ConversationViewInterface {
-  id: string
-  owner: string
-  users: Array<UserInterface>
-  messages: Array<MessageInterface>
-}
+import { MessageClass, MessageInterface, MessageService } from '../message'
+import { UserClass } from '../user'
 
 @Injectable()
 export class ConversationService implements OnDestroy {
 
   subscriptions: Array<Subscription> = []
 
-  public onCreateOneToOneConversation: Observable<Conversation>
-  public onGetOneToOneConversation: Observable<Conversation>
+  public onCreateOneToOneConversation: Observable<ConversationInterface>
+  public onGetOneToOneConversation: Observable<ConversationInterface>
   public onAddConversationMarkup: Observable<any>
   public onAddConversationAttachment: Observable<any>
   private userKey = this.zpClient.getUserId()
@@ -39,7 +26,7 @@ export class ConversationService implements OnDestroy {
     private zpClient: ZetaPushClient,
     private api: ApiConversation,
     private http: Http,
-    //private messageService: MessageService
+    private messageService: MessageService
   ) {
     this.onCreateOneToOneConversation = api.onCreateOneToOneConversation
     this.onGetOneToOneConversation = api.onGetOneToOneConversation
@@ -52,14 +39,14 @@ export class ConversationService implements OnDestroy {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
   }
 
-  createOneToOneConversation(interlocutor) : Promise<Conversation> {
+  createOneToOneConversation(interlocutor) : Promise<ConversationInterface> {
     return this.api.createOneToOneConversation({ interlocutor })
   }
 
   getOneToOneConversation(interlocutor) : Promise<ConversationViewInterface> {
     return this.api.getOneToOneConversation({ interlocutor }).then((conversation) => {
       const { messages, group:{ members }, details:{ id, owner } } = conversation
-      const result:ConversationViewInterface = {
+      const result: ConversationViewInterface = {
         id,
         owner,
         users:[],
@@ -77,25 +64,19 @@ export class ConversationService implements OnDestroy {
         })
       })
 
-        
-        for (var i = messages.length - 1; i >= 0; i--) {
-          const { guid, data:{ author, date, owner, raw, type, value } } = messages[i]
-          result.messages.push(new MessageClass({
-            id: guid,
-            author,
-            type,
-            value,
-            raw,
-            date,
-            isOwner: author === this.userKey ? true : false,
-            user: result.users.find(u => u.id === author)
-          }))
-        }
-        // return this.messageService.processMessage({
-        //   message,
-        //   users:result.users
-        // })
-        
+      for (var i = messages.length - 1; i >= 0; i--) {
+        const { guid, data:{ author, date, owner, raw, type, value } } = messages[i]
+        result.messages.push(new MessageClass({
+          id: guid,
+          author,
+          type,
+          value,
+          raw,
+          date,
+          isOwner: author === this.userKey ? true : false,
+          user: result.users.find(u => u.id === author)
+        }))
+      }
       console.debug('ConversationService::getOneToOneConversation', { conversation, result })
       return result
     })
@@ -127,7 +108,7 @@ export class ConversationService implements OnDestroy {
       // .subscribe(() => resolve(guid), reject)
       var formData: any = new FormData()
       var xhr = new XMLHttpRequest()
-      
+
       xhr.onreadystatechange = () => {
           if (xhr.readyState == 4) {
               if (xhr.status == 200) {

@@ -1,11 +1,9 @@
-import { Component, Input, HostBinding, OnInit, OnDestroy, trigger } from '@angular/core'
+import { Component, Input, HostBinding, OnInit, OnChanges, OnDestroy, trigger } from '@angular/core'
 import { Animations } from '../../../utils/utils.animation'
 
-import {
-  ConversationViewInterface,
-  RtcService, RtcInterface, RtcClass,
-  UserService, UserInterface
-} from '../../../services/'
+import { ConversationViewInterface } from '../../../services/conversation'
+import { RtcService, RtcInterface, RtcClass } from '../../../services/rtc'
+import { UserService } from '../../../services/user'
 
 @Component({
   selector: 'zp-audio',
@@ -16,9 +14,9 @@ import {
     trigger('routeAnimation', Animations.swipeOutDownView())
   ]
 })
-export class AudioComponent implements OnInit, OnDestroy {
+export class AudioComponent implements OnChanges, OnDestroy, OnInit {
   @Input() conversation: ConversationViewInterface
-  group:boolean = false
+  group: boolean = false
   audios: RtcInterface[] = []
 
   @HostBinding('@routeAnimation') get routeAnimation() {
@@ -56,10 +54,10 @@ export class AudioComponent implements OnInit, OnDestroy {
     const { users } = this.conversation
     console.debug('AudioComponent::initVideo', { stream, source })
     // Mock Purpose
-    for (let user of users) { 
+    for (let user of users) {
       this.audios.push(new RtcClass({
         id:user.id,
-        user  
+        user
       }))
     }
     this.audios[0].focus = true
