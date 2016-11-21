@@ -2,6 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core'
 import { Subscription } from 'rxjs/Subscription'
 
 import { UserClass, UserInterface } from '../user'
+import { MessageClass } from '../message'
 import { ApiUser, ApiZetalk } from '../../zetapush/api'
 
 const transformContactsToUserList = ({ contacts }) => contacts.map(contact => new UserClass({
@@ -16,7 +17,7 @@ const transformContactsToUserList = ({ contacts }) => contacts.map(contact => ne
       .reduce((value, { messages }) => {
         const [ message = { data: { type: 'text', value: '' } } ] = messages
         // TODO: Choisir une implémentation I18N
-        return 'text' === message.data.type ? message.data.value  : `Pièce jointe (${message.data.value})`
+        return MessageClass.TYPE_MARKUP === message.data.type ? message.data.value  : `Pièce jointe (${message.data.value})`
       }, '')
   }
 }))
