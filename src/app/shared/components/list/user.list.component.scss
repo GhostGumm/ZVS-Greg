@@ -38,6 +38,8 @@ md-list-item{
 
 [md-line-last-message]{
   span{
+    display: block;
+    height: 15px;
     animation-duration: 16s;
     animation-timing-function: linear;
   }
