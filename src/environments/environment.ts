@@ -1,7 +1,7 @@
-const ZETAPUSH_API_URL = 'http://hq.zpush.io:9080/zbo/pub/business/'
-const ZETAPUSH_SANDBOX_ID = 'dq3eV2XI'
+const ZETAPUSH_API_URL = 'http://localhost:10080/zbo/pub/business/'
+const ZETAPUSH_SANDBOX_ID = 'yZWGxtkN'
 // const ZETAPUSH_PROXY_URL =  `http://file.zpush.ovh/${ZETAPUSH_SANDBOX_ID}/cnvrst_hdfs/`
-const ZETAPUSH_PROXY_URL =  `http://hq.zpush.io:9081/str/rest/deployed/${ZETAPUSH_SANDBOX_ID}/cnvrst_hdfs/`
+const ZETAPUSH_PROXY_URL =  `http://localhost:10080/str/rest/deployed/${ZETAPUSH_SANDBOX_ID}/cnvrst_hdfs/`
 
 export const environment = {
   production: false,
