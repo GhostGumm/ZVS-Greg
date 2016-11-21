@@ -116,14 +116,7 @@ export class ConversationService implements OnDestroy {
   private upload({ attachment, guid, httpMethod, url }): Promise<string> {
     console.debug('ConversationService::upload', { attachment, guid, httpMethod, url })
     return new Promise((resolve, reject) => {
-      // this.http.request(url, {
-      //   method: httpMethod,
-      //   body: attachment
-      // })
-      // .map(response => response.json())
-      // .subscribe(() => resolve(guid), reject)
       const xhr = new XMLHttpRequest()
-
       xhr.onreadystatechange = () => {
           if (xhr.readyState === 4) {
               if (xhr.status === 200) {
