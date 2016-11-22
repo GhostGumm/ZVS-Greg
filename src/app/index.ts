@@ -1,2 +1,2 @@
-export { AppModule } from './app.module'
+export * from './app.module'
 export { initialize } from './zetapush'
