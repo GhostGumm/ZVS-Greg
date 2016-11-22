@@ -45,7 +45,7 @@ declare namespace Handshake {
   }
 
   interface TokenAuthData {
-    token: string 
+    token: string
   }
 
   interface TokenHandshake extends AbstractHandshake {
@@ -54,7 +54,7 @@ declare namespace Handshake {
     authData: TokenAuthData
   }
 
-  type Authentication = () => AbstractHandshake
+  type AuthenticationCallback = () => AbstractHandshake
 }
 
 declare module "zetapush-js" {
@@ -62,7 +62,7 @@ declare module "zetapush-js" {
   type AsyncMacroServicePublisher = (method: string, parameters: any, hardFail?: boolean, debug?: number) => Promise<any>
 
   type MacroServicePublisher = (method: string, parameters: any, hardFail?: boolean, debug?: number) => void
-  
+
   type ServicePublisher = (method: string, parameters: any) => void
 
   interface Options {
@@ -133,10 +133,17 @@ declare module "zetapush-js" {
   }
 
   interface ClientHelper {
+    authentication: Handshake.AuthenticationCallback
     servers: Promise<Array<string>>
   }
 
   type ConnectionStatusHandler = number
+
+  export class Authentication {
+    static delegating({ token }): Handshake.TokenHandshake
+    static simple({ login, password }): Handshake.CredentialsHandshake
+    static weak({ token }): Handshake.TokenHandshake
+  }
 
   export class Client {
     helper: ClientHelper
@@ -151,7 +158,7 @@ declare module "zetapush-js" {
     getResource(): string
     getUserId(): string
     removeConnectionStatusListener(listener: ConnectionStatusHandler)
-    setAuthentication(authentication: Handshake.Authentication)
+    setAuthentication(authentication: Handshake.AuthenticationCallback)
     setLogLevel(level: string)
     setResource(resource: string)
     unsubscribe(service: Service)
