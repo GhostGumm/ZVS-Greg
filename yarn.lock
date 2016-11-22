@@ -525,6 +525,17 @@ autoprefixer@^6.3.1:
     postcss "^5.2.5"
     postcss-value-parser "^3.2.3"
 
+awesome-typescript-loader@2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/awesome-typescript-loader/-/awesome-typescript-loader-2.2.1.tgz#218dfd8ca16d8afae8aa72e2c949c35205eaa91a"
+  dependencies:
+    colors "^1.1.2"
+    enhanced-resolve "^2.2.2"
+    loader-utils "^0.2.6"
+    lodash "^4.13.1"
+    object-assign "^4.1.0"
+    source-map-support "^0.4.0"
+
 awesome-typescript-loader@^2.2.3:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/awesome-typescript-loader/-/awesome-typescript-loader-2.2.4.tgz#4185d60c035c25515f9c2a747fa5f69b2a001e9e"
@@ -5823,6 +5834,10 @@ type-is@~1.6.13:
 typescript@1.8.7:
   version "1.8.7"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-1.8.7.tgz#35e3838de31c91cfe1d8c20e0e5785d386938a49"
+
+typescript@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.0.0.tgz#14795f9c39e06022597a2a09eb733adabef9b08c"
 
 typescript@~2.0.3:
   version "2.0.10"
