@@ -5,7 +5,6 @@
 ///<reference path="./zetapush.d.ts"/>
 
 declare var System: any
-declare var require: any;
 
 interface Window {
   WebFont: any,
