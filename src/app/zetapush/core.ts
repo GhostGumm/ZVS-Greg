@@ -1,18 +1,20 @@
+import { Authentication, SmartClient, SmartClientOptions } from 'zetapush-js'
+
 import { environment } from '../../environments/environment'
 
 const { ZETAPUSH_API_URL, ZETAPUSH_SANDBOX_ID } = environment
 
 const ZETAPUSH_DELEGATING_TOKEN_KEY = 'ServicesAuthToken'
 
-export class ZetaPushClient extends ZetaPush.SmartClient {
-  constructor(options: ZetaPush.SmartClientOptions) {
+export class ZetaPushClient extends SmartClient {
+  constructor(options: SmartClientOptions) {
     super(options)
 
     const { authentication } = this.helper
     this.helper.authentication = () => {
       const token = this.getDelegateToken()
       if (token) {
-        return ZetaPush.Authentication.delegating({ token })
+        return Authentication.delegating({ token })
       } else {
         return authentication()
       }
@@ -32,7 +34,7 @@ export class ZetaPushConnection {
   }
 
   disconnect(): Promise<void> {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       const { client } = this
       const handlers: Array<any> = []
       if (client.isConnected()) {
@@ -58,7 +60,7 @@ export class ZetaPushConnection {
   }
 
   connect(credentials: any): Promise<void> {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       const { client } = this
       const handlers: Array<any> = []
       client.setCredentials(credentials)
@@ -76,6 +78,11 @@ export class ZetaPushConnection {
         }
         const onConnectionEstablished = () => {
           console.debug('ZetaPushConnection::onConnectionEstablished')
+          // Remove connection status listener
+          handlers.forEach((handler) => {
+            client.removeConnectionStatusListener(handler)
+          })
+          // Resolve connection success
           resolve()
         }
         // Handle connection success and fail
@@ -92,6 +99,26 @@ export class ZetaPushConnection {
 export const client: ZetaPushClient = new ZetaPushClient({
   apiUrl: ZETAPUSH_API_URL,
   sandboxId: ZETAPUSH_SANDBOX_ID
+})
+
+/**
+ * Provide promise base to handle connection
+ */
+export const initialize: Promise<any> = new Promise((resolve, reject) => {
+  const handler = client.addConnectionStatusListener({
+    onConnectionEstablished() {
+      client.removeConnectionStatusListener(handler)
+      resolve()
+    },
+    onFailedHandshake() {
+      client.removeConnectionStatusListener(handler)
+      reject()
+    }
+  })
+  // Connect to ZetaPush API
+  client.connect()
+  // Catch server errors
+  client.helper.servers.catch(reject)
 })
 
 export const CORE_PROVIDERS = [

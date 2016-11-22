@@ -57,7 +57,7 @@ declare namespace Handshake {
   type AuthenticationCallback = () => AbstractHandshake
 }
 
-declare module ZetaPush {
+declare module "zetapush-js" {
 
   type AsyncMacroServicePublisher = (method: string, parameters: any, hardFail?: boolean, debug?: number) => Promise<any>
 
