@@ -27,11 +27,13 @@
 
 <md-toolbar class="zp-messages-inputs flex-centered">
   <md-progress-bar mode="determinate" value="{{uploader.progress}}"></md-progress-bar>
-
-  <button class="zp-input-files" type="button" md-icon-button color="primary">
-    <md-icon>file_upload</md-icon>
+  
+  <div class="zp-input-files">
+    <button type="button" md-icon-button color="primary">
+      <md-icon>file_upload</md-icon>
+    </button>
     <input #uploadInput type="file" accept="image/*" ng2FileSelect capture="camera" [uploader]="uploader" [multiple]="multiple" (change)="onSelectAttachment($event)"/>
-  </button>
+  </div> 
 
   <form (ngSubmit)="addMessage()" #messageForm="ngForm" id="messageForm">
     <md-input #messageRaw [(ngModel)]="messageModel.raw" class="zp-messages-inputs-text" maxlength="{{limits.message}}" name="messageRaw" id="messageRaw" required autocomplete="off">

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, AfterViewInit, Output, EventEmitter } from '@angular/core'
+import { Component, Input, OnDestroy, OnInit, AfterViewInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core'
 import { Router } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
 
@@ -40,7 +40,8 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
   constructor(
     private router: Router,
     private conversationService: ConversationService,
-    private userService: UserService
+    private userService: UserService,
+    private changeRef: ChangeDetectorRef
   ) {
     /**
      * Route state listener
@@ -55,6 +56,7 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
         // Close navigation if route changed
         if (this.lastRoute !== event.url) {
           // this.navigation.close()
+          this.closeIntro()
         }
         this.lastRoute = event.url
       }
@@ -108,12 +110,14 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
   }
 
   startIntro() {
-    this.intro.addHints()
+    if (this.intro) {
+      this.intro.addHints()
+    }
   }
 
   closeIntro() {
     if (this.intro) {
-      this.intro.hideHint(0)
+      this.intro.hideHints()
     }
   }
 
@@ -122,7 +126,9 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
     this.refreshIntro()
   }
   refreshIntro() {
-    this.intro.refresh()
+    if (this.intro) {
+      this.intro.refresh()
+    }
   }
   /**
    * ToDo : move this to stats components
@@ -137,6 +143,7 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
   getContact() {
     this.userService.getContact().then(contacts => {
       this.contacts = contacts
+      this.changeRef.detectChanges()
     })
   }
 

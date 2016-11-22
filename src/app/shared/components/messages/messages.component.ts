@@ -81,6 +81,7 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   ngOnChanges(changes) {
+    console.log('MessagesComponent::ngOnChanges', { changes })
     if (changes.conversation.currentValue) {
       const onAddConversationMessage = this.conversationService.onAddConversationMessage(changes.conversation.currentValue.id)
       this.subscriptions.forEach((subscription) => subscription.unsubscribe())

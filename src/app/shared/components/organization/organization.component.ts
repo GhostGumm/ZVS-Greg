@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core'
+import { Component, OnInit, ViewContainerRef, ChangeDetectorRef } from '@angular/core'
 import { MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material'
 
 import { ZetaPushClient } from './../../../zetapush'
@@ -69,14 +69,21 @@ export class OrganizationDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MdDialogRef<OrganizationDialogComponent>,
-    private userService: UserService) {
+    private userService: UserService,
+    private changeRef: ChangeDetectorRef
+  ) {
 
   }
 
   ngOnInit() {
+    console.debug('OrganizationDialogComponent::ngOnInit')
     this.userService
         .getPotentialContact()
-        .then((members) => this.members = members)
+        .then((members) => {
+          console.debug('OrganizationDialogComponent::onGetMembers')
+          this.members = members
+          this.changeRef.detectChanges()
+        })
   }
 
   onMemberClicked(event) {
