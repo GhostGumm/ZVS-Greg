@@ -4,8 +4,8 @@ import { Animations } from '../../../utils/utils.animation'
 import { ZetaPushConnection } from '../../../zetapush'
 
 class Credentials {
-  public login: string = 'yohan.letelier@yopmail.com'
-  public password: string = 'lowtaux'
+  public login: string = ''
+  public password: string = ''
 }
 
 @Component({
