@@ -22,9 +22,9 @@ const PROVIDERS = [ ScrollGlueDirective, MessageService, FileDropDirective, File
   styleUrls: ['./messages.component.scss'],
   providers: [ ...PROVIDERS ],
   animations: [
-    trigger('routeAnimation', Animations.swipeOutDownView()),
-    trigger('dropZoneAnimation', Animations.fadeIn({ duration:'250ms' })),
-    trigger('timestampAnimation', Animations.fadeIn({ duration:'250ms' }))
+    trigger('routeAnimation', Animations.swipeOutDownView),
+    trigger('dropZoneAnimation', Animations.fadeIn),
+    trigger('timestampAnimation', Animations.fadeIn)
   ]
 })
 

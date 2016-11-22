@@ -7,7 +7,7 @@ import { Animations } from '../../../utils/utils.animation'
   templateUrl: './context-view.component.html',
   providers: [],
   animations: [
-    trigger('routeAnimation', Animations.fadeInOutView())
+    trigger('routeAnimation', Animations.fadeInOutView)
   ]
 })
 export class ContextViewComponent implements OnInit {

@@ -11,7 +11,7 @@ import { UserService } from '../../../services/user'
   styleUrls: ['./audio.component.scss'],
   providers: [ UserService, RtcService ],
   animations: [
-    trigger('routeAnimation', Animations.swipeOutDownView())
+    trigger('routeAnimation', Animations.swipeOutDownView)
   ]
 })
 export class AudioComponent implements OnChanges, OnDestroy, OnInit {

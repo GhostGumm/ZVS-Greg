@@ -15,9 +15,9 @@ import { ZetaPushConnection } from '../../zetapush'
 
 @Component({
   animations: [
-    trigger('toolbarAnimation', Animations.slideUpDown({ duration: '250ms' })),
-    trigger('profileAnimation', Animations.slideUpDown()),
-    trigger('routeAnimation', Animations.fadeIn())
+    trigger('toolbarAnimation', Animations.slideUpDown),
+    trigger('profileAnimation', Animations.slideUpDown),
+    trigger('routeAnimation', Animations.fadeIn)
   ],
   providers: [ MdSnackBar ],
   selector: 'zp-authenticated-layout',
