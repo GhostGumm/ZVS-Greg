@@ -77,9 +77,51 @@ table {
 	}
 }
 
+//introJs reset
+.introjs-hint{
+	&:hover{
+		.introjs-hint-pulse{
+			border: 5px solid lighten(md-color($primary),10%);
+		}
+	}
+	.introjs-hint-pulse{
+		border: 5px solid md-color($primary);
+	}
+}
+.introjs-tooltiptext{
+	text-align: center;
+}
+.introjs-button{
+	user-select: none;
+	outline: none;
+	border: none;
+	display: inline-block;
+	white-space: nowrap;
+	text-decoration: none;
+	vertical-align: baseline;
+	font-size: 14px;
+	font-family: Roboto, "Helvetica Neue", sans-serif;
+	font-weight: 500;
+	color: currentColor;
+	text-align: center;
+	margin: 0;
+	margin-top: 10px;
+	min-width: 88px;
+	line-height: 36px;
+	padding: 0 16px;
+	border-radius: 2px;
+	background-color: md-color($primary);
+	box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+	transform: translate3d(0, 0, 0);
+	transition: background 400ms cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+	&:active{
+		box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+	}
+}
+
 input[type=file], /* FF, IE7+, chrome (except button) */
 input[type=file]::-webkit-file-upload-button { /* chromes and blink button */
-    cursor: pointer; 
+	cursor: pointer; 
 }
 
 // Scrollbar reset

@@ -8,8 +8,9 @@
 }
 .zp-nav-close{
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 8px;
+  right: 8px;
+  color: $background;
 }
 
 [zp-nav-overflow]{

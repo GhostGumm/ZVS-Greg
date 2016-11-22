@@ -17,6 +17,7 @@ import { UserService, UserInterface } from '../../../services/user'
 export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
   @Input() navigation: any // md-sidenav reference
   @Input() user: UserInterface
+  @Input() isMobile: boolean
   @Output() logout = new EventEmitter()
 
   contacts: Array<UserInterface> = []
@@ -70,23 +71,25 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
      */
     this.subscriptions.push(this.navigation.onOpen.subscribe(() => {
       console.debug('NavigationComponent.navigation::onOpen')
-      this.refreshStats()
-      this.startIntro()
-    }))
-    this.subscriptions.push(this.navigation.onClose.subscribe(() => {
-      console.debug('NavigationComponent.navigation::onClose')
-      this.refreshStats()
-    }))    
+      this.refreshLayout()
+    }))  
+
     this.subscriptions.push(this.navigation.onCloseStart.subscribe(() => {
       console.debug('NavigationComponent.navigation::onCloseStart')
       this.closeIntro()
+    }))
+    this.subscriptions.push(this.navigation.onClose.subscribe(() => {
+      console.debug('NavigationComponent.navigation::onClose')
+      this.refreshLayout()
     }))
     
     this.getContact()
   }
 
   ngAfterViewInit() {
-    this.initIntro()
+    if (!this.isMobile) {
+      this.initIntro()
+    }
   }
 
   ngOnDestroy() {
@@ -96,9 +99,12 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
   }
 
   initIntro() {
-    this.intro = window.introJs()    
+    this.intro = window.introJs()   
+    console.warn(this.intro) 
     setTimeout(() => {
-      this.navigation.open()
+      this.navigation.open().then(() => {
+        this.startIntro()
+      })
     }, 250)
   }
 
@@ -107,9 +113,18 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
   }
 
   closeIntro() {
-    this.intro.hideHints()
+    if (this.intro) {
+      this.intro.hideHint(0)
+    }
   }
 
+  refreshLayout() {
+    this.refreshStats()
+    this.refreshIntro()
+  }
+  refreshIntro() {
+    this.intro.refresh()
+  }
   /**
    * ToDo : move this to stats components
    */
