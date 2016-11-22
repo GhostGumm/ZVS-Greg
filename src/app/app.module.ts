@@ -5,6 +5,7 @@ import { AuthenticationModule } from './authentication/authentication.module'
 import { DashboardModule } from './dashboard/dashboard.module'
 import { ContextModule } from './context/context.module'
 import { ConversationModule } from './conversation/conversation.module'
+import { HomeModule } from './home/home.module'
 // App Routing
 import { AppConfigModule } from './app-config.module'
 import { AppRoutingModule } from './app-routing.module'
@@ -24,7 +25,8 @@ import { RootComponent } from './root.component'
     AuthenticationModule,
     DashboardModule,
     ContextModule,
-    ConversationModule
+    ConversationModule,
+    HomeModule
   ],
   bootstrap: [ RootComponent ]
 })

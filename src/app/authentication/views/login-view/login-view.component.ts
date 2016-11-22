@@ -66,7 +66,7 @@ export class LoginViewComponent implements AfterViewInit, OnChanges, OnInit {
   }
 
   onConnectionSuccess() {
-    this.router.navigate(['/authenticated/dashboard'])
+    this.router.navigate(['/authenticated/home'])
   }
 
   onConnectionError() {

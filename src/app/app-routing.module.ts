@@ -6,6 +6,14 @@ import { AuthenticatedLayoutComponent } from './shared/layouts'
 import { dashboardRoutes } from './dashboard/dashboard-routing.module'
 import { conversationRoutes } from './conversation/conversation-routing.module'
 import { contextRoutes } from './context/context-routing.module'
+import { homeRoutes } from './home/home-routing.module'
+
+const CHILDRENS = [
+  dashboardRoutes,
+  conversationRoutes,
+  contextRoutes,
+  homeRoutes
+]
 
 export const routes: Routes = [
   {
@@ -15,11 +23,7 @@ export const routes: Routes = [
   {
     path: 'authenticated',
     component: AuthenticatedLayoutComponent,
-    children: [
-      dashboardRoutes,
-      conversationRoutes,
-      contextRoutes
-    ]
+    children: CHILDRENS
   }
 ]
 

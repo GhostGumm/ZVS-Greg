@@ -116,7 +116,14 @@ export class StatsComponent implements OnInit, AfterViewInit {
         }
       }, {
         type: 'Pie',
-        data: data['Pie'],
+        data: {
+          "series": [
+            20,
+            10,
+            30,
+            40
+          ]
+        },
         options: {
           donut: true,
           showLabel: false

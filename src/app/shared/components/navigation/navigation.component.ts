@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core'
+import { Component, Input, OnDestroy, OnInit, AfterViewInit, Output, EventEmitter } from '@angular/core'
 import { Router } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
 
@@ -14,7 +14,7 @@ import { UserService, UserInterface } from '../../../services/user'
   templateUrl: './navigation.component.html',
   providers: [ UserService ]
 })
-export class NavigationComponent implements OnDestroy, OnInit {
+export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
   @Input() navigation: any // md-sidenav reference
   @Input() user: UserInterface
   @Output() logout = new EventEmitter()
@@ -34,6 +34,7 @@ export class NavigationComponent implements OnDestroy, OnInit {
   ]
   lastRoute: string
   subscriptions: Array<Subscription> = []
+  intro: any
 
   constructor(
     private router: Router,
@@ -52,7 +53,7 @@ export class NavigationComponent implements OnDestroy, OnInit {
         })
         // Close navigation if route changed
         if (this.lastRoute !== event.url) {
-          this.navigation.close()
+          // this.navigation.close()
         }
         this.lastRoute = event.url
       }
@@ -70,17 +71,43 @@ export class NavigationComponent implements OnDestroy, OnInit {
     this.subscriptions.push(this.navigation.onOpen.subscribe(() => {
       console.debug('NavigationComponent.navigation::onOpen')
       this.refreshStats()
+      this.startIntro()
     }))
     this.subscriptions.push(this.navigation.onClose.subscribe(() => {
       console.debug('NavigationComponent.navigation::onClose')
       this.refreshStats()
+    }))    
+    this.subscriptions.push(this.navigation.onCloseStart.subscribe(() => {
+      console.debug('NavigationComponent.navigation::onCloseStart')
+      this.closeIntro()
     }))
+    
     this.getContact()
+  }
+
+  ngAfterViewInit() {
+    this.initIntro()
   }
 
   ngOnDestroy() {
     console.debug('NavigationComponent::ngOnDestroy')
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
+    this.closeIntro()
+  }
+
+  initIntro() {
+    this.intro = window.introJs()    
+    setTimeout(() => {
+      this.navigation.open()
+    }, 250)
+  }
+
+  startIntro() {
+    this.intro.addHints()
+  }
+
+  closeIntro() {
+    this.intro.hideHints()
   }
 
   /**
