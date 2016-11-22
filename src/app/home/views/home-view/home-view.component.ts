@@ -1,7 +1,10 @@
-import { Component, HostBinding, OnInit, trigger } from '@angular/core'
+import { Component, HostBinding, ViewChildren, ChangeDetectorRef, OnInit, AfterViewInit, trigger } from '@angular/core'
 import { Animations } from '../../../utils/utils.animation'
+
 import * as Chartist from 'chartist'
 import { ChartType, ChartEvent } from 'angular2-chartist'
+
+import { CARDS_TEMPLATE } from './home-view.template'
 
 export interface Chart {
   type: ChartType
@@ -20,63 +23,38 @@ export interface Chart {
     trigger('routeAnimation', Animations.fadeInOutView)
   ]
 })
-export class HomeViewComponent implements OnInit {
+export class HomeViewComponent implements OnInit, AfterViewInit {
 
-  public cards = [
-    {
-      title:'toto',
-      subtitle:'tata',
-      content:'hey !',
-      chart:{
-        type: 'Pie',
-        data: {
-          "series": [
-            20,
-            10,
-            30,
-            40
-          ]
-        },
-        options: {
-          donut: true,
-          showLabel: false
-        }
-      },
-      actions:[{
-        text:'like',
-      },{
-        text:'share'
-      }]
-    },
-    {
-      title:'toto',
-      subtitle:'tata',
-      content:'hey !',
-      actions:[{
-        text:'like',
-      },{
-        text:'share'
-      }]
-    },
-    {
-      title:'toto',
-      subtitle:'tata',
-      content:'hey !',
-      actions:[{
-        text:'like',
-      },{
-        text:'share'
-      }]
-    }
-  ]
+  public cards:any = CARDS_TEMPLATE
+
+  @ViewChildren('chart') charts
 
   @HostBinding('@routeAnimation') get routeAnimation() {
     return true
   }
 
-  constructor() {
+  constructor(
+  ) {
   }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this.fakeChartData()
+  }
+
+  fakeChartData() {
+    setInterval(() => {
+      this.charts._results.forEach((chart) => {
+        let series = chart.data.series
+        for(let serie in series) {
+          if (chart.type == 'Pie') {
+            series.splice(serie, 1, Math.round(Math.random()*2 + 8))
+          }
+        }
+        chart.update(series)
+      })
+    }, 1000)
   }
 }

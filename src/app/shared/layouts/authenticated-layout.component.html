@@ -1,18 +1,18 @@
 <md-sidenav-layout>
   <md-sidenav #navigation mode="{{isMobile ? 'over' : 'side'}}">
-    <zp-navigation [navigation]="navigation" [user]="user" (logout)="onLogout()"></zp-navigation>
+    <zp-navigation [navigation]="navigation" [user]="user" (logout)="onLogout()" [isMobile]="isMobile"></zp-navigation>
   </md-sidenav>
 
   <!--<md-sidenav #sidenav align="end">
     <zp-sidenav [sidenav]="sidenav"></zp-sidenav>
   </md-sidenav>-->
 
-  <md-toolbar color="primary" *ngIf="toolbarIsVisible" [@toolbarAnimation]="toolbarIsVisible">
-    <button md-icon-button (click)="navigation.toggle()"> <!--  md-tooltip="{{navigationOpened ? 'close menu' : 'open menu'}}" -->
-      <md-icon>{{navigationOpened ? 'close' : 'menu'}}</md-icon>
+  <md-toolbar color="primary" [@slideUpDown]="toolbarIsVisible">
+    <button md-icon-button (click)="navigation.toggle()" *ngIf="!navigationOpened" [@slideUpDown]="!navigationOpened"> <!--  md-tooltip="{{navigationOpened ? 'close menu' : 'open menu'}}" -->
+      <md-icon>menu</md-icon>
     </button>
-    <zp-avatar [user]="user" [size]="40" presence="true" [@profileAnimation]="!navigationOpened"></zp-avatar>
-    <span [@profileAnimation]="!navigationOpened">{{ user.firstname }}</span>
+    <zp-avatar [user]="user" [size]="40" presence="true" *ngIf="!navigationOpened" [@slideUpDown]="!navigationOpened"></zp-avatar>
+    <span *ngIf="!navigationOpened" [@slideUpDown]="!navigationOpened">{{ user.firstname }}</span>
     <span class="flex-fill"></span>
     <button md-icon-button [md-menu-trigger-for]="menu"><md-icon>more_vert</md-icon></button>
   </md-toolbar>

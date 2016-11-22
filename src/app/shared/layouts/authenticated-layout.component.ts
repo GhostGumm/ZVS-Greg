@@ -15,8 +15,7 @@ import { ZetaPushConnection } from '../../zetapush'
 
 @Component({
   animations: [
-    trigger('toolbarAnimation', Animations.slideUpDown),
-    trigger('profileAnimation', Animations.slideUpDown),
+    trigger('slideUpDown', Animations.slideUpDown),
     trigger('routeAnimation', Animations.fadeIn)
   ],
   providers: [ MdSnackBar ],

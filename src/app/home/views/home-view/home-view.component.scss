@@ -3,12 +3,18 @@
 [md-card-container]{
   display: flex;
   justify-content: center;
-  align-items: cennter;
-  max-width: 800px;
+  align-items: center;
+  max-width: 900px;
   margin: 0 auto;
+  flex-wrap: wrap;
 }
 md-card{
-  width: 100%;
-  max-width: 400px;
+  min-width: 200px;
+  height: 100%;
   margin: 5px;
+  text-align: center;
+  flex-grow: 1;
+  md-card-actions{
+    text-align: right;
+  }
 }

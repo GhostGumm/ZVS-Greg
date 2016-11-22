@@ -9,6 +9,8 @@ import { VideoComponent } from './video/video.component'
 import { AudioComponent } from './audio/audio.component'
 import { OrganizationComponent, OrganizationDialogComponent } from './organization/organization.component'
 
+import { ChartistComponent } from 'angular2-chartist'
+
 export const COMPONENTS = [
   AvatarComponent,
   NavigationComponent,
@@ -20,5 +22,6 @@ export const COMPONENTS = [
   VideoComponent,
   AudioComponent,
   OrganizationComponent,
-  OrganizationDialogComponent
+  OrganizationDialogComponent,
+  ChartistComponent
 ]

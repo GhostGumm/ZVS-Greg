@@ -1,3 +1,7 @@
+<button class="zp-nav-close" md-icon-button (click)="navigation.close()"> <!--  md-tooltip="{{navigationOpened ? 'close menu' : 'open menu'}}" -->
+  <md-icon>close</md-icon>
+</button>
+
 <zp-profile [user]="user" (logout)="onLogout()"></zp-profile>
 
 <div zp-nav-overflow>
@@ -12,7 +16,7 @@
     <div class="zp-user-list-actions">
       <h4>Contacts({{contacts?.length}})</h4>
       <span class="flex-fill"></span>
-      <zp-add-contact data-step="1" data-hint="Search for contact" data-hintPosition="top-middle" data-position="right" class="intro-navigation"></zp-add-contact>
+      <zp-add-contact data-step="0" data-hint="Search for contact" data-hintPosition="top-middle" data-position="right" class="intro-navigation"></zp-add-contact>
     </div>
   </zp-user-list>
 </div>
