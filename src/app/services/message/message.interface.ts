@@ -33,6 +33,10 @@ const isTwoWeeksOrMore = (date) => {
 }
 
 export class MessageClass implements MessageInterface {
+
+  static TYPE_ATTACHMENT: string = 'attachment'
+  static TYPE_MARKUP: string = 'markup'
+
   id
   type
   author
@@ -40,12 +44,12 @@ export class MessageClass implements MessageInterface {
   value
   date
 
-  metadata= {}
+  metadata = {}
   timeFromNow
 
-  isOwner= false
-  isPrecede= false
-  isHovered= false
+  isOwner = false
+  isPrecede = false
+  isHovered = false
 
   constructor(parameters: MessageInterface) {
     Object.assign(this, parameters)
