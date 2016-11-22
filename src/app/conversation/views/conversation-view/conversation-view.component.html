@@ -1,14 +1,11 @@
-<md-toolbar>
-  <!--<button md-icon-button (click)="switchView('messages')">
-      <md-icon class="md-24">message</md-icon>
-  </button>-->
-  <button md-icon-button (click)="openView('audio')" [class.on]="audioIsVisible"> <!-- md-tooltip="{{audioIsVisible ? 'Stop audio' : 'Start audio'}}" -->
+<!--<md-toolbar>
+  <button md-icon-button (click)="openView('audio')" [class.on]="audioIsVisible">
       <md-icon class="md-24">{{audioIsVisible ? 'call_end' : 'call'}}</md-icon>
   </button>
-  <button md-icon-button (click)="openView('video')" [class.on]="videoIsVisible"> <!-- md-tooltip="{{videoIsVisible ? 'Stop video' : 'Start video'}}" -->
+  <button md-icon-button (click)="openView('video')" [class.on]="videoIsVisible">
       <md-icon class="md-24">{{videoIsVisible ? 'videocam_off' : 'videocam'}}</md-icon>
   </button>
-</md-toolbar>
+</md-toolbar>-->
 
  
 <zp-messages [conversation]="conversation" [@messagesAnimation]="messagesIsVisible" [class.video]="videoIsVisible" [class.audio]="audioIsVisible"></zp-messages>

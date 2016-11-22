@@ -5,12 +5,12 @@
 <zp-profile [user]="user" (logout)="onLogout()"></zp-profile>
 
 <div zp-nav-overflow>
-  <md-nav-list>
+  <!--<md-nav-list>
     <button color="primary" *ngFor="let route of routes" md-button [routerLink]="route.link">
       <md-icon>{{route.icon}}</md-icon>
       {{route.name}}
     </button>
-  </md-nav-list>
+  </md-nav-list>-->
 
   <zp-user-list [users]="contacts" [link]="'conversation/'" [lastMessage]="true">
     <div class="zp-user-list-actions">

@@ -100,7 +100,6 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
 
   initIntro() {
     this.intro = window.introJs()   
-    console.warn(this.intro) 
     setTimeout(() => {
       this.navigation.open().then(() => {
         this.startIntro()

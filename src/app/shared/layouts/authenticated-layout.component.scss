@@ -8,6 +8,7 @@
 }
 md-toolbar{
   z-index: 1;
+  height: 128px;
 }
 md-sidenav{
   overflow:hidden;
@@ -20,6 +21,6 @@ md-sidenav{
   position: relative;
   display: block;
   /* toolbar height : 64px */
-  height: calc(100% - 64px);
+  height: calc(100% - 128px);
   overflow: auto;
 }

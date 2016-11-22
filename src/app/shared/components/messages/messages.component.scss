@@ -3,7 +3,7 @@
 :host {
   display: flex;
   flex-direction: column;
-  height: calc(100% - 64px);
+  height: 100%; //calc(100% - 64px);
   width: 100%;
 }
 
