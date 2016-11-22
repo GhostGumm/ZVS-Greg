@@ -53,7 +53,7 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
         })
         // Close navigation if route changed
         if (this.lastRoute !== event.url) {
-          this.navigation.close()
+          // this.navigation.close()
         }
         this.lastRoute = event.url
       }
@@ -92,6 +92,7 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
   ngOnDestroy() {
     console.debug('NavigationComponent::ngOnDestroy')
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
+    this.closeIntro()
   }
 
   initIntro() {

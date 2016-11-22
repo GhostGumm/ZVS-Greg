@@ -11,7 +11,8 @@ if (environment.production) {
 }
 
 // Converser cette portion de code static pour le build AOT
-platformBrowserDynamic().bootstrapModule(AppModule).then(() => initialize)
+// platformBrowserDynamic().bootstrapModule(AppModule).then(() => initialize)
+initialize.then(() => platformBrowserDynamic().bootstrapModule(AppModule, []))
 
 window.WebFont.load({
   google: {

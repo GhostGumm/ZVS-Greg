@@ -17,7 +17,7 @@ export interface Chart {
   styleUrls: ['./home-view.component.scss'],
   providers: [],
   animations: [
-    trigger('routeAnimation', Animations.fadeInOutView())
+    trigger('routeAnimation', Animations.fadeInOutView)
   ]
 })
 export class HomeViewComponent implements OnInit {

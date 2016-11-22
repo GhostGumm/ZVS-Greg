@@ -24,7 +24,7 @@
       ],
       "scripts": [
         "../node_modules/zetapush-js/dist/zetapush.min.js",
-        "../node_modules/webfontloader/webfontloader.js"
+        "../node_modules/webfontloader/webfontloader.js",
         "../node_modules/intro.js/intro.js"
       ],
       "environments": {
