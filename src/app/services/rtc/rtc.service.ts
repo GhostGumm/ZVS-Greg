@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core'
-import { RtcInterface, RtcClass } from './rtc.interface'
-import { services } from 'zetapush-js'
 import { ZetaPushClient } from '../../zetapush'
 import { DomSanitizer } from '@angular/platform-browser'
 // import 'webrtc-adapter'
@@ -9,7 +7,7 @@ import { ICE_SERVERS, RTC_CHANNEL } from '../../utils/utils.rtc'
 
 @Injectable()
 export class RtcService {
-  
+
   peers:any = {}
   iceServers:any = ICE_SERVERS
 
@@ -235,7 +233,7 @@ export class RtcService {
     if (this.peers[source] && !this.peers[source].url) {
       this.removePeer(source)
     }
-    
+
     var pc = this.getPeerConnection(source)
     pc.setRemoteDescription(new window.RTCSessionDescription(data.sdp), () => {
       pc.createAnswer((sdp) => {
@@ -258,7 +256,7 @@ export class RtcService {
 
   hangup(userKey = null) {
 
-    const closeConnection = (key) => {      
+    const closeConnection = (key) => {
       if (this.peers[key]) {
         this.peers[key].connection.close()
       }
@@ -289,7 +287,7 @@ export class RtcService {
       this.local.stream.getTracks().forEach((track) => {
         track.stop()
       })
-    }  
+    }
   }
 
   destroy() {

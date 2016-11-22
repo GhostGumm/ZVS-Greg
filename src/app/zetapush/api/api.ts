@@ -1,4 +1,4 @@
-import { services } from 'zetapush-js'
+const { services } = ZetaPush
 
 export class Api extends services.Macro {
   /**

@@ -1,20 +1,18 @@
-import { Authentication, SmartClient, SmartClientOptions } from 'zetapush-js'
-
 import { environment } from '../../environments/environment'
 
 const { ZETAPUSH_API_URL, ZETAPUSH_SANDBOX_ID } = environment
 
 const ZETAPUSH_DELEGATING_TOKEN_KEY = 'ServicesAuthToken'
 
-export class ZetaPushClient extends SmartClient {
-  constructor(options: SmartClientOptions) {
+export class ZetaPushClient extends ZetaPush.SmartClient {
+  constructor(options: ZetaPush.SmartClientOptions) {
     super(options)
 
     const { authentication } = this.helper
     this.helper.authentication = () => {
       const token = this.getDelegateToken()
       if (token) {
-        return Authentication.delegating({ token })
+        return ZetaPush.Authentication.delegating({ token })
       } else {
         return authentication()
       }
