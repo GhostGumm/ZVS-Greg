@@ -4,11 +4,11 @@ import { SharedModule } from '../shared/shared.module'
 import { COMPONENTS } from './components'
 import { VIEWS } from './views'
 
-import { DashboardRoutingModule } from './dashboard-routing.module'
+import { HomeRoutingModule } from './home-routing.module'
 
 @NgModule({
   declarations: [ ...COMPONENTS, ...VIEWS ],
-  imports: [ SharedModule.forRoot(), DashboardRoutingModule ],
+  imports: [ SharedModule.forRoot(), HomeRoutingModule ],
   providers: [ ]
 })
-export class DashboardModule { }
+export class HomeModule { }

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { HttpModule } from '@angular/http'
 import { MaterialModule } from '@angular/material'
+import { ChartistComponent } from 'angular2-chartist'
 
 import { SharedRoutingModule } from './shared-routing.module'
 
@@ -21,7 +22,7 @@ import { ScrollGlueDirective } from '../utils'
 import { FileDropDirective, FileSelectDirective } from 'ng2-file-upload'
 
 const CORE_MODULES = [ CommonModule, BrowserModule, FormsModule, HttpModule ]
-const DIRECTIVES = [ ScrollGlueDirective, FileDropDirective, FileSelectDirective]
+const DIRECTIVES = [ ScrollGlueDirective, FileDropDirective, FileSelectDirective, ChartistComponent]
 const SERVICES = [ AuthenticationService, ...DATA_SERVICES ]
 
 @NgModule({

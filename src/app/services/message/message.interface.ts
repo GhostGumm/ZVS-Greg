@@ -19,6 +19,18 @@ export interface MessageInterface {
   isHovered?: boolean
 }
 
+const isToday = (date) => {
+    return date.isSame(moment(Date.now()).startOf('day'), 'd');
+}
+const isYesterday = (date) => {
+    return date.isSame(moment(Date.now()).subtract(7, 'days').startOf('day'), 'd');
+}
+const isWithinAWeek = (date) => {
+    return date.isAfter(moment(Date.now()).subtract(7, 'days').startOf('day'));
+}
+const isTwoWeeksOrMore = (date) => {
+    return !isWithinAWeek(date);
+}
 
 export class MessageClass implements MessageInterface {
   id
@@ -41,6 +53,5 @@ export class MessageClass implements MessageInterface {
 
   getTimeFromNow() {
     this.timeFromNow = moment(this.date).fromNow()
-    console.warn(this.timeFromNow)
   }
 }

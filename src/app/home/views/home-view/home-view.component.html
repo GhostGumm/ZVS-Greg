@@ -1,0 +1,21 @@
+<h1>Home</h1>
+
+<div md-card-container>
+  <md-card *ngFor="let card of cards;">
+    <md-card-title>{{card.title}}</md-card-title>   
+    <md-card-subtitle>{{card.subtitle}}</md-card-subtitle>
+    <md-card-content>
+        <p>{{card.content}}</p>
+          <!--<x-chartist *ngIf="{{card.chart}}"
+            [data]="card.chart.data"
+            [type]="card.chart.type"
+            [options]="card.chart.options"
+            [responsiveOptions]="card.chart.responsiveOptions"
+            [events]="card.chart.events">
+          </x-chartist>-->
+    </md-card-content>
+    <md-card-actions>
+        <button *ngFor="let action of card.actions;" md-button>{{action.text}}</button>
+    </md-card-actions>
+  </md-card>  
+</div>
