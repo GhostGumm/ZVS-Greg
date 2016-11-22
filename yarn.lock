@@ -525,17 +525,6 @@ autoprefixer@^6.3.1:
     postcss "^5.2.5"
     postcss-value-parser "^3.2.3"
 
-awesome-typescript-loader@2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/awesome-typescript-loader/-/awesome-typescript-loader-2.2.1.tgz#218dfd8ca16d8afae8aa72e2c949c35205eaa91a"
-  dependencies:
-    colors "^1.1.2"
-    enhanced-resolve "^2.2.2"
-    loader-utils "^0.2.6"
-    lodash "^4.13.1"
-    object-assign "^4.1.0"
-    source-map-support "^0.4.0"
-
 awesome-typescript-loader@^2.2.3:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/awesome-typescript-loader/-/awesome-typescript-loader-2.2.4.tgz#4185d60c035c25515f9c2a747fa5f69b2a001e9e"
@@ -2717,6 +2706,10 @@ interpret@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.0.1.tgz#d579fb7f693b858004947af39fa0db49f795602c"
 
+intro.js@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/intro.js/-/intro.js-2.3.0.tgz#eccadf1ede2451615a93cb27ef62f1437342d1bf"
+
 invert-kv@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-1.0.0.tgz#104a8e4aaca6d3d8cd157a8ef8bfab2d7a3ffdb6"
@@ -3532,11 +3525,7 @@ lower-case@^1.1.1:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/lower-case/-/lower-case-1.1.3.tgz#c92393d976793eee5ba4edb583cf8eae35bd9bfb"
 
-lru-cache@2:
-  version "2.7.3"
-  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-2.7.3.tgz#6d4524e8b955f95d4f5b58851ce21dd72fb4e952"
-
-lru-cache@2.2.x:
+lru-cache@2, lru-cache@2.2.x:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-2.2.4.tgz#6c658619becf14031d0d0b594b16042ce4dc063d"
 
@@ -4895,11 +4884,11 @@ reduce-function-call@^1.0.1:
   dependencies:
     balanced-match "~0.1.0"
 
-reflect-metadata@0.1.2:
+reflect-metadata@0.1.2, reflect-metadata@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.2.tgz#ea23e5823dc830f292822bd3da9b89fd57bffb03"
 
-reflect-metadata@^0.1.2, reflect-metadata@^0.1.8:
+reflect-metadata@^0.1.8:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.8.tgz#72426d570b60776e3688968bd5ab9537a15cecf6"
 
@@ -5855,11 +5844,7 @@ typescript@1.8.7:
   version "1.8.7"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-1.8.7.tgz#35e3838de31c91cfe1d8c20e0e5785d386938a49"
 
-typescript@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.0.0.tgz#14795f9c39e06022597a2a09eb733adabef9b08c"
-
-typescript@~2.0.3:
+typescript@^2.0.2, typescript@~2.0.3:
   version "2.0.10"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.0.10.tgz#ccdd4ed86fd5550a407101a0814012e1b3fac3dd"
 
@@ -6410,9 +6395,9 @@ zetapush-cometd@^3.0.13:
   version "3.0.13"
   resolved "https://registry.yarnpkg.com/zetapush-cometd/-/zetapush-cometd-3.0.13.tgz#7bd6fc9bc491a7db3535e772369818d82031cc56"
 
-zetapush-js@3.1.0-alpha.1:
-  version "3.1.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/zetapush-js/-/zetapush-js-3.1.0-alpha.1.tgz#4fc9edb822168afb2d2985ee3af482a194c83117"
+zetapush-js@3.1.0-alpha.2:
+  version "3.1.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/zetapush-js/-/zetapush-js-3.1.0-alpha.2.tgz#dc6b085b1f67b6f8e6fee8894e2f038e0b1a1280"
   dependencies:
     zetapush-cometd "^3.0.13"
 
