@@ -19,8 +19,8 @@ class RegisterModel {
   templateUrl: './register-view.component.html',
   providers: [],
   animations: [
-    trigger('formAnimation', Animations.slideUpDown()),
-    trigger('routeAnimation', Animations.fadeInOutView())
+    trigger('formAnimation', Animations.slideUpDown),
+    trigger('routeAnimation', Animations.fadeInOutView)
   ]
 })
 export class RegisterViewComponent implements AfterViewInit, OnChanges, OnInit {

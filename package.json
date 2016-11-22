@@ -5,7 +5,8 @@
   "angular-cli": {},
   "scripts": {
     "start": "ng serve --port 3000 --host 0.0.0.0",
-    "lint": "tslint \"src/**/*.ts\""
+    "lint": "tslint \"src/**/*.ts\"",
+    "serve": "(cd dist && python ../python-gzip.py)"
   },
   "private": true,
   "dependencies": {

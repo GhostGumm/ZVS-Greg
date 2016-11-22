@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs/Subscription'
   templateUrl: './user.list.component.html',
   styleUrls: ['./user.list.component.scss'],
   animations: [
-    trigger('loadingAnimation', Animations.fadeIn())
+    trigger('loadingAnimation', Animations.fadeIn)
   ]
 
 })

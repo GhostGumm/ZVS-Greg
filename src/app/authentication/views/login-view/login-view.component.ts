@@ -13,8 +13,8 @@ class Credentials {
   templateUrl: './login-view.component.html',
   providers: [],
   animations: [
-    trigger('formAnimation', Animations.slideUpDown()),
-    trigger('routeAnimation', Animations.fadeInOutView())
+    trigger('formAnimation', Animations.slideUpDown),
+    trigger('routeAnimation', Animations.fadeInOutView)
   ]
 })
 export class LoginViewComponent implements AfterViewInit, OnChanges, OnInit {

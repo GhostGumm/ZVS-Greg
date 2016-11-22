@@ -11,11 +11,11 @@ import { UserService } from '../../../services/user'
   templateUrl: './conversation-view.component.html',
   styleUrls: ['./conversation-view.component.scss'],
   animations: [
-    trigger('routeAnimation', Animations.fadeInOutView()),
-    trigger('loadingAnimation', Animations.fadeIn()),
-    trigger('messagesAnimation', Animations.swipeOutDownView()),
-    trigger('videoAnimation', Animations.swipeOutDownView()),
-    trigger('audioAnimation', Animations.swipeOutDownView())
+    trigger('routeAnimation', Animations.fadeInOutView),
+    trigger('loadingAnimation', Animations.fadeIn),
+    trigger('messagesAnimation', Animations.swipeOutDownView),
+    trigger('videoAnimation', Animations.swipeOutDownView),
+    trigger('audioAnimation', Animations.swipeOutDownView)
   ]
 })
 export class ConversationViewComponent implements OnInit, AfterViewInit, AfterContentInit {

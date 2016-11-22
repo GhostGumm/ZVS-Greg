@@ -25,7 +25,7 @@ export interface Chart {
     }
   `],
   animations: [
-    trigger('statsAnimation', Animations.fadeInOutView())
+    trigger('statsAnimation', Animations.fadeInOutView)
   ]
 })
 export class StatsComponent implements OnInit, AfterViewInit {
