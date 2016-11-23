@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs/Subscription'
   templateUrl: './user.list.component.html',
   styleUrls: ['./user.list.component.scss'],
   animations: [
+    trigger('listAnimation', Animations.fadeInHeight),
     trigger('loadingAnimation', Animations.fadeIn)
   ]
 
@@ -21,10 +22,10 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   @Input() users: UserInterface[]
   @Input() link: string
   @Input() lastMessage: boolean = false
+  @Input() loading: boolean
   @Output() userClickedEmitter = new EventEmitter()
 
   subscriptions: Array<Subscription> = []
-  loading: boolean = true
   isExpanded: boolean = false
 
   constructor() {
@@ -43,26 +44,24 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     })
   }
   ngAfterViewInit() {
-    console.debug('UserListComponent::ngAfterViewInit')
+    console.debug('UserListComponent::ngAfterViewInit', { loading: this.loading })
   }
   ngOnChanges(event) {
-    console.debug('UserListComponent::ngOnChanges', {
-      users: this.users,
-      event
-    })
     // Mock Purpose
-    if (event.users.currentValue) {
+    if (event.users.currentValue.length > 0) {
       OrderBy(this.users, 'online')
       for (let user of this.users) {
         user.metadata = Object.assign(user.metadata, {
           link: this.link ? `${this.link}${user.id}` : ''
         })
       }
-      setTimeout(() => {
-        this.loading = false
-      },0)
     }
     //
+    console.debug('UserListComponent::ngOnChanges', {
+      users: this.users,
+      event,
+      loading: this.loading
+    })
   }
   ngOnDestroy() {
     console.debug('UserListComponent::ngOnDestroy')

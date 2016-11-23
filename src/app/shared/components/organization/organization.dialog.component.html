@@ -4,7 +4,7 @@
     
   </li>
 </ul>-->
-<zp-user-list [users]="members" (userClickedEmitter)="onMemberClicked($event)">
+<zp-user-list [users]="members" [loading]="loading" (userClickedEmitter)="onMemberClicked($event)">
   <div class="zp-user-list-actions">
     <h4>Contacts({{members?.length}})</h4>
     <span class="flex-fill"></span>

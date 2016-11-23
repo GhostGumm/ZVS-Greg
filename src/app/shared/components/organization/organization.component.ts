@@ -66,6 +66,7 @@ export class OrganizationDialogComponent implements OnInit {
   members: UserInterface[] = []
   allUsers: boolean
   selected: number = 0
+  loading: boolean = true
 
   constructor(
     public dialogRef: MdDialogRef<OrganizationDialogComponent>,
@@ -82,6 +83,7 @@ export class OrganizationDialogComponent implements OnInit {
         .then((members) => {
           console.debug('OrganizationDialogComponent::onGetMembers')
           this.members = members
+          this.loading = false
           this.changeRef.detectChanges()
         })
   }

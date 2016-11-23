@@ -3,8 +3,9 @@
 :host{
   display: block;
   position: relative;
-  overflow: visible !important;
+  overflow: hidden;
   font-size: 14px;
+  text-overflow: ellipsis;
 }
 
 [zp-user-presence]{

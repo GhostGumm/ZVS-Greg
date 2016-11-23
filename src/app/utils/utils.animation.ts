@@ -1,9 +1,9 @@
 import { state, animate, transition, style } from '@angular/core'
 
 const options = {
-  duration:'500ms',
-  easingIn:'ease-in-out',
-  easingOut:'ease-in-out'
+  duration:'375ms',
+  easingIn:'cubic-bezier(0.4, 0.0, 0.2, 1)',
+  easingOut:'cubic-bezier(0.4, 0.0, 0.2, 1)'
 }
 
 export const Animations = {
@@ -57,6 +57,45 @@ export const Animations = {
     transition(':leave', [
       animate(`${options.duration} ${options.easingOut}`, style({
         opacity: 0
+      }))
+    ])
+  ],
+
+  fadeInHeight: [
+    state('true', style({
+      opacity: 1,
+      height: '*'
+    })),
+    state('false', style({
+      opacity: 0,
+      height: 0
+    })),
+    transition('0 => 1', [
+      style({height:0}),
+      animate(`${options.duration} ${options.easingIn}`, style({
+        opacity: 1,
+        height: '*'
+      }))
+    ]),
+    transition('1 => 0', [
+      style({height:'*'}),
+      animate(`${options.duration} ${options.easingIn}`, style({
+        opacity: 0,
+        height: 0
+      }))
+    ]),
+    transition(':enter', [
+      style({height:0}),
+      animate(`${options.duration} ${options.easingIn}`, style({
+        opacity: 1,
+        height: '*'
+      }))
+    ]),
+    transition(':leave', [
+      style({height:'*'}),
+      animate(`${options.duration} ${options.easingOut}`, style({
+        opacity: 0,
+        height: 0
       }))
     ])
   ],

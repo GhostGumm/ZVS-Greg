@@ -20,6 +20,7 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
   @Input() isMobile: boolean
   @Output() logout = new EventEmitter()
 
+  loading: boolean = true
   contacts: Array<UserInterface> = []
   routes: any[] = [
     {
@@ -111,7 +112,7 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
 
   startIntro() {
     if (this.intro) {
-      this.intro.addHints()
+      // this.intro.addHints()
     }
   }
 
@@ -143,6 +144,7 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
   getContact() {
     this.userService.getContact().then(contacts => {
       this.contacts = contacts
+      this.loading = false
       this.changeRef.detectChanges()
     })
   }
