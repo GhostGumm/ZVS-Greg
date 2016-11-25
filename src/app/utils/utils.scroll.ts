@@ -4,15 +4,15 @@ import { Directive, ElementRef, AfterContentInit, OnDestroy, HostListener } from
     selector: '[zpScrollGlue]'
 })
 
-export class ScrollGlueDirective implements AfterContentInit, OnDestroy{
+export class ScrollGlueDirective implements AfterContentInit, OnDestroy {
     public el: any
     public isLocked: boolean = true
     private _observer: any
     private _oldScrollHeight: number = 0
     private observerConfig = {
-      attributes: false, 
-      childList: true, 
-      characterData: false 
+      attributes: false,
+      childList: true,
+      characterData: false
     }
 
     constructor(private _el: ElementRef) {

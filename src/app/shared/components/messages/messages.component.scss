@@ -36,7 +36,9 @@ md-list-item{
   border-left-width: 6px;
   border-left-style: solid;
   border-left-color: md-color($primary);
-  transition: background-color 250ms ease-in-out;
+  transition-property: background-color;
+  transition-duration: $transition-duration-fast;
+  transition-timing-function: $transition-duration-easing;
   cursor: pointer;
   &.owner {
     // float: right;
@@ -118,8 +120,8 @@ h3[md-line]{
     left: 0;
     height: 100%;
     width: 100%;
-    z-index: 2;
     opacity: 0;
+    z-index: -1;
     cursor: pointer;
   }
 }

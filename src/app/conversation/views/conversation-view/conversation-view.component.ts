@@ -1,4 +1,7 @@
-import { Component, HostBinding, Input, OnInit, AfterViewInit, AfterContentInit, trigger } from '@angular/core'
+import {
+  Component, HostBinding, Input, OnInit, AfterViewInit, AfterContentInit,
+  trigger, NgZone
+} from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 
 import { Animations } from '../../../utils/utils.animation'
@@ -19,12 +22,11 @@ import { UserService } from '../../../services/user'
   ]
 })
 export class ConversationViewComponent implements OnInit, AfterViewInit, AfterContentInit {
-  private loading: boolean = false
   private $params: any
   private mode: string
-  private conversation: ConversationViewInterface
-  private owner: string
 
+  @Input() conversation: ConversationViewInterface
+  @Input() loading: boolean
   @Input() messagesIsVisible: boolean = true
   @Input() videoIsVisible: boolean = false
   @Input() audioIsVisible: boolean = false
@@ -34,6 +36,7 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
   }
 
   constructor(
+    private zone: NgZone,
     private route: ActivatedRoute,
     private router: Router,
     private conversationService: ConversationService,
@@ -63,12 +66,11 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
   getConversation(interlocutor) {
     console.log('ConversationViewComponent::getConversation', interlocutor)
     this.loading = true
-
     this.conversationService.getOneToOneConversation(interlocutor).then((result) => {
       this.conversation = result
-      this.loading = false
+      setTimeout(() => { this.loading = false }, 500)
       console.log('ConversationViewComponent::getConversation:success', {
-        conversation:this.conversation
+        conversation: this.conversation
       })
     })
   }
@@ -76,9 +78,9 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
   openView(mode) {
     const id = this.$params.id
     this.mode = mode
-    //this.router.navigate(['authenticated/conversation', mode, id])
+    // this.router.navigate(['authenticated/conversation', mode, id])
 
-    switch(mode) {
+    switch (mode) {
     case 'video':
       this.videoIsVisible = !this.videoIsVisible
       this.audioIsVisible = false
@@ -98,9 +100,11 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
 
   addRouteListener() {
     this.route.params.subscribe((params) => {
-      console.debug('ConversationViewComponent::params', params)
-      this.getConversation(params['id'])
-      this.$params = params
+      this.zone.run(() => {
+        console.debug('ConversationViewComponent::params', params)
+        this.getConversation(params['id'])
+        this.$params = params
+      })
     })
   }
 }

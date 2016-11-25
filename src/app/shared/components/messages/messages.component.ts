@@ -1,9 +1,11 @@
 import {
-  Component, HostBinding, HostListener, Input, ChangeDetectorRef,
-  ViewChild, ElementRef, AfterViewInit, OnChanges, OnDestroy, trigger
+  Component, HostBinding, HostListener, Input, ChangeDetectorRef, ChangeDetectionStrategy,
+  ViewChild, ContentChild, ElementRef, AfterViewInit, OnChanges, OnDestroy, trigger
 } from '@angular/core'
+import { NgForm } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
+import { Observable } from 'rxjs/Observable'
 import { Animations } from '../../../utils/utils.animation'
 import { ZetaPushClient } from '../../../zetapush'
 
@@ -21,6 +23,7 @@ const PROVIDERS = [ ScrollGlueDirective, MessageService, FileDropDirective, File
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.scss'],
   providers: [ ...PROVIDERS ],
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('routeAnimation', Animations.swipeOutDownView),
     trigger('dropZoneAnimation', Animations.fadeIn),
@@ -32,11 +35,9 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() conversation: ConversationViewInterface
   private subscriptions: Array<Subscription> = []
 
-  public messageModel: any = {
-    raw: null
-  }
+  public messageRaw: string
   public limits: any = {
-    message: 1000,
+    message: 4000,
     upload: 20 * 1024 // 20mb
   }
   public dropZoneActive: boolean = false
@@ -46,37 +47,44 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   })
 
   @ViewChild('uploadInput') uploadInputRef: ElementRef // uploader dom ref
+  @ViewChild('messageForm')  messageForm: NgForm // form message dom ref
 
   constructor(
-    private zpClient : ZetaPushClient,
+    private zpClient: ZetaPushClient,
     private route: ActivatedRoute,
     private messageService: MessageService,
     private conversationService: ConversationService,
     private changeRef: ChangeDetectorRef
-  ) {}
+  ) {
+  }
 
   @HostBinding('@routeAnimation') get routeAnimation() { return true }
 
   /**
    * Drag & Drop listener
    */
-  @HostListener('document:dragenter', ['$event'])
-  onDragEnter(event:MouseEvent) {
-    console.debug('MessagesComponent::onDragEnter',{ event })
+  @HostListener('document:dragstart', ['$event'])
+  onDragStart(event: MouseEvent) {
+    console.debug('MessagesComponent::onDragStart', { event })
     this.dropZoneActive = true
   }
-  onDropzoneLeave(event:MouseEvent) {
-    console.debug('MessagesComponent::onDropzoneLeave',{ event })
+  @HostListener('document:dragend', ['$event'])
+  onDragEnd(event: MouseEvent) {
+    console.debug('MessagesComponent::onDragEnd', { event })
     this.dropZoneActive = false
   }
+  // onDropzoneLeave(event: MouseEvent) {
+  //   console.debug('MessagesComponent::onDropzoneLeave', { event })
+  //   this.dropZoneActive = false
+  // }
 
   /**
    * Mouse over message listener
    */
-  onMouseEnterMessage(event:MouseEvent, message, index) {
+  onMouseEnterMessage(event: MouseEvent, message, index) {
     message.isHovered = true
   }
-  onMouseLeaveMessage(event:MouseEvent, message, index) {
+  onMouseLeaveMessage(event: MouseEvent, message, index) {
     message.isHovered = false
   }
 
@@ -104,6 +112,17 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.uploader.onAfterAddingFile = (item => {
       this.uploadInputRef.nativeElement.value = ''
     })
+    // listen to input text change
+    // this.messageForm.valueChanges
+    //   .debounceTime(200)
+    //   .filter(val => val.messageRawDom)
+    //   .distinctUntilChanged()
+    //   .subscribe((value) => {
+    //     console.warn({
+    //       value,
+    //       value2: value.messageRawDom.trim()
+    //     })
+    //   })
   }
 
   // Click on md-list-item
@@ -125,14 +144,17 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   onImageClicked() {
   }
 
+  inputFileClick() {
+    this.uploadInputRef.nativeElement.click()
+  }
   /**
    * Select files with input
    */
   onSelectAttachment(event) {
     let target = event.target || event.srcElement
-    this.uploader.addToQueue(target.files);
-    const { uploader, uploader:{ queue } } = this
-    console.warn('MessagesComponent::onSelectAttachment', { event, uploader:this.uploader })
+    this.uploader.addToQueue(target.files)
+    const { uploader, uploader: { queue } } = this
+    console.warn('MessagesComponent::onSelectAttachment', { event, uploader: this.uploader })
     // this.uploader.setOptions({
     //   url: 'https://evening-anchorage-3159.herokuapp.com/api/'
     // })
@@ -168,11 +190,13 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   // User add message
   addMessage() {
     const { owner, id } = this.conversation
-    const value = this.messageModel.raw
+    const value = this.messageRaw
     console.debug('MessagesComponent::addMessage', { id, owner, value })
-    this.conversationService.addConversationMarkup(id, owner, value).then((message) => {
-      this.resetForm()
-    })
+    if (value.trim().length > 0) {
+      this.conversationService.addConversationMarkup(id, owner, value).then((message) => {
+        this.resetForm()
+      })
+    }
   }
   // On user add message
   onAddMessage(message) {
@@ -221,7 +245,7 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   // Reset message form
   resetForm() {
-    this.messageModel.raw = null
+    this.messageRaw = null
   }
 
   ngOnDestroy() {

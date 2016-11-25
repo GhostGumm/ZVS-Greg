@@ -1,6 +1,6 @@
 import {
   Component, AfterViewInit, OnInit, OnDestroy, OnChanges, Input,
-  Output, EventEmitter, ContentChild, TemplateRef, trigger
+  Output, EventEmitter, ContentChild, TemplateRef, trigger, ChangeDetectionStrategy
 } from '@angular/core'
 
 import { UserInterface } from '../../../services/user'
@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs/Subscription'
   selector: 'zp-user-list',
   templateUrl: './user.list.component.html',
   styleUrls: ['./user.list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('listAnimation', Animations.fadeInHeight),
     trigger('loadingAnimation', Animations.fadeIn)
@@ -18,6 +19,7 @@ import { Subscription } from 'rxjs/Subscription'
 
 })
 export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+  private static ComponentInstance: number = 0
   @ContentChild(TemplateRef) templateUserAction
   @Input() users: UserInterface[]
   @Input() link: string
@@ -29,7 +31,10 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   isExpanded: boolean = false
 
   constructor() {
-    console.debug('UserListComponent::constructor', this)
+    UserListComponent.ComponentInstance++
+    console.debug('UserListComponent::constructor', {
+      instance: UserListComponent.ComponentInstance
+    })
   }
 
     // Custom Track By
@@ -40,7 +45,7 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   ngOnInit() {
     console.debug('UserListComponent::ngOnInit', {
       users: this.users,
-      link:this.link
+      link: this.link
     })
   }
   ngAfterViewInit() {

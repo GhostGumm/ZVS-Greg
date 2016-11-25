@@ -34,13 +34,13 @@ md-list-item{
   cursor: pointer;
   transition-property: background-color;
   will-change: background-color;
-  transition-duration: 250ms;
-  transition-timing-function: ease-in-out;
+  transition-duration: $transition-duration-fast;
+  transition-timing-function: $transition-duration-easing;
   h3{
     transition-property: transform;
     will-change: transform;
-    transition-duration: 250ms;
-    transition-timing-function: ease-in-out;
+    transition-duration: $transition-duration-fast;
+    transition-timing-function: $transition-duration-easing;
   }
   &:hover{
     background-color: $zp-whiter;

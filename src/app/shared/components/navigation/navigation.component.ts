@@ -24,6 +24,11 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
   contacts: Array<UserInterface> = []
   routes: any[] = [
     {
+      name: 'Home',
+      icon: 'home',
+      link: ['home']
+    },
+    {
       name: 'Stats',
       icon: 'timeline',
       link: ['dashboard', 'stats']
@@ -75,7 +80,7 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
     this.subscriptions.push(this.navigation.onOpen.subscribe(() => {
       console.debug('NavigationComponent.navigation::onOpen')
       this.refreshLayout()
-    }))  
+    }))
 
     this.subscriptions.push(this.navigation.onCloseStart.subscribe(() => {
       console.debug('NavigationComponent.navigation::onCloseStart')
@@ -85,7 +90,7 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
       console.debug('NavigationComponent.navigation::onClose')
       this.refreshLayout()
     }))
-    
+
     this.getContact()
   }
 
@@ -102,7 +107,7 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
   }
 
   initIntro() {
-    this.intro = window.introJs()   
+    this.intro = window.introJs()
     setTimeout(() => {
       this.navigation.open().then(() => {
         this.startIntro()

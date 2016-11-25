@@ -7,8 +7,8 @@ export interface RtcInterface {
   stream?: any
   source?: any
   focus?: boolean
-  
-  init?:() => void
+
+  init?: () => void
 }
 
 

@@ -3,7 +3,7 @@
 export const RTC_CHANNEL = 'rtc'
 
 export const ICE_SERVERS = {
-  //,'iceTransportPolicy': 'relay' // Remove to force turn server
+  // ,'iceTransportPolicy': 'relay' // Remove to force turn server
   'iceServers': [
     { 'url': 'stun:stun.l.google.com:19302' },
     { 'url': 'stun:stun1.l.google.com:19302' },

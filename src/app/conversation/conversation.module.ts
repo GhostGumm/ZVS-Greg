@@ -6,8 +6,6 @@ import { VIEWS } from './views'
 
 import { ConversationRoutingModule } from './conversation-routing.module'
 
-import { MessagesComponent, VideoComponent } from './components'
-
 @NgModule({
   declarations: [ ...COMPONENTS, ...VIEWS ],
   imports: [ SharedModule.forRoot(), ConversationRoutingModule ],

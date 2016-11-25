@@ -8,29 +8,29 @@ import { ICE_SERVERS, RTC_CHANNEL } from '../../utils/utils.rtc'
 @Injectable()
 export class RtcService {
 
-  peers:any = {}
-  iceServers:any = ICE_SERVERS
+  peers: any = {}
+  iceServers: any = ICE_SERVERS
 
-  videoInProgress:boolean = false
-  stream:any = null
+  videoInProgress: boolean = false
+  stream: any = null
 
-  local:any = {
-    stream:null,
-    source:null
+  local: any = {
+    stream: null,
+    source: null
   }
 
-  pc:any = null
-  offerOptions:any = {
+  pc: any = null
+  offerOptions: any = {
     offerToReceiveAudio: 1,
     offerToReceiveVideo: 1
   }
 
-  zpMessaging:any
-  client:ZetaPushClient
-  context:string = 'rtc'
+  zpMessaging: any
+  client: ZetaPushClient
+  context: string = 'rtc'
 
   constructor(
-    private sanitizer:DomSanitizer
+    private sanitizer: DomSanitizer
   ) {
 
     // this.zpMessaging = this.client.createService({
@@ -49,10 +49,11 @@ export class RtcService {
     const { context, verb } = data
     console.debug('WebRtc::onMessage', verb, `${source}:${context} -> ${target}`, msg)
 
-    if (context != this.context)
+    if (context !== this.context) {
       return
+    }
 
-    var pc = null
+    let pc = null
 
     switch (verb) {
     case 'hangup':
@@ -62,12 +63,12 @@ export class RtcService {
 
     case 'sdp-offer':
       console.debug('WebRtc::sdp-offer', this.peers[source])
-      //this.answer(source, data)
+      // this.answer(source, data)
       break
 
     case 'sdp-answer':
-      pc= this.getPeerConnection(source)
-      pc.setRemoteDescription(new window.RTCSessionDescription(data.sdp), ()  =>{
+      pc = this.getPeerConnection(source)
+      pc.setRemoteDescription(new window.RTCSessionDescription(data.sdp), ()  => {
         console.debug('WebRtc::Setting remote description by answer', pc)
       }, (e) => {
         console.error(e)
@@ -75,7 +76,7 @@ export class RtcService {
       break
 
     case 'ice':
-      pc= this.getPeerConnection(source)
+      pc = this.getPeerConnection(source)
       if (data.ice && pc.remoteDescription.sdp) { //  && pc.remoteDescription.sdp
         console.debug('WebRtc::Adding ice candidates', data, pc)
         pc.addIceCandidate(new window.RTCIceCandidate(data.ice))
@@ -84,7 +85,7 @@ export class RtcService {
     }
   }
 
-  startRtc({ audio=true, video=true } = {}):Promise<any> {
+  startRtc({ audio= true, video= true } = {}): Promise<any> {
     console.debug('WebRtc::startVideo')
     return new Promise((resolve, reject) => {
       const getUserMedia = navigator.mediaDevices.getUserMedia({
@@ -116,9 +117,9 @@ export class RtcService {
   addPeerConnection(userId, connection) {
     console.debug('WebRtc::addPeerConnection', userId)
     if (!this.peers[userId]) {
-      this.peers[userId]={}
+      this.peers[userId] = {}
     }
-    this.peers[userId].connection= connection
+    this.peers[userId].connection = connection
   }
 
   addPeerStream(userId, stream) {
@@ -136,8 +137,7 @@ export class RtcService {
     if (this.peers[userId]) {
       delete this.peers[userId]
       return true
-    }
-    else {
+    } else {
       return false
     }
   }
@@ -149,7 +149,7 @@ export class RtcService {
       return this.getConnection(userId)
     }
 
-    var pc = new window.RTCPeerConnection(this.iceServers)
+    let pc = new window.RTCPeerConnection(this.iceServers)
 
     pc.userId = userId
     this.addPeerConnection(userId, pc)
@@ -158,27 +158,27 @@ export class RtcService {
 
     pc.onicecandidate = (evt) => {
       if (this.videoInProgress === false) {
-        var answer={
+        let answer = {
           context: this.context,
           verb: 'ice',
           ice: evt.candidate
         }
         this.zpMessaging.send({
-          RTC_channel:RTC_CHANNEL,
-          target:userId,
-          data:answer
+          RTC_channel: RTC_CHANNEL,
+          target: userId,
+          data: answer
         })
       }
-      this.videoInProgress= true
+      this.videoInProgress = true
     }
 
-    pc.oniceconnectionstatechange= (evt) => {
+    pc.oniceconnectionstatechange = (evt) => {
       if (evt.target.iceConnectionState === 'connected' || evt.target.iceConnectionState === 'completed') {
-        this.videoInProgress= true
+        this.videoInProgress = true
       }
       if (evt.target.iceConnectionState === 'closed' || evt.target.iceConnectionState === 'disconnected') {
         this.removePeer(evt.target.userId)
-        this.videoInProgress= false
+        this.videoInProgress = false
       }
     }
 
@@ -186,8 +186,7 @@ export class RtcService {
       pc.ontrack = (evt) => {
         this.addPeerStream(userId, evt.stream)
       }
-    }
-    else {
+    } else {
       pc.onaddstream = (evt) => {
         this.addPeerStream(userId, evt.stream)
       }
@@ -197,31 +196,33 @@ export class RtcService {
 
   clearPeers() {
     for (let peer in this.peers) {
-      console.warn('WebRtc::clearPeers', this.peers[peer])
-      delete this.peers[peer]
+      if (this.peers[peer]) {
+        console.warn('WebRtc::clearPeers', this.peers[peer])
+        delete this.peers[peer]
+      }
     }
   }
 
   makeOffer(userId) {
     console.debug('WebRtc::makeOffer', userId, this.peers)
 
-    var pc = this.getPeerConnection(userId)
+    let pc = this.getPeerConnection(userId)
 
     pc.createOffer((sdp) => {
       pc.setLocalDescription(sdp)
 
-      var answer={
+      let answer = {
         context: this.context,
         verb: 'sdp-offer',
         sdp: sdp
       }
 
       this.zpMessaging.send({
-        RTC_channel:RTC_CHANNEL,
-        target:userId,
-        data:answer
+        RTC_channel: RTC_CHANNEL,
+        target: userId,
+        data: answer
       })
-    },(e) => {
+    }, (e) => {
       console.debug(e)
     },
     { mandatory: { OfferToReceiveVideo: true, OfferToReceiveAudio: true }})
@@ -234,19 +235,19 @@ export class RtcService {
       this.removePeer(source)
     }
 
-    var pc = this.getPeerConnection(source)
+    let pc = this.getPeerConnection(source)
     pc.setRemoteDescription(new window.RTCSessionDescription(data.sdp), () => {
       pc.createAnswer((sdp) => {
         pc.setLocalDescription(sdp)
-        var answer={
+        let answer = {
           context: this.context,
           verb: 'sdp-answer',
           sdp: sdp
         }
         this.zpMessaging.send({
-          RTC_channel:RTC_CHANNEL,
-          target:source,
-          data:answer
+          RTC_channel: RTC_CHANNEL,
+          target: source,
+          data: answer
         })
       }, (error) => {
         console.error(error)
@@ -260,14 +261,14 @@ export class RtcService {
       if (this.peers[key]) {
         this.peers[key].connection.close()
       }
-      var answer={
+      let answer = {
         context: this.context,
         verb: 'hangup'
       }
       this.zpMessaging.send({
-        RTC_channel:RTC_CHANNEL,
-        target:key,
-        data:answer
+        RTC_channel: RTC_CHANNEL,
+        target: key,
+        data: answer
       })
     }
     if (userKey) {
@@ -275,9 +276,11 @@ export class RtcService {
       closeConnection(userKey)
     }
     else {
-      for (var key in this.peers) {
-        console.debug('WebRtc::hangup', key, this.peers[key])
-        closeConnection(key)
+      for (let key in this.peers) {
+        if (this.peers[key]) {
+          console.debug('WebRtc::hangup', key, this.peers[key])
+          closeConnection(key)
+        }
       }
     }
   }

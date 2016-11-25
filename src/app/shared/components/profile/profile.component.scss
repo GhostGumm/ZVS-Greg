@@ -18,8 +18,8 @@
     margin-left: -5px;
     transition-property: transform;
     will-change: transform;
-    transition-duration: 250ms;
-    transition-timing-function: ease-in-out;
+    transition-duration: $transition-duration-fast;
+    transition-timing-function: $transition-duration-easing;
   }
   &:hover{
     > button {

@@ -16,7 +16,7 @@ import { UserService } from '../../../services/user'
 })
 export class VideoComponent implements OnInit, OnChanges, OnDestroy {
   @Input() conversation: ConversationViewInterface
-  group:boolean = false
+  group: boolean = false
   videos: RtcInterface[] = []
 
   @HostBinding('@routeAnimation') get routeAnimation() {
@@ -45,9 +45,9 @@ export class VideoComponent implements OnInit, OnChanges, OnDestroy {
         // Mock Purpose
           this.initVideo(stream, source)
         //
-        console.debug('VideoComponent::startVideo:success',{ data })
+        console.debug('VideoComponent::startVideo:success', { data })
       }).catch((error) => {
-        console.debug('VideoComponent::startVideo:error',{ error })
+        console.debug('VideoComponent::startVideo:error', { error })
       })
     }
   }
@@ -58,7 +58,7 @@ export class VideoComponent implements OnInit, OnChanges, OnDestroy {
     // Mock Purpose
     for (let user of users) {
       this.videos.push(new RtcClass({
-        id:user.id,
+        id: user.id,
         user
       }))
     }
@@ -71,8 +71,7 @@ export class VideoComponent implements OnInit, OnChanges, OnDestroy {
   checkLayout() {
     if (this.videos.length > 2) {
       this.group = true
-    }
-    else {
+    } else {
       this.group = false
     }
   }
@@ -91,11 +90,10 @@ export class VideoComponent implements OnInit, OnChanges, OnDestroy {
   updateVideo(add) {
     if (add) {
       this.videos.push(new RtcClass({
-        id:`${this.videos.length + 1}`,
-        user:this.conversation.users[this.videos.length + 1]
+        id: `${this.videos.length + 1}`,
+        user: this.conversation.users[this.videos.length + 1]
       }))
-    }
-    else {
+    } else {
       this.videos.pop()
     }
     this.checkLayout()

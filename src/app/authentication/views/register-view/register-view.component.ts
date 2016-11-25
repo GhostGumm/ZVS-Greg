@@ -71,6 +71,7 @@ export class RegisterViewComponent implements AfterViewInit, OnChanges, OnInit {
   }
 
   onCreateUserSuccess({ user }) {
+    console.debug('RegisterView::onCreate', { user })
     // window.open(`http://yopmail.com/${user.email}`)
     this.router.navigate(['/login'])
   }

@@ -19,6 +19,7 @@ export interface MessageInterface {
   isHovered?: boolean
 }
 
+/*
 const isToday = (date) => {
     return date.isSame(moment(Date.now()).startOf('day'), 'd');
 }
@@ -31,6 +32,7 @@ const isWithinAWeek = (date) => {
 const isTwoWeeksOrMore = (date) => {
     return !isWithinAWeek(date);
 }
+*/
 
 export class MessageClass implements MessageInterface {
 

@@ -18,7 +18,7 @@ export interface Chart {
 @Component({
   selector: 'zp-stats',
   templateUrl: './stats.component.html',
-  styles:[`
+  styles: [`
     :host {
       display: block;
       position: relative;
@@ -117,7 +117,7 @@ export class StatsComponent implements OnInit, AfterViewInit {
       }, {
         type: 'Pie',
         data: {
-          "series": [
+          'series': [
             20,
             10,
             30,

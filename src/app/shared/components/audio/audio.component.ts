@@ -40,12 +40,12 @@ export class AudioComponent implements OnChanges, OnDestroy, OnInit {
     })
     // Mock Purpose
     if (changes.conversation.currentValue) {
-      this.rtcService.startRtc({ video:false }).then((data) => {
+      this.rtcService.startRtc({ video: false }).then((data) => {
         const { stream, source } = data
         this.initAudio(stream, source)
-        console.debug('AudioComponent::startRtc:success',{ data })
+        console.debug('AudioComponent::startRtc:success', { data })
       }).catch((error) => {
-        console.debug('AudioComponent::startRtc:error',{ error })
+        console.debug('AudioComponent::startRtc:error', { error })
       })
     }
   }
@@ -56,7 +56,7 @@ export class AudioComponent implements OnChanges, OnDestroy, OnInit {
     // Mock Purpose
     for (let user of users) {
       this.audios.push(new RtcClass({
-        id:user.id,
+        id: user.id,
         user
       }))
     }

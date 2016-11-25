@@ -6,9 +6,10 @@
       <md-icon class="md-24">{{videoIsVisible ? 'videocam_off' : 'videocam'}}</md-icon>
   </button>
 </md-toolbar>-->
-
- 
-<zp-messages [conversation]="conversation" [@messagesAnimation]="messagesIsVisible" [class.video]="videoIsVisible" [class.audio]="audioIsVisible"></zp-messages>
+<zp-messages
+  [conversation]="conversation" [@messagesAnimation]="messagesIsVisible"
+  [class.video]="videoIsVisible" [class.audio]="audioIsVisible" [class.loading]="loading">
+</zp-messages>
 
 <zp-audio [conversation]="conversation" [@audioAnimation]="audioIsVisible"></zp-audio>
 

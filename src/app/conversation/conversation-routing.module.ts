@@ -3,8 +3,6 @@ import { RouterModule, Routes } from '@angular/router'
 
 import { AuthenticationService } from '../shared/authentication.service'
 
-import { AuthenticatedLayoutComponent } from '../shared/layouts'
-
 import { ConversationViewComponent } from './views'
 
 export const conversationRoutes: any = {
