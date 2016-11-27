@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef, ChangeDetectorRef } from '@angular/core'
+import { Component, OnInit, OnDestroy, ViewContainerRef, ChangeDetectorRef } from '@angular/core'
 import { MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material'
 
 import { ZetaPushClient } from './../../../zetapush'
@@ -61,7 +61,7 @@ export class OrganizationComponent implements OnInit {
   styleUrls: ['./organization.dialog.component.scss'],
   templateUrl: './organization.dialog.component.html'
 })
-export class OrganizationDialogComponent implements OnInit {
+export class OrganizationDialogComponent implements OnInit, OnDestroy {
 
   members: UserInterface[] = []
   inviteAll: boolean
@@ -114,5 +114,10 @@ export class OrganizationDialogComponent implements OnInit {
       this.selected--
       this.inviteAll = false
     }
+  }
+
+  ngOnDestroy() {
+    console.debug('OrganizationDialogComponent::ngOnDestroy')
+    this.changeRef.detach()
   }
 }

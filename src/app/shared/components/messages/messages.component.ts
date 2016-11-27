@@ -41,7 +41,7 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
     message: 4000,
     upload: 20 * 1024 // 20mb
   }
-  private dropZoneActive: boolean = false
+  dropZoneActive: boolean = false
   private uploader: FileUploader = new FileUploader({
     // maxFileSize:this.limits.upload,
     removeAfterUpload: true
@@ -64,20 +64,20 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   /**
    * Drag & Drop listener
    */
-  @HostListener('document:dragstart', ['$event'])
+  @HostListener('document:dragenter', ['$event'])
   onDragStart(event: MouseEvent) {
     console.debug('MessagesComponent::onDragStart', { event })
     this.dropZoneActive = true
   }
-  @HostListener('document:dragend', ['$event'])
-  onDragEnd(event: MouseEvent) {
-    console.debug('MessagesComponent::onDragEnd', { event })
-    this.dropZoneActive = false
-  }
-  // onDropzoneLeave(event: MouseEvent) {
-  //   console.debug('MessagesComponent::onDropzoneLeave', { event })
+  // @HostListener('document:dragleave', ['$event'])
+  // onDragEnd(event: MouseEvent) {
+  //   console.debug('MessagesComponent::onDragEnd', { event })
   //   this.dropZoneActive = false
   // }
+  onDropzoneLeave(event: MouseEvent) {
+    console.debug('MessagesComponent::onDropzoneLeave', { event })
+    this.dropZoneActive = false
+  }
 
   /**
    * Mouse over message listener
@@ -100,6 +100,7 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
         this.changeRef.detectChanges()
       }))
       this.messageService.indexByAuthor(this.conversation.messages)
+      this.resetForm()
     }
   }
 
@@ -252,5 +253,6 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     console.debug('MessagesComponent::ngOnDestroy')
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
+    this.changeRef.detach()
   }
 }

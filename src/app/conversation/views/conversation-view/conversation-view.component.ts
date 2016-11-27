@@ -27,11 +27,11 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
   private mode: string
   private subscriptions: Array<Subscription> = []
 
-  @Input() conversation: ConversationViewInterface
-  @Input() loading: boolean
-  @Input() messagesIsVisible: boolean = true
-  @Input() videoIsVisible: boolean = false
-  @Input() audioIsVisible: boolean = false
+  private conversation: ConversationViewInterface
+  private loading: boolean
+  private messagesIsVisible: boolean = true
+  private videoIsVisible: boolean = false
+  private audioIsVisible: boolean = false
 
   @HostBinding('@routeAnimation') get routeAnimation() {
     return true
