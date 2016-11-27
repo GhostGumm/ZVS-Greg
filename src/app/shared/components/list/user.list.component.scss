@@ -6,28 +6,22 @@
 }
 md-list{
   position: relative;
-  background:
-    linear-gradient(white 30%, rgba(255,255,255,0)),
-    linear-gradient(rgba(255,255,255,0), white 70%) 0 100%,
-    radial-gradient(50% 0, farthest-side, rgba(md-color($primary),.2), rgba(0,0,0,0)),
-    radial-gradient(50% 100%,farthest-side, rgba(md-color($primary),.2), rgba(0,0,0,0)) 0 100%;
-  background:
-    linear-gradient(white 30%, rgba(255,255,255,0)),
-    linear-gradient(rgba(255,255,255,0), white 70%) 0 100%,
-    radial-gradient(farthest-side at 50% 0, rgba(md-color($primary),.2), rgba(0,0,0,0)),
-    radial-gradient(farthest-side at 50% 100%, rgba(md-color($primary),.2), rgba(0,0,0,0)) 0 100%;
-	background-repeat: no-repeat;
-	background-color: white;
-	background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
-	background-attachment: local, local, scroll, scroll;
-  /*&:before,&:after{
-    content: '';
-    position:relative;
-    display: block;
-    width: 100%;
-    height: 1px;
-    background-color: md-color($primary);
-  }*/
+  &.shadow{
+    background:
+      linear-gradient(white 30%, rgba(255,255,255,0)),
+      linear-gradient(rgba(255,255,255,0), white 70%) 0 100%,
+      radial-gradient(50% 0, farthest-side, rgba(md-color($primary),.2), rgba(0,0,0,0)),
+      radial-gradient(50% 100%,farthest-side, rgba(md-color($primary),.2), rgba(0,0,0,0)) 0 100%;
+    background:
+      linear-gradient(white 30%, rgba(255,255,255,0)),
+      linear-gradient(rgba(255,255,255,0), white 70%) 0 100%,
+      radial-gradient(farthest-side at 50% 0, rgba(md-color($primary),.2), rgba(0,0,0,0)),
+      radial-gradient(farthest-side at 50% 100%, rgba(md-color($primary),.2), rgba(0,0,0,0)) 0 100%;
+    background-repeat: no-repeat;
+    background-color: white;
+    background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+    background-attachment: local, local, scroll, scroll;
+  }
 }
 md-list-item{
   display: block;
@@ -43,7 +37,7 @@ md-list-item{
     transition-timing-function: $transition-duration-easing;
   }
   &:hover{
-    background-color: $zp-whiter;
+    background-color: $zp-shadow-button;
     h3{
       transform: translateX(10px);
     }

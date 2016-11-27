@@ -6,9 +6,6 @@ body {
 body{
   font-family: 'Noto Sans', sans-serif !important; 
 }
-html{
-  background-color:$zp-white;
-}
 html::before{
   opacity: 0.5;
   position: absolute;

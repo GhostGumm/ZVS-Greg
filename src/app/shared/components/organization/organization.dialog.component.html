@@ -4,29 +4,29 @@
     
   </li>
 </ul>-->
-<zp-user-list [users]="members" [loading]="loading" (userClickedEmitter)="onMemberClicked($event)">
+<zp-user-list [users]="members" [loading]="loading" [withShadow]="true" (userClickedEmitter)="onMemberClicked($event)">
   <div class="zp-user-list-actions">
     <h4>Contacts({{members?.length}})</h4>
     <span class="flex-fill"></span>
     <!--<button type="button" md-icon-button (click)="dialogRef.close(members)" color="primary">
       <md-icon>add</md-icon>
     </button>-->
-    <md-checkbox [(ngModel)]="allUsers" (change)="selectAll()"></md-checkbox>
+    <md-checkbox [disabled]="loading" [checked]="inviteAll" (change)="selectAll()"></md-checkbox>
   </div>
 
   <template class="zp-user-list-user-action" let-user="user">
     <!--<button type="button" md-icon-button (click)="dialogRef.close(user)" color="primary">
       <md-icon>add</md-icon>
     </button>-->
-    <md-checkbox class="user-checkbox" [(ngModel)]="user.metadata.checked" (change)="userSelected(user)"></md-checkbox>
+    <md-checkbox class="user-checkbox" [checked]="user.metadata.checked" (change)="userSelected(user)"></md-checkbox>
   </template>
 
   <div class="zp-user-list-actions-bottom">
     <span class="flex-fill"></span>
-    <button *ngIf="!allUsers" type="button" md-raised-button (click)="dialogRef.close(members)" color="primary" [disabled]="selected==0">
+    <button *ngIf="!inviteAll" type="button" md-raised-button (click)="dialogRef.close(members)" color="primary" [disabled]="selected==0">
       Invite({{selected}})
     </button>
-    <button *ngIf="allUsers" type="button" md-raised-button (click)="dialogRef.close(members)" color="primary">
+    <button *ngIf="inviteAll" type="button" md-raised-button (click)="dialogRef.close(members)" color="primary">
       Invite all
     </button>
   </div>

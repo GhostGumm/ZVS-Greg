@@ -41,20 +41,20 @@ export class HomeViewComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.fakeChartData()
+    this.refreshData()
   }
 
-  fakeChartData() {
-    setInterval(() => {
-      this.charts._results.forEach((chart) => {
-        let series = chart.data.series
-        for(let serie in series) {
-          if (chart.type == 'Pie') {
-            series.splice(serie, 1, Math.round(Math.random()*2 + 8))
-          }
-        }
-        chart.update(series)
-      })
-    }, 1000)
+  refreshData() {
+    // setInterval(() => {
+    //   this.charts._results.forEach((chart) => {
+    //     let series = chart.data.series
+    //     for(let serie in series) {
+    //       if (chart.type == 'Pie') {
+    //         series.splice(serie, 1, Math.round(Math.random()*2 + 8))
+    //       }
+    //     }
+    //     chart.update(series)
+    //   })
+    // }, 1000)
   }
 }

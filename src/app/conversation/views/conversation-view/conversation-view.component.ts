@@ -1,8 +1,9 @@
 import {
   Component, HostBinding, Input, OnInit, AfterViewInit, AfterContentInit,
-  trigger, NgZone
+  trigger, NgZone, ChangeDetectorRef
 } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
+import { Subscription } from 'rxjs/Subscription'
 
 import { Animations } from '../../../utils/utils.animation'
 
@@ -24,6 +25,7 @@ import { UserService } from '../../../services/user'
 export class ConversationViewComponent implements OnInit, AfterViewInit, AfterContentInit {
   private $params: any
   private mode: string
+  private subscriptions: Array<Subscription> = []
 
   @Input() conversation: ConversationViewInterface
   @Input() loading: boolean
@@ -40,7 +42,8 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
     private route: ActivatedRoute,
     private router: Router,
     private conversationService: ConversationService,
-    private userService: UserService
+    private userService: UserService,
+    private changeRef: ChangeDetectorRef
   ) {
     this.addRouteListener()
   }
@@ -68,7 +71,8 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
     this.loading = true
     this.conversationService.getOneToOneConversation(interlocutor).then((result) => {
       this.conversation = result
-      setTimeout(() => { this.loading = false }, 500)
+      this.loading = false
+      // this.changeRef.detectChanges()
       console.log('ConversationViewComponent::getConversation:success', {
         conversation: this.conversation
       })
@@ -99,12 +103,17 @@ export class ConversationViewComponent implements OnInit, AfterViewInit, AfterCo
   }
 
   addRouteListener() {
-    this.route.params.subscribe((params) => {
+    this.subscriptions.push(this.route.params.subscribe((params) => {
       this.zone.run(() => {
         console.debug('ConversationViewComponent::params', params)
         this.getConversation(params['id'])
         this.$params = params
       })
-    })
+    }))
+  }
+
+  ngOnDestroy() {
+    console.debug('ConversationViewComponent::ngOnDestroy')
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe())
   }
 }
