@@ -23,7 +23,7 @@ const PROVIDERS = [ ScrollGlueDirective, MessageService, FileDropDirective, File
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.scss'],
   providers: [ ...PROVIDERS ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('routeAnimation', Animations.swipeOutDownView),
     trigger('dropZoneAnimation', Animations.fadeIn),
@@ -190,10 +190,11 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   // User add message
-  addMessage() {
+  addMessage($event) {
+    $event.preventDefault()
     const { owner, id } = this.conversation
     const value = this.messageRaw
-    console.debug('MessagesComponent::addMessage', { id, owner, value })
+    console.debug('MessagesComponent::addMessage', { id, owner, value, $event })
     if (value.trim().length > 0) {
       this.conversationService.addConversationMarkup(id, owner, value).then((message) => {
         this.resetForm()
