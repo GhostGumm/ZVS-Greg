@@ -16,6 +16,7 @@ import { UserService } from '../../../services/user'
 })
 export class VideoComponent implements OnInit, OnChanges, OnDestroy {
   @Input() conversation: ConversationViewInterface
+  @Input() loading : boolean
   group: boolean = false
   videos: RtcInterface[] = []
 

@@ -64,7 +64,7 @@ export class OrganizationComponent implements OnInit {
 export class OrganizationDialogComponent implements OnInit {
 
   members: UserInterface[] = []
-  allUsers: boolean
+  inviteAll: boolean
   selected: number = 0
   loading: boolean = true
 
@@ -90,16 +90,17 @@ export class OrganizationDialogComponent implements OnInit {
 
   onMemberClicked(event) {
     console.debug('OrganizationDialogComponent::onMemberClicked', { event })
-    let user = event.value
+    const user = event.value
     user.metadata.checked = !user.metadata.checked
     this.userSelected(user)
+    this.changeRef.detectChanges()
   }
 
   selectAll() {
-    const { allUsers, members } = this
-    console.debug('OrganizationDialogComponent::selectAll', { allUsers })
-    members.forEach(({ metadata }) => metadata.checked = allUsers ? true : false)
-    this.selected = allUsers ? members.length : 0
+    this.inviteAll = !this.inviteAll
+    console.debug('OrganizationDialogComponent::selectAll', { inviteAll:this.inviteAll })
+    this.members.forEach(({ metadata }) => metadata.checked = this.inviteAll ? true : false)
+    this.selected = this.inviteAll ? this.members.length : 0
   }
 
   userSelected(member: UserInterface) {
@@ -107,11 +108,11 @@ export class OrganizationDialogComponent implements OnInit {
     if (member.metadata.checked === true) {
       this.selected++
       if (this.selected === this.members.length) {
-        this.allUsers = true
+        this.inviteAll = true
       }
     } else {
       this.selected--
-      this.allUsers = false
+      this.inviteAll = false
     }
   }
 }

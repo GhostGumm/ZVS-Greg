@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs/Subscription'
   selector: 'zp-user-list',
   templateUrl: './user.list.component.html',
   styleUrls: ['./user.list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('listAnimation', Animations.fadeInHeight),
     trigger('loadingAnimation', Animations.fadeIn)
@@ -25,6 +25,7 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   @Input() link: string
   @Input() lastMessage: boolean = false
   @Input() loading: boolean
+  @Input() withShadow: boolean = false
   @Output() userClickedEmitter = new EventEmitter()
 
   subscriptions: Array<Subscription> = []

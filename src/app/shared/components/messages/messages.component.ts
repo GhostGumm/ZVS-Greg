@@ -23,7 +23,7 @@ const PROVIDERS = [ ScrollGlueDirective, MessageService, FileDropDirective, File
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.scss'],
   providers: [ ...PROVIDERS ],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('routeAnimation', Animations.swipeOutDownView),
     trigger('dropZoneAnimation', Animations.fadeIn),
@@ -33,15 +33,16 @@ const PROVIDERS = [ ScrollGlueDirective, MessageService, FileDropDirective, File
 
 export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() conversation: ConversationViewInterface
+  @Input() loading : boolean
   private subscriptions: Array<Subscription> = []
 
-  public messageRaw: string
-  public limits: any = {
+  private messageRaw: string
+  private limits: any = {
     message: 4000,
     upload: 20 * 1024 // 20mb
   }
-  public dropZoneActive: boolean = false
-  public uploader: FileUploader = new FileUploader({
+  private dropZoneActive: boolean = false
+  private uploader: FileUploader = new FileUploader({
     // maxFileSize:this.limits.upload,
     removeAfterUpload: true
   })
@@ -90,7 +91,7 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   ngOnChanges(changes) {
     console.log('MessagesComponent::ngOnChanges', { changes })
-    if (changes.conversation.currentValue) {
+    if (changes.conversation && changes.conversation.currentValue) {
       const onAddConversationMessage = this.conversationService.onAddConversationMessage(changes.conversation.currentValue.id)
       this.subscriptions.forEach((subscription) => subscription.unsubscribe())
       this.subscriptions.push(onAddConversationMessage.subscribe(({ result }) => {

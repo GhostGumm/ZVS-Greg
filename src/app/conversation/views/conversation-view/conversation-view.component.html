@@ -7,13 +7,13 @@
   </button>
 </md-toolbar>-->
 <zp-messages
-  [conversation]="conversation" [@messagesAnimation]="messagesIsVisible"
+  [conversation]="conversation" [loading]="loading" [@messagesAnimation]="messagesIsVisible"
   [class.video]="videoIsVisible" [class.audio]="audioIsVisible" [class.loading]="loading">
 </zp-messages>
 
-<zp-audio [conversation]="conversation" [@audioAnimation]="audioIsVisible"></zp-audio>
+<!--<zp-audio [conversation]="conversation" [loading]="loading" [@audioAnimation]="audioIsVisible"></zp-audio>
 
-<zp-video [conversation]="conversation" [@videoAnimation]="videoIsVisible"></zp-video>
+<zp-video [conversation]="conversation" [loading]="loading" [@videoAnimation]="videoIsVisible"></zp-video>-->
 
 <md-spinner class="centered" *ngIf="loading" [@loadingAnimation]="loading"></md-spinner>
 

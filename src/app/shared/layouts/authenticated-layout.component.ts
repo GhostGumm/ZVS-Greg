@@ -29,9 +29,10 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
   @Input() toolbarIsVisible: boolean = false
   @Input() navigationOpened: boolean = false
 
-  isMobile: boolean
-  subscriptions: Array<Subscription> = []
-  user: UserInterface
+  private isMobile: boolean
+  private subscriptions: Array<Subscription> = []
+  public user: UserInterface
+  private $url: any
 
   constructor(
     private connection: ZetaPushConnection,
@@ -60,17 +61,10 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
   }
 
   ngOnInit() {
+    this.getUserProfile()
     this.updateWindowSize(window.innerWidth)
-    this.subscriptions.push(this.navigation.onOpenStart.subscribe(() => {
-      this.navigationOpened = true
-    }))
-    this.subscriptions.push(this.navigation.onCloseStart.subscribe(() => {
-      this.navigationOpened = false
-    }))
-    this.userService.getUser().then(user => {
-      console.debug('AuthenticatedLayoutComponent::onGetUser', user)
-      this.user = user
-    })
+    this.addNavListener()    
+    this.addRouterListener()
   }
 
   ngAfterViewInit() {
@@ -83,21 +77,50 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
   }
 
-  updateWindowSize(width) {
-    this.isMobile = width < 800 ? true : false
-    console.debug('AuthenticatedLayoutComponent::updateWindowSize', {
-      width,
-      isMobile: this.isMobile
+  getUserProfile() {
+    this.userService.getUser().then((user: UserInterface) => {
+      console.debug('AuthenticatedLayoutComponent::onGetUser', user)
+      this.user = user
+      // this.toast(`Welcome ${user.firstname}`)
     })
   }
 
-  toast() {
-    let config = new MdSnackBarConfig()
-    console.debug('AuthenticatedLayoutComponent::toast', {
-      snack: this.snackBar,
-      config
-    })
-    this.snackBar.open('It didn\'t quite work!', 'Try Again', config)
+  updateWindowSize(width) {
+    this.isMobile = width < 800 ? true : false
+    if (this.isMobile) { 
+      this.navigation.close()   
+    }
+    else{      
+      this.navigation.open()
+    }
+  }
+
+  addNavListener() {
+    this.subscriptions.push(this.navigation.onOpenStart.subscribe(() => {
+      this.navigationOpened = true
+    }))
+    this.subscriptions.push(this.navigation.onCloseStart.subscribe(() => {
+      this.navigationOpened = false
+    }))
+  }
+
+  addRouterListener() {
+    this.subscriptions.push(this.router.events.subscribe((events) => {
+      const url = events.url.split('/')
+      this.$url = url.slice(2, url.length)
+      console.debug('AuthenticatedLayoutComponent::routerEvents', { url: this.$url })
+    }))
+  }
+
+  goTo(index) {
+    const url = [...this.$url].slice(0,index + 1).join('/')
+    this.router.navigate([url])
+  }
+
+  toast(title, subtitle = '') {
+    let t= new MdSnackBarConfig()
+    console.debug('AuthenticatedLayoutComponent::toast', { title, subtitle })
+    this.snackBar.open(title, subtitle)
   }
 
   onLogout() {
