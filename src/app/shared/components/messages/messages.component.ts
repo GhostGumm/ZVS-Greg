@@ -1,11 +1,10 @@
 import {
   Component, HostBinding, HostListener, Input, ChangeDetectorRef, ChangeDetectionStrategy,
-  ViewChild, ContentChild, ElementRef, AfterViewInit, OnChanges, OnDestroy, trigger
+  ViewChild, ElementRef, AfterViewInit, OnChanges, OnDestroy, trigger
 } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
-import { Observable } from 'rxjs/Observable'
 import { Animations } from '../../../utils/utils.animation'
 import { ZetaPushClient } from '../../../zetapush'
 
@@ -23,7 +22,7 @@ const PROVIDERS = [ ScrollGlueDirective, MessageService, FileDropDirective, File
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.scss'],
   providers: [ ...PROVIDERS ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('routeAnimation', Animations.swipeOutDownView),
     trigger('dropZoneAnimation', Animations.fadeIn),
@@ -41,7 +40,7 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
     message: 4000,
     upload: 20 * 1024 // 20mb
   }
-  private dropZoneActive: boolean = false
+  dropZoneActive: boolean = false
   private uploader: FileUploader = new FileUploader({
     // maxFileSize:this.limits.upload,
     removeAfterUpload: true
@@ -64,20 +63,20 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   /**
    * Drag & Drop listener
    */
-  @HostListener('document:dragstart', ['$event'])
+  @HostListener('document:dragenter', ['$event'])
   onDragStart(event: MouseEvent) {
     console.debug('MessagesComponent::onDragStart', { event })
     this.dropZoneActive = true
   }
-  @HostListener('document:dragend', ['$event'])
-  onDragEnd(event: MouseEvent) {
-    console.debug('MessagesComponent::onDragEnd', { event })
-    this.dropZoneActive = false
-  }
-  // onDropzoneLeave(event: MouseEvent) {
-  //   console.debug('MessagesComponent::onDropzoneLeave', { event })
+  // @HostListener('document:dragleave', ['$event'])
+  // onDragEnd(event: MouseEvent) {
+  //   console.debug('MessagesComponent::onDragEnd', { event })
   //   this.dropZoneActive = false
   // }
+  onDropzoneLeave(event: MouseEvent) {
+    console.debug('MessagesComponent::onDropzoneLeave', { event })
+    this.dropZoneActive = false
+  }
 
   /**
    * Mouse over message listener
@@ -100,6 +99,7 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
         this.changeRef.detectChanges()
       }))
       this.messageService.indexByAuthor(this.conversation.messages)
+      this.resetForm()
     }
   }
 
@@ -189,10 +189,11 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   // User add message
-  addMessage() {
+  addMessage($event) {
+    $event.preventDefault()
     const { owner, id } = this.conversation
     const value = this.messageRaw
-    console.debug('MessagesComponent::addMessage', { id, owner, value })
+    console.debug('MessagesComponent::addMessage', { id, owner, value, $event })
     if (value.trim().length > 0) {
       this.conversationService.addConversationMarkup(id, owner, value).then((message) => {
         this.resetForm()
@@ -252,5 +253,6 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     console.debug('MessagesComponent::ngOnDestroy')
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
+    this.changeRef.detach()
   }
 }

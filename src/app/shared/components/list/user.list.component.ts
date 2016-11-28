@@ -56,11 +56,6 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     // Mock Purpose
     if (event.users.currentValue) {
       OrderBy(this.users, 'online')
-      for (let user of this.users) {
-        user.metadata = Object.assign(user.metadata, {
-          link: this.link ? `${this.link}${user.id}` : ''
-        })
-      }
     }
     //
     console.debug('UserListComponent::ngOnChanges', {

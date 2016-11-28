@@ -25,7 +25,7 @@ export interface Chart {
 })
 export class HomeViewComponent implements OnInit, AfterViewInit {
 
-  public cards:any = CARDS_TEMPLATE
+  public cards: any = CARDS_TEMPLATE
 
   @ViewChildren('chart') charts
 
