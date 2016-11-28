@@ -25,7 +25,6 @@ md-list{
 md-list-item{
   position: relative;
   display: block;
-  //background-color: $background;
   width: calc(100% - #{($md-list-avatar-computed-size + 16)});
   border-radius: $zp-radius $zp-radius 0 0;
   margin-right: 8px;
@@ -35,14 +34,13 @@ md-list-item{
   float: left;
   border-left-width: 6px;
   border-left-style: solid;
-  border-left-color: md-color($primary);
+  border-left-color: md-color($accent);
   transition-property: background-color;
   transition-duration: $transition-duration-fast;
   transition-timing-function: $transition-duration-easing;
   cursor: pointer;
   &.owner {
-    // float: right;
-    border-left-color: md-color($accent);
+    border-left-color: md-color($primary);
   }
   &.precede {
     margin-top: 2px;

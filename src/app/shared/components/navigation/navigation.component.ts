@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit, AfterViewInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core'
-import { Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
 
 import { ConversationService } from '../../../services/conversation'
@@ -20,9 +20,9 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
   @Input() isMobile: boolean
   @Output() logout = new EventEmitter()
 
-  loading: boolean = true
-  contacts: Array<UserInterface> = []
-  routes: any[] = [
+  public loading: boolean = true
+  private contacts: Array<UserInterface> = []
+  private routes: any[] = [
     {
       name: 'Home',
       icon: 'home',
@@ -39,12 +39,13 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
       link: ['context', 1]
     }
   ]
-  lastRoute: string
-  subscriptions: Array<Subscription> = []
-  intro: any
+  private subscriptions: Array<Subscription> = []
+  private $params: any
+  private lastRoute: string
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private conversationService: ConversationService,
     private userService: UserService,
     private changeRef: ChangeDetectorRef
@@ -52,21 +53,7 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
     /**
      * Route state listener
      */
-    this.subscriptions.push(router.events.subscribe((event) => {
-      if (event.constructor.name === 'NavigationEnd') {
-        console.debug('NavigationComponent::routeChange', {
-          state: event.constructor.name,
-          url: event.url,
-          lastRoute: this.lastRoute
-        })
-        // Close navigation if route changed
-        if (this.lastRoute !== event.url) {
-          // this.navigation.close()
-          this.closeIntro()
-        }
-        this.lastRoute = event.url
-      }
-    }))
+    this.addRouteListener()
     /**
      * Handle create one to one conversation
      */
@@ -84,7 +71,6 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
 
     this.subscriptions.push(this.navigation.onCloseStart.subscribe(() => {
       console.debug('NavigationComponent.navigation::onCloseStart')
-      this.closeIntro()
     }))
     this.subscriptions.push(this.navigation.onClose.subscribe(() => {
       console.debug('NavigationComponent.navigation::onClose')
@@ -94,47 +80,10 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
     this.getContact()
   }
 
-  ngAfterViewInit() {
-    if (!this.isMobile) {
-      this.initIntro()
-    }
-  }
-
-  ngOnDestroy() {
-    console.debug('NavigationComponent::ngOnDestroy')
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe())
-    this.closeIntro()
-  }
-
-  initIntro() {
-    this.intro = window.introJs()
-    setTimeout(() => {
-      this.navigation.open().then(() => {
-        this.startIntro()
-      })
-    }, 250)
-  }
-
-  startIntro() {
-    if (this.intro) {
-      // this.intro.addHints()
-    }
-  }
-
-  closeIntro() {
-    if (this.intro) {
-      this.intro.hideHints()
-    }
-  }
+  ngAfterViewInit() {}
 
   refreshLayout() {
     this.refreshStats()
-    this.refreshIntro()
-  }
-  refreshIntro() {
-    if (this.intro) {
-      this.intro.refresh()
-    }
   }
   /**
    * ToDo : move this to stats components
@@ -158,4 +107,29 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
     this.logout.emit()
   }
 
+  addRouteListener() {
+    this.subscriptions.push(this.route.params.subscribe((params) => {
+      console.debug('NavigationComponent::paramsChanged', { params })
+      this.$params = params
+    }))
+    this.subscriptions.push(this.router.events.subscribe((event) => {
+      if (event.constructor.name === 'NavigationStart') {
+        console.debug('NavigationComponent::routeChangeStart', { event })
+        if (this.lastRoute !== event.url) {
+          this.routeChanged()
+        }
+        this.lastRoute = event.url
+      }
+    }))
+  }
+  routeChanged() {
+    if (this.isMobile) {
+      this.navigation.close()
+    }
+  }
+
+  ngOnDestroy() {
+    console.debug('NavigationComponent::ngOnDestroy')
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe())
+  }
 }
