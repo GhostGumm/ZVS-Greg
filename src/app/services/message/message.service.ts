@@ -8,6 +8,7 @@ import { ENVIRONMENT } from '../../app-config.module'
 
 @Injectable()
 export class MessageService {
+  public files: Array<any> = []
   private userKey = this.zpClient.getUserId()
   private proxy: string
 
@@ -17,28 +18,32 @@ export class MessageService {
   ) {
     this.proxy = environment.ZETAPUSH_PROXY_URL
   }
+
+  resetServices() {
+    this.files = []
+  }
+
+  onGetMessages(messages) {
+    this.resetServices()
+    for (let index = 1; index < messages.length; index++) {
+      const message: MessageInterface = messages[index]
+      this.indexByAuthor(messages, message)
+
+      if (message.type === 'attachment') {
+        this.files.push(message.value)
+      }
+    }
+  }
   /**
    * Messages: List of messages to index on init
-   * Message? : Message to index once added
    * Toggle class 'precede' if messages[n].author == messages[n - 1].author
    */
-  indexByAuthor(Messages: MessageInterface[], Message?: MessageInterface) {
-    if (Messages.length > 1) {
-      if (Message) {
-        const index = Messages.indexOf(Message)
-        const previous = Messages[index - 1]
-        if (Message.author === previous.author) {
-          Message.isPrecede = true
-        }
-      } else {
-        for (let index = 1; index < Messages.length; index++) {
-          let message = Messages[index]
-          let previous = Messages[index - 1]
-
-          if (message.author === previous.author) {
-            message.isPrecede = true
-          }
-        }
+  indexByAuthor(messages: MessageInterface[], message: MessageInterface) {
+    if (messages.length > 1) {
+      const index = messages.indexOf(message)
+      const previous = messages[index - 1]
+      if (message.author === previous.author) {
+        message.isPrecede = true
       }
     }
   }

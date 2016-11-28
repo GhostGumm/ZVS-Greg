@@ -4,6 +4,7 @@ import {
 } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
+import { MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material'
 import { Subscription } from 'rxjs/Subscription'
 import { Animations } from '../../../utils/utils.animation'
 import { ZetaPushClient } from '../../../zetapush'
@@ -14,8 +15,10 @@ import {
   ConversationService, ConversationViewInterface,
   MessageService, MessageInterface, MessageClass
 } from './../../../services'
+import { GalleryComponent } from '../gallery/gallery.component'
 
 const PROVIDERS = [ ScrollGlueDirective, MessageService, FileDropDirective, FileSelectDirective]
+
 
 @Component({
   selector: 'zp-messages',
@@ -32,7 +35,8 @@ const PROVIDERS = [ ScrollGlueDirective, MessageService, FileDropDirective, File
 
 export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() conversation: ConversationViewInterface
-  @Input() loading : boolean
+  @Input() loading: boolean
+  private gallery: MdDialogRef<GalleryComponent>
   private subscriptions: Array<Subscription> = []
 
   private messageRaw: string
@@ -54,7 +58,8 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
     private route: ActivatedRoute,
     private messageService: MessageService,
     private conversationService: ConversationService,
-    private changeRef: ChangeDetectorRef
+    private changeRef: ChangeDetectorRef,
+    public dialog: MdDialog
   ) {
   }
 
@@ -91,16 +96,22 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   ngOnChanges(changes) {
     console.log('MessagesComponent::ngOnChanges', { changes })
     if (changes.conversation && changes.conversation.currentValue) {
-      const onAddConversationMessage = this.conversationService.onAddConversationMessage(changes.conversation.currentValue.id)
-      this.subscriptions.forEach((subscription) => subscription.unsubscribe())
-      this.subscriptions.push(onAddConversationMessage.subscribe(({ result }) => {
-        const { message } = result
-        this.onAddMessage(message)
-        this.changeRef.detectChanges()
-      }))
-      this.messageService.indexByAuthor(this.conversation.messages)
-      this.resetForm()
+      this.onGetConversation(changes)
     }
+  }
+
+  onGetConversation(changes) {
+    // Reset subscriptions
+    const onAddConversationMessage = this.conversationService.onAddConversationMessage(changes.conversation.currentValue.id)
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe())
+    this.subscriptions.push(onAddConversationMessage.subscribe(({ result }) => {
+      const { message } = result
+      this.onAddMessage(message)
+      this.changeRef.detectChanges()
+    }))
+
+    this.messageService.onGetMessages(this.conversation.messages)
+    this.resetForm()
   }
 
   // Custom Track By
@@ -113,36 +124,17 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.uploader.onAfterAddingFile = (item => {
       this.uploadInputRef.nativeElement.value = ''
     })
-    // listen to input text change
-    // this.messageForm.valueChanges
-    //   .debounceTime(200)
-    //   .filter(val => val.messageRawDom)
-    //   .distinctUntilChanged()
-    //   .subscribe((value) => {
-    //     console.warn({
-    //       value,
-    //       value2: value.messageRawDom.trim()
-    //     })
-    //   })
   }
 
   // Click on md-list-item
-  onClickMessage(event: MouseEvent, message, index) {
+  onClickMessage(event: MouseEvent, message: MessageInterface, index) {
     console.debug('MessagesComponent::onClickMessage', { message, event, index })
     const { type } = message
     switch (type) {
-    // case 'text':
-    //   this.onImageClicked()
-    //   break
-    // case 'attachment':
-    //   this.onImageClicked()
-    //   break
-    case 'image':
-      this.onImageClicked()
+    case 'attachment':
+      this.openGallery(message)
       break
     }
-  }
-  onImageClicked() {
   }
 
   inputFileClick() {
@@ -155,13 +147,6 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
     let target = event.target || event.srcElement
     this.uploader.addToQueue(target.files)
     const { uploader, uploader: { queue } } = this
-    console.warn('MessagesComponent::onSelectAttachment', { event, uploader: this.uploader })
-    // this.uploader.setOptions({
-    //   url: 'https://evening-anchorage-3159.herokuapp.com/api/'
-    // })
-    // this.uploader.uploadAll()
-    // this.uploader.clearQueue()
-
     this.addFiles(queue)
   }
 
@@ -247,7 +232,17 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   // Reset message form
   resetForm() {
-    this.messageRaw = null
+    this.messageRaw = ''
+  }
+
+  openGallery(message: MessageInterface) {
+    this.gallery = this.dialog.open(GalleryComponent)
+    this.gallery.componentInstance.images = this.messageService.files
+    this.gallery.componentInstance.selected = message.value
+    this.gallery.afterClosed().subscribe(result => {
+      console.debug('MessagesComponent::Gallery:afterClosed', { result })
+      this.gallery = null
+    })
   }
 
   ngOnDestroy() {

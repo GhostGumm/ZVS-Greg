@@ -1,4 +1,30 @@
 @import '../../../../styles/_variables';
 
 :host {
+  position: relative;
+  width: 90vw;
+  height: 90vh;
+  background-color: $zp-white;
+  display: flex;
+  flex-direction: column;
+  backface-visibility: hidden;
+  margin: -1px; // weird clipping fix
+}
+
+img{
+  flex: 1 1 0;
+  object-fit: contain;
+}
+
+.zp-gallery-previous,
+.zp-gallery-next{
+  position: absolute;
+  top: 50%;
+  margin-top: -($zp-size-lg * 0.5);
+}
+.zp-gallery-previous{
+  left: 20px;
+}
+.zp-gallery-next{
+  right: 20px;
 }

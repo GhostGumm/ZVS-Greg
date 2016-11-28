@@ -1,3 +1,26 @@
-<button (click)="openGallery()" type="button" md-icon-button color="primary">
-  <md-icon>zoom_out_map</md-icon>
+
+<md-toolbar color="primary">  
+  <button md-icon-button (click)="download()">
+    <md-icon>file_download</md-icon>
+  </button>
+  <button md-icon-button (click)="print()">
+    <md-icon>print</md-icon>
+  </button>
+  <button md-icon-button (click)="share()">
+    <md-icon>share</md-icon>
+  </button>
+  <span class="flex-fill"></span>
+  <button md-icon-button (click)="close()">
+    <md-icon>close</md-icon>
+  </button>
+</md-toolbar>
+
+<button lg accent class="zp-gallery-previous" *ngIf="hasPrevious" md-icon-button (click)="previous()">
+  <md-icon>keyboard_arrow_left</md-icon>
+</button>
+
+<img [src]="selected" alt="" draggable="false">
+
+<button lg accent class="zp-gallery-next" *ngIf="hasNext" md-icon-button (click)="next()">
+  <md-icon>keyboard_arrow_right</md-icon>
 </button>

@@ -1,49 +1,72 @@
-import { Component, OnInit, ViewContainerRef, ChangeDetectorRef } from '@angular/core'
-import { MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material'
+import { Component, OnInit, trigger, HostBinding } from '@angular/core'
+import { MdDialogRef } from '@angular/material'
+import { Animations } from '../../../utils/utils.animation'
 
 @Component({
   selector: 'zp-gallery',
   styleUrls: ['./gallery.component.scss'],
-  templateUrl: './gallery.component.html'
+  templateUrl: './gallery.component.html',
+  animations: [
+    trigger('routeAnimation', Animations.slideUpDown)
+  ]
 })
 export class GalleryComponent implements OnInit {
-
-  dialogRef: MdDialogRef<GalleryDialogComponent>
-
+  public images: Array<any>
+  public selected: string
+  private index: number
+  private hasPrevious: boolean = false
+  private hasNext: boolean = false
   constructor(
-    public dialog: MdDialog,
-    public viewContainerRef: ViewContainerRef) { }
-
-  openDialog() {
-    const config = new MdDialogConfig()
-
-    config.viewContainerRef = this.viewContainerRef
-
-    this.dialogRef = this.dialog.open(GalleryDialogComponent, config)
-
-    this.dialogRef.afterClosed().subscribe((result) => {
-      console.debug('GalleryComponent::dialogRef:afterClosed', { result })
-      this.dialogRef = null
-    })
-  }
-
-  ngOnInit() {}
-}
-
-@Component({
-  selector: 'zp-gallery-dialog',
-  styleUrls: ['./gallery.dialog.component.scss'],
-  templateUrl: './gallery.dialog.component.html'
-})
-export class GalleryDialogComponent implements OnInit {
-
-  constructor(
-    public dialogRef: MdDialogRef<GalleryDialogComponent>
+    public dialogRef: MdDialogRef<GalleryComponent>
   ) {
 
   }
 
+  @HostBinding('@routeAnimation') get routeAnimation() {
+    return true
+  }
+
   ngOnInit() {
-    console.debug('GalleryDialogComponent::ngOnInit')
+    console.debug('GalleryComponent::ngOnInit', {
+      images: this.images
+    })
+    this.index = this.images.indexOf(this.selected)
+    this.checkAvailable()
+  }
+
+  checkAvailable() {
+    console.debug('GalleryComponent::checkAvailable', this.index, this.images.length)
+    this.index > 0 ? this.hasPrevious = true : this.hasPrevious = false
+    this.index < this.images.length - 1 ? this.hasNext = true : this.hasNext = false
+  }
+
+  previous() {
+    this.index--
+    this.selected = this.images[this.index]
+    this.checkAvailable()
+  }
+  next() {
+    this.index++
+    this.selected = this.images[this.index]
+    this.checkAvailable()
+  }
+
+  download() {
+    console.debug('GalleryComponent::download')
+    window.open(this.selected, '_blank')
+  }
+
+  print() {
+    console.debug('GalleryComponent::print')
+
+  }
+
+  share() {
+    console.debug('GalleryComponent::share')
+
+  }
+
+  close() {
+    this.dialogRef.close()
   }
 }

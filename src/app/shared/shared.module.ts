@@ -9,9 +9,7 @@ import { SharedRoutingModule } from './shared-routing.module'
 
 import { ZetaPushModule } from '../zetapush/zetapush.module'
 
-import { OrganizationDialogComponent } from './components/organization/organization.component'
-
-import { COMPONENTS } from './components'
+import { COMPONENTS, DIALOGS } from './components'
 import { LAYOUTS } from './layouts'
 
 import { AuthenticationService } from './authentication.service'
@@ -26,7 +24,7 @@ const SERVICES = [ AuthenticationService, ...DATA_SERVICES ]
 
 @NgModule({
   declarations: [ ...COMPONENTS, ...LAYOUTS, ...DIRECTIVES ],
-  entryComponents: [ OrganizationDialogComponent ],
+  entryComponents: [ ...DIALOGS ],
   exports: [ ...COMPONENTS, ...LAYOUTS, ...CORE_MODULES, MaterialModule, ZetaPushModule ],
   imports: [ ...CORE_MODULES, MaterialModule.forRoot(), SharedRoutingModule, ZetaPushModule ],
   providers: [ AuthenticationService ]

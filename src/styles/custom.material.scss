@@ -20,29 +20,42 @@ md-nav-list[dense] a[md-list-item] [md-line]{
   line-height: 15px;
 }
 
-md-icon {    
-  &.md{
+button {  
+  &[lg]{
     width: $font-size-lg;
     height: $font-size-lg;
-    font-size: $font-size-lg;
+    md-icon{
+      width: $font-size-lg;
+      height: $font-size-lg;
+      font-size: $font-size-lg;
+      line-height: $font-size-lg !important;
+    }
   }
-  &.lg{
-    width: $font-size-lg;
-    height: $font-size-lg;
-    font-size: $font-size-lg;
-  }
-  &.xl{
+  &[xl]{
     width: $font-size-xl;
     height: $font-size-xl;
-    font-size: $font-size-xl;
+    md-icon{
+      width: $font-size-xl;
+      height: $font-size-xl;
+      font-size: $font-size-xl;
+      line-height: $font-size-xl !important;
+    }
   }
-  &.xxl{
+  &[xxl]{
     width: $font-size-xxl;
     height: $font-size-xxl;
-    font-size: $font-size-xxl;
+    md-icon{
+      width: $font-size-xxl;
+      height: $font-size-xxl;
+      font-size: $font-size-xxl;
+      line-height: $font-size-xxl !important;
+    }
   }
-  &.white{
-    color: $zp-white;
+  &[accent]{
+    background-color: $zp-black;
+    md-icon{
+      color: $zp-white;
+    }
   }
 }
 // Smaller spinner default size
@@ -56,4 +69,10 @@ md-spinner{
     margin-left: -($md-spinner-size * 0.5);
     margin-top: -($md-spinner-size * 0.5);
   }
+}
+// Mandatory padding & backround on md-dialog ? no-thanks
+md-dialog-container{
+  padding: 0!important;
+  box-shadow: none! important;
+  background: none! important;
 }

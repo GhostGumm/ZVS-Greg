@@ -112,9 +112,9 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
      * Angular 2 router weird behavior
      * router.navigate lead to detectChange break
      * native action don't obviously..
-     * Related : https://derickbailey.com/wp-content/uploads/2014/12/meme.jpg
+     * Related : https://goo.gl/BKCRhN
      */
-    window.open(`http://localhost:3000/#/authenticated/conversation/${user.id}`, '_self')
+    window.open(`http://localhost:3000/#/authenticated/conversation/${user.id}`, '_self', )
   }
 
   onLogout() {

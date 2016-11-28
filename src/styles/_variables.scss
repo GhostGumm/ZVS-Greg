@@ -55,6 +55,10 @@ $zp-green: #80cd3d;
 $zp-red: #f1452a;
 $zp-yellow: #fbc81e;
 
+$zp-size-lg:36px;
+$zp-size-xl:48px;
+$zp-size-xxl:64px;
+
 $md-error: $zp-red;
 $md-warning: $zp-yellow;
 $md-success: $zp-green;
@@ -69,11 +73,11 @@ $dark-background-accent: $zp-white;
 $transition-duration-fast: 375ms;
 $transition-duration-easing: cubic-bezier(0.4, 0.0, 0.2, 1);
 
-$md-list-avatar-size: 36px;
+$md-list-avatar-size: $zp-size-lg;
 $md-list-avatar-margin: 5px;
 $md-list-avatar-computed-size: $md-list-avatar-size + ($md-list-avatar-margin * 2);
-$md-toolbar-height: 64px;
-$md-spinner-size: 40px;
+$md-toolbar-height: $zp-size-xxl;
+$md-spinner-size: $zp-size-xl;
 
 $zp-navigation-width: 360px;
 $zp-sidenav-width: 280px;
@@ -96,6 +100,6 @@ $font-size-xxs: 8px;
 $font-size-xs: 12px;
 $font-size-sm: 18px !default;
 $font-size-md: 24px;
-$font-size-lg: 36px;
-$font-size-xl: 48px;
-$font-size-xxl: 60px;
+$font-size-lg: $zp-size-lg;
+$font-size-xl: $zp-size-xl;
+$font-size-xxl: $zp-size-xxl;
