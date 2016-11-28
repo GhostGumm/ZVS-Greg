@@ -1,11 +1,10 @@
 import {
   Component, HostBinding, HostListener, Input, ChangeDetectorRef, ChangeDetectionStrategy,
-  ViewChild, ContentChild, ElementRef, AfterViewInit, OnChanges, OnDestroy, trigger
+  ViewChild, ElementRef, AfterViewInit, OnChanges, OnDestroy, trigger
 } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
-import { Observable } from 'rxjs/Observable'
 import { Animations } from '../../../utils/utils.animation'
 import { ZetaPushClient } from '../../../zetapush'
 

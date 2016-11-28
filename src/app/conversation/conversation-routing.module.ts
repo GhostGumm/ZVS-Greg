@@ -7,8 +7,7 @@ import { ConversationViewComponent } from './views'
 
 export const conversationRoutes: any = {
   path: 'conversation/:id',
-  component: ConversationViewComponent,
-  canActivate: [AuthenticationService],
+  component: ConversationViewComponent
   // children: [
   //   { path: 'messages' },
   //   { path: 'video' }

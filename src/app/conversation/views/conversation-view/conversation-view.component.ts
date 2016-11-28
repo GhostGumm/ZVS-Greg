@@ -1,5 +1,5 @@
 import {
-  Component, HostBinding, Input, OnInit, AfterViewInit, AfterContentInit,
+  Component, HostBinding, OnInit, OnDestroy, AfterViewInit, AfterContentInit,
   trigger, NgZone, ChangeDetectorRef
 } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
@@ -22,14 +22,13 @@ import { UserService } from '../../../services/user'
     trigger('audioAnimation', Animations.swipeOutDownView)
   ]
 })
-export class ConversationViewComponent implements OnInit, AfterViewInit, AfterContentInit {
+export class ConversationViewComponent implements OnInit, OnDestroy, AfterViewInit, AfterContentInit {
   private $params: any
   private mode: string
   private subscriptions: Array<Subscription> = []
 
   private conversation: ConversationViewInterface
   private loading: boolean
-  private messagesIsVisible: boolean = true
   private videoIsVisible: boolean = false
   private audioIsVisible: boolean = false
 
