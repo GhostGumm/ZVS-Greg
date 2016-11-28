@@ -65,15 +65,16 @@ export class MessageService {
 
   processMarkup({ message, users }: { message: any, users: Array<UserInterface> }) {
     console.debug('MessageService::processMarkup', { message, users })
-    return this.processData({ message, users })
+    let markup = this.processData({ message, users })
+    return markup
   }
 
   processAttachment({ message, users }: { message: any, users: Array<UserInterface> }) {
 
     console.debug('MessageService::processAttachment', { message, users })
-    let processedMessage = this.processData({ message, users })
-    processedMessage.value = `${this.proxy}${processedMessage.value}`
-    return processedMessage
+    let attachment = this.processData({ message, users })
+    attachment.value = `${this.proxy}${attachment.value}`
+    return attachment
     // const { metadata:{ contentType } } = message
     // console.debug('MessageService::processAttachment', {
     //   message,
