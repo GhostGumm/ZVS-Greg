@@ -14,19 +14,19 @@ export const Animations = {
       opacity: 1
     })),
     state('false', style({
-      transform: 'translateY(-50%)',
+      transform: 'translateY(-100px)',
       opacity: 0
     })),
     transition(':enter, 0 => 1', [
       style({
-        transform: 'translateY(-50%)',
+        transform: 'translateY(-100px)',
          opacity: 0
       }),
       animate(`${options.duration} ${options.easingIn}`) // cubic-bezier(0.175, 0.885, 0.32, 1.275)
     ]),
     transition(':leave, 1 => 0', [
       animate(`${options.duration} ${options.easingOut}`, style({
-        transform: 'translateY(50%)',
+        transform: 'translateY(100px)',
         opacity: 0
       }))
     ])
@@ -35,6 +35,9 @@ export const Animations = {
   fadeIn: [
     state('true', style({
       opacity: 1
+    })),
+    state('void', style({
+      opacity: 0
     })),
     state('false', style({
       opacity: 0

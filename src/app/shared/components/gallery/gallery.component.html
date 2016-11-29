@@ -1,0 +1,42 @@
+
+<md-toolbar color="primary">  
+  <button md-icon-button (click)="download()">
+    <md-icon>file_download</md-icon>
+  </button>
+  
+  <button md-icon-button (click)="print()">
+    <md-icon>print</md-icon>
+  </button>
+  
+  <button md-icon-button [md-menu-trigger-for]="menuShare">
+    <md-icon>share</md-icon>
+  </button>
+  <md-menu #menuShare="mdMenu">
+    <button md-menu-item> Facebook </button>
+    <button md-menu-item> Twitter </button>
+    <button md-menu-item> Google </button>
+  </md-menu>
+
+  <span class="flex-fill"></span>
+
+  <button md-icon-button (click)="close()">
+    <md-icon>close</md-icon>
+  </button>
+</md-toolbar>
+
+<button lg accent zp-gallery-previous *ngIf="hasPrevious" md-icon-button (click)="previous()" [@fadeInAnimation]="hasPrevious">
+  <md-icon>keyboard_arrow_left</md-icon>
+</button>
+
+<img [src]="selected.value" alt="" draggable="false" (load)="onLoad()" [class.loading]="loading" #imageRef>
+
+<button lg accent zp-gallery-next *ngIf="hasNext" md-icon-button (click)="next()" [@fadeInAnimation]="hasNext">
+  <md-icon>keyboard_arrow_right</md-icon>
+</button>
+
+<md-toolbar color="primary" sm>
+  <span class="flex-fill"></span>
+  <span *ngIf="files.length > 1">{{index + 1}}/{{files.length}}</span>
+</md-toolbar>
+
+<md-spinner centered *ngIf="loading" [@fadeInAnimation]="loading"></md-spinner>

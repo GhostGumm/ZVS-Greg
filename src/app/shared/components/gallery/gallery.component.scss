@@ -1,0 +1,43 @@
+@import '../../../../styles/_variables';
+
+:host {
+  position: relative;
+  width: 90vw;
+  height: 90vh;
+  background-color: $zp-white;
+  display: flex;
+  flex-direction: column;
+  backface-visibility: hidden;
+  margin: -1px; // weird clipping fix
+}
+
+img{
+  width: 100%;
+  max-height: calc(100% - 88px);
+  flex: 1 1 0;
+  object-fit: contain;
+  transition-property: filter;
+  will-change: filter;
+  transition-duration: $transition-duration-fast;
+  transition-timing-function: $transition-easing;
+  backface-visibility: hidden;
+  &.loading{
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    transition-duration: 0s;
+  }
+}
+
+[zp-gallery-previous],
+[zp-gallery-next]{
+  position: absolute;
+  top: 50%;
+  margin-top: -($zp-size-lg * 0.5);
+  z-index: 1;
+}
+[zp-gallery-previous]{
+  left: 20px;
+}
+[zp-gallery-next]{
+  right: 20px;
+}

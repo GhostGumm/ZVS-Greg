@@ -8,8 +8,14 @@ import { MessagesComponent } from './messages/messages.component'
 import { VideoComponent } from './video/video.component'
 import { AudioComponent } from './audio/audio.component'
 import { OrganizationComponent, OrganizationDialogComponent } from './organization/organization.component'
+import { GalleryComponent } from './gallery/gallery.component'
 
 import { ChartistComponent } from 'angular2-chartist'
+
+export const DIALOGS = [
+  OrganizationDialogComponent,
+  GalleryComponent
+]
 
 export const COMPONENTS = [
   AvatarComponent,
@@ -23,5 +29,6 @@ export const COMPONENTS = [
   AudioComponent,
   OrganizationComponent,
   OrganizationDialogComponent,
-  ChartistComponent
+  ChartistComponent,
+  GalleryComponent
 ]

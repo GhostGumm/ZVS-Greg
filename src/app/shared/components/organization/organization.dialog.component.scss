@@ -1,6 +1,13 @@
-zp-user-list{
+@import '../../../../styles/_variables';
+
+:host {
+  display: block;
+  position: relative;
+  background-color: $zp-white;
   width: 300px;
-  margin: -22px;
+}
+
+zp-user-list{
   md-checkbox.user-checkbox{
     pointer-events: none;
   }

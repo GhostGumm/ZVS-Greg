@@ -49,7 +49,7 @@ md-card{
 // flex support
 [md-mini-fab],
 [md-icon-button] {
-  min-width: 40px !important;
+  min-width: 40px;
 }
 
 // Encapsulation emulation doesn't allow custom style on rendered elements

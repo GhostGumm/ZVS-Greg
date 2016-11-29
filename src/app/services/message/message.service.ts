@@ -8,6 +8,7 @@ import { ENVIRONMENT } from '../../app-config.module'
 
 @Injectable()
 export class MessageService {
+  public static files: Array<MessageInterface> = []
   private userKey = this.zpClient.getUserId()
   private proxy: string
 
@@ -17,6 +18,21 @@ export class MessageService {
   ) {
     this.proxy = environment.ZETAPUSH_PROXY_URL
   }
+
+  resetServices() {
+    MessageService.files = []
+  }
+
+  getFiles() {
+    console.debug('MessageService::getFiles', MessageService.files)
+    return MessageService.files
+  }
+
+  setFile(file) {
+    console.debug('MessageService::setFile', file)
+    MessageService.files.push(file)
+  }
+
   /**
    * Messages: List of messages to index on init
    * Message? : Message to index once added
@@ -41,6 +57,10 @@ export class MessageService {
         }
       }
     }
+    console.debug('MessageOrder', {
+      Messages,
+      Message
+    })
   }
 
   processData({ message, users }: { message: any, users: Array<UserInterface> }) {
@@ -60,13 +80,16 @@ export class MessageService {
   }
 
   processMarkup({ message, users }: { message: any, users: Array<UserInterface> }) {
-    return this.processData({ message, users })
+    let markup = this.processData({ message, users })
+    return markup
   }
 
   processAttachment({ message, users }: { message: any, users: Array<UserInterface> }) {
-    let processedMessage = this.processData({ message, users })
-    processedMessage.value = `${this.proxy}${processedMessage.value}`
-    return processedMessage
+    let attachment = this.processData({ message, users })
+    attachment.value = `${this.proxy}${attachment.value}`
+    this.setFile(attachment)
+    return attachment
+
     // const { metadata:{ contentType } } = message
     // console.debug('MessageService::processAttachment', {
     //   message,

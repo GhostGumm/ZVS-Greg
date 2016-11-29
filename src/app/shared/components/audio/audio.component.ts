@@ -16,7 +16,7 @@ import { UserService } from '../../../services/user'
 })
 export class AudioComponent implements OnChanges, OnDestroy, OnInit {
   @Input() conversation: ConversationViewInterface
-  @Input() loading : boolean
+  @Input() loading: boolean
   group: boolean = false
   audios: RtcInterface[] = []
 
