@@ -29,12 +29,12 @@ md-list-item{
   transition-property: background-color;
   will-change: background-color;
   transition-duration: $transition-duration-fast;
-  transition-timing-function: $transition-duration-easing;
+  transition-timing-function: $transition-easing;
   h3{
     transition-property: transform;
     will-change: transform;
     transition-duration: $transition-duration-fast;
-    transition-timing-function: $transition-duration-easing;
+    transition-timing-function: $transition-easing;
   }
   &:hover{
     background-color: $zp-shadow-button;

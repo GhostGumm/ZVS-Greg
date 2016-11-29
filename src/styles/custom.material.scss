@@ -62,7 +62,7 @@ button {
 md-spinner{
   width: $md-spinner-size !important;
   height: $md-spinner-size !important;
-  &.centered{
+  &[centered]{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -75,4 +75,22 @@ md-dialog-container{
   padding: 0!important;
   box-shadow: none! important;
   background: none! important;
+}
+
+md-toolbar{
+  &[sm]{
+    min-height: $zp-size-sm;
+    height: $zp-size-sm;
+    font-size: $zp-size-sm - 6;
+    md-toolbar-row{
+      height: $zp-size-sm;
+    }
+  }
+  &[md]{
+    min-height: $zp-size-md;
+    height: $zp-size-md;
+    md-toolbar-row{
+      height: $zp-size-md;
+    }
+  }
 }

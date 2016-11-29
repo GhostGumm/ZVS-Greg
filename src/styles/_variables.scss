@@ -55,6 +55,8 @@ $zp-green: #80cd3d;
 $zp-red: #f1452a;
 $zp-yellow: #fbc81e;
 
+$zp-size-sm: 24px;
+$zp-size-md: 32px;
 $zp-size-lg:36px;
 $zp-size-xl:48px;
 $zp-size-xxl:64px;
@@ -71,7 +73,9 @@ $dark-background: $zp-black;
 $dark-background-accent: $zp-white;
 
 $transition-duration-fast: 375ms;
-$transition-duration-easing: cubic-bezier(0.4, 0.0, 0.2, 1);
+$transition-duration-normal: 500ms;
+$transition-duration-slow: 1000ms;
+$transition-easing: cubic-bezier(0.4, 0.0, 0.2, 1);
 
 $md-list-avatar-size: $zp-size-lg;
 $md-list-avatar-margin: 5px;

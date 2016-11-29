@@ -4,7 +4,7 @@
   <md-list-item *ngFor="let message of conversation?.messages; let $index = index; trackBy: trackByMessageId;"
       (mouseenter)="onMouseEnterMessage($event, message, $index)"
       (mouseleave)="onMouseLeaveMessage($event, message, $index)"
-      (click)="onClickMessage($event, message, $index)"
+      (click)="onClickMessage($event, message, $index)" [ngClass]="message.type"
       [class.owner]="message.isOwner" [class.precede]="message.isPrecede" [class.hovered]="message.isHovered">
     <zp-avatar md-list-avatar [user]="message.user" [size]="40"></zp-avatar>
 
@@ -32,7 +32,7 @@
     <button type="button" md-icon-button color="primary" (click)="inputFileClick()">
       <md-icon>file_upload</md-icon>
     </button>
-    <input #uploadInput type="file" accept="image/*" ng2FileSelect capture="camera" [uploader]="uploader" [multiple]="multiple" (change)="onSelectAttachment($event)"/>
+    <input #uploadInput type="file" ng2FileSelect capture="camera" [uploader]="uploader" [multiple]="multiple" (change)="onSelectAttachment($event)"/>
   </div> 
 
   <form (ngSubmit)="addMessage($event)" #messageForm="ngForm" id="messageForm">

@@ -19,7 +19,7 @@
     transition-property: transform;
     will-change: transform;
     transition-duration: $transition-duration-fast;
-    transition-timing-function: $transition-duration-easing;
+    transition-timing-function: $transition-easing;
   }
   &:hover{
     > button {

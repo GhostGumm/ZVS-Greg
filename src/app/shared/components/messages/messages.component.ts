@@ -1,10 +1,10 @@
 import {
-  Component, HostBinding, HostListener, Input, ChangeDetectorRef, ChangeDetectionStrategy,
+  Component, HostBinding, HostListener, Input, ChangeDetectorRef,
   ViewChild, ElementRef, AfterViewInit, OnChanges, OnDestroy, trigger
 } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
-import { MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material'
+import { MdDialog, MdDialogRef } from '@angular/material'
 import { Subscription } from 'rxjs/Subscription'
 import { Animations } from '../../../utils/utils.animation'
 import { ZetaPushClient } from '../../../zetapush'
@@ -25,7 +25,6 @@ const PROVIDERS = [ ScrollGlueDirective, MessageService, FileDropDirective, File
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.scss'],
   providers: [ ...PROVIDERS ],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('routeAnimation', Animations.swipeOutDownView),
     trigger('dropZoneAnimation', Animations.fadeIn),
@@ -40,7 +39,7 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   private subscriptions: Array<Subscription> = []
 
   private messageRaw: string
-  private limits: any = {
+  public limits: any = {
     message: 4000,
     upload: 20 * 1024 // 20mb
   }
@@ -110,7 +109,6 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
       this.changeRef.detectChanges()
     }))
 
-    this.messageService.onGetMessages(this.conversation.messages)
     this.resetForm()
   }
 
@@ -237,8 +235,8 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   openGallery(message: MessageInterface) {
     this.gallery = this.dialog.open(GalleryComponent)
-    this.gallery.componentInstance.images = this.messageService.files
-    this.gallery.componentInstance.selected = message.value
+    this.gallery.componentInstance.files = this.messageService.getFiles()
+    this.gallery.componentInstance.selected = message
     this.gallery.afterClosed().subscribe(result => {
       console.debug('MessagesComponent::Gallery:afterClosed', { result })
       this.gallery = null

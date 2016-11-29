@@ -14,7 +14,8 @@ md-toolbar{
   button {
     margin: 0 5px;
     md-icon{
-      transition: color $transition-duration-fast $transition-duration-easing;
+      transition: color $transition-duration-fast $transition-easing;
+      will-change: color;
     }
     &.on{
       md-icon{
@@ -28,7 +29,7 @@ zp-messages{
   transition-property: width, opacity;
   will-change: width, opacity;
   transition-duration: $transition-duration-fast;
-  transition-timing-function: $transition-duration-easing;
+  transition-timing-function: $transition-easing;
   &.audio{
     width: 60%;
   }

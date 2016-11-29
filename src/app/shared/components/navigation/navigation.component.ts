@@ -22,7 +22,7 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
 
   public loading: boolean = true
   private contacts: Array<UserInterface> = []
-  private routes: any[] = [
+  public routes: any[] = [
     {
       name: 'Home',
       icon: 'home',
@@ -114,7 +114,7 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
      * native action don't obviously..
      * Related : https://goo.gl/BKCRhN
      */
-    window.open(`http://localhost:3000/#/authenticated/conversation/${user.id}`, '_self', )
+    window.location.hash = `#/authenticated/conversation/${user.id}`
   }
 
   onLogout() {

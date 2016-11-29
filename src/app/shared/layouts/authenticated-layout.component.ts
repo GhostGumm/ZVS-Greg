@@ -5,7 +5,7 @@ import {
 
 import { Router } from '@angular/router'
 
-import { MdSnackBar, MdSnackBarConfig } from '@angular/material'
+import { MdSnackBar } from '@angular/material'
 import { Subscription } from 'rxjs/Subscription'
 
 import { Animations } from '../../utils/'
@@ -24,7 +24,7 @@ import { ZetaPushConnection } from '../../zetapush'
   templateUrl: './authenticated-layout.component.html'
 })
 export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('navigation') navigation;
+  @ViewChild('navigation') navigation
 
   @Input() toolbarIsVisible: boolean = false
   @Input() navigationOpened: boolean = false
@@ -62,9 +62,9 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
 
   ngOnInit() {
     this.getUserProfile()
-    this.updateWindowSize(window.innerWidth)
-    this.addNavListener()    
+    this.addNavListener()
     this.addRouterListener()
+    this.updateWindowSize(window.innerWidth)
   }
 
   ngAfterViewInit() {
@@ -87,10 +87,9 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
 
   updateWindowSize(width) {
     this.isMobile = width < 800 ? true : false
-    if (this.isMobile) { 
-      this.navigation.close()   
-    }
-    else{      
+    if (this.isMobile) {
+      this.navigation.close()
+    } else {
       this.navigation.open()
     }
   }
@@ -113,12 +112,11 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
   }
 
   goTo(index) {
-    const url = [...this.$url].slice(0,index + 1).join('/')
+    const url = [...this.$url].slice(0, index + 1).join('/')
     this.router.navigate([url])
   }
 
   toast(title, subtitle = '') {
-    let t= new MdSnackBarConfig()
     console.debug('AuthenticatedLayoutComponent::toast', { title, subtitle })
     this.snackBar.open(title, subtitle)
   }

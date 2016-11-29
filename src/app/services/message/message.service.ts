@@ -8,7 +8,7 @@ import { ENVIRONMENT } from '../../app-config.module'
 
 @Injectable()
 export class MessageService {
-  public files: Array<any> = []
+  public static files: Array<MessageInterface> = []
   private userKey = this.zpClient.getUserId()
   private proxy: string
 
@@ -20,32 +20,47 @@ export class MessageService {
   }
 
   resetServices() {
-    this.files = []
+    MessageService.files = []
   }
 
-  onGetMessages(messages) {
-    this.resetServices()
-    for (let index = 1; index < messages.length; index++) {
-      const message: MessageInterface = messages[index]
-      this.indexByAuthor(messages, message)
-
-      if (message.type === 'attachment') {
-        this.files.push(message.value)
-      }
-    }
+  getFiles() {
+    console.debug('MessageService::getFiles', MessageService.files)
+    return MessageService.files
   }
+
+  setFile(file) {
+    console.debug('MessageService::setFile', file)
+    MessageService.files.push(file)
+  }
+
   /**
    * Messages: List of messages to index on init
+   * Message? : Message to index once added
    * Toggle class 'precede' if messages[n].author == messages[n - 1].author
    */
-  indexByAuthor(messages: MessageInterface[], message: MessageInterface) {
-    if (messages.length > 1) {
-      const index = messages.indexOf(message)
-      const previous = messages[index - 1]
-      if (message.author === previous.author) {
-        message.isPrecede = true
+  indexByAuthor(Messages: MessageInterface[], Message?: MessageInterface) {
+    if (Messages.length > 1) {
+      if (Message) {
+        const index = Messages.indexOf(Message)
+        const previous = Messages[index - 1]
+        if (Message.author === previous.author) {
+          Message.isPrecede = true
+        }
+      } else {
+        for (let index = 1; index < Messages.length; index++) {
+          let message = Messages[index]
+          let previous = Messages[index - 1]
+
+          if (message.author === previous.author) {
+            message.isPrecede = true
+          }
+        }
       }
     }
+    console.debug('MessageOrder', {
+      Messages,
+      Message
+    })
   }
 
   processData({ message, users }: { message: any, users: Array<UserInterface> }) {
@@ -72,7 +87,9 @@ export class MessageService {
   processAttachment({ message, users }: { message: any, users: Array<UserInterface> }) {
     let attachment = this.processData({ message, users })
     attachment.value = `${this.proxy}${attachment.value}`
+    this.setFile(attachment)
     return attachment
+
     // const { metadata:{ contentType } } = message
     // console.debug('MessageService::processAttachment', {
     //   message,

@@ -36,8 +36,9 @@ md-list-item{
   border-left-style: solid;
   border-left-color: md-color($accent);
   transition-property: background-color;
+  will-change: background-color;
   transition-duration: $transition-duration-fast;
-  transition-timing-function: $transition-duration-easing;
+  transition-timing-function: $transition-easing;
   cursor: pointer;
   &.owner {
     border-left-color: md-color($primary);
@@ -58,6 +59,13 @@ md-list-item{
   }
   &.hovered{
     background-color: $zp-white;
+    &.attachment{
+      cursor: zoom-in;
+      [md-list-image]{
+        opacity: 0.9;
+        transform: scale(1.02);
+      }
+    }
   }
 }
 [md-list-avatar]{
@@ -89,6 +97,11 @@ h3[md-line]{
   max-width: 100%;
   max-height: 400px;
   border-radius: $zp-radius;
+  transition-property: opacity, transform;
+  will-change: opacity, transform;
+  transition-duration: $transition-duration-fast;
+  transition-timing-function: $transition-easing;
+  backface-visibility: hidden;
 }
 
 .zp-messages-inputs {

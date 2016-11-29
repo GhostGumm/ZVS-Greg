@@ -36,6 +36,9 @@ export const Animations = {
     state('true', style({
       opacity: 1
     })),
+    state('void', style({
+      opacity: 0
+    })),
     state('false', style({
       opacity: 0
     })),
