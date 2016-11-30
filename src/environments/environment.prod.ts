@@ -1,6 +1,6 @@
 const ZETAPUSH_SANDBOX_ID = 'lGxx7tBx'
-const ZETAPUSH_API_URL = `http://api.zpush.ovh/`
-const ZETAPUSH_PROXY_URL = `http://file2.zpush.ovh/${ZETAPUSH_SANDBOX_ID}/cnvrst_hdfs/`
+const ZETAPUSH_API_URL = `//api.zpush.ovh/`
+const ZETAPUSH_PROXY_URL = `//file-demo.zpush.io/${ZETAPUSH_SANDBOX_ID}/cnvrst_hdfs/`
 const ZETAPUSH_DELEGATING_TOKEN_KEY = 'ServicesAuthToken'
 
 export const environment = {

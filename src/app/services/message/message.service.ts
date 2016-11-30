@@ -38,28 +38,28 @@ export class MessageService {
    * Message? : Message to index once added
    * Toggle class 'precede' if messages[n].author == messages[n - 1].author
    */
-  indexByAuthor(Messages: MessageInterface[], Message?: MessageInterface) {
-    if (Messages.length > 1) {
-      if (Message) {
-        const index = Messages.indexOf(Message)
-        const previous = Messages[index - 1]
-        if (Message.author === previous.author) {
-          Message.isPrecede = true
+  indexByAuthor(messages: MessageInterface[], message?: MessageInterface) {
+    if (messages.length > 1) {
+      if (message) {
+        const index = messages.indexOf(message)
+        const previous = messages[index - 1]
+        if (message.author === previous.author) {
+          message.isPrecede = true
         }
       } else {
-        for (let index = 1; index < Messages.length; index++) {
-          let message = Messages[index]
-          let previous = Messages[index - 1]
+        for (let index = 1; index < messages.length; index++) {
+          let msg = messages[index]
+          let previous = messages[index - 1]
 
-          if (message.author === previous.author) {
-            message.isPrecede = true
+          if (msg.author === previous.author) {
+            msg.isPrecede = true
           }
         }
       }
     }
     console.debug('MessageOrder', {
-      Messages,
-      Message
+      messages,
+      message
     })
   }
 

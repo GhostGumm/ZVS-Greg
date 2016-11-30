@@ -35,6 +35,7 @@ const PROVIDERS = [ ScrollGlueDirective, MessageService, FileDropDirective, File
 export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() conversation: ConversationViewInterface
   @Input() loading: boolean
+
   private gallery: MdDialogRef<GalleryComponent>
   private subscriptions: Array<Subscription> = []
 
@@ -51,7 +52,7 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   })
 
   @ViewChild('uploadInput') uploadInputRef: ElementRef // uploader dom ref
-  @ViewChild('messageForm')  messageForm: NgForm // form message dom ref
+  @ViewChild('messageForm') messageForm: NgForm // form message dom ref
 
   constructor(
     private zpClient: ZetaPushClient,
@@ -114,7 +115,6 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.subscriptions.push(onAddConversationMessage.subscribe(({ result }) => {
       const { message } = result
       this.onAddMessage(message)
-      this.changeRef.detectChanges()
     }))
 
     this.resetForm()
@@ -180,11 +180,11 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   // User add message
-  addMessage($event) {
-    $event.preventDefault()
+  addMessage(event) {
+    event.preventDefault()
     const { owner, id } = this.conversation
     const value = this.messageRaw
-    console.debug('MessagesComponent::addMessage', { id, owner, value, $event })
+    console.debug('MessagesComponent::addMessage', { id, owner, value, event })
     if (value.trim().length > 0) {
       this.conversationService.addConversationMarkup(id, owner, value).then((message) => {
         this.resetForm()
@@ -207,12 +207,11 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   // Process received attachment
   processAttachment(message: any) {
-    const { messages, users } = this.conversation
+    const { users } = this.conversation
     const uploader = this.uploader
     let fileProcessed: MessageInterface = this.messageService.processAttachment({ message, users })
 
-    messages.push(fileProcessed)
-    this.messageService.indexByAuthor(messages, fileProcessed)
+    this.pushProcessedMessage(fileProcessed)
 
     console.log('MessagesComponent::processFile', {
       queue: uploader.queue,
@@ -223,17 +222,22 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   // Process received message
   processMarkup(message: MessageInterface) {
-    const { messages, users } = this.conversation
+    const { users } = this.conversation
 
     let messageProcessed: MessageInterface = this.messageService.processMarkup({ message, users })
 
-    messages.push(messageProcessed)
-    this.messageService.indexByAuthor(messages, messageProcessed)
+    this.pushProcessedMessage(messageProcessed)
 
     console.debug('MessagesComponent::processMessage', {
       message,
       messageProcessed
     })
+  }
+
+  pushProcessedMessage(message: MessageInterface) {
+    const { messages } = this.conversation
+    messages.push(message)
+    this.messageService.indexByAuthor(messages, message)
   }
 
   // Reset message form
@@ -242,6 +246,7 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   openGallery(message: MessageInterface) {
+    console.debug('MessagesComponent::Gallery:open', { message })
     this.gallery = this.dialog.open(GalleryComponent)
     this.gallery.componentInstance.files = this.messageService.getFiles()
     this.gallery.componentInstance.selected = message

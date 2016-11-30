@@ -77,6 +77,7 @@ export class ConversationService implements OnDestroy {
 
       // Reset messageService files
       this.messageService.resetServices()
+      
       // Reverse messages list
       for (let i = messages.length - 1; i >= 0; i--) {
         let message
@@ -98,7 +99,9 @@ export class ConversationService implements OnDestroy {
         }
         result.messages.push(message)
       }
+
       this.messageService.indexByAuthor(result.messages)
+
       console.debug('ConversationService::getOneToOneConversation', {
         conversation,
         result,
