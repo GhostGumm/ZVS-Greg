@@ -2,7 +2,7 @@
 <ng-content select=".zp-user-list-actions"></ng-content>
 
 <md-list dense *ngIf="!loading" [@listAnimation]="!loading" [class.shadow]="withShadow">
-  <md-list-item *ngFor="let user of users; let $index = index; trackBy: trackById;" (click)="onUserClicked(user)">
+  <md-list-item *ngFor="let user of users; let $index = index; trackBy: trackById;" (click)="onUserClicked(user)" [routerLinkActive]="['is-active']">
     <zp-avatar md-list-avatar [user]="user" [size]="80"></zp-avatar>
     <h3 md-line>
       <zp-username [user]="user"></zp-username>

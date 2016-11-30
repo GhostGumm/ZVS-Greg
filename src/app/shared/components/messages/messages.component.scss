@@ -95,7 +95,8 @@ h3[md-line]{
 }
 [md-list-image]{
   max-width: 100%;
-  max-height: 400px;
+  min-height: 200px;
+  max-height: 200px;
   border-radius: $zp-radius;
   transition-property: opacity, transform;
   will-change: opacity, transform;

@@ -26,7 +26,7 @@
 </md-list>
 
 <md-toolbar class="zp-messages-inputs flex-centered">
-  <md-progress-bar mode="determinate" value="{{uploader.progress}}"></md-progress-bar>
+  <md-progress-bar *ngIf="progress > 0" mode="determinate" value="{{progress}}"></md-progress-bar>
   
   <div class="zp-input-files">
     <button type="button" md-icon-button color="primary" (click)="inputFileClick()">

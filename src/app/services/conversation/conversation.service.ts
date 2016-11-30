@@ -22,6 +22,9 @@ export class ConversationService implements OnDestroy {
   public onCreateOneToOneConversation: Observable<ConversationInterface>
   public onGetOneToOneConversation: Observable<ConversationInterface>
 
+  // To Improve
+  public percent: any = new Rx.Subject()
+
   constructor(
     private api: ApiConversation,
     private http: Http,
@@ -124,6 +127,9 @@ export class ConversationService implements OnDestroy {
     console.debug('ConversationService::upload', { attachment, guid, httpMethod, url })
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest()
+
+      xhr.open(httpMethod, url, true)
+      // xhr.responseType = 'arraybuffer'
       xhr.onreadystatechange = () => {
           if (xhr.readyState === 4) {
               if (xhr.status === 200) {
@@ -131,9 +137,14 @@ export class ConversationService implements OnDestroy {
               } else {
                   reject()
               }
+              this.percent.next(0)
           }
       }
-      xhr.open('POST', url, true)
+      xhr.upload.onprogress = (event: any) => {
+        if (event.lengthComputable) {
+          this.percent.next(Math.round((event.loaded / event.total) * 100))
+        }
+      }
       xhr.send(attachment._file)
     })
   }
