@@ -43,7 +43,8 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
     message: 4000,
     upload: 20 * 1024 // 20mb
   }
-  dropZoneActive: boolean = false
+  private progress: number
+  private dropZoneActive: boolean = false
   private uploader: FileUploader = new FileUploader({
     // maxFileSize:this.limits.upload,
     removeAfterUpload: true
@@ -60,6 +61,13 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
     private changeRef: ChangeDetectorRef,
     public dialog: MdDialog
   ) {
+    this.conversationService.percent.subscribe({
+      next: (progress) => {
+        this.progress = progress
+        this.changeRef.detectChanges()
+        console.debug('MessagesComponent::upload.progress', { progress: this.progress })
+      }
+    })
   }
 
   @HostBinding('@routeAnimation') get routeAnimation() { return true }
