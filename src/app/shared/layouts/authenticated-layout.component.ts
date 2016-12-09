@@ -5,7 +5,7 @@ import {
 
 import { Router } from '@angular/router'
 
-import { MdSnackBar } from '@angular/material'
+import { MdSnackBar, MdSnackBarConfig } from '@angular/material'
 import { Subscription } from 'rxjs/Subscription'
 
 import { Animations } from '../../utils/'
@@ -33,6 +33,7 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
   private subscriptions: Array<Subscription> = []
   public user: UserInterface
   private $url: any
+  private toastConfig: MdSnackBarConfig
 
   constructor(
     private connection: ZetaPushConnection,
@@ -48,6 +49,8 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
       avatar: './assets/zetalk_logo.png',
       online: false
     })
+    this.toastConfig = new MdSnackBarConfig()
+    this.toastConfig.duration = 2000
   }
 
   @HostBinding('@routeAnimation')
@@ -64,11 +67,11 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
     this.getUserProfile()
     this.addNavListener()
     this.addRouterListener()
-    this.updateWindowSize(window.innerWidth)
   }
 
   ngAfterViewInit() {
     this.toolbarIsVisible = true
+    this.updateWindowSize(window.innerWidth)
     console.debug('AuthenticatedLayoutComponent::ngAfterViewInit')
   }
 
@@ -81,7 +84,7 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
     this.userService.getUser().then((user: UserInterface) => {
       console.debug('AuthenticatedLayoutComponent::onGetUser', user)
       this.user = user
-      // this.toast(`Welcome ${user.firstname}`)
+      this.toast(`Welcome ${user.firstname}`)
     })
   }
 
@@ -118,7 +121,7 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
 
   toast(title, subtitle = '') {
     console.debug('AuthenticatedLayoutComponent::toast', { title, subtitle })
-    this.snackBar.open(title, subtitle)
+    this.snackBar.open(title, subtitle, this.toastConfig)
   }
 
   onLogout() {
