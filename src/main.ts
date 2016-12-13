@@ -16,6 +16,6 @@ initialize.then(() => platformBrowserDynamic().bootstrapModule(AppModule, []))
 
 window.WebFont.load({
   google: {
-    families: ['Noto Sans', 'Material Icons']
+    families: ['Material Icons']
   }
 })

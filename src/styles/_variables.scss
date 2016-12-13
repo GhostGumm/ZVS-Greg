@@ -43,7 +43,7 @@ $primary: md-palette($md-custom-blue);
 $accent:  md-palette($md-blue);
 
 // The warn palette is optional (defaults to red).
-$warn:    md-palette($md-red);
+$warn: md-palette($md-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
 $theme: md-light-theme($primary, $accent, $warn);
