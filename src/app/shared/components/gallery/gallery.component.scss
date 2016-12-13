@@ -8,7 +8,6 @@
   display: flex;
   flex-direction: column;
   backface-visibility: hidden;
-  margin: -1px; // weird clipping fix
 }
 
 img{
