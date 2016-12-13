@@ -21,16 +21,6 @@ md-nav-list[dense] a[md-list-item] [md-line]{
 }
 
 button {  
-  &[lg]{
-    width: $font-size-lg;
-    height: $font-size-lg;
-    md-icon{
-      width: $font-size-lg;
-      height: $font-size-lg;
-      font-size: $font-size-lg;
-      line-height: $font-size-lg !important;
-    }
-  }
   &[xl]{
     width: $font-size-xl;
     height: $font-size-xl;
