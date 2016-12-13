@@ -1,0 +1,15 @@
+@import '../../../../styles/_variables';
+
+:host{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: -14px -24px;
+  height: 48px;
+}
+
+button{
+  color: $zp-green;
+}
+
