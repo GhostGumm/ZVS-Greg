@@ -10,5 +10,6 @@ interface Window {
   RTCCertificate: any,
   RTCIceCandidate: any,
   RTCSessionDescription: any,
-  RTCPeerConnection: any
+  RTCPeerConnection: any,
+  Notification: any
 }

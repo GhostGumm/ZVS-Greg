@@ -84,3 +84,16 @@ md-toolbar{
     }
   }
 }
+
+// A bit taller notification & overflow authorized
+snack-bar-container{
+  height: 32px !important;
+  overflow: visible !important;
+  line-height: 32px !important;
+}
+
+md-progress-bar[white]{
+  .md-progress-bar-fill::after{
+    background-color: $zp-white;
+  }
+}

@@ -80,10 +80,8 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
     this.userService.getUser().then((user: UserInterface) => {
       console.debug('AuthenticatedLayoutComponent::onGetUser', user)
       this.user = user
-      this.notificationService.toast({
-        title: `Welcome ${user.firstname}`,
-        duration: 4000
-      })
+      this.notificationService.welcomeToast()
+      // this.notificationService.toastCall()
     })
   }
 
