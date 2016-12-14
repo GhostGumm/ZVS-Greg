@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core'
+import { Injectable, OnInit, OnDestroy } from '@angular/core'
 import { MdSnackBar, MdSnackBarConfig } from '@angular/material'
 import { Subscription } from 'rxjs/Subscription'
 
@@ -6,20 +6,40 @@ import { NotificationCallComponent } from './call/notification.call'
 import { NOTIFICATION_CALL_DURATION } from './notification.interface'
 
 @Injectable()
-export class NotificationService implements OnDestroy {
+export class NotificationService implements OnInit, OnDestroy {
 
   private toastConfig: MdSnackBarConfig
-  subscriptions: Array<Subscription> = []
+  private subscriptions: Array<Subscription> = []
 
   constructor(
     private snackBar: MdSnackBar
   ) {
   }
 
-  toast({ title, action = null, duration = 2000 }) {
+  ngOnInit() {
+    if (this.nativeNotificationGranted() === false) {
+      window.Notification.requestPermission()
+    }
+  }
+
+  nativeNotificationGranted() {
+    return window.Notification && window.Notification.permission === 'granted' ? true : false
+  }
+
+  newNativeNotification(title, action, duration) {
+    if (this.nativeNotificationGranted() === true) {
+      const native = new window.Notification(title, { body: action })
+      native.onshow = () => {
+        setTimeout(native.close.bind(native), duration)
+      }
+    }
+  }
+
+  toast({ title, action = '', duration = 2000 }) {
+    // this.newNativeNotification(title, action, duration)
+
     const config = new MdSnackBarConfig()
     config.duration = duration
-
     this.snackBar.open(title, action, this.toastConfig)
 
     console.debug('NotificationService::toast', { title, action, config })
