@@ -1,6 +1,6 @@
 import {
   Component, HostBinding, HostListener, Input, ChangeDetectorRef,
-  ViewChild, ElementRef, AfterViewInit, OnChanges, OnDestroy, trigger
+  ViewChild, ElementRef, OnInit, AfterViewInit, OnChanges, OnDestroy, trigger
 } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
@@ -32,7 +32,7 @@ const PROVIDERS = [ ScrollGlueDirective, MessageService, FileDropDirective, File
   ]
 })
 
-export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
+export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @Input() conversation: ConversationViewInterface
   @Input() loading: boolean
 
@@ -62,12 +62,22 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
     private changeRef: ChangeDetectorRef,
     public dialog: MdDialog
   ) {
+  }
+
+  ngOnInit() {
     this.conversationService.percent.subscribe({
       next: (progress) => {
         this.progress = progress
         this.changeRef.detectChanges()
         console.debug('MessagesComponent::upload.progress', { progress: this.progress })
       }
+    })
+  }
+
+  ngAfterViewInit() {
+    // Clear input on adding file
+    this.uploader.onAfterAddingFile = (item => {
+      this.uploadInputRef.nativeElement.value = ''
     })
   }
 
@@ -123,13 +133,6 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   // Custom Track By
   trackByMessageId(index: number, message: MessageInterface) {
     return message.id
-  }
-
-  ngAfterViewInit() {
-    // Clear input on adding file
-    this.uploader.onAfterAddingFile = (item => {
-      this.uploadInputRef.nativeElement.value = ''
-    })
   }
 
   // Click on md-list-item
@@ -238,6 +241,7 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
     const { messages } = this.conversation
     messages.push(message)
     this.messageService.indexByAuthor(messages, message)
+    this.changeRef.detectChanges()
   }
 
   // Reset message form

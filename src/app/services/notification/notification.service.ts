@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core'
-import { MdSnackBar, MdSnackBarConfig, MdSnackBarRef } from '@angular/material'
+import { MdSnackBar, MdSnackBarConfig } from '@angular/material'
 import { Subscription } from 'rxjs/Subscription'
 
 import { NotificationCallComponent } from './call/notification.call'
@@ -28,7 +28,8 @@ export class NotificationService implements OnDestroy {
   toastCall() {
     const config = new MdSnackBarConfig()
     config.duration = NOTIFICATION_CALL_DURATION
-    this.snackBar.openFromComponent(NotificationCallComponent, config)
+    const ref = this.snackBar.openFromComponent(NotificationCallComponent, config)
+    NotificationCallComponent.toastRef = ref
   }
 
   ngOnDestroy() {

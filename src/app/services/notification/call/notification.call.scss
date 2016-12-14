@@ -5,11 +5,26 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: -14px -24px;
+  margin: -7px;
   height: 48px;
 }
 
+md-progress-bar{
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+p{
+  color: $zp-white;
+}
+
 button{
+  background-color: $zp-white;
+  margin: 0 5px;
+}
+
+[notification-success]{
   color: $zp-green;
 }
 

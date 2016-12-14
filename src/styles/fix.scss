@@ -54,9 +54,6 @@ md-card{
 
 // Encapsulation emulation doesn't allow custom style on rendered elements
 zp-messages{
-  .md-progress-bar-buffer{
-    background-color: transparent;
-  }
   .zp-messages-list {
     .md-list-item {
       height: auto !important;
@@ -101,4 +98,9 @@ md-checkbox{
   md-checkbox{
     margin-right: 4px;
   }
+}
+
+// invisible loading with dark theme
+.md-progress-bar-buffer{
+  background-color: transparent !important;
 }
