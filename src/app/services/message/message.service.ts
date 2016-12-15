@@ -64,19 +64,22 @@ export class MessageService {
   }
 
   processData({ message, users }: { message: any, users: Array<UserInterface> }) {
-    let { author, type, value, raw, date } = message.data
+    let { author, type, value, raw, date, metadata } = message.data
     const id = message.guid
 
-    return new MessageClass({
+    let msg = new MessageClass({
       id,
       author,
       type,
       value,
       raw,
       date,
+      metadata,
       isOwner: author === this.userKey ? true : false,
       user: users.find(u => u.id === author)
     })
+    console.error(msg)
+    return msg
   }
 
   processMarkup({ message, users }: { message: any, users: Array<UserInterface> }) {
@@ -85,44 +88,68 @@ export class MessageService {
   }
 
   processAttachment({ message, users }: { message: any, users: Array<UserInterface> }) {
-    let attachment = this.processData({ message, users })
-    // const { metadata: { contentType } } = attachment
+    const attachment = this.processData({ message, users })
+    const { metadata } = attachment
 
+    // Rename value with proxy url
     attachment.value = `${this.proxy}${attachment.value}`
     this.setFile(attachment)
 
-    // if (contentType) {
-    //   if (contentType.match(/pdf/g)) {
-    //     message.metadata.class = 'fa-file-pdf-o'
-    //     message.metadata.type = 'pdf'
-    //   } else if (contentType.match(/msword/g)) {
-    //     message.metadata.class = 'fa-file-word-o'
-    //     message.metadata.type = 'word'
-    //   } else if (contentType.match(/excel/g)) {
-    //     message.metadata.class = 'fa-file-excel-o'
-    //     message.metadata.type = 'excel'
-    //   } else if (contentType.match(/zip|compressed|bzip/g)) {
-    //     message.metadata.class = 'fa-file-zip-o'
-    //     message.metadata.type = 'zip'
-    //   } else if (contentType.match(/powerpoint/g)) {
-    //     message.metadata.class = 'fa-file-powerpoint-o'
-    //     message.metadata.type = 'powerpoint'
-    //   } else if (contentType.match(/video/g)) {
-    //     message.metadata.class = 'fa-file-video-o'
-    //     message.metadata.type = 'video'
-    //   } else if (contentType.match(/byte/g)) {
-    //     message.metadata.class = 'fa-file-code-o'
-    //     message.metadata.type = 'code'
-    //   } else if (contentType.match(/audio/g)) {
-    //     message.metadata.class = 'fa-file-audio-o'
-    //     message.metadata.type = 'audio'
-    //   } else {
-    //     message.metadata.class = 'fa-file-o'
-    //   }
-    // } else {
-    //   message.metadata.class = 'fa-file-o'
-    // }
+    // Format size value
+    metadata.size = this.formatBytes(metadata.size, 2)
+
+    // Set icon based on content-type
+    const contentType = metadata ? metadata.contentType : null
+    if (contentType) {
+      if (contentType.match(/image/g)) {
+        metadata.class = 'fa-image'
+        metadata.type = 'image'
+      } else {
+        metadata.class = 'fa-file'
+        metadata.type = 'file'
+      }
+      // } else if (contentType.match(/pdf/g)) {
+      //   metadata.class = 'fa-file-pdf-o'
+      //   metadata.type = 'pdf'
+      // } else if (contentType.match(/msword/g)) {
+      //   metadata.class = 'fa-file-word-o'
+      //   metadata.type = 'word'
+      // } else if (contentType.match(/excel/g)) {
+      //   metadata.class = 'fa-file-excel-o'
+      //   metadata.type = 'excel'
+      // } else if (contentType.match(/zip|compressed|bzip/g)) {
+      //   metadata.class = 'fa-file-zip-o'
+      //   metadata.type = 'zip'
+      // } else if (contentType.match(/powerpoint/g)) {
+      //   metadata.class = 'fa-file-powerpoint-o'
+      //   metadata.type = 'powerpoint'
+      // } else if (contentType.match(/video/g)) {
+      //   metadata.class = 'fa-file-video-o'
+      //   metadata.type = 'video'
+      // } else if (contentType.match(/byte/g)) {
+      //   metadata.class = 'fa-file-code-o'
+      //   metadata.type = 'code'
+      // } else if (contentType.match(/audio/g)) {
+      //   metadata.class = 'fa-file-audio-o'
+      //   metadata.type = 'audio'
+      // } else {
+      //   metadata.class = 'fa-file-o'
+      // }
+    } else {
+      metadata.class = 'fa-file-o'
+    }
 
     return attachment
+  }
+
+  formatBytes(bytes, decimals) {
+    if (bytes === 0) {
+      return '0 Byte'
+    }
+    const k = 1000 // or 1024 for binary
+    const dm = decimals + 1 || 3
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
   }
 }

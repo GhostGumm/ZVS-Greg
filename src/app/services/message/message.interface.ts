@@ -55,6 +55,9 @@ export class MessageClass implements MessageInterface {
 
   constructor(parameters: MessageInterface) {
     Object.assign(this, parameters)
+    if (this.metadata === undefined) {
+      this.metadata = {}
+    }
   }
 
   getTimeFromNow() {
