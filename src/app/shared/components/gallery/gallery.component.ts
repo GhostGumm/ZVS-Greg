@@ -3,6 +3,7 @@ import { MdDialogRef } from '@angular/material'
 import { Animations } from '../../../utils/utils.animation'
 import { MessageInterface } from './../../../services'
 
+// Typescript is magic they say..
 interface CSSStyleDeclarationExtended extends CSSStyleDeclaration {
   objectFit: string
 }
@@ -65,7 +66,7 @@ export class GalleryComponent implements OnInit {
   download() {
     console.debug('GalleryComponent::download')
     let link = document.createElement('a')
-    link.href = `${this.selected.value}/?download=true` // &name=${message.extra.name}
+    link.href = `${this.selected.value}/?download=true&name=${this.selected.metadata.name}`
     if (typeof link.download === 'string') {
       link.setAttribute('download', this.selected.value)
       document.body.appendChild(link)

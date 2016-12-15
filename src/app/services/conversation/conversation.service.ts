@@ -122,7 +122,8 @@ export class ConversationService implements OnDestroy {
       .then(({ guid, httpMethod, url }) => this.upload({ attachment, guid, httpMethod, url }))
       .then((guid) => {
         console.debug('ConversationService::addConversationAttachment', { id, owner, guid })
-        this.api.addConversationAttachment({ id, owner, guid })
+        const name = attachment._file.name
+        this.api.addConversationAttachment({ id, owner, guid, name })
       })
   }
 

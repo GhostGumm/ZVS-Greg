@@ -1,5 +1,5 @@
 import {
-  Component, HostBinding, HostListener, Input, ChangeDetectorRef,
+  Component, HostBinding, HostListener, Input, ChangeDetectorRef, NgZone,
   ViewChild, ElementRef, OnInit, AfterViewInit, OnChanges, OnDestroy, trigger
 } from '@angular/core'
 import { NgForm } from '@angular/forms'
@@ -60,7 +60,8 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     private messageService: MessageService,
     private conversationService: ConversationService,
     private changeRef: ChangeDetectorRef,
-    public dialog: MdDialog
+    public dialog: MdDialog,
+    private zone: NgZone
   ) {
   }
 
@@ -124,7 +125,9 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
     this.subscriptions.push(onAddConversationMessage.subscribe(({ result }) => {
       const { message } = result
-      this.onAddMessage(message)
+      this.zone.run(() => {
+        this.onAddMessage(message)
+      })
     }))
 
     this.resetForm()
@@ -241,7 +244,6 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     const { messages } = this.conversation
     messages.push(message)
     this.messageService.indexByAuthor(messages, message)
-    this.changeRef.detectChanges()
   }
 
   // Reset message form

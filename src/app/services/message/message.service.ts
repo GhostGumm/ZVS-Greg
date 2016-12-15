@@ -67,7 +67,7 @@ export class MessageService {
     let { author, type, value, raw, date, metadata } = message.data
     const id = message.guid
 
-    let msg = new MessageClass({
+    return new MessageClass({
       id,
       author,
       type,
@@ -78,8 +78,6 @@ export class MessageService {
       isOwner: author === this.userKey ? true : false,
       user: users.find(u => u.id === author)
     })
-    console.error(msg)
-    return msg
   }
 
   processMarkup({ message, users }: { message: any, users: Array<UserInterface> }) {
@@ -96,7 +94,7 @@ export class MessageService {
     this.setFile(attachment)
 
     // Format size value
-    metadata.size = this.formatBytes(metadata.size, 2)
+    metadata.size = this.formatBytes(metadata.size, 1)
 
     // Set icon based on content-type
     const contentType = metadata ? metadata.contentType : null
@@ -143,8 +141,8 @@ export class MessageService {
   }
 
   formatBytes(bytes, decimals) {
-    if (bytes === 0) {
-      return '0 Byte'
+    if (!bytes || bytes === 0) {
+      return ''
     }
     const k = 1000 // or 1024 for binary
     const dm = decimals + 1 || 3
