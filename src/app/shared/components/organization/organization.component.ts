@@ -33,7 +33,7 @@ export class OrganizationComponent implements OnInit {
       if (result) {
         // Create conversation for each checked user in result
         for (let user of result) {
-          const { id, metadata:{ checked } } = user
+          const { id, metadata: { checked } } = user
           if (checked) {
             this.createConversation(id)
           }

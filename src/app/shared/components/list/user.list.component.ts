@@ -53,16 +53,16 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     console.debug('UserListComponent::ngAfterViewInit', { loading: this.loading })
   }
   ngOnChanges(event) {
-    // Mock Purpose
-    if (event.users.currentValue) {
-      OrderBy(this.users, 'online')
-    }
-    //
     console.debug('UserListComponent::ngOnChanges', {
       users: this.users,
       event,
       loading: this.loading
     })
+    // Mock Purpose
+    if (event.users.currentValue) {
+      OrderBy(this.users, 'online')
+    }
+    //
   }
   ngOnDestroy() {
     console.debug('UserListComponent::ngOnDestroy')
