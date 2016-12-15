@@ -46,7 +46,7 @@ export class MessageClass implements MessageInterface {
   value
   date
 
-  metadata = {}
+  metadata
   timeFromNow
 
   isOwner = false

@@ -10,8 +10,8 @@ export class ApiConversation extends Api {
   public onListConversationByMember: Observable<any>
   public onListConversation: Observable<any>
   public onUploadConversationAttachment: Observable<any>
-  addConversationAttachment({ id, owner, value }) {
-    return this.$publish('addConversationAttachment', { id, owner, value })
+  addConversationAttachment({ id, owner, guid }) {
+    return this.$publish('addConversationAttachment', { id, owner, guid })
   }
   addConversationMarkup({ id, owner, value }) {
     return this.$publish('addConversationMarkup', { id, owner, value })
