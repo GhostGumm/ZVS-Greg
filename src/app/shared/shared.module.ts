@@ -30,8 +30,7 @@ const SERVICES = [ AuthenticationService, ...DATA_SERVICES ]
   declarations: [ ...COMPONENTS, ...LAYOUTS, ...DIRECTIVES, ...SERVICES_COMPONENTS ],
   entryComponents: [ ...DIALOGS, ...SERVICES_COMPONENTS ],
   exports: [ ...COMPONENTS, ...LAYOUTS, ...CORE_MODULES, MaterialModule, ZetaPushModule ],
-  imports: [ ...CORE_MODULES, MaterialModule.forRoot(), SharedRoutingModule, ZetaPushModule ],
-  providers: [ AuthenticationService ]
+  imports: [ ...CORE_MODULES, MaterialModule.forRoot(), SharedRoutingModule, ZetaPushModule ]
 })
 
 export class SharedModule {

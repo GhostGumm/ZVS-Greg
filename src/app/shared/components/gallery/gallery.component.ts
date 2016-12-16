@@ -77,7 +77,6 @@ export class GalleryComponent implements OnInit {
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
-      console.warn(link)
     } else {
       window.open(link.href)
     }

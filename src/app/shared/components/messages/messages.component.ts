@@ -17,7 +17,7 @@ import {
 } from './../../../services'
 import { GalleryComponent } from '../gallery/gallery.component'
 
-const PROVIDERS = [ ScrollGlueDirective, MessageService, FileDropDirective, FileSelectDirective]
+const PROVIDERS = [ ScrollGlueDirective, FileDropDirective, FileSelectDirective]
 
 
 @Component({
