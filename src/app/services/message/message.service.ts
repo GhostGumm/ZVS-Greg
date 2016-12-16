@@ -100,41 +100,37 @@ export class MessageService {
     const contentType = metadata ? metadata.contentType : null
     if (contentType) {
       if (contentType.match(/image/g)) {
-        metadata.class = 'fa-image'
         metadata.type = 'image'
+        if (contentType.match(/gif/g)) {
+          metadata.subtype = 'gif'
+        } else if (contentType.match(/jpeg/g)) {
+          metadata.subtype = 'jpeg'
+        } else if (contentType.match(/png/g)) {
+          metadata.subtype = 'png'
+        }
       } else {
-        metadata.class = 'fa-file'
         metadata.type = 'file'
+        if (contentType.match(/pdf/g)) {
+          metadata.subtype = 'pdf'
+        } else if (contentType.match(/msword/g)) {
+          metadata.subtype = 'word'
+        } else if (contentType.match(/excel/g)) {
+          metadata.subtype = 'excel'
+        } else if (contentType.match(/zip|compressed|bzip/g)) {
+          metadata.subtype = 'zip'
+        } else if (contentType.match(/powerpoint/g)) {
+          metadata.subtype = 'powerpoint'
+        } else if (contentType.match(/video/g)) {
+          metadata.subtype = 'video'
+        } else if (contentType.match(/byte/g)) {
+          metadata.subtype = 'code'
+        } else if (contentType.match(/audio/g)) {
+          metadata.subtype = 'audio'
+        }
       }
-      // } else if (contentType.match(/pdf/g)) {
-      //   metadata.class = 'fa-file-pdf-o'
-      //   metadata.type = 'pdf'
-      // } else if (contentType.match(/msword/g)) {
-      //   metadata.class = 'fa-file-word-o'
-      //   metadata.type = 'word'
-      // } else if (contentType.match(/excel/g)) {
-      //   metadata.class = 'fa-file-excel-o'
-      //   metadata.type = 'excel'
-      // } else if (contentType.match(/zip|compressed|bzip/g)) {
-      //   metadata.class = 'fa-file-zip-o'
-      //   metadata.type = 'zip'
-      // } else if (contentType.match(/powerpoint/g)) {
-      //   metadata.class = 'fa-file-powerpoint-o'
-      //   metadata.type = 'powerpoint'
-      // } else if (contentType.match(/video/g)) {
-      //   metadata.class = 'fa-file-video-o'
-      //   metadata.type = 'video'
-      // } else if (contentType.match(/byte/g)) {
-      //   metadata.class = 'fa-file-code-o'
-      //   metadata.type = 'code'
-      // } else if (contentType.match(/audio/g)) {
-      //   metadata.class = 'fa-file-audio-o'
-      //   metadata.type = 'audio'
-      // } else {
-      //   metadata.class = 'fa-file-o'
-      // }
     } else {
-      metadata.class = 'fa-file-o'
+      metadata.type = 'file'
+      metadata.contentType = 'unknown'
     }
 
     return attachment
