@@ -108,7 +108,22 @@ h3[md-line]{
   backface-visibility: hidden;
 }
 [md-list-file]{
-  
+  display: flex;
+  align-items: center;
+  margin-left: -12px;
+  md-icon{
+    width: $zp-size-xxxl;
+    height: $zp-size-xxxl;
+    font-size: $zp-size-xxxl;
+    color: md-color($primary);    
+  }
+  p{
+    font-size: $font-size-xs;
+    padding: 1px 0;
+    span{
+      font-weight: bold;
+    }
+  }
 }
 
 .zp-messages-inputs {

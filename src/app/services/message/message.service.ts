@@ -67,7 +67,7 @@ export class MessageService {
     let { author, type, value, raw, date, metadata } = message.data
     const id = message.guid
 
-    let msg = new MessageClass({
+    return new MessageClass({
       id,
       author,
       type,
@@ -78,8 +78,6 @@ export class MessageService {
       isOwner: author === this.userKey ? true : false,
       user: users.find(u => u.id === author)
     })
-    console.error(msg)
-    return msg
   }
 
   processMarkup({ message, users }: { message: any, users: Array<UserInterface> }) {
@@ -96,55 +94,51 @@ export class MessageService {
     this.setFile(attachment)
 
     // Format size value
-    metadata.size = this.formatBytes(metadata.size, 2)
+    metadata.size = this.formatBytes(metadata.size, 1)
 
     // Set icon based on content-type
     const contentType = metadata ? metadata.contentType : null
     if (contentType) {
       if (contentType.match(/image/g)) {
-        metadata.class = 'fa-image'
         metadata.type = 'image'
+        if (contentType.match(/gif/g)) {
+          metadata.subtype = 'gif'
+        } else if (contentType.match(/jpeg/g)) {
+          metadata.subtype = 'jpeg'
+        } else if (contentType.match(/png/g)) {
+          metadata.subtype = 'png'
+        }
       } else {
-        metadata.class = 'fa-file'
         metadata.type = 'file'
+        if (contentType.match(/pdf/g)) {
+          metadata.subtype = 'pdf'
+        } else if (contentType.match(/msword/g)) {
+          metadata.subtype = 'word'
+        } else if (contentType.match(/excel/g)) {
+          metadata.subtype = 'excel'
+        } else if (contentType.match(/zip|compressed|bzip/g)) {
+          metadata.subtype = 'zip'
+        } else if (contentType.match(/powerpoint/g)) {
+          metadata.subtype = 'powerpoint'
+        } else if (contentType.match(/video/g)) {
+          metadata.subtype = 'video'
+        } else if (contentType.match(/byte/g)) {
+          metadata.subtype = 'code'
+        } else if (contentType.match(/audio/g)) {
+          metadata.subtype = 'audio'
+        }
       }
-      // } else if (contentType.match(/pdf/g)) {
-      //   metadata.class = 'fa-file-pdf-o'
-      //   metadata.type = 'pdf'
-      // } else if (contentType.match(/msword/g)) {
-      //   metadata.class = 'fa-file-word-o'
-      //   metadata.type = 'word'
-      // } else if (contentType.match(/excel/g)) {
-      //   metadata.class = 'fa-file-excel-o'
-      //   metadata.type = 'excel'
-      // } else if (contentType.match(/zip|compressed|bzip/g)) {
-      //   metadata.class = 'fa-file-zip-o'
-      //   metadata.type = 'zip'
-      // } else if (contentType.match(/powerpoint/g)) {
-      //   metadata.class = 'fa-file-powerpoint-o'
-      //   metadata.type = 'powerpoint'
-      // } else if (contentType.match(/video/g)) {
-      //   metadata.class = 'fa-file-video-o'
-      //   metadata.type = 'video'
-      // } else if (contentType.match(/byte/g)) {
-      //   metadata.class = 'fa-file-code-o'
-      //   metadata.type = 'code'
-      // } else if (contentType.match(/audio/g)) {
-      //   metadata.class = 'fa-file-audio-o'
-      //   metadata.type = 'audio'
-      // } else {
-      //   metadata.class = 'fa-file-o'
-      // }
     } else {
-      metadata.class = 'fa-file-o'
+      metadata.type = 'file'
+      metadata.contentType = 'unknown'
     }
 
     return attachment
   }
 
   formatBytes(bytes, decimals) {
-    if (bytes === 0) {
-      return '0 Byte'
+    if (!bytes || bytes === 0) {
+      return ''
     }
     const k = 1000 // or 1024 for binary
     const dm = decimals + 1 || 3
