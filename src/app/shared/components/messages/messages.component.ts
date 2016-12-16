@@ -1,5 +1,5 @@
 import {
-  Component, HostBinding, HostListener, Input, ChangeDetectorRef,
+  Component, HostBinding, HostListener, Input, NgZone,
   ViewChild, ElementRef, OnInit, AfterViewInit, OnChanges, OnDestroy, trigger
 } from '@angular/core'
 import { NgForm } from '@angular/forms'
@@ -59,18 +59,19 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     private route: ActivatedRoute,
     private messageService: MessageService,
     private conversationService: ConversationService,
-    private changeRef: ChangeDetectorRef,
-    public dialog: MdDialog
+    public dialog: MdDialog,
+    private zone: NgZone
   ) {
   }
 
   ngOnInit() {
-    this.conversationService.percent.subscribe({
-      next: (progress) => {
-        this.progress = progress
-        this.changeRef.detectChanges()
-        console.debug('MessagesComponent::upload.progress', { progress: this.progress })
-      }
+    this.zone.run(() => {
+      this.conversationService.percent.subscribe({
+        next: (progress) => {
+          this.progress = progress
+          console.debug('MessagesComponent::upload.progress', { progress: this.progress })
+        }
+      })
     })
   }
 
@@ -262,6 +263,5 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   ngOnDestroy() {
     console.debug('MessagesComponent::ngOnDestroy')
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
-    this.changeRef.detach()
   }
 }

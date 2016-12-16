@@ -1,4 +1,4 @@
-import { Component, HostBinding, ViewChildren, ChangeDetectorRef, OnInit, AfterViewInit, trigger } from '@angular/core'
+import { Component, HostBinding, ViewChildren, OnInit, AfterViewInit, trigger } from '@angular/core'
 import { Animations } from '../../../utils/utils.animation'
 
 import * as Chartist from 'chartist'

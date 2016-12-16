@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewContainerRef, ChangeDetectorRef } from '@angular/core'
+import { Component, OnInit, OnDestroy, ViewContainerRef, NgZone } from '@angular/core'
 import { MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material'
 
 import { ZetaPushClient } from './../../../zetapush'
@@ -71,21 +71,23 @@ export class OrganizationDialogComponent implements OnInit, OnDestroy {
   constructor(
     public dialogRef: MdDialogRef<OrganizationDialogComponent>,
     private userService: UserService,
-    private changeRef: ChangeDetectorRef
+    private zone: NgZone
   ) {
 
   }
 
   ngOnInit() {
     console.debug('OrganizationDialogComponent::ngOnInit')
+
     this.userService
-        .getPotentialContact()
-        .then((members) => {
+      .getPotentialContact()
+      .then((members) => {
+        this.zone.run(() => {
           console.debug('OrganizationDialogComponent::onGetMembers')
           this.members = members
           this.loading = false
-          this.changeRef.detectChanges()
         })
+      })
   }
 
   onMemberClicked(event) {
@@ -93,7 +95,6 @@ export class OrganizationDialogComponent implements OnInit, OnDestroy {
     const user = event.value
     user.metadata.checked = !user.metadata.checked
     this.userSelected(user)
-    this.changeRef.detectChanges()
   }
 
   selectAll() {
@@ -118,6 +119,5 @@ export class OrganizationDialogComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     console.debug('OrganizationDialogComponent::ngOnDestroy')
-    this.changeRef.detach()
   }
 }
