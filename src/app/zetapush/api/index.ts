@@ -1,3 +1,4 @@
+import { NgZone } from '@angular/core'
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/publish'
 
@@ -10,7 +11,7 @@ import { ApiZetalk } from './api-zetalk'
 
 const toPascalCase = (word = '') => `${word.charAt(0).toUpperCase()}${word.substring(1)}`
 
-const factory = (Api: Api) => {
+const factory = (Api: Api, zone: NgZone) => {
   const filter = (element) => element !== 'constructor'
   const methods = Object.getOwnPropertyNames(Api.prototype).filter(filter)
   const extensions = {}
@@ -18,7 +19,9 @@ const factory = (Api: Api) => {
     const source = Observable.create((observer) => {
       reducer[method] = ({ data = {} }) => {
         console.debug(`Api::on${toPascalCase(method)}`, data)
-        observer.next(data)
+        zone.run(() => {
+            observer.next(data)
+        })
       }
     })
     const published = source.publish()
@@ -33,7 +36,7 @@ const factory = (Api: Api) => {
   return Object.assign(service, extensions)
 }
 
-const provider = (provide) => ({ provide, useFactory: () => factory(provide) })
+const provider = (provide) => ({ provide, useFactory: (zone: NgZone) => factory(provide, zone), deps: [NgZone] })
 
 export { ApiConfig, ApiUser, ApiConversation, ApiZetalk }
 
