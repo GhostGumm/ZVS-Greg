@@ -1,21 +1,35 @@
+
 <md-list class="zp-messages-list" zpScrollGlue [class.empty]="conversation?.messages.length === 0">
   <h4 md-list-empty *ngIf="conversation?.messages.length === 0">0 messages</h4>
 
   <md-list-item *ngFor="let message of conversation?.messages; let $index = index; trackBy: trackByMessageId;"
       (mouseenter)="onMouseEnterMessage($event, message, $index)"
       (mouseleave)="onMouseLeaveMessage($event, message, $index)"
-      (click)="onClickMessage($event, message, $index)" [ngClass]="message.type"
+      (click)="onClickMessage($event, message, $index)" [ngClass]="[message.type]"
       [class.owner]="message.isOwner" [class.precede]="message.isPrecede" [class.hovered]="message.isHovered">
     <zp-avatar md-list-avatar [user]="message.user" [size]="40"></zp-avatar>
 
     <h3 md-line> {{message.user.firstname}} </h3>
 
     <p md-line [ngSwitch]="message.type">
-      <span *ngSwitchCase="'markup'"> {{message.value}}</span>
-      <!-- ONLY IMAGE FOR NOW -->
-      <img md-list-image *ngSwitchCase="'attachment'" [src]="message.value">
-      <!--<img md-list-image *ngSwitchCase="'image'" [src]="message.value">
-      <span md-list-attachment *ngSwitchCase="'attachment'" class="fa {{message.metadata?.class}}">{{message.metadata?.type}}</span>-->
+      <span md-list-markup *ngSwitchCase="'markup'"> {{message.value}}</span>
+      <template [ngSwitchCase]="'attachment'">
+        <div md-list-file *ngIf="message.metadata.type == 'file'">
+          <md-icon>insert_drive_file</md-icon>
+          <span>
+            <p md-list-file-name>
+              <span>Name:</span> {{message.metadata.name}}
+            </p>
+            <p md-list-file-name>
+              <span>Type:</span> {{message.metadata.contentType}}
+            </p>
+            <p md-list-file-size>
+              <span>Size:</span> {{message.metadata.size}}
+            </p>
+          </span>
+        </div>
+        <img md-list-image *ngIf="message.metadata.type == 'image'" [src]="message.value">
+      </template>
     </p>
 
     <span md-list-date *ngIf="message.isHovered" [@timestampAnimation]="message.isHovered" title="{{ message.timeFromNow }}" 

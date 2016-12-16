@@ -5,12 +5,12 @@ import {
 
 import { Router } from '@angular/router'
 
-import { MdSnackBar } from '@angular/material'
 import { Subscription } from 'rxjs/Subscription'
 
 import { Animations } from '../../utils/'
 
 import { UserService, UserClass, UserInterface } from '../../services/user'
+import { NotificationService } from '../../services/notification'
 import { ZetaPushConnection } from '../../zetapush'
 
 @Component({
@@ -18,7 +18,6 @@ import { ZetaPushConnection } from '../../zetapush'
     trigger('slideUpDown', Animations.slideUpDown),
     trigger('routeAnimation', Animations.fadeIn)
   ],
-  providers: [ MdSnackBar ],
   selector: 'zp-authenticated-layout',
   styleUrls: ['./authenticated-layout.component.scss'],
   templateUrl: './authenticated-layout.component.html'
@@ -38,7 +37,7 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
     private connection: ZetaPushConnection,
     private router: Router,
     private userService: UserService,
-    private snackBar: MdSnackBar
+    private notificationService: NotificationService
   ) {
     this.user = new UserClass({
       id: '0',
@@ -64,11 +63,11 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
     this.getUserProfile()
     this.addNavListener()
     this.addRouterListener()
-    this.updateWindowSize(window.innerWidth)
   }
 
   ngAfterViewInit() {
     this.toolbarIsVisible = true
+    this.updateWindowSize(window.innerWidth)
     console.debug('AuthenticatedLayoutComponent::ngAfterViewInit')
   }
 
@@ -81,7 +80,8 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
     this.userService.getUser().then((user: UserInterface) => {
       console.debug('AuthenticatedLayoutComponent::onGetUser', user)
       this.user = user
-      // this.toast(`Welcome ${user.firstname}`)
+      this.notificationService.welcomeToast(user)
+      // this.notificationService.toastCall()
     })
   }
 
@@ -114,11 +114,6 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
   goTo(index) {
     const url = [...this.$url].slice(0, index + 1).join('/')
     this.router.navigate([url])
-  }
-
-  toast(title, subtitle = '') {
-    console.debug('AuthenticatedLayoutComponent::toast', { title, subtitle })
-    this.snackBar.open(title, subtitle)
   }
 
   onLogout() {

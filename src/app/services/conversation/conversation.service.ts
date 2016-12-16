@@ -77,6 +77,7 @@ export class ConversationService implements OnDestroy {
 
       // Reset messageService files
       this.messageService.resetServices()
+
       // Reverse messages list
       for (let i = messages.length - 1; i >= 0; i--) {
         let message
@@ -98,7 +99,9 @@ export class ConversationService implements OnDestroy {
         }
         result.messages.push(message)
       }
+
       this.messageService.indexByAuthor(result.messages)
+
       console.debug('ConversationService::getOneToOneConversation', {
         conversation,
         result,
@@ -116,11 +119,12 @@ export class ConversationService implements OnDestroy {
 
   addConversationAttachment({ id, owner, attachment }): Promise<any> {
     return this.api.uploadConversationAttachment({ id, owner })
-        .then(({ guid, httpMethod, url }) => this.upload({ attachment, guid, httpMethod, url }))
-        .then((value) => {
-          console.debug('ConversationService::addConversationAttachment', { id, owner, value })
-          this.api.addConversationAttachment({ id, owner, value })
-        })
+      .then(({ guid, httpMethod, url }) => this.upload({ attachment, guid, httpMethod, url }))
+      .then((guid) => {
+        console.debug('ConversationService::addConversationAttachment', { id, owner, guid })
+        const name = attachment._file.name
+        this.api.addConversationAttachment({ id, owner, guid, name })
+      })
   }
 
   private upload({ attachment, guid, httpMethod, url }): Promise<string> {
@@ -131,14 +135,14 @@ export class ConversationService implements OnDestroy {
       xhr.open(httpMethod, url, true)
       // xhr.responseType = 'arraybuffer'
       xhr.onreadystatechange = () => {
-          if (xhr.readyState === 4) {
-              if (xhr.status === 200) {
-                  resolve(guid)
-              } else {
-                  reject()
-              }
-              this.percent.next(0)
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            resolve(guid)
+          } else {
+            reject()
           }
+          this.percent.next(0)
+        }
       }
       xhr.upload.onprogress = (event: any) => {
         if (event.lengthComputable) {

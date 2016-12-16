@@ -1,6 +1,6 @@
 import {
-  Component, HostBinding, HostListener, Input, ChangeDetectorRef,
-  ViewChild, ElementRef, AfterViewInit, OnChanges, OnDestroy, trigger
+  Component, HostBinding, HostListener, Input, ChangeDetectorRef, NgZone,
+  ViewChild, ElementRef, OnInit, AfterViewInit, OnChanges, OnDestroy, trigger
 } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
@@ -32,9 +32,10 @@ const PROVIDERS = [ ScrollGlueDirective, MessageService, FileDropDirective, File
   ]
 })
 
-export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
+export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @Input() conversation: ConversationViewInterface
   @Input() loading: boolean
+
   private gallery: MdDialogRef<GalleryComponent>
   private subscriptions: Array<Subscription> = []
 
@@ -51,7 +52,7 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   })
 
   @ViewChild('uploadInput') uploadInputRef: ElementRef // uploader dom ref
-  @ViewChild('messageForm')  messageForm: NgForm // form message dom ref
+  @ViewChild('messageForm') messageForm: NgForm // form message dom ref
 
   constructor(
     private zpClient: ZetaPushClient,
@@ -59,14 +60,25 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
     private messageService: MessageService,
     private conversationService: ConversationService,
     private changeRef: ChangeDetectorRef,
-    public dialog: MdDialog
+    public dialog: MdDialog,
+    private zone: NgZone
   ) {
+  }
+
+  ngOnInit() {
     this.conversationService.percent.subscribe({
       next: (progress) => {
         this.progress = progress
         this.changeRef.detectChanges()
         console.debug('MessagesComponent::upload.progress', { progress: this.progress })
       }
+    })
+  }
+
+  ngAfterViewInit() {
+    // Clear input on adding file
+    this.uploader.onAfterAddingFile = (item => {
+      this.uploadInputRef.nativeElement.value = ''
     })
   }
 
@@ -113,8 +125,9 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
     this.subscriptions.push(onAddConversationMessage.subscribe(({ result }) => {
       const { message } = result
-      this.onAddMessage(message)
-      this.changeRef.detectChanges()
+      this.zone.run(() => {
+        this.onAddMessage(message)
+      })
     }))
 
     this.resetForm()
@@ -123,13 +136,6 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   // Custom Track By
   trackByMessageId(index: number, message: MessageInterface) {
     return message.id
-  }
-
-  ngAfterViewInit() {
-    // Clear input on adding file
-    this.uploader.onAfterAddingFile = (item => {
-      this.uploadInputRef.nativeElement.value = ''
-    })
   }
 
   // Click on md-list-item
@@ -180,11 +186,11 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   // User add message
-  addMessage($event) {
-    $event.preventDefault()
+  addMessage(event) {
+    event.preventDefault()
     const { owner, id } = this.conversation
     const value = this.messageRaw
-    console.debug('MessagesComponent::addMessage', { id, owner, value, $event })
+    console.debug('MessagesComponent::addMessage', { id, owner, value, event })
     if (value.trim().length > 0) {
       this.conversationService.addConversationMarkup(id, owner, value).then((message) => {
         this.resetForm()
@@ -207,12 +213,11 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   // Process received attachment
   processAttachment(message: any) {
-    const { messages, users } = this.conversation
+    const { users } = this.conversation
     const uploader = this.uploader
     let fileProcessed: MessageInterface = this.messageService.processAttachment({ message, users })
 
-    messages.push(fileProcessed)
-    this.messageService.indexByAuthor(messages, fileProcessed)
+    this.pushProcessedMessage(fileProcessed)
 
     console.log('MessagesComponent::processFile', {
       queue: uploader.queue,
@@ -223,17 +228,22 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   // Process received message
   processMarkup(message: MessageInterface) {
-    const { messages, users } = this.conversation
+    const { users } = this.conversation
 
     let messageProcessed: MessageInterface = this.messageService.processMarkup({ message, users })
 
-    messages.push(messageProcessed)
-    this.messageService.indexByAuthor(messages, messageProcessed)
+    this.pushProcessedMessage(messageProcessed)
 
     console.debug('MessagesComponent::processMessage', {
       message,
       messageProcessed
     })
+  }
+
+  pushProcessedMessage(message: MessageInterface) {
+    const { messages } = this.conversation
+    messages.push(message)
+    this.messageService.indexByAuthor(messages, message)
   }
 
   // Reset message form
@@ -242,6 +252,7 @@ export class MessagesComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   openGallery(message: MessageInterface) {
+    console.debug('MessagesComponent::Gallery:open', { message })
     this.gallery = this.dialog.open(GalleryComponent)
     this.gallery.componentInstance.files = this.messageService.getFiles()
     this.gallery.componentInstance.selected = message

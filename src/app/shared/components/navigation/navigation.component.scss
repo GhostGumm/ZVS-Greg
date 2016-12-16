@@ -14,15 +14,13 @@
 }
 
 [zp-nav-overflow]{
-  height: calc(100% - #{$zp-profile-height});
-  overflow: auto;
-  overflow: overlay;
+  height: calc(100vh - #{$zp-profile-height});
+  display: flex;
+  flex-direction: column;
 }
 
 md-nav-list{
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
+  display: block;
   margin: 10px;
   > button {
     width: 100%;
@@ -32,6 +30,8 @@ md-nav-list{
 
 zp-user-list{
   margin-top: 10px;
+  height: 100%;
+  overflow: hidden;
 }
 
 .zp-user-list-actions{

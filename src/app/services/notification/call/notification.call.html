@@ -1,0 +1,15 @@
+
+
+<md-progress-bar white *ngIf="progress > 0" color="primary" mode="determinate" value="{{progress}}"></md-progress-bar>
+
+<p>Take Call</p>
+      
+<span class="flex-fill"></span>
+
+<button notification-success md-icon-button (click)="takeCall()">
+  <md-icon>call</md-icon>
+</button>
+
+<button md-icon-button color="warn" (click)="denyCall()">
+  <md-icon>call_end</md-icon>
+</button>

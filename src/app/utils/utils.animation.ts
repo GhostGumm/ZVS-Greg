@@ -42,23 +42,13 @@ export const Animations = {
     state('false', style({
       opacity: 0
     })),
-    transition('0 => 1', [
+    transition('0 => 1, :enter', [
       animate(`${options.duration} ${options.easingIn}`, style({
         opacity: 1
       }))
     ]),
-    transition('1 => 0', [
+    transition('1 => 0, :leave', [
       animate(`${options.duration} ${options.easingIn}`, style({
-        opacity: 0
-      }))
-    ]),
-    transition(':enter', [
-      animate(`${options.duration} ${options.easingIn}`, style({
-        opacity: 1
-      }))
-    ]),
-    transition(':leave', [
-      animate(`${options.duration} ${options.easingOut}`, style({
         opacity: 0
       }))
     ])
@@ -73,29 +63,21 @@ export const Animations = {
       opacity: 0,
       height: 0
     })),
-    transition('0 => 1', [
-      style({height: 0}),
+    transition('0 => 1, :enter', [
+      style({
+        height: 0,
+        overflow: 'hidden'
+      }),
       animate(`${options.duration} ${options.easingIn}`, style({
         opacity: 1,
         height: '*'
       }))
     ]),
-    transition('1 => 0', [
-      style({height: '*'}),
-      animate(`${options.duration} ${options.easingIn}`, style({
-        opacity: 0,
-        height: 0
-      }))
-    ]),
-    transition(':enter', [
-      style({height: 0}),
-      animate(`${options.duration} ${options.easingIn}`, style({
-        opacity: 1,
-        height: '*'
-      }))
-    ]),
-    transition(':leave', [
-      style({height: '*'}),
+    transition('1 => 0, :leave', [
+      style({
+        height: '*',
+        overflow: 'hidden'
+      }),
       animate(`${options.duration} ${options.easingOut}`, style({
         opacity: 0,
         height: 0

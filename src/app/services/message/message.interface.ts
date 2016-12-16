@@ -46,7 +46,7 @@ export class MessageClass implements MessageInterface {
   value
   date
 
-  metadata = {}
+  metadata
   timeFromNow
 
   isOwner = false
@@ -55,6 +55,9 @@ export class MessageClass implements MessageInterface {
 
   constructor(parameters: MessageInterface) {
     Object.assign(this, parameters)
+    if (this.metadata === undefined) {
+      this.metadata = {}
+    }
   }
 
   getTimeFromNow() {

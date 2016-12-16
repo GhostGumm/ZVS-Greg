@@ -12,10 +12,13 @@ if (environment.production) {
 
 // Converser cette portion de code static pour le build AOT
 // platformBrowserDynamic().bootstrapModule(AppModule).then(() => initialize)
-initialize.then(() => platformBrowserDynamic().bootstrapModule(AppModule, []))
+initialize.then(
+  () => platformBrowserDynamic().bootstrapModule(AppModule, []),
+  () => console.error('Unable to connect to ZetaPush API.')
+)
 
 window.WebFont.load({
   google: {
-    families: ['Noto Sans', 'Material Icons']
+    families: ['Material Icons']
   }
 })
