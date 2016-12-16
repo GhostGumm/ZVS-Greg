@@ -17,15 +17,9 @@
         <div md-list-file *ngIf="message.metadata.type == 'file'">
           <md-icon>insert_drive_file</md-icon>
           <span>
-            <p md-list-file-name>
-              <span>Name:</span> {{message.metadata.name}}
-            </p>
-            <p md-list-file-name>
-              <span>Type:</span> {{message.metadata.contentType}}
-            </p>
-            <p md-list-file-size>
-              <span>Size:</span> {{message.metadata.size}}
-            </p>
+            <p><span>Name:</span> {{message.metadata.name}}</p>
+            <p><span>Type:</span> {{message.metadata.contentType}}</p>
+            <p><span>Size:</span> {{message.metadata.size}}</p>
           </span>
         </div>
         <img md-list-image *ngIf="message.metadata.type == 'image'" [src]="message.value">

@@ -28,14 +28,30 @@
   <md-icon>keyboard_arrow_left</md-icon>
 </button>
 
-<img [src]="selected.value" alt="" draggable="false" (load)="onLoad()" [class.loading]="loading" #imageRef>
+<div zp-gallery-container>
+  <img image *ngIf="selected.metadata.type == 'image'" [src]="selected.value" alt="" draggable="false" (load)="onLoad()" [class.loading]="loading" #imageRef>
+  <div file *ngIf="selected.metadata.type == 'file'" [class.loading]="loading"  [ngSwitch]="selected.metadata.subtype">
+
+    <video video *ngSwitchCase="'video'" controls autoplay [src]="selected.value"></video>
+
+    <div default *ngSwitchDefault>
+      <md-icon>insert_drive_file</md-icon>
+      <span>
+        <p><span>Name:</span> {{selected.metadata.name}}</p>
+        <p><span>Type:</span> {{selected.metadata.contentType}}</p>
+        <p><span>Size:</span> {{selected.metadata.size}}</p>
+      </span>
+    </div>
+  </div>
+</div>
 
 <button lg accent zp-gallery-next *ngIf="hasNext" md-icon-button (click)="next()" [@fadeInAnimation]="hasNext">
   <md-icon>keyboard_arrow_right</md-icon>
 </button>
 
 <md-toolbar color="primary" sm>
-  <span>{{selected.metadata.name}} - </span>
+  <span>{{selected.metadata.name}}</span>
+  <span>&nbsp;-&nbsp;</span>
   <span>{{selected.metadata.size}}</span>
   <span class="flex-fill"></span>
   <span *ngIf="files.length > 1">{{index + 1}}/{{files.length}}</span>
