@@ -46,8 +46,13 @@ export class GalleryComponent implements OnInit {
   }
 
   checkAvailable() {
-    console.debug('GalleryComponent::checkAvailable', this.index, this.files.length)
-    this.loading = true
+    console.debug('GalleryComponent::checkAvailable', {
+      index: this.index,
+      length: this.files.length,
+      selected: this.selected
+    })
+    const { type } = this.selected.metadata
+    this.loading = type === 'image' ? true : false
     this.index > 0 ? this.hasPrevious = true : this.hasPrevious = false
     this.index < this.files.length - 1 ? this.hasNext = true : this.hasNext = false
   }
@@ -80,7 +85,9 @@ export class GalleryComponent implements OnInit {
 
   onLoad() {
     console.debug('GalleryComponent::onLoad')
-    this.loading = false
+    setTimeout(() => {
+      this.loading = false
+    }, 100)
   }
 
   print() {
