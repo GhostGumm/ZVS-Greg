@@ -19,7 +19,8 @@ export class OrganizationComponent implements OnInit {
     public dialog: MdDialog,
     public viewContainerRef: ViewContainerRef,
     private apiConversation: ApiConversation,
-    private client: ZetaPushClient) { }
+    private client: ZetaPushClient
+  ) { }
 
   openDialog() {
     const config = new MdDialogConfig()
@@ -79,6 +80,10 @@ export class OrganizationDialogComponent implements OnInit, OnDestroy {
   ngOnInit() {
     console.debug('OrganizationDialogComponent::ngOnInit')
 
+    this.getPotentialContact()
+  }
+
+  getPotentialContact() {
     this.userService
       .getPotentialContact()
       .then((members) => {
@@ -99,7 +104,7 @@ export class OrganizationDialogComponent implements OnInit, OnDestroy {
 
   selectAll() {
     this.inviteAll = !this.inviteAll
-    console.debug('OrganizationDialogComponent::selectAll', { inviteAll:this.inviteAll })
+    console.debug('OrganizationDialogComponent::selectAll', { inviteAll: this.inviteAll })
     this.members.forEach(({ metadata }) => metadata.checked = this.inviteAll ? true : false)
     this.selected = this.inviteAll ? this.members.length : 0
   }

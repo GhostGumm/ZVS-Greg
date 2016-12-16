@@ -5,23 +5,6 @@ import { UserClass, UserInterface } from '../user'
 import { MessageClass } from '../message'
 import { ApiUser, ApiZetalk } from '../../zetapush/api'
 
-const transformContactsToUserList = ({ contacts }) => contacts.map(contact => new UserClass({
-  id: contact.user.userKey,
-  firstname: contact.user.firstname,
-  lastname: contact.user.lastname,
-  login: contact.user.login,
-  online: true,
-  metadata: {
-    message: contact.conversations
-      .filter(({ details }) => details.name === 'I18N.ONE_TO_ONE_CONVERSATION')
-      .reduce((value, { messages }) => {
-        const [ message = { data: { type: MessageClass.TYPE_MARKUP, value: '' } } ] = messages
-        // TODO: Choisir une implémentation I18N
-        return MessageClass.TYPE_MARKUP === message.data.type ? message.data.value  : `Pièce jointe (${message.data.value})`
-      }, '')
-  }
-}))
-
 @Injectable()
 export class UserService implements OnDestroy {
   subscriptions: Array<Subscription> = []
@@ -49,10 +32,31 @@ export class UserService implements OnDestroy {
   }
 
   getPotentialContact(): Promise<UserInterface[]> {
-    return this.apiZetalk.listPotentialContact().then(transformContactsToUserList)
+    return this.apiZetalk.listPotentialContact().then(this.transformContactsToUserList)
   }
 
   getContact(): Promise<UserInterface[]> {
-    return this.apiZetalk.listContact().then(transformContactsToUserList)
+    return this.apiZetalk.listContact().then(({contacts}) => {
+      return this.transformContactsToUserList({contacts})
+    })
+  }
+
+  transformContactsToUserList({ contacts }) {
+    return contacts.map(contact => new UserClass({
+      id: contact.user.userKey,
+      firstname: contact.user.firstname,
+      lastname: contact.user.lastname,
+      login: contact.user.login,
+      online: true,
+      metadata: {
+        message: contact.conversations
+          .filter(({ details }) => details.name === 'I18N.ONE_TO_ONE_CONVERSATION')
+          .reduce((value, { messages }) => {
+            const [ message = { data: { type: MessageClass.TYPE_MARKUP, value: '' } } ] = messages
+            // TODO: Choisir une implémentation I18N
+            return MessageClass.TYPE_MARKUP === message.data.type ? message.data.value  : `Pièce jointe (${message.data.value})`
+          }, '')
+      }
+    }))
   }
 }
