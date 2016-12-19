@@ -1,10 +1,12 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'zp-root',
   template: '<router-outlet></router-outlet>'
 })
 export class RootComponent implements AfterViewInit, OnInit {
+  constructor(private router: Router) {}
   ngOnInit() {
     console.debug('AppComponent::ngOnInit')
   }

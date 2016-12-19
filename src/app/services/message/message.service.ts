@@ -6,6 +6,8 @@ import { MessageInterface, MessageClass } from '../message'
 import { ZetaPushClient } from '../../zetapush'
 import { ENVIRONMENT } from '../../app-config.module'
 
+const REGEX_URL = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
+
 @Injectable()
 export class MessageService {
   public files: Array<MessageInterface> = []
@@ -82,6 +84,7 @@ export class MessageService {
 
   processMarkup({ message, users }: { message: any, users: Array<UserInterface> }) {
     let markup = this.processData({ message, users })
+    markup.value = this.linkify(markup.value)
     return markup
   }
 
@@ -145,5 +148,11 @@ export class MessageService {
     const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
     const i = Math.floor(Math.log(bytes) / Math.log(k))
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
+  }
+
+  linkify(text) {
+    return text.replace(REGEX_URL, (url) => {
+      return `<a target="_blank" href="${url}">${url}</a>`
+    })
   }
 }

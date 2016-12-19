@@ -1,5 +1,5 @@
 import { Component, Input, HostBinding, OnInit, OnChanges, OnDestroy, trigger } from '@angular/core'
-import { Animations } from '../../../utils/utils.animation'
+import { swipeOutDownView } from '../../../utils/utils.animation'
 
 import { ConversationViewInterface } from '../../../services/conversation'
 import { RtcService, RtcInterface, RtcClass } from '../../../services/rtc'
@@ -11,7 +11,7 @@ import { UserService } from '../../../services/user'
   styleUrls: ['./video.component.scss'],
   providers: [ UserService, RtcService ],
   animations: [
-    trigger('routeAnimation', Animations.swipeOutDownView)
+    trigger('routeAnimation', swipeOutDownView)
   ]
 })
 export class VideoComponent implements OnInit, OnChanges, OnDestroy {

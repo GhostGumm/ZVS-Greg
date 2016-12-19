@@ -12,7 +12,7 @@
     <h3 md-line> {{message.user.firstname}} </h3>
 
     <p md-line [ngSwitch]="message.type">
-      <span md-list-markup *ngSwitchCase="'markup'"> {{message.value}}</span>
+      <span md-list-markup *ngSwitchCase="'markup'" [innerHTML]="message.value"></span>
       <template [ngSwitchCase]="'attachment'">
         <div md-list-file *ngIf="message.metadata.type == 'file'">
           <md-icon>insert_drive_file</md-icon>
