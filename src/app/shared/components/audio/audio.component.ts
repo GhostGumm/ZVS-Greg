@@ -1,20 +1,19 @@
-import { Component, Input, HostBinding, OnInit, OnChanges, OnDestroy, trigger } from '@angular/core'
-import { Animations } from '../../../utils/utils.animation'
+import { Component, Input, HostBinding, OnChanges, OnDestroy, trigger } from '@angular/core'
+import { swipeOutDownView } from '../../../utils/utils.animation'
 
 import { ConversationViewInterface } from '../../../services/conversation'
 import { RtcService, RtcInterface, RtcClass } from '../../../services/rtc'
-import { UserService } from '../../../services/user'
 
 @Component({
   selector: 'zp-audio',
   templateUrl: './audio.component.html',
   styleUrls: ['./audio.component.scss'],
-  providers: [ UserService, RtcService ],
+  providers: [ RtcService ],
   animations: [
-    trigger('routeAnimation', Animations.swipeOutDownView)
+    trigger('routeAnimation', swipeOutDownView)
   ]
 })
-export class AudioComponent implements OnChanges, OnDestroy, OnInit {
+export class AudioComponent implements OnChanges, OnDestroy {
   @Input() conversation: ConversationViewInterface
   @Input() loading: boolean
   group: boolean = false
@@ -25,13 +24,8 @@ export class AudioComponent implements OnChanges, OnDestroy, OnInit {
   }
 
   constructor(
-    private userService: UserService,
     private rtcService: RtcService
   ) {
-  }
-
-  ngOnInit() {
-    console.debug('AudioComponent::ngOnInit')
   }
 
   ngOnChanges(changes) {

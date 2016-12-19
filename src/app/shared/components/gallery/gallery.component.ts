@@ -1,6 +1,6 @@
 import { Component, OnInit, trigger, HostBinding, ViewChild, ElementRef } from '@angular/core'
 import { MdDialogRef } from '@angular/material'
-import { Animations } from '../../../utils/utils.animation'
+import { fadeIn, slideUpDown } from '../../../utils/utils.animation'
 import { MessageInterface } from './../../../services'
 
 // Typescript is magic they say..
@@ -13,8 +13,8 @@ interface CSSStyleDeclarationExtended extends CSSStyleDeclaration {
   styleUrls: ['./gallery.component.scss'],
   templateUrl: './gallery.component.html',
   animations: [
-    trigger('routeAnimation', Animations.slideUpDown),
-    trigger('fadeInAnimation', Animations.fadeIn)
+    trigger('routeAnimation', slideUpDown),
+    trigger('fadeInAnimation', fadeIn)
   ]
 })
 export class GalleryComponent implements OnInit {

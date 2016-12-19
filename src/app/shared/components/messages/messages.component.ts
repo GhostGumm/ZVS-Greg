@@ -6,7 +6,7 @@ import { NgForm } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { MdDialog, MdDialogRef } from '@angular/material'
 import { Subscription } from 'rxjs/Subscription'
-import { Animations } from '../../../utils/utils.animation'
+import { fadeIn, swipeOutDownView } from '../../../utils/utils.animation'
 import { ZetaPushClient } from '../../../zetapush'
 
 import { ScrollGlueDirective } from '../../../utils/utils.scroll'
@@ -26,9 +26,9 @@ const PROVIDERS = [ ScrollGlueDirective, FileDropDirective, FileSelectDirective]
   styleUrls: ['./messages.component.scss'],
   providers: [ ...PROVIDERS ],
   animations: [
-    trigger('routeAnimation', Animations.swipeOutDownView),
-    trigger('dropZoneAnimation', Animations.fadeIn),
-    trigger('timestampAnimation', Animations.fadeIn)
+    trigger('routeAnimation', swipeOutDownView),
+    trigger('dropZoneAnimation', fadeIn),
+    trigger('timestampAnimation', fadeIn)
   ]
 })
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, trigger, AfterViewInit, Inject, Input } from '@angular/core'
 import * as Chartist from 'chartist'
 import { ChartType, ChartEvent } from 'angular2-chartist'
-import { Animations } from '../../../utils/utils.animation'
+import { fadeInOutView } from '../../../utils/utils.animation'
 
 import { ENVIRONMENT } from '../../../app-config.module'
 
@@ -25,7 +25,7 @@ export interface Chart {
     }
   `],
   animations: [
-    trigger('statsAnimation', Animations.fadeInOutView)
+    trigger('statsAnimation', fadeInOutView)
   ]
 })
 export class StatsComponent implements OnInit, AfterViewInit {

@@ -7,7 +7,7 @@ import { Router } from '@angular/router'
 
 import { Subscription } from 'rxjs/Subscription'
 
-import { Animations } from '../../utils/'
+import { fadeIn, slideUpDown } from '../../utils/utils.animation'
 
 import { UserService, UserClass, UserInterface } from '../../services/user'
 import { NotificationService } from '../../services/notification'
@@ -15,8 +15,8 @@ import { ZetaPushConnection } from '../../zetapush'
 
 @Component({
   animations: [
-    trigger('slideUpDown', Animations.slideUpDown),
-    trigger('routeAnimation', Animations.fadeIn)
+    trigger('slideUpDown', slideUpDown),
+    trigger('routeAnimation', fadeIn)
   ],
   selector: 'zp-authenticated-layout',
   styleUrls: ['./authenticated-layout.component.scss'],

@@ -1,10 +1,11 @@
 import {
   Component, AfterViewInit, OnInit, OnDestroy, OnChanges, Input,
-  Output, EventEmitter, ContentChild, TemplateRef, trigger, ChangeDetectionStrategy
+  Output, EventEmitter, ContentChild, TemplateRef, trigger
 } from '@angular/core'
 
 import { UserInterface } from '../../../services/user'
-import { OrderBy, Animations } from '../../../utils/'
+import { OrderBy } from '../../../utils/'
+import { fadeIn, fadeInHeight } from '../../../utils/utils.animation'
 import { Subscription } from 'rxjs/Subscription'
 
 @Component({
@@ -13,8 +14,8 @@ import { Subscription } from 'rxjs/Subscription'
   styleUrls: ['./user.list.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
-    trigger('listAnimation', Animations.fadeInHeight),
-    trigger('loadingAnimation', Animations.fadeIn)
+    trigger('listAnimation', fadeInHeight),
+    trigger('loadingAnimation', fadeIn)
   ]
 
 })
