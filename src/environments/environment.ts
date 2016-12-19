@@ -6,6 +6,6 @@ const ZETAPUSH_PROXY_URL =  `${ZETAPUSH_SERVEUR_URL}:9081/str/rest/deployed/${ZE
 const ZETAPUSH_DELEGATING_TOKEN_KEY = 'ServicesAuthToken'
 
 export const environment = {
-  production: true,
+  production: false,
   ZETAPUSH_API_URL, ZETAPUSH_DELEGATING_TOKEN_KEY, ZETAPUSH_PROXY_URL, ZETAPUSH_SANDBOX_ID
 }
