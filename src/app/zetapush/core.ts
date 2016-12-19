@@ -28,10 +28,7 @@ export class ZetaPushClient extends SmartClient {
 
 export class ZetaPushConnection {
 
-  constructor(
-    private client: ZetaPushClient
-    ) {
-  }
+  constructor(private client: ZetaPushClient) {}
 
   disconnect(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
@@ -93,6 +90,10 @@ export class ZetaPushConnection {
         client.connect()
       })
     })
+  }
+
+  isAuthenticated(): boolean {
+    return this.client.isStronglyAuthenticated()
   }
 }
 
