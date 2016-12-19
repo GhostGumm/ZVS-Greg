@@ -65,13 +65,13 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   }
 
   ngOnInit() {
-    this.zone.run(() => {
       this.conversationService.percent.subscribe({
         next: (progress) => {
-          this.progress = progress
-          console.debug('MessagesComponent::upload.progress', { progress: this.progress })
+          this.zone.run(() => {
+            this.progress = progress
+            console.debug('MessagesComponent::upload.progress', { progress: this.progress })
+          })
         }
-      })
     })
   }
 
