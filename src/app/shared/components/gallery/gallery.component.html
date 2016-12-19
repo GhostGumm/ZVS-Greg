@@ -30,9 +30,14 @@
 
 <div zp-gallery-container>
   <img image *ngIf="selected.metadata.type == 'image'" [src]="selected.value" alt="" draggable="false" (load)="onLoad()" [class.loading]="loading" #imageRef>
-  <div file *ngIf="selected.metadata.type == 'file'" [class.loading]="loading"  [ngSwitch]="selected.metadata.subtype">
+  <div file *ngIf="selected.metadata.type == 'file'" [class.loading]="loading"  [ngSwitch]="selected.metadata.extension">
 
     <video video *ngSwitchCase="'video'" controls autoplay [src]="selected.value"></video>
+
+    <pdf-viewer *ngSwitchCase="'pdf'" [src]="selected.value" 
+                [page]="1" 
+                [original-size]="true">
+    </pdf-viewer>
 
     <div default *ngSwitchDefault>
       <md-icon>insert_drive_file</md-icon>

@@ -105,30 +105,30 @@ export class MessageService {
       if (contentType.match(/image/g)) {
         metadata.type = 'image'
         if (contentType.match(/gif/g)) {
-          metadata.subtype = 'gif'
+          metadata.extension = 'gif'
         } else if (contentType.match(/jpeg/g)) {
-          metadata.subtype = 'jpeg'
+          metadata.extension = 'jpeg'
         } else if (contentType.match(/png/g)) {
-          metadata.subtype = 'png'
+          metadata.extension = 'png'
         }
       } else {
         metadata.type = 'file'
         if (contentType.match(/pdf/g)) {
-          metadata.subtype = 'pdf'
+          metadata.extension = 'pdf'
         } else if (contentType.match(/msword/g)) {
-          metadata.subtype = 'word'
+          metadata.extension = 'word'
         } else if (contentType.match(/excel/g)) {
-          metadata.subtype = 'excel'
+          metadata.extension = 'excel'
         } else if (contentType.match(/zip|compressed|bzip/g)) {
-          metadata.subtype = 'zip'
+          metadata.extension = 'zip'
         } else if (contentType.match(/powerpoint/g)) {
-          metadata.subtype = 'powerpoint'
+          metadata.extension = 'powerpoint'
         } else if (contentType.match(/video/g)) {
-          metadata.subtype = 'video'
+          metadata.extension = 'video'
         } else if (contentType.match(/byte/g)) {
-          metadata.subtype = 'code'
+          metadata.extension = 'code'
         } else if (contentType.match(/audio/g)) {
-          metadata.subtype = 'audio'
+          metadata.extension = 'audio'
         }
       }
     } else {
