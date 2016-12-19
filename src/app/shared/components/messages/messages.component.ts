@@ -26,8 +26,8 @@ const PROVIDERS = [ ScrollGlueDirective, FileDropDirective, FileSelectDirective]
   styleUrls: ['./messages.component.scss'],
   providers: [ ...PROVIDERS ],
   animations: [
-    trigger('routeAnimation', Animations.swipeOutDownView),
-    trigger('fadeInAnimation', Animations.fadeIn)
+    trigger('routeAnimation', swipeOutDownView),
+    trigger('fadeInAnimation', fadeIn)
   ]
 })
 
