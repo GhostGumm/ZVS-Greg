@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core'
+import { Injectable, OnDestroy, NgZone } from '@angular/core'
 import { Http } from '@angular/http'
 import { Observable } from 'rxjs/Observable'
 import { Subscription } from 'rxjs/Subscription'
@@ -28,7 +28,8 @@ export class ConversationService implements OnDestroy {
   constructor(
     private api: ApiConversation,
     private http: Http,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private zone: NgZone
   ) {
     this.onAddConversationAttachment = api.onAddConversationAttachment
     this.onAddConversationMarkup = api.onAddConversationMarkup
@@ -129,7 +130,7 @@ export class ConversationService implements OnDestroy {
 
   private upload({ attachment, guid, httpMethod, url }): Promise<string> {
     console.debug('ConversationService::upload', { attachment, guid, httpMethod, url })
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => { 
       const xhr = new XMLHttpRequest()
 
       xhr.open(httpMethod, url, true)

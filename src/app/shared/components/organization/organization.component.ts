@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewContainerRef, ChangeDetectorRef } from '@angular/core'
+import { Component, OnInit, OnDestroy, ViewContainerRef, NgZone } from '@angular/core'
 import { MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material'
 
 import { ZetaPushClient } from './../../../zetapush'
@@ -19,7 +19,8 @@ export class OrganizationComponent implements OnInit {
     public dialog: MdDialog,
     public viewContainerRef: ViewContainerRef,
     private apiConversation: ApiConversation,
-    private client: ZetaPushClient) { }
+    private client: ZetaPushClient
+  ) { }
 
   openDialog() {
     const config = new MdDialogConfig()
@@ -71,21 +72,27 @@ export class OrganizationDialogComponent implements OnInit, OnDestroy {
   constructor(
     public dialogRef: MdDialogRef<OrganizationDialogComponent>,
     private userService: UserService,
-    private changeRef: ChangeDetectorRef
+    private zone: NgZone
   ) {
 
   }
 
   ngOnInit() {
     console.debug('OrganizationDialogComponent::ngOnInit')
+
+    this.getPotentialContact()
+  }
+
+  getPotentialContact() {
     this.userService
-        .getPotentialContact()
-        .then((members) => {
+      .getPotentialContact()
+      .then((members) => {
+        this.zone.run(() => {
           console.debug('OrganizationDialogComponent::onGetMembers')
           this.members = members
           this.loading = false
-          this.changeRef.detectChanges()
         })
+      })
   }
 
   onMemberClicked(event) {
@@ -93,12 +100,11 @@ export class OrganizationDialogComponent implements OnInit, OnDestroy {
     const user = event.value
     user.metadata.checked = !user.metadata.checked
     this.userSelected(user)
-    this.changeRef.detectChanges()
   }
 
   selectAll() {
     this.inviteAll = !this.inviteAll
-    console.debug('OrganizationDialogComponent::selectAll', { inviteAll:this.inviteAll })
+    console.debug('OrganizationDialogComponent::selectAll', { inviteAll: this.inviteAll })
     this.members.forEach(({ metadata }) => metadata.checked = this.inviteAll ? true : false)
     this.selected = this.inviteAll ? this.members.length : 0
   }
@@ -118,6 +124,5 @@ export class OrganizationDialogComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     console.debug('OrganizationDialogComponent::ngOnDestroy')
-    this.changeRef.detach()
   }
 }

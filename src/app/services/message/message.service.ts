@@ -8,7 +8,7 @@ import { ENVIRONMENT } from '../../app-config.module'
 
 @Injectable()
 export class MessageService {
-  public static files: Array<MessageInterface> = []
+  public files: Array<MessageInterface> = []
   private userKey = this.zpClient.getUserId()
   private proxy: string
 
@@ -20,17 +20,17 @@ export class MessageService {
   }
 
   resetServices() {
-    MessageService.files = []
+    this.files = []
   }
 
   getFiles() {
-    console.debug('MessageService::getFiles', MessageService.files)
-    return MessageService.files
+    console.debug('MessageService::getFiles', this.files)
+    return this.files
   }
 
   setFile(file) {
     console.debug('MessageService::setFile', file)
-    MessageService.files.push(file)
+    this.files.push(file)
   }
 
   /**

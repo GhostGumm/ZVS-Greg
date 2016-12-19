@@ -1,5 +1,5 @@
 import {
-  Component, HostBinding, HostListener, Input, ChangeDetectorRef, NgZone,
+  Component, HostBinding, HostListener, Input, NgZone,
   ViewChild, ElementRef, OnInit, AfterViewInit, OnChanges, OnDestroy, trigger
 } from '@angular/core'
 import { NgForm } from '@angular/forms'
@@ -17,7 +17,7 @@ import {
 } from './../../../services'
 import { GalleryComponent } from '../gallery/gallery.component'
 
-const PROVIDERS = [ ScrollGlueDirective, MessageService, FileDropDirective, FileSelectDirective]
+const PROVIDERS = [ ScrollGlueDirective, FileDropDirective, FileSelectDirective]
 
 
 @Component({
@@ -59,19 +59,19 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     private route: ActivatedRoute,
     private messageService: MessageService,
     private conversationService: ConversationService,
-    private changeRef: ChangeDetectorRef,
     public dialog: MdDialog,
     private zone: NgZone
   ) {
   }
 
   ngOnInit() {
-    this.conversationService.percent.subscribe({
-      next: (progress) => {
-        this.progress = progress
-        this.changeRef.detectChanges()
-        console.debug('MessagesComponent::upload.progress', { progress: this.progress })
-      }
+    this.zone.run(() => {
+      this.conversationService.percent.subscribe({
+        next: (progress) => {
+          this.progress = progress
+          console.debug('MessagesComponent::upload.progress', { progress: this.progress })
+        }
+      })
     })
   }
 
@@ -125,9 +125,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
     this.subscriptions.push(onAddConversationMessage.subscribe(({ result }) => {
       const { message } = result
-      this.zone.run(() => {
-        this.onAddMessage(message)
-      })
+      this.onAddMessage(message)
     }))
 
     this.resetForm()
@@ -265,6 +263,5 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   ngOnDestroy() {
     console.debug('MessagesComponent::ngOnDestroy')
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
-    this.changeRef.detach()
   }
 }

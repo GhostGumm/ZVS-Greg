@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, AfterViewInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core'
+import { Component, Input, OnDestroy, OnInit, AfterViewInit, Output, EventEmitter, NgZone } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
 
@@ -48,7 +48,7 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private conversationService: ConversationService,
     private userService: UserService,
-    private changeRef: ChangeDetectorRef
+    private zone: NgZone
   ) {
     /**
      * Route state listener
@@ -97,9 +97,10 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
 
   getContact() {
     this.userService.getContact().then(contacts => {
-      this.contacts = contacts
-      this.loading = false
-      this.changeRef.detectChanges()
+      this.zone.run(() => {
+        this.contacts = contacts
+        this.loading = false
+      })
     })
   }
 
