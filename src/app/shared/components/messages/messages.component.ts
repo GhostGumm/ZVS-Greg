@@ -27,8 +27,7 @@ const PROVIDERS = [ ScrollGlueDirective, FileDropDirective, FileSelectDirective]
   providers: [ ...PROVIDERS ],
   animations: [
     trigger('routeAnimation', Animations.swipeOutDownView),
-    trigger('dropZoneAnimation', Animations.fadeIn),
-    trigger('timestampAnimation', Animations.fadeIn)
+    trigger('fadeInAnimation', Animations.fadeIn)
   ]
 })
 
@@ -115,13 +114,14 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   ngOnChanges(changes) {
     console.log('MessagesComponent::ngOnChanges', { changes })
     if (changes.conversation && changes.conversation.currentValue) {
-      this.onGetConversation(changes)
+      const id = changes.conversation.currentValue.id
+      this.onGetConversation(id)
     }
   }
 
-  onGetConversation(changes) {
+  onGetConversation(id) {
     // Reset subscriptions
-    const onAddConversationMessage = this.conversationService.onAddConversationMessage(changes.conversation.currentValue.id)
+    const onAddConversationMessage = this.conversationService.onAddConversationMessage(id)
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
     this.subscriptions.push(onAddConversationMessage.subscribe(({ result }) => {
       const { message } = result

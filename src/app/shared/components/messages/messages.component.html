@@ -1,18 +1,28 @@
 
+
 <md-list class="zp-messages-list" zpScrollGlue [class.empty]="conversation?.messages.length === 0">
+
   <h4 md-list-empty *ngIf="conversation?.messages.length === 0">0 messages</h4>
+
+  <div zp-messages-pagination>
+    <button lg accent md-icon-button>
+      <md-icon>keyboard_arrow_up</md-icon>
+    </button>
+  </div>
 
   <md-list-item *ngFor="let message of conversation?.messages; let $index = index; trackBy: trackByMessageId;"
       (mouseenter)="onMouseEnterMessage($event, message, $index)"
       (mouseleave)="onMouseLeaveMessage($event, message, $index)"
       (click)="onClickMessage($event, message, $index)" [ngClass]="[message.type]"
       [class.owner]="message.isOwner" [class.precede]="message.isPrecede" [class.hovered]="message.isHovered">
-    <zp-avatar md-list-avatar [user]="message.user" [size]="40"></zp-avatar>
+    <zp-avatar md-list-avatar [class.fade]="message.isPrecede" [user]="message.user" [size]="40"></zp-avatar>
 
-    <h3 md-line> {{message.user.firstname}} </h3>
+    <h3 md-line md-list-author *ngIf="!message.isPrecede"> {{message.user.firstname}} </h3>
 
-    <p md-line [ngSwitch]="message.type">
+    <p md-line md-list-content [ngSwitch]="message.type">
+
       <span md-list-markup *ngSwitchCase="'markup'" [innerHTML]="message.value"></span>
+
       <template [ngSwitchCase]="'attachment'">
         <div md-list-file *ngIf="message.metadata.type == 'file'">
           <md-icon>insert_drive_file</md-icon>
@@ -26,7 +36,7 @@
       </template>
     </p>
 
-    <span md-list-date *ngIf="message.isHovered" [@timestampAnimation]="message.isHovered" title="{{ message.timeFromNow }}" 
+    <span md-list-date *ngIf="message.isHovered" [@fadeInAnimation]="message.isHovered" title="{{ message.timeFromNow }}" 
           (mouseenter)="message.getTimeFromNow()">
       {{ message.date | date:'HH:mm:ss' }}
     </span>
@@ -58,7 +68,7 @@
   </button>-->
 </md-toolbar>
 
-<!--<div class="zp-messages-dropzone" *ngIf="dropZoneActive" [@dropZoneAnimation]="dropZoneActive"
+<!--<div class="zp-messages-dropzone" *ngIf="dropZoneActive" [@fadeInAnimation]="dropZoneActive"
      ng2FileDrop [uploader]="uploader"(fileOver)="onDropAttachment($event)" (dragleave)="onDropzoneLeave($event)">
   <div class="zp-messages-dropzone-content">
     <md-icon class="xl">file_upload</md-icon>

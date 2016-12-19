@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs/Subscription'
 
 import { Animations } from '../../../utils/utils.animation'
 
-import { ConversationService, ConversationViewInterface } from '../../../services/conversation'
+import { ConversationService, ConversationViewInterface, ConversationPagination } from '../../../services/conversation'
 import { UserService } from '../../../services/user'
 
 @Component({
@@ -67,7 +67,11 @@ export class ConversationViewComponent implements OnInit, OnDestroy, AfterViewIn
   getConversation(interlocutor) {
     console.log('ConversationViewComponent::getConversation', interlocutor)
     this.loading = true
-    this.conversationService.getOneToOneConversation(interlocutor).then((result) => {
+    const pagination: ConversationPagination = {
+      pageNumber: 0,
+      pageSize: 20
+    }
+    this.conversationService.getOneToOneConversation(interlocutor, pagination).then((result) => {
       this.conversation = result
       this.loading = false
       console.log('ConversationViewComponent::getConversation:success', {

@@ -8,9 +8,15 @@ export interface ConversationInterface {
   unread
 }
 
+export interface ConversationPagination {
+  pageNumber: number,
+  pageSize: number
+}
+
 export interface ConversationViewInterface {
   id: string
   owner: string
   users: Array<UserInterface>
-  messages: Array<MessageInterface>
+  messages: Array<MessageInterface>,
+  pagination?: ConversationPagination
 }

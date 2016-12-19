@@ -50,15 +50,12 @@ md-list-item{
     &:last-child {
       border-radius: 0 0 $zp-radius $zp-radius;
     }
-    [md-list-avatar] {
-      display: none;
-    }
-    h3[md-line] {
-      display: none;
-    }
   }
   &.hovered{
     background-color: $zp-white;
+    [md-list-avatar]{
+      opacity: 1;
+    }
     &.attachment{
       &.image{
         cursor: zoom-in;
@@ -77,17 +74,24 @@ md-list-item{
   background-repeat: no-repeat;
   background-size: 80%;
   background-position: center;
+  transition-property: opacity;
+  will-change: opacity;
+  transition-duration: $transition-duration-fast;
+  transition-timing-function: $transition-easing;
+  &.fade{
+    opacity: 0.2;
+  }
 }
-p[md-line]{
+[md-list-author]{
+  overflow: visible;
+  font-weight: 600;
+}
+[md-list-content]{
   white-space: normal;
   overflow: visible;
   padding-top: 8px;
   padding-bottom: 16px;
   line-height: 16px;
-}
-h3[md-line]{
-  overflow: visible;
-  font-weight: 600;
 }
 [md-list-date]{
   position: absolute;
@@ -124,6 +128,13 @@ h3[md-line]{
       font-weight: bold;
     }
   }
+}
+
+[zp-messages-pagination]{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
 }
 
 .zp-messages-inputs {
