@@ -1,6 +1,6 @@
 import { Component, HostBinding, AfterViewInit, OnChanges, OnInit, Input, trigger } from '@angular/core'
 import { Router } from '@angular/router'
-import { Animations } from '../../../utils/utils.animation'
+import { fadeInOutView, slideUpDown } from '../../../utils/utils.animation'
 import { ZetaPushConnection } from '../../../zetapush'
 
 class Credentials {
@@ -13,8 +13,8 @@ class Credentials {
   templateUrl: './login-view.component.html',
   providers: [],
   animations: [
-    trigger('formAnimation', Animations.slideUpDown),
-    trigger('routeAnimation', Animations.fadeInOutView)
+    trigger('formAnimation', slideUpDown),
+    trigger('routeAnimation', fadeInOutView)
   ]
 })
 export class LoginViewComponent implements AfterViewInit, OnChanges, OnInit {

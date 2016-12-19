@@ -6,7 +6,7 @@ import { NgForm } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { MdDialog, MdDialogRef } from '@angular/material'
 import { Subscription } from 'rxjs/Subscription'
-import { Animations } from '../../../utils/utils.animation'
+import { fadeIn, swipeOutDownView } from '../../../utils/utils.animation'
 import { ZetaPushClient } from '../../../zetapush'
 
 import { ScrollGlueDirective } from '../../../utils/utils.scroll'

@@ -5,7 +5,7 @@ import {
 import { Router, ActivatedRoute } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
 
-import { Animations } from '../../../utils/utils.animation'
+import { fadeIn, fadeInOutView, swipeOutDownView } from '../../../utils/utils.animation'
 
 import { ConversationService, ConversationViewInterface, ConversationPagination } from '../../../services/conversation'
 import { UserService } from '../../../services/user'
@@ -15,11 +15,11 @@ import { UserService } from '../../../services/user'
   templateUrl: './conversation-view.component.html',
   styleUrls: ['./conversation-view.component.scss'],
   animations: [
-    trigger('routeAnimation', Animations.fadeInOutView),
-    trigger('loadingAnimation', Animations.fadeIn),
-    trigger('messagesAnimation', Animations.swipeOutDownView),
-    trigger('videoAnimation', Animations.swipeOutDownView),
-    trigger('audioAnimation', Animations.swipeOutDownView)
+    trigger('routeAnimation', fadeInOutView),
+    trigger('loadingAnimation', fadeIn),
+    trigger('messagesAnimation', swipeOutDownView),
+    trigger('videoAnimation', swipeOutDownView),
+    trigger('audioAnimation', swipeOutDownView)
   ]
 })
 export class ConversationViewComponent implements OnInit, OnDestroy, AfterViewInit, AfterContentInit {

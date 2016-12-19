@@ -1,5 +1,5 @@
 import { Component, HostBinding, ViewChildren, OnInit, AfterViewInit, trigger } from '@angular/core'
-import { Animations } from '../../../utils/utils.animation'
+import { fadeInOutView } from '../../../utils/utils.animation'
 
 import * as Chartist from 'chartist'
 import { ChartType, ChartEvent } from 'angular2-chartist'
@@ -20,7 +20,7 @@ export interface Chart {
   styleUrls: ['./home-view.component.scss'],
   providers: [],
   animations: [
-    trigger('routeAnimation', Animations.fadeInOutView)
+    trigger('routeAnimation', fadeInOutView)
   ]
 })
 export class HomeViewComponent implements OnInit, AfterViewInit {

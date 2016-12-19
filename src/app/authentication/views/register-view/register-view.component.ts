@@ -1,6 +1,6 @@
 import { Component, HostBinding, AfterViewInit, OnChanges, OnInit, Input, trigger } from '@angular/core'
 import { Router } from '@angular/router'
-import { Animations } from '../../../utils/utils.animation'
+import { fadeInOutView, slideUpDown } from '../../../utils/utils.animation'
 import { uuid } from '../../../utils/utils.string'
 import { ApiUser } from '../../../zetapush/api'
 
@@ -19,8 +19,8 @@ class RegisterModel {
   templateUrl: './register-view.component.html',
   providers: [],
   animations: [
-    trigger('formAnimation', Animations.slideUpDown),
-    trigger('routeAnimation', Animations.fadeInOutView)
+    trigger('formAnimation', slideUpDown),
+    trigger('routeAnimation', fadeInOutView)
   ]
 })
 export class RegisterViewComponent implements AfterViewInit, OnChanges, OnInit {
