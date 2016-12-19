@@ -60,7 +60,9 @@ md-list-item{
   &.hovered{
     background-color: $zp-white;
     &.attachment{
-      cursor: zoom-in;
+      &.image{
+        cursor: zoom-in;
+      }
       [md-list-image]{
         opacity: 0.9;
         transform: scale(1.02);
@@ -104,6 +106,24 @@ h3[md-line]{
   transition-duration: $transition-duration-fast;
   transition-timing-function: $transition-easing;
   backface-visibility: hidden;
+}
+[md-list-file]{
+  display: flex;
+  align-items: center;
+  margin-left: -12px;
+  md-icon{
+    width: $zp-size-xxxl;
+    height: $zp-size-xxxl;
+    font-size: $zp-size-xxxl;
+    color: md-color($primary);    
+  }
+  p{
+    font-size: $font-size-xs;
+    padding: 1px 0;
+    span{
+      font-weight: bold;
+    }
+  }
 }
 
 .zp-messages-inputs {

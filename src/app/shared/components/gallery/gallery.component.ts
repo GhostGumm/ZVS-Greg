@@ -3,6 +3,7 @@ import { MdDialogRef } from '@angular/material'
 import { Animations } from '../../../utils/utils.animation'
 import { MessageInterface } from './../../../services'
 
+// Typescript is magic they say..
 interface CSSStyleDeclarationExtended extends CSSStyleDeclaration {
   objectFit: string
 }
@@ -45,8 +46,13 @@ export class GalleryComponent implements OnInit {
   }
 
   checkAvailable() {
-    console.debug('GalleryComponent::checkAvailable', this.index, this.files.length)
-    this.loading = true
+    console.debug('GalleryComponent::checkAvailable', {
+      index: this.index,
+      length: this.files.length,
+      selected: this.selected
+    })
+    const { type } = this.selected.metadata
+    this.loading = type === 'image' ? true : false
     this.index > 0 ? this.hasPrevious = true : this.hasPrevious = false
     this.index < this.files.length - 1 ? this.hasNext = true : this.hasNext = false
   }
@@ -65,13 +71,12 @@ export class GalleryComponent implements OnInit {
   download() {
     console.debug('GalleryComponent::download')
     let link = document.createElement('a')
-    link.href = `${this.selected.value}/?download=true` // &name=${message.extra.name}
+    link.href = `${this.selected.value}/?download=true&name=${this.selected.metadata.name}`
     if (typeof link.download === 'string') {
       link.setAttribute('download', this.selected.value)
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
-      console.warn(link)
     } else {
       window.open(link.href)
     }
@@ -79,7 +84,9 @@ export class GalleryComponent implements OnInit {
 
   onLoad() {
     console.debug('GalleryComponent::onLoad')
-    this.loading = false
+    setTimeout(() => {
+      this.loading = false
+    }, 100)
   }
 
   print() {

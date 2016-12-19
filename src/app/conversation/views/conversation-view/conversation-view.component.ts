@@ -1,6 +1,6 @@
 import {
   Component, HostBinding, OnInit, OnDestroy, AfterViewInit, AfterContentInit,
-  trigger, NgZone, ChangeDetectorRef
+  trigger, NgZone
 } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
@@ -41,8 +41,7 @@ export class ConversationViewComponent implements OnInit, OnDestroy, AfterViewIn
     private route: ActivatedRoute,
     private router: Router,
     private conversationService: ConversationService,
-    private userService: UserService,
-    private changeRef: ChangeDetectorRef
+    private userService: UserService
   ) {
     this.addRouteListener()
   }
@@ -71,7 +70,6 @@ export class ConversationViewComponent implements OnInit, OnDestroy, AfterViewIn
     this.conversationService.getOneToOneConversation(interlocutor).then((result) => {
       this.conversation = result
       this.loading = false
-      // this.changeRef.detectChanges()
       console.log('ConversationViewComponent::getConversation:success', {
         conversation: this.conversation
       })
