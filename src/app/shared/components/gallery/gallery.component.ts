@@ -1,4 +1,4 @@
-import { Component, OnInit, trigger, HostBinding, ViewChild, ElementRef } from '@angular/core'
+import { Component, OnInit, trigger, HostBinding, ViewChild, ElementRef, NgZone } from '@angular/core'
 import { MdDialogRef } from '@angular/material'
 import { fadeIn, slideUpDown } from '../../../utils/utils.animation'
 import { MessageInterface } from './../../../services'
@@ -23,14 +23,15 @@ export class GalleryComponent implements OnInit {
   private index: number
   private hasPrevious: boolean = false
   private hasNext: boolean = false
-  private loading: boolean = true
+  private loading: boolean = false
 
   @ViewChild('imageRef') imageRef: ElementRef // image dom ref
 
   constructor(
-    public dialogRef: MdDialogRef<GalleryComponent>
+    public dialogRef: MdDialogRef<GalleryComponent>,
+    private zone: NgZone
   ) {
-
+    this.afterPdfLoaded = this.afterPdfLoaded.bind(this)
   }
 
   @HostBinding('@routeAnimation') get routeAnimation() {
@@ -51,8 +52,10 @@ export class GalleryComponent implements OnInit {
       length: this.files.length,
       selected: this.selected
     })
-    const { type } = this.selected.metadata
-    this.loading = type === 'image' ? true : false
+    const { extension } = this.selected.metadata
+    if (extension !== 'video') {
+      this.loading = true
+    }
     this.index > 0 ? this.hasPrevious = true : this.hasPrevious = false
     this.index < this.files.length - 1 ? this.hasNext = true : this.hasNext = false
   }
@@ -82,11 +85,16 @@ export class GalleryComponent implements OnInit {
     }
   }
 
-  onLoad() {
-    console.debug('GalleryComponent::onLoad')
+  onLoaded() {
+    console.debug('GalleryComponent::onLoaded')
     setTimeout(() => {
       this.loading = false
     }, 100)
+  }
+
+  afterPdfLoaded(pdf) {
+    console.debug('GalleryComponent::afterPdfLoaded', { pdf })
+    this.onLoaded()
   }
 
   print() {

@@ -38,6 +38,14 @@
   height: 100%;
 }
 
+pdf-viewer{
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow: auto;
+}
+
 [file]{
   position: relative;
   width: 100%;
@@ -70,12 +78,6 @@
   }
 }
 
-[default]{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
 
 [zp-gallery-previous],
 [zp-gallery-next]{

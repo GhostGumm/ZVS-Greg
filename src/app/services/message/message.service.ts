@@ -6,7 +6,7 @@ import { MessageInterface, MessageClass } from '../message'
 import { ZetaPushClient } from '../../zetapush'
 import { ENVIRONMENT } from '../../app-config.module'
 
-const REGEX_URL = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
+const REGEX_URL = /(([a-z]+:\/\/)?(([a-z0-9\-]+\.)+([a-z]{2}|aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|local|internal))(:[0-9]{1,5})?(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-zA-Z0-9!$&'()*+.=-_~:@/?]*)?)(\s+|$)/gi
 
 @Injectable()
 export class MessageService {
@@ -99,36 +99,46 @@ export class MessageService {
     // Format size value
     metadata.size = this.formatBytes(metadata.size, 1)
 
-    // Set icon based on content-type
+    // Set type & extension base on ContentType
     const contentType = metadata ? metadata.contentType : null
     if (contentType) {
       if (contentType.match(/image/g)) {
         metadata.type = 'image'
         if (contentType.match(/gif/g)) {
-          metadata.subtype = 'gif'
+          metadata.extension = 'gif'
         } else if (contentType.match(/jpeg/g)) {
-          metadata.subtype = 'jpeg'
+          metadata.extension = 'jpeg'
         } else if (contentType.match(/png/g)) {
-          metadata.subtype = 'png'
+          metadata.extension = 'png'
         }
       } else {
+        // DEFAULT TYPE
         metadata.type = 'file'
-        if (contentType.match(/pdf/g)) {
-          metadata.subtype = 'pdf'
-        } else if (contentType.match(/msword/g)) {
-          metadata.subtype = 'word'
-        } else if (contentType.match(/excel/g)) {
-          metadata.subtype = 'excel'
-        } else if (contentType.match(/zip|compressed|bzip/g)) {
-          metadata.subtype = 'zip'
-        } else if (contentType.match(/powerpoint/g)) {
-          metadata.subtype = 'powerpoint'
-        } else if (contentType.match(/video/g)) {
-          metadata.subtype = 'video'
-        } else if (contentType.match(/byte/g)) {
-          metadata.subtype = 'code'
+        // VIDEO
+        if (contentType.match(/video/g)) {
+          metadata.extension = 'video'
+          if (contentType.match(/mp4|mp3|ogg|webm/g)) {
+            metadata.parsable = true
+          }
+        // AUDIO
         } else if (contentType.match(/audio/g)) {
-          metadata.subtype = 'audio'
+          metadata.extension = 'audio'
+          if (contentType.match(/mp4|mpeg|ogg|webm|wav/g)) {
+            metadata.parsable = true
+          }
+        } else if (contentType.match(/pdf/g)) {
+          metadata.extension = 'pdf'
+          metadata.parsable = true
+        } else if (contentType.match(/msword/g)) {
+          metadata.extension = 'word'
+        } else if (contentType.match(/excel/g)) {
+          metadata.extension = 'excel'
+        } else if (contentType.match(/zip|compressed|bzip/g)) {
+          metadata.extension = 'zip'
+        } else if (contentType.match(/powerpoint/g)) {
+          metadata.extension = 'powerpoint'
+        } else if (contentType.match(/byte/g)) {
+          metadata.extension = 'code'
         }
       }
     } else {
@@ -152,7 +162,13 @@ export class MessageService {
 
   linkify(text) {
     return text.replace(REGEX_URL, (url) => {
-      return `<a target="_blank" href="${url}">${url}</a>`
+      const name = url
+      try {
+        new URL(url)
+      }catch (e) {
+        url = `http://${url}`
+      }
+      return `<a target="_blank" href="${url}">${name}</a>`
     })
   }
 }

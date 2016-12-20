@@ -29,13 +29,29 @@
 </button>
 
 <div zp-gallery-container>
-  <img image *ngIf="selected.metadata.type == 'image'" [src]="selected.value" alt="" draggable="false" (load)="onLoad()" [class.loading]="loading" #imageRef>
-  <div file *ngIf="selected.metadata.type == 'file'" [class.loading]="loading"  [ngSwitch]="selected.metadata.subtype">
+  <img image *ngIf="selected.metadata.type == 'image'" [src]="selected.value" alt="" draggable="false" (load)="onLoaded()" [class.loading]="loading" #imageRef>
 
+  <!-- Parsable File -->
+  <div file *ngIf="selected.metadata.type == 'file' && selected.metadata.parsable" [class.loading]="loading"  [ngSwitch]="selected.metadata.extension">
     <video video *ngSwitchCase="'video'" controls autoplay [src]="selected.value"></video>
+    
+    <audio audio *ngSwitchCase="'audio'" controls autoplay [src]="selected.value"></audio>
 
-    <div default *ngSwitchDefault>
-      <md-icon>insert_drive_file</md-icon>
+    <pdf-viewer *ngSwitchCase="'pdf'" [src]="selected.value"
+                [after-load-complete]="afterPdfLoaded"
+                [page]="1"
+                [render-text]="true"
+                [original-size]="false">
+    </pdf-viewer>
+  </div>
+  <!-- Unparsable File -->
+  <div file *ngIf="selected.metadata.type == 'file' && !selected.metadata.parsable" [class.loading]="loading">
+    <div default class="flex-centered flex-column">
+      <div [ngSwitch]="selected.metadata.extension">
+        <md-icon *ngSwitchDefault>insert_drive_file</md-icon>
+        <md-icon *ngSwitchCase="'video'">play_circle_filled</md-icon>
+        <md-icon *ngSwitchCase="'audio'">audiotrack</md-icon> 
+      </div>
       <span>
         <p><span>Name:</span> {{selected.metadata.name}}</p>
         <p><span>Type:</span> {{selected.metadata.contentType}}</p>

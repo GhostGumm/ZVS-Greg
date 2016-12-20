@@ -33,6 +33,10 @@ app-root{
   align-items: center;
 }
 
+.flex-column{
+  flex-direction: column;
+}
+
 .flex-height {
   height: 100%;
   flex: 1;
