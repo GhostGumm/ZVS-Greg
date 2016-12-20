@@ -1,2 +1,2 @@
-export { ConversationInterface, ConversationViewInterface } from './conversation.interface'
+export { ConversationInterface, ConversationViewInterface, ConversationPagination } from './conversation.interface'
 export { ConversationService } from './conversation.service'

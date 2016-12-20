@@ -7,7 +7,7 @@ import * as Rx from 'rxjs'
 
 import { ApiConversation } from '../../zetapush/api'
 
-import { ConversationInterface, ConversationViewInterface } from './conversation.interface'
+import { ConversationInterface, ConversationViewInterface, ConversationPagination } from './conversation.interface'
 
 import { MessageClass, MessageInterface, MessageService } from '../message'
 import { UserClass } from '../user'
@@ -55,7 +55,7 @@ export class ConversationService implements OnDestroy {
     return this.api.createOneToOneConversation({ interlocutor })
   }
 
-  getOneToOneConversation(interlocutor): Promise<ConversationViewInterface> {
+  getOneToOneConversation(interlocutor: Array<string>, pagination: ConversationPagination): Promise<ConversationViewInterface> {
     return this.api.getOneToOneConversation({ interlocutor }).then((conversation) => {
       const { messages, group: { members }, details: { id, owner } } = conversation
       const result: ConversationViewInterface = {
