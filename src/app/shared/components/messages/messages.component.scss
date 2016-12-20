@@ -39,7 +39,6 @@ md-list-item{
   will-change: background-color;
   transition-duration: $transition-duration-fast;
   transition-timing-function: $transition-easing;
-  cursor: pointer;
   &.owner {
     border-left-color: md-color($primary);
   }
@@ -60,13 +59,14 @@ md-list-item{
   &.hovered{
     background-color: $zp-white;
     &.attachment{
+      cursor: pointer;
       &.image{
         cursor: zoom-in;
       }
-      [md-list-image]{
-        opacity: 0.9;
-        transform: scale(1.02);
-      }
+    }
+    [md-list-image]{
+      opacity: 0.9;
+      transform: scale(1.02);
     }
   }
 }

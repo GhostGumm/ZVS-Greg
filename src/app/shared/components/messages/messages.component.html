@@ -11,11 +11,16 @@
 
     <h3 md-line> {{message.user.firstname}} </h3>
 
-    <p md-line [ngSwitch]="message.type">
-      <span md-list-markup *ngSwitchCase="'markup'" [innerHTML]="message.value"></span>
-      <template [ngSwitchCase]="'attachment'">
-        <div md-list-file *ngIf="message.metadata.type == 'file'">
-          <md-icon>insert_drive_file</md-icon>
+    <p md-line>
+      <span md-list-markup *ngIf="message.type == 'markup'" [innerHTML]="message.value"></span>
+
+      <template [ngIf]="message.type == 'attachment'">
+        <div md-list-file *ngIf="message.metadata.type != 'image'">
+          <div [ngSwitch]="message.metadata.extension">
+            <md-icon *ngSwitchDefault>insert_drive_file</md-icon>
+            <md-icon *ngSwitchCase="'video'">play_circle_filled</md-icon>
+            <md-icon *ngSwitchCase="'audio'">audiotrack</md-icon>  
+          </div>        
           <span>
             <p><span>Name:</span> {{message.metadata.name}}</p>
             <p><span>Type:</span> {{message.metadata.contentType}}</p>
@@ -58,10 +63,10 @@
   </button>-->
 </md-toolbar>
 
-<!--<div class="zp-messages-dropzone" *ngIf="dropZoneActive" [@dropZoneAnimation]="dropZoneActive"
+<div class="zp-messages-dropzone" *ngIf="dropZoneActive" [@dropZoneAnimation]="dropZoneActive"
      ng2FileDrop [uploader]="uploader"(fileOver)="onDropAttachment($event)" (dragleave)="onDropzoneLeave($event)">
   <div class="zp-messages-dropzone-content">
     <md-icon class="xl">file_upload</md-icon>
     <h4>Drop your files.</h4>
   </div>
-</div>-->
+</div>
