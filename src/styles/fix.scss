@@ -61,6 +61,12 @@ zp-messages{
     }
     .md-list-text {
       overflow: initial !important;
+      padding: 0 16px !important;
+    }
+    [md-line]{
+      font-size: inherit !important;
+      padding-bottom: 8px !important;
+      overflow: initial !important;
     }
   }
 }

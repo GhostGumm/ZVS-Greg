@@ -15,7 +15,7 @@
       (mouseleave)="onMouseLeaveMessage($event, message, $index)"
       (click)="onClickMessage($event, message, $index)" [ngClass]="[message.type]"
       [class.owner]="message.isOwner" [class.precede]="message.isPrecede" [class.hovered]="message.isHovered">
-    <zp-avatar md-list-avatar [class.fade]="message.isPrecede" [user]="message.user" [size]="40"></zp-avatar>
+    <zp-avatar md-list-avatar *ngIf="!message.isPrecede" [user]="message.user" [size]="40"></zp-avatar>
 
     <h3 md-line md-list-author *ngIf="!message.isPrecede"> {{message.user.firstname}} </h3>
 
