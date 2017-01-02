@@ -14,7 +14,7 @@ import { RootComponent } from './root.component'
 
 @NgModule({
   declarations: [
-    RootComponent,
+    RootComponent
   ],
   imports: [
     SharedModule.forRoot(),

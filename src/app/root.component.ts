@@ -3,7 +3,13 @@ import { Router } from '@angular/router'
 
 @Component({
   selector: 'zp-root',
-  template: '<router-outlet></router-outlet>'
+  styles: [`
+    :host {
+      display: flex;
+      height: 100%;
+    }
+  `],
+  template: '<router-outlet zp-connection-status></router-outlet>'
 })
 export class RootComponent implements AfterViewInit, OnInit {
   constructor(private router: Router) {}

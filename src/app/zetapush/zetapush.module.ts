@@ -3,8 +3,15 @@ import { NgModule } from '@angular/core'
 import { API_PROVIDERS } from './api'
 import { CORE_PROVIDERS } from './core'
 
+import { DIRECTIVES } from './directives'
+
 @NgModule({
-  declarations: [ ],
+  declarations: [
+    ...DIRECTIVES
+  ],
+  exports: [
+    ...DIRECTIVES
+  ],
   imports: [ ],
   providers: [
     ...API_PROVIDERS,

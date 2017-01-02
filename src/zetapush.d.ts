@@ -89,9 +89,11 @@ declare module "zetapush-js" {
     onConnectionBroken?: () => void
     onConnectionClosed?: () => void
     onConnectionEstablished?: () => void
+    onConnectionToServerFail?: (failure: any) => void
     onConnectionWillClose?: () => void
     onFailedHandshake?: (failure: any) => void
     onMessageLost?: () => void
+    onNoServerUrlAvailable?: () => void
     onSuccessfulHandshake?: (authentication: any) => void
   }
 
@@ -155,6 +157,7 @@ declare module "zetapush-js" {
     disconnect(): void
     isConnected(): boolean
     getSandboxId(): string
+    getServers(): Promise<string>
     getResource(): string
     getUserId(): string
     removeConnectionStatusListener(listener: ConnectionStatusHandler)

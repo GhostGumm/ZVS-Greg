@@ -111,6 +111,14 @@ export const initialize: Promise<any> = new Promise((resolve, reject) => {
       client.removeConnectionStatusListener(handler)
       resolve()
     },
+    onConnectionToServerFail() {
+      client.removeConnectionStatusListener(handler)
+      reject()
+    },
+    onNoServerUrlAvailable() {
+      client.removeConnectionStatusListener(handler)
+      reject()
+    },
     onFailedHandshake() {
       client.removeConnectionStatusListener(handler)
       reject()
@@ -118,8 +126,6 @@ export const initialize: Promise<any> = new Promise((resolve, reject) => {
   })
   // Connect to ZetaPush API
   client.connect()
-  // Catch server errors
-  client.helper.servers.catch(reject)
 })
 
 export const CORE_PROVIDERS = [
