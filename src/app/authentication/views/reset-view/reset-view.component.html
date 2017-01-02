@@ -1,0 +1,18 @@
+<md-card class="zp-card-form" *ngIf="formIsVisible" [@formAnimation]="formIsVisible">
+  <md-toolbar color="primary">Reset your password</md-toolbar>
+  <md-card-content>
+    <form (ngSubmit)="onSubmit()" #resetForm="ngForm" id="resetForm">
+      <md-input type="text" placeholder="Login" [(ngModel)]="login" name="login" required></md-input>
+    </form>
+    <div *ngFor="let error of errors;">
+      <div>{{error.code}}</div>
+      <div>{{error.location}}</div>
+      <div>{{error.message}}</div>
+    </div>
+  </md-card-content>
+  <md-card-actions align="end">
+    <button md-button routerLink="/login">Sign In</button>
+    <button md-button routerLink="/register">Sign Up</button>
+    <button form="resetForm" type="submit" md-raised-button color="primary">Reset</button>
+  </md-card-actions>
+</md-card>

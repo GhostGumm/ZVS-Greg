@@ -1,28 +1,27 @@
-import { Component, HostBinding, AfterViewInit, Input, trigger } from '@angular/core'
+import { Component, HostBinding, Input, AfterViewInit, trigger } from '@angular/core'
 import { Router } from '@angular/router'
 import { fadeInOutView, slideUpDown } from '../../../utils/utils.animation'
 import { ApiUser } from '../../../zetapush/api'
 
-class RegisterModel {
-  public login: string = ''
-  public password: string = ''
-  public email: string = ''
-  public firstname: string = ''
-  public lastname: string = ''
+interface Error {
+  code: string
+  location: string
+  message: string
 }
 
 @Component({
-  selector: 'zp-register',
-  templateUrl: './register-view.component.html',
+  selector: 'zp-reset',
+  templateUrl: './reset-view.component.html',
   providers: [],
   animations: [
     trigger('formAnimation', slideUpDown),
     trigger('routeAnimation', fadeInOutView)
   ]
 })
-export class RegisterViewComponent implements AfterViewInit {
+export class ResetViewComponent implements AfterViewInit {
 
-  model: RegisterModel
+  login: string = ''
+  errors: Error[] = []
 
   @Input() formIsVisible: boolean = false
 
@@ -34,25 +33,26 @@ export class RegisterViewComponent implements AfterViewInit {
   constructor(
     private router: Router,
     private api: ApiUser
-  ) {
-    this.model = new RegisterModel()
-  }
+  ) {}
 
   ngAfterViewInit() {
     this.formIsVisible = true
   }
 
   onSubmit() {
-    console.debug('RegisterViewComponent::onSubmit', {
-      model: this.model
+    console.debug('ResetViewComponent::onSubmit', {
+      login: this.login
     })
     this.api
-        .createUser(this.model)
-        .then((result) => this.onCreateUserSuccess(result), console.error)
+        .resetUserPasswordByLogin({ login: this.login })
+        .then(
+          (result) => this.onResetUserPasswordByLogin(result),
+          (errors: Error[]) => this.errors = errors
+        )
   }
 
-  onCreateUserSuccess({ user }) {
-    console.debug('RegisterViewComponent::onCreate', { user })
+  onResetUserPasswordByLogin({ user }) {
+    console.debug('RegisterView::onResetUserPasswordByLogin', { user })
     // window.open(`http://yopmail.com/${user.email}`)
     this.router.navigate(['/login'])
   }

@@ -1,4 +1,4 @@
-import { Component, HostBinding, AfterViewInit, OnChanges, OnInit, Input, trigger } from '@angular/core'
+import { Component, HostBinding, AfterViewInit, Input, trigger } from '@angular/core'
 import { Router } from '@angular/router'
 import { fadeInOutView, slideUpDown } from '../../../utils/utils.animation'
 import { ZetaPushConnection } from '../../../zetapush'
@@ -17,7 +17,7 @@ class Credentials {
     trigger('routeAnimation', fadeInOutView)
   ]
 })
-export class LoginViewComponent implements AfterViewInit, OnChanges, OnInit {
+export class LoginViewComponent implements AfterViewInit {
 
   credentials: Credentials
   error: string
@@ -37,27 +37,12 @@ export class LoginViewComponent implements AfterViewInit, OnChanges, OnInit {
     this.credentials = new Credentials()
   }
 
-  ngOnInit() {
-    console.debug('LoginView::ngOnInit', {
-      formIsVisible: this.formIsVisible
-    })
-  }
-
-  ngOnChanges() {
-    console.debug('LoginView::ngOnChanges', {
-      formIsVisible: this.formIsVisible
-    })
-  }
-
   ngAfterViewInit() {
     this.formIsVisible = true
-    console.debug('LoginView::ngAfterViewInit', {
-      formIsVisible: this.formIsVisible
-    })
   }
 
   onSubmit() {
-    console.debug('LoginView::onSubmit', {
+    console.debug('LoginViewComponent::onSubmit', {
       credentials: this.credentials
     })
     this.connection

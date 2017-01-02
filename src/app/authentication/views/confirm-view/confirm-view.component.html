@@ -1,0 +1,14 @@
+<md-card class="zp-card-form" *ngIf="formIsVisible" [@formAnimation]="formIsVisible">
+  <md-toolbar color="primary">Confirm your password</md-toolbar>
+  <md-card-content>
+    <form (ngSubmit)="onSubmit()" #confirmForm="ngForm" id="confirmForm">
+      <md-input type="password" placeholder="Password" [(ngModel)]="password" name="password" required></md-input>
+      <md-input type="password" placeholder="Confirmation" [(ngModel)]="confirmation" name="confirmation" required></md-input>
+    </form>
+  </md-card-content>
+  <md-card-actions align="end">
+    <button md-button routerLink="/login">Sign In</button>
+    <button md-button routerLink="/register">Sign Up</button>
+    <button form="confirmForm" type="submit" [disabled]="!confirmForm.valid" md-raised-button color="primary">Confirm</button>
+  </md-card-actions>
+</md-card>
