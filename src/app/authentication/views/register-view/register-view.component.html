@@ -2,11 +2,21 @@
   <md-toolbar color="primary">Register</md-toolbar>
   <md-card-content>
     <form (ngSubmit)="onSubmit()" #registerForm="ngForm" id="registerForm">
-      <md-input type="text" placeholder="Login" [(ngModel)]="model.login" name="login" required></md-input>
-      <md-input type="password" placeholder="Password" [(ngModel)]="model.password" name="password" required></md-input>
-      <md-input type="email" placeholder="Email" [(ngModel)]="model.email" name="email" required></md-input>
-      <md-input type="text" placeholder="Firsname" [(ngModel)]="model.firstname" name="firstname" required></md-input>
-      <md-input type="text" placeholder="Lastname" [(ngModel)]="model.lastname" name="lastname" required></md-input>
+      <md-input-container>
+        <input md-input type="text" placeholder="Login" [(ngModel)]="model.login" name="login" required>
+      </md-input-container>
+      <md-input-container>
+        <input md-input type="password" placeholder="Password" [(ngModel)]="model.password" name="password" required>
+      </md-input-container>
+      <md-input-container>
+        <input md-input type="email" placeholder="Email" [(ngModel)]="model.email" name="email" required>
+      </md-input-container>
+      <md-input-container>
+        <input md-input type="text" placeholder="Firsname" [(ngModel)]="model.firstname" name="firstname" required>
+      </md-input-container>
+      <md-input-container>
+        <input md-input type="text" placeholder="Lastname" [(ngModel)]="model.lastname" name="lastname" required>
+      </md-input-container>
     </form>
   </md-card-content>
   <md-card-actions align="end">

@@ -1,4 +1,4 @@
-<md-sidenav-layout>
+<md-sidenav-container>
   <md-sidenav #navigation mode="{{isMobile ? 'over' : 'side'}}">
     <zp-navigation [navigation]="navigation" [user]="user" (logout)="onLogout()" [isMobile]="isMobile"></zp-navigation>
   </md-sidenav>
@@ -34,4 +34,4 @@
   <div class="zp-content">
     <router-outlet></router-outlet>
   </div>
-</md-sidenav-layout>
+</md-sidenav-container>

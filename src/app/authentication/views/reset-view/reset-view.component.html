@@ -2,7 +2,9 @@
   <md-toolbar color="primary">Reset your password</md-toolbar>
   <md-card-content>
     <form (ngSubmit)="onSubmit()" #resetForm="ngForm" id="resetForm">
-      <md-input type="text" placeholder="Login" [(ngModel)]="login" name="login" required></md-input>
+      <md-input-container>
+        <input md-input type="text" placeholder="Login" [(ngModel)]="login" name="login" required>
+      </md-input-container>
     </form>
     <div *ngFor="let error of errors;">
       <div>{{error.code}}</div>

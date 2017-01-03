@@ -57,9 +57,10 @@
   </div> 
 
   <form (ngSubmit)="addMessage($event)" #messageForm="ngForm" id="messageForm">
-    <md-input #messageRawDom [(ngModel)]="messageRaw" class="zp-messages-inputs-text" maxlength="{{limits.message}}" name="messageRawDom" id="messageRawDom" required autocomplete="off">
+    <md-input-container>
+      <input md-input #messageRawDom [(ngModel)]="messageRaw" class="zp-messages-inputs-text" maxlength="{{limits.message}}" name="messageRawDom" id="messageRawDom" required autocomplete="off">
       <md-hint align="end">{{messageRawDom.characterCount > 0 ? messageRawDom.characterCount : '' }}</md-hint>
-    </md-input>
+    </md-input-container>
   </form>
 
   <button type="submit" md-icon-button color="primary" form="messageForm">

@@ -2,8 +2,12 @@
   <md-toolbar color="primary">Confirm your password</md-toolbar>
   <md-card-content>
     <form (ngSubmit)="onSubmit()" #confirmForm="ngForm" id="confirmForm">
-      <md-input type="password" placeholder="Password" [(ngModel)]="password" name="password" required></md-input>
-      <md-input type="password" placeholder="Confirmation" [(ngModel)]="confirmation" name="confirmation" required></md-input>
+      <md-input-container>
+        <input md-input type="password" placeholder="Password" [(ngModel)]="password" name="password" required>
+      </md-input-container>
+      <md-input-container>
+        <input md-input type="password" placeholder="Confirmation" [(ngModel)]="confirmation" name="confirmation" required>
+      </md-input-container>
     </form>
   </md-card-content>
   <md-card-actions align="end">
