@@ -22,8 +22,11 @@ export class ApiConversation extends Api {
   getConversation({ id, owner }) {
     return this.$publish('getConversation', { id, owner })
   }
-  getOneToOneConversation({ interlocutor }) {
-    return this.$publish('getOneToOneConversation', { interlocutor })
+  getConversationMessages({ id, owner, pagination }) {
+    return this.$publish('getConversation', { id, owner, pagination })
+  }
+  getOneToOneConversation({ interlocutor, pagination }) {
+    return this.$publish('getOneToOneConversation', { interlocutor, pagination })
   }
   listConversationByMember({ userKey }) {
     return this.$publish('listConversationByMember', { userKey })

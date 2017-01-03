@@ -18,5 +18,6 @@ export interface ConversationViewInterface {
   owner: string
   users: Array<UserInterface>
   messages: Array<MessageInterface>,
-  pagination?: ConversationPagination
+  pagination?: ConversationPagination,
+  hasNext: boolean
 }

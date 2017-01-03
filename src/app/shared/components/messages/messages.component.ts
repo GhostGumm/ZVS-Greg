@@ -136,6 +136,9 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     return message.id
   }
 
+  getNextMessage() {
+  }
+
   // Click on md-list-item
   onClickMessage(event: MouseEvent, message: MessageInterface, index) {
     console.debug('MessagesComponent::onClickMessage', { message, event, index })

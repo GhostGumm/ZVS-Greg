@@ -56,13 +56,14 @@ export class ConversationService implements OnDestroy {
   }
 
   getOneToOneConversation(interlocutor: Array<string>, pagination: ConversationPagination): Promise<ConversationViewInterface> {
-    return this.api.getOneToOneConversation({ interlocutor }).then((conversation) => {
-      const { messages, group: { members }, details: { id, owner } } = conversation
+    return this.api.getOneToOneConversation({ interlocutor, pagination }).then((conversation) => {
+      const { page, messages, group: { members }, details: { id, owner } } = conversation
       const result: ConversationViewInterface = {
         id,
         owner,
         users: [],
-        messages: []
+        messages: [],
+        hasNext: page.hasNext
       }
 
       result.users = members.map((user) => {
@@ -108,6 +109,7 @@ export class ConversationService implements OnDestroy {
         result,
         files: this.messageService.getFiles()
       })
+
       return result
     })
   }
@@ -130,7 +132,7 @@ export class ConversationService implements OnDestroy {
 
   private upload({ attachment, guid, httpMethod, url }): Promise<string> {
     console.debug('ConversationService::upload', { attachment, guid, httpMethod, url })
-    return new Promise((resolve, reject) => { 
+    return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest()
 
       xhr.open(httpMethod, url, true)

@@ -4,8 +4,8 @@
 
   <h4 md-list-empty *ngIf="conversation?.messages.length === 0">0 messages</h4>
 
-  <div zp-messages-pagination>
-    <button lg accent md-icon-button>
+  <div *ngIf="conversation?.hasNext" zp-messages-pagination>
+    <button lg accent md-icon-button (click)="getNextMessage()">
       <md-icon>keyboard_arrow_up</md-icon>
     </button>
   </div>
