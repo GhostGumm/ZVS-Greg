@@ -110,7 +110,6 @@ export class GalleryComponent implements OnInit {
 
     popup.document.write(`<html><head><title>${document.title}</title>`)
     popup.document.write('</head><body >')
-    popup.document.write(`<h1>${document.title}</h1>`)
     const image = new Image()
     image.src = this.selected.value
     // Typescript issue with unknown attr...
