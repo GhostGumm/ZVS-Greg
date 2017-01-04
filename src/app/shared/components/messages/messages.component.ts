@@ -64,13 +64,11 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   }
 
   ngOnInit() {
-      this.conversationService.percent.subscribe({
-        next: (progress) => {
-          this.zone.run(() => {
-            this.progress = progress
-            console.debug('MessagesComponent::upload.progress', { progress: this.progress })
-          })
-        }
+    this.conversationService.percent.subscribe({
+      next: (progress) => { this.zone.run(() => {
+        this.progress = progress
+        console.debug('MessagesComponent::upload.progress', { progress: this.progress })
+      })}
     })
   }
 
@@ -112,7 +110,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   }
 
   ngOnChanges(changes) {
-    console.log('MessagesComponent::ngOnChanges', { changes })
+    console.debug('MessagesComponent::ngOnChanges', { changes })
     if (changes.conversation && changes.conversation.currentValue) {
       const id = changes.conversation.currentValue.id
       this.onGetConversation(id)
@@ -134,6 +132,10 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   // Custom Track By
   trackByMessageId(index: number, message: MessageInterface) {
     return message.id
+  }
+
+  getNextMessage() {
+    this.conversationService.getConversationMessages(this.conversation)
   }
 
   // Click on md-list-item
@@ -217,7 +219,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
 
     this.pushProcessedMessage(fileProcessed)
 
-    console.log('MessagesComponent::processFile', {
+    console.debug('MessagesComponent::processFile', {
       queue: uploader.queue,
       message,
       fileProcessed

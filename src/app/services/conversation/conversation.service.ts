@@ -56,13 +56,14 @@ export class ConversationService implements OnDestroy {
   }
 
   getOneToOneConversation(interlocutor: Array<string>, pagination: ConversationPagination): Promise<ConversationViewInterface> {
-    return this.api.getOneToOneConversation({ interlocutor }).then((conversation) => {
-      const { messages, group: { members }, details: { id, owner } } = conversation
+    return this.api.getOneToOneConversation({ interlocutor, pagination }).then((conversation) => {
+      const { page, messages, group: { members }, details: { id, owner } } = conversation
       const result: ConversationViewInterface = {
         id,
         owner,
         users: [],
-        messages: []
+        messages: [],
+        pagination: page
       }
 
       result.users = members.map((user) => {
@@ -79,25 +80,9 @@ export class ConversationService implements OnDestroy {
       // Reset messageService files
       this.messageService.resetServices()
 
-      // Reverse messages list
+      // Reverse and process message by type
       for (let i = messages.length - 1; i >= 0; i--) {
-        let message
-        const type = messages[i].data.type
-
-        switch (type) {
-        case MessageClass.TYPE_MARKUP:
-          message = this.messageService.processMarkup({
-            message: messages[i],
-            users: result.users
-          })
-          break
-        case MessageClass.TYPE_ATTACHMENT:
-          message = this.messageService.processAttachment({
-            message: messages[i],
-            users: result.users
-          })
-          break
-        }
+        let message = this.parseConversationMessage(messages[i], result.users)
         result.messages.push(message)
       }
 
@@ -108,8 +93,48 @@ export class ConversationService implements OnDestroy {
         result,
         files: this.messageService.getFiles()
       })
+
       return result
     })
+  }
+
+  getConversationMessages(conversation): Promise<any> {
+    const { id, owner, pagination, users  } = conversation
+    pagination.pageNumber++
+    console.debug('ConversationService::getConversationMessages', { pagination })
+    return this.api.getConversationMessages({ id, owner, pagination }).then((result) => {
+      const { messages, page } = result
+      pagination.hasNext = page.hasNext
+
+      for (let i = 0; i < messages.length; i++) {
+        let message = this.parseConversationMessage(messages[i], users)
+        conversation.messages.unshift(message)
+      }
+
+      this.messageService.indexByAuthor(conversation.messages)
+      return result
+    })
+  }
+
+  parseConversationMessage(message, users) {
+    let processedMessage
+    const type = message.data.type
+
+    switch (type) {
+    case MessageClass.TYPE_MARKUP:
+      processedMessage = this.messageService.processMarkup({
+        message: message,
+        users: users
+      })
+      break
+    case MessageClass.TYPE_ATTACHMENT:
+      processedMessage = this.messageService.processAttachment({
+        message: message,
+        users: users
+      })
+      break
+    }
+    return processedMessage
   }
 
   addConversationMarkup(id, owner, value): Promise<MessageInterface> {
@@ -130,7 +155,7 @@ export class ConversationService implements OnDestroy {
 
   private upload({ attachment, guid, httpMethod, url }): Promise<string> {
     console.debug('ConversationService::upload', { attachment, guid, httpMethod, url })
-    return new Promise((resolve, reject) => { 
+    return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest()
 
       xhr.open(httpMethod, url, true)
