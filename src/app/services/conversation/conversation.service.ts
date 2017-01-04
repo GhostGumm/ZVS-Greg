@@ -63,7 +63,7 @@ export class ConversationService implements OnDestroy {
         owner,
         users: [],
         messages: [],
-        hasNext: page.hasNext
+        pagination: page
       }
 
       result.users = members.map((user) => {
@@ -80,25 +80,9 @@ export class ConversationService implements OnDestroy {
       // Reset messageService files
       this.messageService.resetServices()
 
-      // Reverse messages list
+      // Reverse and process message by type
       for (let i = messages.length - 1; i >= 0; i--) {
-        let message
-        const type = messages[i].data.type
-
-        switch (type) {
-        case MessageClass.TYPE_MARKUP:
-          message = this.messageService.processMarkup({
-            message: messages[i],
-            users: result.users
-          })
-          break
-        case MessageClass.TYPE_ATTACHMENT:
-          message = this.messageService.processAttachment({
-            message: messages[i],
-            users: result.users
-          })
-          break
-        }
+        let message = this.parseConversationMessage(messages[i], result.users)
         result.messages.push(message)
       }
 
@@ -112,6 +96,45 @@ export class ConversationService implements OnDestroy {
 
       return result
     })
+  }
+
+  getConversationMessages(conversation): Promise<any> {
+    const { id, owner, pagination, users  } = conversation
+    pagination.pageNumber++
+    console.debug('ConversationService::getConversationMessages', { pagination })
+    return this.api.getConversationMessages({ id, owner, pagination }).then((result) => {
+      const { messages, page } = result
+      pagination.hasNext = page.hasNext
+
+      for (let i = 0; i < messages.length; i++) {
+        let message = this.parseConversationMessage(messages[i], users)
+        conversation.messages.unshift(message)
+      }
+
+      this.messageService.indexByAuthor(conversation.messages)
+      return result
+    })
+  }
+
+  parseConversationMessage(message, users) {
+    let processedMessage
+    const type = message.data.type
+
+    switch (type) {
+    case MessageClass.TYPE_MARKUP:
+      processedMessage = this.messageService.processMarkup({
+        message: message,
+        users: users
+      })
+      break
+    case MessageClass.TYPE_ATTACHMENT:
+      processedMessage = this.messageService.processAttachment({
+        message: message,
+        users: users
+      })
+      break
+    }
+    return processedMessage
   }
 
   addConversationMarkup(id, owner, value): Promise<MessageInterface> {

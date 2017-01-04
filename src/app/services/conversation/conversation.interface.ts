@@ -10,7 +10,8 @@ export interface ConversationInterface {
 
 export interface ConversationPagination {
   pageNumber: number,
-  pageSize: number
+  pageSize: number,
+  hasNext?: boolean
 }
 
 export interface ConversationViewInterface {
@@ -18,6 +19,5 @@ export interface ConversationViewInterface {
   owner: string
   users: Array<UserInterface>
   messages: Array<MessageInterface>,
-  pagination?: ConversationPagination,
-  hasNext: boolean
+  pagination?: ConversationPagination
 }

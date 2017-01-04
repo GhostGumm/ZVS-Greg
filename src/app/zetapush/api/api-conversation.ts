@@ -23,7 +23,7 @@ export class ApiConversation extends Api {
     return this.$publish('getConversation', { id, owner })
   }
   getConversationMessages({ id, owner, pagination }) {
-    return this.$publish('getConversation', { id, owner, pagination })
+    return this.$publish('getConversationMessages', { id, owner, pagination })
   }
   getOneToOneConversation({ interlocutor, pagination }) {
     return this.$publish('getOneToOneConversation', { interlocutor, pagination })
