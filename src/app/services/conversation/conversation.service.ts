@@ -112,7 +112,7 @@ export class ConversationService implements OnInit, OnDestroy {
       pagination.hasNext = page.hasNext
 
       for (let i = 0; i < messages.length; i++) {
-        let message = this.parseConversationMessage(messages[i], users)
+        let message = this.parseConversationMessage(messages[i], users, false)
         conversation.messages.unshift(message)
       }
 
@@ -121,7 +121,7 @@ export class ConversationService implements OnInit, OnDestroy {
     })
   }
 
-  parseConversationMessage(message, users) {
+  parseConversationMessage(message, users, isNew = true) {
     let processedMessage
     const type = message.data.type
 
@@ -129,13 +129,15 @@ export class ConversationService implements OnInit, OnDestroy {
     case MessageClass.TYPE_MARKUP:
       processedMessage = this.messageService.processMarkup({
         message: message,
-        users: users
+        users: users,
+        isNew
       })
       break
     case MessageClass.TYPE_ATTACHMENT:
       processedMessage = this.messageService.processAttachment({
         message: message,
-        users: users
+        users: users,
+        isNew
       })
       break
     }
