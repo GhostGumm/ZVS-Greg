@@ -141,6 +141,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   }
 
   getNextMessage() {
+    // No fetch if no next messages available
     if (this.conversation.pagination.hasNext === false) {
       return
     }
@@ -148,12 +149,16 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     this.conversationService.getConversationMessages(this.conversation).then((result) => {
       this.zone.run(() => {
         console.debug('MessagesComponent::getNextMessage', { result })
-        if (this.conversation.pagination.hasNext === true) {
-          this.messageListRef.el.scrollTop = 80
-        }
+        // Zero timeout incase of no scrollbar on first fetch 
+        setTimeout(() => {
+          if (this.conversation.pagination.hasNext === true) {
+            this.messageListRef.el.scrollTop = 80
+          }
+        }, 0)
+        // 500ms timeout to allow <img> element to be parsed before reactivate scroll-glue
         setTimeout(() => {
           this.messageListRef.isLocked = true
-        }, 1000)
+        }, 500)
       })
     })
   }
@@ -235,7 +240,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   processAttachment(message: any) {
     const { users } = this.conversation
     const uploader = this.uploader
-    let fileProcessed: MessageInterface = this.messageService.processAttachment({ message, users })
+    let fileProcessed: MessageInterface = this.messageService.processAttachment({ message, users, isNew: true })
 
     this.pushProcessedMessage(fileProcessed)
 
@@ -250,7 +255,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   processMarkup(message: MessageInterface) {
     const { users } = this.conversation
 
-    let messageProcessed: MessageInterface = this.messageService.processMarkup({ message, users })
+    let messageProcessed: MessageInterface = this.messageService.processMarkup({ message, users, isNew: true })
 
     this.pushProcessedMessage(messageProcessed)
 

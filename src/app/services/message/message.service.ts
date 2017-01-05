@@ -30,9 +30,13 @@ export class MessageService {
     return this.files
   }
 
-  setFile(file) {
+  setFile(file, isNew) {
     console.debug('MessageService::setFile', file)
-    this.files.push(file)
+    if (isNew === true) {
+      this.files.push(file)
+    } else {
+      this.files.unshift(file)
+    }
   }
 
   /**
@@ -82,19 +86,19 @@ export class MessageService {
     })
   }
 
-  processMarkup({ message, users }: { message: any, users: Array<UserInterface> }) {
+  processMarkup({ message, users, isNew }: { message: any, users: Array<UserInterface>, isNew: boolean }) {
     let markup = this.processData({ message, users })
     markup.value = this.linkify(markup.value)
     return markup
   }
 
-  processAttachment({ message, users }: { message: any, users: Array<UserInterface> }) {
+  processAttachment({ message, users, isNew }: { message: any, users: Array<UserInterface>, isNew: boolean }) {
     const attachment = this.processData({ message, users })
     const { metadata } = attachment
 
     // Rename value with proxy url
     attachment.value = `${this.proxy}${attachment.value}`
-    this.setFile(attachment)
+    this.setFile(attachment, isNew)
 
     // Format size value
     metadata.size = this.formatBytes(metadata.size, 1)
