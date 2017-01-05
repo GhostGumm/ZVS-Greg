@@ -50,6 +50,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     removeAfterUpload: true
   })
 
+  @ViewChild(ScrollGlueDirective) messageListRef: ScrollGlueDirective // message container directive ref
   @ViewChild('uploadInput') uploadInputRef: ElementRef // uploader dom ref
   @ViewChild('messageForm') messageForm: NgForm // form message dom ref
 
@@ -135,7 +136,13 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   }
 
   getNextMessage() {
-    this.conversationService.getConversationMessages(this.conversation)
+    this.messageListRef.isLocked = false
+    this.conversationService.getConversationMessages(this.conversation).then((result) => {
+      console.debug('MessagesComponent::getNextMessage', { result })
+      setTimeout(() => {
+        this.messageListRef.isLocked = true
+      }, 500)
+    })
   }
 
   // Click on md-list-item
