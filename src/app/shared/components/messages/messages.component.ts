@@ -71,6 +71,11 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
         console.debug('MessagesComponent::upload.progress', { progress: this.progress })
       })}
     })
+    this.messageListRef.isTop.subscribe({
+      next: () => {
+        this.getNextMessage()
+      }
+    })
   }
 
   ngAfterViewInit() {
@@ -136,12 +141,20 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   }
 
   getNextMessage() {
+    if (this.conversation.pagination.hasNext === false) {
+      return
+    }
     this.messageListRef.isLocked = false
     this.conversationService.getConversationMessages(this.conversation).then((result) => {
-      console.debug('MessagesComponent::getNextMessage', { result })
-      setTimeout(() => {
-        this.messageListRef.isLocked = true
-      }, 500)
+      this.zone.run(() => {
+        console.debug('MessagesComponent::getNextMessage', { result })
+        if (this.conversation.pagination.hasNext === true) {
+          this.messageListRef.el.scrollTop = 80
+        }
+        setTimeout(() => {
+          this.messageListRef.isLocked = true
+        }, 1000)
+      })
     })
   }
 
