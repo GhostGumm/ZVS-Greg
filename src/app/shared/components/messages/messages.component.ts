@@ -50,6 +50,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     removeAfterUpload: true
   })
 
+  @ViewChild(ScrollGlueDirective) messageListRef: ScrollGlueDirective // message container directive ref
   @ViewChild('uploadInput') uploadInputRef: ElementRef // uploader dom ref
   @ViewChild('messageForm') messageForm: NgForm // form message dom ref
 
@@ -69,6 +70,11 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
         this.progress = progress
         console.debug('MessagesComponent::upload.progress', { progress: this.progress })
       })}
+    })
+    this.messageListRef.isTop.subscribe({
+      next: () => {
+        this.getNextMessage()
+      }
     })
   }
 
@@ -135,7 +141,21 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   }
 
   getNextMessage() {
-    this.conversationService.getConversationMessages(this.conversation)
+    if (this.conversation.pagination.hasNext === false) {
+      return
+    }
+    this.messageListRef.isLocked = false
+    this.conversationService.getConversationMessages(this.conversation).then((result) => {
+      this.zone.run(() => {
+        console.debug('MessagesComponent::getNextMessage', { result })
+        if (this.conversation.pagination.hasNext === true) {
+          this.messageListRef.el.scrollTop = 80
+        }
+        setTimeout(() => {
+          this.messageListRef.isLocked = true
+        }, 1000)
+      })
+    })
   }
 
   // Click on md-list-item

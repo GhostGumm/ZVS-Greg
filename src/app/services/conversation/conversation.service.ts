@@ -1,9 +1,10 @@
-import { Injectable, OnDestroy, NgZone } from '@angular/core'
+import { Injectable, OnInit, OnDestroy, NgZone } from '@angular/core'
 import { Http } from '@angular/http'
 import { Observable } from 'rxjs/Observable'
 import { Subscription } from 'rxjs/Subscription'
+import { Subject } from 'rxjs/Subject'
 import 'rxjs/add/operator/map'
-import * as Rx from 'rxjs'
+import 'rxjs/add/observable/merge'
 
 import { ApiConversation } from '../../zetapush/api'
 
@@ -13,17 +14,16 @@ import { MessageClass, MessageInterface, MessageService } from '../message'
 import { UserClass } from '../user'
 
 @Injectable()
-export class ConversationService implements OnDestroy {
+export class ConversationService implements OnInit, OnDestroy {
 
-  subscriptions: Array<Subscription> = []
+  public subscriptions: Array<Subscription> = []
+  public percent: any
 
   public onAddConversationAttachment: Observable<any>
   public onAddConversationMarkup: Observable<any>
   public onCreateOneToOneConversation: Observable<ConversationInterface>
   public onGetOneToOneConversation: Observable<ConversationInterface>
 
-  // To Improve
-  public percent: any = new Rx.Subject()
 
   constructor(
     private api: ApiConversation,
@@ -35,10 +35,15 @@ export class ConversationService implements OnDestroy {
     this.onAddConversationMarkup = api.onAddConversationMarkup
     this.onCreateOneToOneConversation = api.onCreateOneToOneConversation
     this.onGetOneToOneConversation = api.onGetOneToOneConversation
+    // To Improve
+    this.percent = new Subject()
+  }
+
+  ngOnInit() {
   }
 
   onAddConversationMessage(id) {
-    return Rx.Observable.merge(
+    return Observable.merge(
       this.onAddConversationAttachment,
       this.onAddConversationMarkup
     ).filter(({ result }) => {

@@ -1,11 +1,13 @@
-import { Directive, ElementRef, AfterContentInit, OnDestroy, HostListener } from '@angular/core'
+import { Directive, ElementRef, OnInit, AfterContentInit, OnDestroy, HostListener } from '@angular/core'
+import { Subject } from 'rxjs/Subject'
 
 @Directive({
     selector: '[zpScrollGlue]'
 })
 
-export class ScrollGlueDirective implements AfterContentInit, OnDestroy {
+export class ScrollGlueDirective implements OnInit, AfterContentInit, OnDestroy {
     public el: any
+    public isTop: any = new Subject()
     public isLocked: boolean = true
     private _observer: any
     private _oldScrollHeight: number = 0
@@ -17,10 +19,20 @@ export class ScrollGlueDirective implements AfterContentInit, OnDestroy {
 
     constructor(private _el: ElementRef) {
       this.el = _el.nativeElement
+      // To Improve
+      this.isTop = new Subject()
+    }
+
+    ngOnInit() {
     }
 
     @HostListener('scroll')
     onScroll() {
+      const scrollTop = this.el.scrollTop
+      console.debug('ScrollGlueDirective::onScroll', { scrollTop })
+      if (scrollTop === 0) {
+        this.isTop.next()
+      }
     }
 
     ngAfterContentInit() {
