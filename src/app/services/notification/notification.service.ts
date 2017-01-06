@@ -56,32 +56,24 @@ export class NotificationService implements OnInit, OnDestroy {
 
   toast({ title, action = '', duration = 2000 }) {
     // this.newNativeNotification(title, action, duration)
-
-    const config = new MdSnackBarConfig()
-    config.duration = duration
-    const ref = this.snackBar.open(title, action, this.toastConfig)
-    // Quick fix waiting material update
-    ref.afterOpened().subscribe(() => {
-      setTimeout(() => {
-        ref.dismiss()
-      }, duration)
+    this.snackBar.open(title, action, {
+      duration
     })
-
-    console.debug('NotificationService::toast', { title, action, config })
+    console.debug('NotificationService::toast', { title, action })
   }
 
   listUserNotification(): Promise<any> {
     return this.api.listUserNotification()
   }
 
-  welcomeToast(user) {
+  toastOnConnection(user) {
     this.toast({
       title: `Welcome ${user.firstname}`,
       duration: NOTIFICATION_WELCOME_DURATION
     })
   }
 
-  callToast() {
+  toastOnCall() {
     const config = new MdSnackBarConfig()
     config.duration = NOTIFICATION_CALL_DURATION
     const ref = this.snackBar.openFromComponent(NotificationCallComponent, config)

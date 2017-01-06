@@ -21,15 +21,6 @@ export class NotificationCallComponent implements OnInit, OnDestroy {
   constructor(
   ) {
     console.debug('NotificationCallComponent::constructor')
-    // this.interval = setInterval(() => {
-    //   if (this.duration < NOTIFICATION_CALL_DURATION) {
-    //     this.duration += 32
-    //     this.progress = (this.duration / NOTIFICATION_CALL_DURATION) * 100
-    //     this.changeRef.detectChanges()
-    //   } else if (this.duration >= NOTIFICATION_CALL_DURATION) {
-    //     clearInterval(this.interval)
-    //   }
-    // }, 32)
   }
 
   ngOnInit() {
