@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 // Application Modules
-import { API_PROVIDERS } from './api'
+import { PROVIDERS as API_PROVIDERS  } from './api'
+import { PROVIDERS as SERVICE_PROVIDERS } from './services'
 import { CORE_PROVIDERS } from './core'
 
 import { DIRECTIVES } from './directives'
@@ -15,7 +16,8 @@ import { DIRECTIVES } from './directives'
   imports: [ ],
   providers: [
     ...API_PROVIDERS,
-    ...CORE_PROVIDERS
+    ...CORE_PROVIDERS,
+    ...SERVICE_PROVIDERS
   ],
   bootstrap: [ ]
 })

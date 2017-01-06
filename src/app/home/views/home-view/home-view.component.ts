@@ -4,6 +4,8 @@ import { fadeInOutView } from '../../../utils/utils.animation'
 import * as Chartist from 'chartist'
 import { ChartType, ChartEvent } from 'angular2-chartist'
 
+import { NotificationService } from '../../../services'
+
 import { CARDS_TEMPLATE } from './home-view.template'
 
 export interface Chart {
@@ -34,10 +36,14 @@ export class HomeViewComponent implements OnInit, AfterViewInit {
   }
 
   constructor(
+    private notifications: NotificationService
   ) {
   }
 
   ngOnInit() {
+    this.notifications.listUserNotification().then(({ notifications, page }) => {
+      console.debug('listUserNotification', { notifications, page })
+    })
   }
 
   ngAfterViewInit() {

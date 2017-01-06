@@ -1,6 +1,10 @@
 import { Injectable, OnInit, OnDestroy } from '@angular/core'
 import { MdSnackBar, MdSnackBarConfig } from '@angular/material'
 import { Subscription } from 'rxjs/Subscription'
+import { Observable } from 'rxjs/Observable'
+
+import { ApiNotification } from '../../zetapush/api'
+import { MessagingService } from '../../zetapush/services'
 
 import { NotificationCallComponent } from './call/notification.call'
 import { NOTIFICATION_CALL_DURATION, NOTIFICATION_WELCOME_DURATION } from './notification.interface'
@@ -8,12 +12,24 @@ import { NOTIFICATION_CALL_DURATION, NOTIFICATION_WELCOME_DURATION } from './not
 @Injectable()
 export class NotificationService implements OnInit, OnDestroy {
 
+  public onListUserNotification: Observable<any>
+
   private toastConfig: MdSnackBarConfig
   private subscriptions: Array<Subscription> = []
 
   constructor(
+    private api: ApiNotification,
+    private messaging: MessagingService,
     private snackBar: MdSnackBar
   ) {
+    this.onListUserNotification = api.onListUserNotification
+    messaging.onNotification.subscribe(({ data }) => {
+      console.debug('onNotification', data)
+      this.toast({
+        title: `${data.type} ${data.value.message.data.raw}`,
+        duration: NOTIFICATION_WELCOME_DURATION
+      })
+    })
   }
 
   ngOnInit() {
@@ -49,6 +65,10 @@ export class NotificationService implements OnInit, OnDestroy {
     })
 
     console.debug('NotificationService::toast', { title, action, config })
+  }
+
+  listUserNotification(): Promise<any> {
+    return this.api.listUserNotification()
   }
 
   welcomeToast(user) {
