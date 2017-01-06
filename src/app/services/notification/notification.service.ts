@@ -23,12 +23,15 @@ export class NotificationService implements OnInit, OnDestroy {
     private snackBar: MdSnackBar
   ) {
     this.onListUserNotification = api.onListUserNotification
-    messaging.onNotification.subscribe(({ data }) => {
-      console.debug('onNotification', data)
-      this.toast({
-        title: `${data.type} ${data.value.message.data.raw}`,
-        duration: NOTIFICATION_WELCOME_DURATION
-      })
+    messaging.onNotification.subscribe(({ data }) => this.onReceiveNotification(data))
+  }
+
+  onReceiveNotification(notification: any) {
+    console.debug('NotificationService::onReceiveNotification', notification)
+    // TODO Dispath notification?
+    this.toast({
+      title: `${notification.type} ${notification.value}`,
+      duration: NOTIFICATION_WELCOME_DURATION
     })
   }
 
