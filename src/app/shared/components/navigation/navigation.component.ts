@@ -107,14 +107,14 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
   onContactClicked(event) {
     const user = event.value
     console.debug('NavigationComponent::onContactClicked', { user })
-    // this.router.navigate(['/authenticated/conversation' , user.id])
-    // this.router.navigateByUrl(`/authenticated/conversation/${user.id}`)
+    this.router.navigate(['/authenticated/conversation' , user.id])
     /**
-     * Angular 2 router weird behavior
+     * OLD
+     * Angular 2.1 router weird behavior
      * router.navigate lead to detectChange break
      * native action don't obviously..
      */
-    window.location.hash = `#/authenticated/conversation/${user.id}`
+    // window.location.hash = `#/authenticated/conversation/${user.id}`
   }
 
   onLogout() {
