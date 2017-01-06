@@ -72,10 +72,12 @@ export class ConversationViewComponent implements OnInit, OnDestroy, AfterViewIn
       pageSize: 20
     }
     this.conversationService.getOneToOneConversation(interlocutor, pagination).then((result) => {
-      this.conversation = result
-      this.loading = false
-      console.log('ConversationViewComponent::getConversation:success', {
-        conversation: this.conversation
+      this.zone.run(() => {
+        this.conversation = result
+        this.loading = false
+        console.log('ConversationViewComponent::getConversation:success', {
+          conversation: this.conversation
+        })
       })
     })
   }
@@ -105,11 +107,9 @@ export class ConversationViewComponent implements OnInit, OnDestroy, AfterViewIn
 
   addRouteListener() {
     this.subscriptions.push(this.route.params.subscribe((params) => {
-      this.zone.run(() => {
-        console.debug('ConversationViewComponent::params', params)
-        this.getConversation(params['id'])
-        this.$params = params
-      })
+      console.debug('ConversationViewComponent::params', params)
+      this.getConversation(params['id'])
+      this.$params = params
     }))
   }
 
