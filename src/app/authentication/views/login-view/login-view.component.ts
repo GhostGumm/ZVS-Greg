@@ -45,17 +45,20 @@ export class LoginViewComponent implements AfterViewInit {
     console.debug('LoginViewComponent::onSubmit', {
       credentials: this.credentials
     })
+    this.error = ''
     this.connection
         .connect(this.credentials)
-        .then(() => this.onConnectionSuccess(), () => this.onConnectionError())
+        .then((result) => this.onConnectionSuccess(result), () => this.onConnectionError())
   }
 
-  onConnectionSuccess() {
+  onConnectionSuccess(result) {
+    console.debug('LoginViewComponent::onConnectionSuccess', { result })
     this.router.navigate(['/authenticated/home'])
   }
 
   onConnectionError() {
-    this.error = 'Unable to connect'
+    console.debug('LoginViewComponent::onConnectionError')
+    this.error = 'ERROR__USER_UNKNOWN'
   }
 
 }

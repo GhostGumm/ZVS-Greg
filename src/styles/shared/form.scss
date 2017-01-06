@@ -16,3 +16,14 @@
     padding: 16px 32px !important;
   }
 }
+
+.zp-form-error{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 16px;
+  color: md-color($warn);
+  > p {
+    padding-left: 10px;
+  }
+}

@@ -14,6 +14,10 @@
     <md-checkbox [disabled]="loading" [checked]="inviteAll" (change)="selectAll()"></md-checkbox>
   </div>
 
+  <div class="zp-user-list-empty">
+    0 members left to invite
+  </div>
+
   <template class="zp-user-list-user-action" let-user="user">
     <!--<button type="button" md-icon-button (click)="dialogRef.close(user)" color="primary">
       <md-icon>add</md-icon>

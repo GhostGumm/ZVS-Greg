@@ -23,6 +23,7 @@ class RegisterModel {
 export class RegisterViewComponent implements AfterViewInit {
 
   model: RegisterModel
+  error: string
 
   @Input() formIsVisible: boolean = false
 
@@ -46,15 +47,21 @@ export class RegisterViewComponent implements AfterViewInit {
     console.debug('RegisterViewComponent::onSubmit', {
       model: this.model
     })
+    this.error = ''
     this.api
         .createUser(this.model)
-        .then((result) => this.onCreateUserSuccess(result), console.error)
+        .then((result) => this.onCreateUserSuccess(result), (errors) => this.onCreateUserError(errors[0]))
   }
 
   onCreateUserSuccess({ user }) {
     console.debug('RegisterViewComponent::onCreate', { user })
     // window.open(`http://yopmail.com/${user.email}`)
     this.router.navigate(['/login'])
+  }
+
+  onCreateUserError(error) {
+    console.debug('RegisterViewComponent::onError', { error })
+    this.error = error.code
   }
 
 }

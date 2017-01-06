@@ -85,6 +85,7 @@ pdf-viewer{
   top: 50%;
   margin-top: -($zp-size-lg * 0.5);
   z-index: 1;
+  box-shadow: 0 0 0px 1px white;
 }
 [zp-gallery-previous]{
   left: 20px;

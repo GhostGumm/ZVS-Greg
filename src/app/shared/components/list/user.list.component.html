@@ -12,6 +12,8 @@
     </p>      
     <template [ngTemplateOutlet]="templateUserAction" [ngOutletContext]="{user:user}" select=".zp-user-list-user-action"></template>
   </md-list-item>
+
+  <ng-content *ngIf="users.length == 0" select=".zp-user-list-empty"></ng-content>
 </md-list>
 
 <ng-content select=".zp-user-list-actions-bottom"></ng-content>

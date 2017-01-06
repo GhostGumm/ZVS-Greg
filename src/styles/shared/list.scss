@@ -1,0 +1,7 @@
+.zp-user-list-empty{
+  text-align: center;
+  padding: 15px 0;
+  &.error{
+    color: md-color($warn);
+  }
+}

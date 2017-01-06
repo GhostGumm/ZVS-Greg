@@ -8,7 +8,10 @@
       <md-input-container>
         <input md-input type="password" placeholder="Password" [(ngModel)]="credentials.password" name="password" required>
       </md-input-container>
-      <div *ngIf="error">{{error}}</div>
+      <div class="zp-form-error" *ngIf="error">
+        <md-icon>error</md-icon>
+        <p>{{error}}</p>
+      </div>
     </form>
   </md-card-content>
   <md-card-actions align="end">

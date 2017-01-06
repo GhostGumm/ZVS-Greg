@@ -10,6 +10,8 @@ import { fadeIn, fadeInOutView, swipeOutDownView } from '../../../utils/utils.an
 import { ConversationService, ConversationViewInterface, ConversationPagination } from '../../../services/conversation'
 import { UserService } from '../../../services/user'
 
+const CONVERSATION_PAGE_SIZE = 50
+
 @Component({
   selector: 'zp-conversation-view',
   templateUrl: './conversation-view.component.html',
@@ -69,7 +71,7 @@ export class ConversationViewComponent implements OnInit, OnDestroy, AfterViewIn
     this.loading = true
     const pagination: ConversationPagination = {
       pageNumber: 0,
-      pageSize: 20
+      pageSize: CONVERSATION_PAGE_SIZE
     }
     this.conversationService.getOneToOneConversation(interlocutor, pagination).then((result) => {
       this.zone.run(() => {

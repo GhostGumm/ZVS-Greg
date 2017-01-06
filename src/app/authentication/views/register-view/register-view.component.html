@@ -17,6 +17,10 @@
       <md-input-container>
         <input md-input type="text" placeholder="Lastname" [(ngModel)]="model.lastname" name="lastname" required>
       </md-input-container>
+      <div class="zp-form-error" *ngIf="error">
+        <md-icon>error</md-icon>
+        <p>{{error}}</p>
+      </div>
     </form>
   </md-card-content>
   <md-card-actions align="end">
