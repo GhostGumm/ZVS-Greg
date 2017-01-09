@@ -10,7 +10,7 @@ import { fadeIn, fadeInOutView, swipeOutDownView } from '../../../utils/utils.an
 import { ConversationService, ConversationViewInterface, ConversationPagination } from '../../../services/conversation'
 import { UserService } from '../../../services/user'
 
-const CONVERSATION_PAGE_SIZE = 50
+const CONVERSATION_PAGE_SIZE = 20
 
 @Component({
   selector: 'zp-conversation-view',

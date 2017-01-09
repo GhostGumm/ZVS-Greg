@@ -7,6 +7,7 @@ import { MaterialModule } from '@angular/material'
 
 import { FileDropDirective, FileSelectDirective } from 'ng2-file-upload'
 import { PdfViewerComponent } from 'ng2-pdf-viewer'
+import { ScrollGlueDirective } from '../utils'
 
 import { SharedRoutingModule } from './shared-routing.module'
 
@@ -21,8 +22,6 @@ import {
   COMPONENTS as SERVICES_COMPONENTS
 } from '../services/'
 
-
-import { ScrollGlueDirective } from '../utils'
 
 const CORE_MODULES = [ CommonModule, BrowserModule, FormsModule, HttpModule ]
 const DIRECTIVES = [ ScrollGlueDirective, FileDropDirective, FileSelectDirective, PdfViewerComponent]

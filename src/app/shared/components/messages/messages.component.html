@@ -14,10 +14,12 @@
       (mouseenter)="onMouseEnterMessage($event, message, $index)"
       (mouseleave)="onMouseLeaveMessage($event, message, $index)"
       (click)="onClickMessage($event, message, $index)" [ngClass]="[message.type]"
-      [class.owner]="message.isOwner" [class.precede]="message.isPrecede" [class.hovered]="message.isHovered">
+      [class.owner]="message.isOwner" [class.precede]="message.isPrecede" [class.hovered]="message.isHovered" [class.old]="message.isOld">
     <zp-avatar md-list-avatar *ngIf="!message.isPrecede" [user]="message.user" [size]="40"></zp-avatar>
 
-    <h3 md-line md-list-author *ngIf="!message.isPrecede"> {{message.user.firstname}} </h3>
+    <div md-list-date-milestone *ngIf="message.isOld">{{ message.date | date:'dd MMMM yyyy' }}</div>
+
+    <!--<h3 md-line md-list-author *ngIf="!message.isPrecede"> {{message.user.firstname}} </h3>-->
 
     <p md-line>
       <span md-list-markup *ngIf="message.type == 'markup'" [innerHTML]="message.value"></span>

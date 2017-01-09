@@ -11,7 +11,7 @@ md-list{
   height: 100%;
   overflow: auto;
   padding-bottom: 8px;
-  background-color: $background-fade;
+  background-color: #FFF;
   &.empty{
     display: flex;
     justify-content: center;
@@ -25,12 +25,14 @@ md-list{
 md-list-item{
   position: relative;
   display: block;
-  width: calc(100% - #{($md-list-avatar-computed-size + 16)});
-  border-radius: $zp-radius $zp-radius 0 0;
+  width: calc(100% - #{($md-list-avatar-computed-size + 32)});
+  background: $background-fade;
+  border-radius: $zp-radius;
   margin-right: 8px;
   margin-top: 8px;
-  margin-left: $md-list-avatar-computed-size;
+  margin-left: $md-list-avatar-computed-size + 16;
   padding-top: 10px;
+  padding-bottom: 10px;
   float: left;
   border-left-width: 6px;
   border-left-style: solid;
@@ -45,10 +47,10 @@ md-list-item{
   &.precede {
     margin-top: 2px;
     padding-top: 0;
-    border-radius: 0;
-    &:last-child {
-      border-radius: 0 0 $zp-radius $zp-radius;
-    }
+    padding-bottom: 0;
+  }
+  &.old{
+    margin-top: 50px;
   }
   &.hovered{
     background-color: $zp-white;
@@ -69,8 +71,8 @@ md-list-item{
 }
 [md-list-avatar]{
   position: absolute;
-  left:-($md-list-avatar-computed-size);
-  top: 2px;
+  left:-($md-list-avatar-computed-size + 8);
+  top: 8px;
   background-repeat: no-repeat;
   background-size: 80%;
   background-position: center;
@@ -93,6 +95,27 @@ md-list-item{
   padding-bottom: 16px;
   line-height: 16px;
 }
+[md-list-date-milestone]{
+  position: absolute;
+  top: -30px;
+  width: 100%;
+  text-align: center;
+  &:before,&:after{
+    content: '';
+    width: 40%;
+    top: 5px;
+    position: absolute;
+    background-color: md-color($primary);
+    display: block;
+    height: 2px;
+  }
+  &:before{
+    left: 0;
+  }
+  &:after{
+    right: 0;
+  }
+}
 [md-list-date]{
   position: absolute;
   bottom: 4px;
@@ -101,9 +124,7 @@ md-list-item{
 }
 [md-list-image]{
   object-fit: cover;
-  max-width: 100%;
-  min-height: 200px;
-  max-height: 200px;
+  width: 300px;
   border-radius: $zp-radius;
   transition-property: opacity, transform;
   will-change: opacity, transform;

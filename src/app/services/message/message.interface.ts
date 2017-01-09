@@ -16,6 +16,7 @@ export interface MessageInterface {
 
   isOwner?: boolean
   isPrecede?: boolean
+  isOld?: boolean
   isHovered?: boolean
 }
 
@@ -51,6 +52,7 @@ export class MessageClass implements MessageInterface {
 
   isOwner = false
   isPrecede = false
+  isOld = false
   isHovered = false
 
   constructor(parameters: MessageInterface) {

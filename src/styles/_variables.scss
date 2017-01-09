@@ -84,9 +84,10 @@ $md-list-avatar-computed-size: $md-list-avatar-size + ($md-list-avatar-margin * 
 $md-toolbar-height: $zp-size-xxl;
 $md-spinner-size: $zp-size-xl;
 
+$zp-navigation-context-width: 80px;
 $zp-navigation-width: 360px;
 $zp-sidenav-width: 280px;
-$zp-profile-height: $md-toolbar-height * 2;
+$zp-profile-height: $md-toolbar-height;
 $zp-user-presence-size: 10px;
 
 $zp-shadow-light: rgba(0,0,0, .26);
@@ -99,7 +100,7 @@ $zp-shadow-3: 0px 5px 6px -3px rgba(0, 0, 0, 0.2), 0px 9px 12px 1px rgba(0, 0, 0
 
 $zp-shadow-1-up: 0px -3px 1px -2px rgba(0, 0, 0, 0.2), 0px -2px 2px 0px rgba(0, 0, 0, 0.14), 0px -1px 5px 0px rgba(0, 0, 0, 0.12);
 
-$zp-radius: 4px;
+$zp-radius: 2px;
 
 $font-size-xxs: 10px;
 $font-size-xs: 14px;

@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core'
+import { FlexLayoutModule } from '@angular/flex-layout'
 // Application Modules
 import { SharedModule } from './shared/shared.module'
 import { AuthenticationModule } from './authentication/authentication.module'
@@ -18,6 +19,7 @@ import { RootComponent } from './root.component'
   ],
   imports: [
     SharedModule.forRoot(),
+    FlexLayoutModule.forRoot(),
 
     AppConfigModule,
     AppRoutingModule,

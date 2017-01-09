@@ -2,6 +2,7 @@ import { AvatarComponent } from './avatar/avatar.component'
 import { NavigationComponent } from './navigation/navigation.component'
 import { ProfileComponent } from './profile/profile.component'
 import { SidenavComponent } from './sidenav/sidenav.component'
+import { SidenavContextComponent } from './sidenav/sidenav.context.component'
 import { UserListComponent } from './list/user.list.component'
 import { UsernameComponent } from './username/username.component'
 import { MessagesComponent } from './messages/messages.component'
@@ -22,6 +23,7 @@ export const COMPONENTS = [
   NavigationComponent,
   ProfileComponent,
   SidenavComponent,
+  SidenavContextComponent,
   UserListComponent,
   UsernameComponent,
   MessagesComponent,

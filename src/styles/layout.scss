@@ -58,6 +58,13 @@ md-toolbar{
 .zp-color-white{
   color: $zp-white;
 }
+[zp-separator] {
+  background-color: md-color($accent);
+  width: 60%;
+  left: 20%;
+  margin: 20px 0;
+  height: 2px;
+}
 
 .zp-mockup-infos{
   position: fixed;

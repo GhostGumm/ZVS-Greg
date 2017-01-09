@@ -1,0 +1,17 @@
+@import '../../../../styles/_variables';
+
+:host{
+  float: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: $zp-navigation-context-width;
+  background-color: md-color($primary);
+}
+
+button{
+  background-color: $zp-white;
+  margin: 5px;
+}

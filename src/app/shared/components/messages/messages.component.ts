@@ -149,7 +149,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     this.conversationService.getConversationMessages(this.conversation).then((result) => {
       this.zone.run(() => {
         console.debug('MessagesComponent::getNextMessage', { result })
-        // Zero timeout incase of no scrollbar on first fetch 
+        // Zero timeout scroll incase of no scrollbar on first fetch 
         setTimeout(() => {
           if (this.conversation.pagination.hasNext === true) {
             this.messageListRef.el.scrollTop = 80

@@ -40,32 +40,47 @@ export class MessageService {
   }
 
   /**
-   * Messages: List of messages to index on init
-   * Message? : Message to index once added
-   * Toggle class 'precede' if messages[n].author == messages[n - 1].author
+   * messages: List of messages to index on init
+   * newMessage? : Message to index once added
+   * Toggle class 'precede' if messages[n].author == messages[n - 1].author & timestamp delta < 600,000ms(10min)
+   * Also provide 'old' class if message.date is 1 day old than previous.date
    */
-  indexByAuthor(messages: MessageInterface[], message?: MessageInterface) {
+  indexByAuthor(messages: MessageInterface[], newMessage?: MessageInterface) {
+
+    const checkCondition = (message: MessageInterface, previous: MessageInterface, index: number) => {
+      if (message.author === previous.author && (message.date - previous.date) < 600000) {
+        message.isPrecede = true
+      } else {
+        message.isPrecede = false
+      }
+      if (new Date(message.date).getDay() !== new Date(previous.date).getDay()) {
+        message.isOld = true
+      } else {
+        message.isOld = false
+      }
+      if (index === 1) {
+        messages[0].isOld = true
+      }
+    }
+
     if (messages.length > 1) {
-      if (message) {
-        const index = messages.indexOf(message)
+      if (newMessage) {
+        const index = messages.indexOf(newMessage)
         const previous = messages[index - 1]
-        if (message.author === previous.author) {
-          message.isPrecede = true
-        }
+        checkCondition(newMessage, previous, index)
       } else {
         for (let index = 1; index < messages.length; index++) {
           let msg = messages[index]
           let previous = messages[index - 1]
-
-          if (msg.author === previous.author) {
-            msg.isPrecede = true
-          }
+          checkCondition(msg, previous, index)
         }
       }
+    } else {
+      messages[0].isOld = true
     }
     console.debug('MessageOrder', {
       messages,
-      message
+      newMessage
     })
   }
 

@@ -1,1 +1,23 @@
 <h1>Context {{$params['id']}}</h1>
+
+<div class="flex-container" 
+     fxLayout="column" 
+     fxLayoutAlign="center center">
+  <md-card class="flex-item" *ngFor="let card of cards; let $index = index" fxFlex>
+    <md-card-title>{{card.title}}</md-card-title>   
+    <md-card-subtitle>{{card.subtitle}}</md-card-subtitle>
+
+    <md-card-content>
+      <p>{{card.content}}</p>
+    </md-card-content>
+    
+    <md-card-actions>
+      <template ngFor let-action [ngForOf]="card.actions">
+        <button *ngIf="action.text" md-raised-button>{{action.text}}</button>
+        <button *ngIf="action.icon" md-icon-button>
+          <md-icon>{{action.icon}}</md-icon>
+        </button>
+      </template>
+    </md-card-actions>
+  </md-card>
+</div>
