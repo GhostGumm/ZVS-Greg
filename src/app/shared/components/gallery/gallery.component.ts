@@ -52,8 +52,8 @@ export class GalleryComponent implements OnInit {
       length: this.files.length,
       selected: this.selected
     })
-    const { extension } = this.selected.metadata
-    if (extension !== 'video') {
+    const { parsable } = this.selected.metadata
+    if (parsable === true) {
       this.loading = true
     }
     this.index > 0 ? this.hasPrevious = true : this.hasPrevious = false

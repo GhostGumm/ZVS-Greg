@@ -29,7 +29,6 @@ export class ScrollGlueDirective implements OnInit, AfterContentInit, OnDestroy 
     @HostListener('scroll')
     onScroll() {
       const scrollTop = this.el.scrollTop
-      console.debug('ScrollGlueDirective::onScroll', { scrollTop })
       if (scrollTop === 0) {
         this.isTop.next()
       }

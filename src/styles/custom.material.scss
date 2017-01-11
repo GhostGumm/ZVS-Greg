@@ -98,3 +98,12 @@ md-progress-bar[white]{
     background-color: $zp-white;
   }
 }
+
+// awaiting update on this
+.md-chip:not(.md-basic-chip) {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 24px;
+  font-size: 13px;
+  line-height: 16px;
+}

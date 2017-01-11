@@ -18,7 +18,9 @@
 }
 
 [image]{
-  width: 100%;
+  position: relative;
+  width: 90%;
+  left: 5%;
   height: 100%;
   object-fit: contain;
   transition-property: filter;

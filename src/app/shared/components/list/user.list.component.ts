@@ -25,6 +25,7 @@ export class UserListComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   @Input() users: UserInterface[]
   @Input() link: string
   @Input() lastMessage: boolean = false
+  @Input() unreadMessage: boolean = false
   @Input() loading: boolean
   @Input() withShadow: boolean = false
   @Output() userClickedEmitter = new EventEmitter()

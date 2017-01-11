@@ -1,5 +1,4 @@
-<zp-sidenav-context>
-</zp-sidenav-context>
+<zp-sidenav-context *ngIf="!this.isMobile"></zp-sidenav-context>
 
 <md-sidenav-container>
   <md-sidenav #navigation mode="{{isMobile ? 'over' : 'side'}}">

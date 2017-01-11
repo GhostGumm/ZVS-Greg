@@ -17,7 +17,11 @@
       [class.owner]="message.isOwner" [class.precede]="message.isPrecede" [class.hovered]="message.isHovered" [class.old]="message.isOld">
     <zp-avatar md-list-avatar *ngIf="!message.isPrecede" [user]="message.user" [size]="40"></zp-avatar>
 
-    <div md-list-date-milestone *ngIf="message.isOld">{{ message.date | date:'dd MMMM yyyy' }}</div>
+    <div md-list-date-milestone *ngIf="message.isOld">
+      <span></span>
+      <p>{{ message.date | date:'dd MMMM yyyy' }}</p>
+      <span></span>
+    </div>
 
     <!--<h3 md-line md-list-author *ngIf="!message.isPrecede"> {{message.user.firstname}} </h3>-->
 
@@ -37,7 +41,11 @@
             <p><span>Size:</span> {{message.metadata.size}}</p>
           </span>
         </div>
-        <img md-list-image *ngIf="message.metadata.type == 'image'" [src]="message.value">
+
+        <img md-list-image *ngIf="message.metadata.type == 'image' && message.metadata.parsable == true" [src]="message.value">
+        <div md-list-image md-list-image-holder *ngIf="message.metadata.type == 'image' && message.metadata.parsable == false">
+          <md-icon>image</md-icon>
+        </div>
       </template>
     </p>
 

@@ -27,6 +27,7 @@ md-list{
   }
 }
 md-list-item{
+  position: relative;
   display: block;
   cursor: pointer;
   transition-property: background-color;
@@ -85,6 +86,20 @@ md-list-item{
   60%{
     opacity: 1;
   }
+}
+
+[md-list-unread]{
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  border-radius: 50%;
+  font-weight: 900;
+  left: $md-list-avatar-size;
+  top: $md-list-avatar-size;
+  color: $zp-whiter;
+  text-align: center;
+  background-color: md-color($warn);
 }
 
 md-spinner{

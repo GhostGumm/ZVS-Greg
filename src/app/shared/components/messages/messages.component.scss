@@ -26,7 +26,6 @@ md-list-item{
   position: relative;
   display: block;
   width: calc(100% - #{($md-list-avatar-computed-size + 32)});
-  background: $background-fade;
   border-radius: $zp-radius;
   margin-right: 8px;
   margin-top: 8px;
@@ -53,7 +52,7 @@ md-list-item{
     margin-top: 50px;
   }
   &.hovered{
-    background-color: $zp-white;
+    background: $background-fade;
     [md-list-avatar]{
       opacity: 1;
     }
@@ -100,20 +99,25 @@ md-list-item{
   top: -30px;
   width: 100%;
   text-align: center;
-  &:before,&:after{
-    content: '';
-    width: 40%;
-    top: 5px;
-    position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  p{
+    min-width: 150px;
+    margin: 0 20px;
+  }
+  span{
+    position: relative;
     background-color: md-color($primary);
     display: block;
     height: 2px;
-  }
-  &:before{
-    left: 0;
-  }
-  &:after{
-    right: 0;
+    width: 100%;
+    &:nth-child(1){
+      left: 0;
+    }
+    &:nth-child(2){
+      right: 0;
+    }
   }
 }
 [md-list-date]{
@@ -123,14 +127,27 @@ md-list-item{
   font-size: 10px;
 }
 [md-list-image]{
+  display: block;
   object-fit: cover;
   width: 300px;
+  height: 300px;
   border-radius: $zp-radius;
   transition-property: opacity, transform;
   will-change: opacity, transform;
   transition-duration: $transition-duration-fast;
   transition-timing-function: $transition-easing;
   backface-visibility: hidden;
+}
+[md-list-image-holder]{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $zp-white;
+  md-icon{
+    width: $zp-size-xxxl;
+    height: $zp-size-xxxl;
+    font-size: $zp-size-xxxl;
+  }
 }
 [md-list-file]{
   display: flex;
@@ -145,6 +162,10 @@ md-list-item{
   p{
     font-size: $font-size-xs;
     padding: 1px 0;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     span{
       font-weight: bold;
     }

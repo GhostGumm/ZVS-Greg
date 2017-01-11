@@ -13,6 +13,8 @@ import { UserService, UserClass, UserInterface } from '../../services/user'
 import { NotificationService } from '../../services/notification'
 import { ZetaPushConnection } from '../../zetapush'
 
+const RESPONSIVE_BREAKPOINT = 980
+
 @Component({
   animations: [
     trigger('slideUpDown', slideUpDown),
@@ -85,7 +87,7 @@ export class AuthenticatedLayoutComponent implements OnInit, AfterViewInit, OnDe
   }
 
   updateWindowSize(width) {
-    this.isMobile = width < 800 ? true : false
+    this.isMobile = width < RESPONSIVE_BREAKPOINT ? true : false
     if (this.isMobile) {
       this.navigation.close()
     } else {

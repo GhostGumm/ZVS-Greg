@@ -43,7 +43,7 @@ export class MessageService {
    * messages: List of messages to index on init
    * newMessage? : Message to index once added
    * Toggle class 'precede' if messages[n].author == messages[n - 1].author & timestamp delta < 600,000ms(10min)
-   * Also provide 'old' class if message.date is 1 day old than previous.date
+   * Also provide 'old' class if message.date is 1 day old or more than previous.date
    */
   indexByAuthor(messages: MessageInterface[], newMessage?: MessageInterface) {
 
@@ -53,7 +53,7 @@ export class MessageService {
       } else {
         message.isPrecede = false
       }
-      if (new Date(message.date).getDay() !== new Date(previous.date).getDay()) {
+      if (new Date(message.date).toLocaleDateString() !== new Date(previous.date).toLocaleDateString()) {
         message.isOld = true
       } else {
         message.isOld = false
@@ -118,21 +118,20 @@ export class MessageService {
     // Format size value
     metadata.size = this.formatBytes(metadata.size, 1)
 
+    // Default type & parsable metadata
+    metadata.parsable = false
+    metadata.type = 'file'
+
     // Set type & extension base on ContentType
     const contentType = metadata ? metadata.contentType : null
     if (contentType) {
       if (contentType.match(/image/g)) {
         metadata.type = 'image'
-        if (contentType.match(/gif/g)) {
-          metadata.extension = 'gif'
-        } else if (contentType.match(/jpeg/g)) {
-          metadata.extension = 'jpeg'
-        } else if (contentType.match(/png/g)) {
-          metadata.extension = 'png'
+        metadata.extension = contentType.split('/')[1]
+        if (contentType.match(/gif|png|jpeg/g)) {
+          metadata.parsable = true
         }
       } else {
-        // DEFAULT TYPE
-        metadata.type = 'file'
         // VIDEO
         if (contentType.match(/video/g)) {
           metadata.extension = 'video'
@@ -161,7 +160,6 @@ export class MessageService {
         }
       }
     } else {
-      metadata.type = 'file'
       metadata.contentType = 'unknown'
     }
 

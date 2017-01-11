@@ -12,7 +12,7 @@
     </button>
   </md-nav-list>-->
 
-  <zp-user-list [users]="contacts" [loading]="loading" [lastMessage]="true" (userClickedEmitter)="onContactClicked($event)">
+  <zp-user-list [users]="contacts" [loading]="loading" [lastMessage]="true" [unreadMessage]="true" (userClickedEmitter)="onContactClicked($event)">
     <div class="zp-user-list-actions">
       <h4>Contacts({{contacts?.length}})</h4>
       <span class="flex-fill"></span>
