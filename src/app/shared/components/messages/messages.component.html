@@ -29,23 +29,11 @@
       <span md-list-markup *ngIf="message.type == 'markup'" [innerHTML]="message.value"></span>
 
       <template [ngIf]="message.type == 'attachment'">
-        <div md-list-file *ngIf="message.metadata.type != 'image'">
-          <div [ngSwitch]="message.metadata.extension">
-            <md-icon *ngSwitchDefault>insert_drive_file</md-icon>
-            <md-icon *ngSwitchCase="'video'">play_circle_filled</md-icon>
-            <md-icon *ngSwitchCase="'audio'">audiotrack</md-icon>  
-          </div>        
-          <span>
-            <p><span>Name:</span> {{message.metadata.name}}</p>
-            <p><span>Type:</span> {{message.metadata.contentType}}</p>
-            <p><span>Size:</span> {{message.metadata.size}}</p>
-          </span>
+        <div *ngIf="message.metadata.type == 'image' && message.metadata.parsable == true">
+          <img md-list-image [src]="message.metadata.thumbnail || message.value">
         </div>
-
-        <img md-list-image *ngIf="message.metadata.type == 'image' && message.metadata.parsable == true" [src]="message.value">
-        <div md-list-image md-list-image-holder *ngIf="message.metadata.type == 'image' && message.metadata.parsable == false">
-          <md-icon>image</md-icon>
-        </div>
+        <zp-attachement-placeholder [message]="message" *ngIf="message.metadata.type != 'image'"></zp-attachement-placeholder>
+        <zp-attachement-placeholder [message]="message" [background]="true" *ngIf="message.metadata.type == 'image' && message.metadata.parsable == false"></zp-attachement-placeholder>
       </template>
     </p>
 

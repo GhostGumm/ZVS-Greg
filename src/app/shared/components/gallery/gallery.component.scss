@@ -15,23 +15,46 @@
   width: 100%;
   max-height: calc(100% - 88px);
   flex: 1 1 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-[image]{
-  position: relative;
-  width: 90%;
-  left: 5%;
+[image],
+[image-loader]{
+  width: 100%;
   height: 100%;
   object-fit: contain;
-  transition-property: filter;
-  will-change: filter;
+}
+[image-loader]{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  opacity: 0;
+  user-select: none;
+  pointer-events: none;
+  transition-property: filter, opacity;
+  will-change: filter, opacity;
   transition-duration: $transition-duration-fast;
   transition-timing-function: $transition-easing;
   backface-visibility: hidden;
   &.loading{
+    opacity: 1;
     filter: blur(5px);
     -webkit-filter: blur(5px);
     transition-duration: 0s;
+  }
+}
+[image]{
+  position: relative;
+  opacity: 1;
+  transition-property: opacity;
+  will-change: opacity;
+  transition-duration: $transition-duration-fast;
+  transition-timing-function: $transition-easing;
+  &.loading{
+    opacity: 0;
   }
 }
 
@@ -56,23 +79,6 @@ pdf-viewer{
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  md-icon{
-    width: 120px;
-    height: 120px;
-    font-size: 120px;
-    color: md-color($primary);
-    transition-property: opacity;
-    will-change: opacity;
-    transition-duration: $transition-duration-fast;
-    transition-timing-function: $transition-easing;
-  }  
-  p{
-    font-size: $font-size-xs;
-    padding: 1px 0;
-    span{
-      font-weight: bold;
-    }
-  }
   &.loading{
     md-icon{
       opacity: 0.5;
@@ -86,7 +92,7 @@ pdf-viewer{
   position: absolute;
   top: 50%;
   margin-top: -($zp-size-lg * 0.5);
-  z-index: 1;
+  z-index: 2;
   box-shadow: 0 0 0px 1px white;
 }
 [zp-gallery-previous]{
@@ -98,4 +104,8 @@ pdf-viewer{
 
 md-toolbar{
   font-size: $font-size-xs;
+}
+
+md-spinner{
+  z-index: 1;
 }

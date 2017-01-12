@@ -1,3 +1,3 @@
-<div zp-user-presence [class.on]="user.online"></div>
-<span zp-user-firstname>{{user.firstname}}</span>
-<span zp-user-lastname>{{user.lastname}}</span>
+<div zp-user-presence *ngIf="presence" [class.on]="user.online"></div>
+<span zp-user-firstname text-capitalize [class.presence]="presence">{{user.firstname}}</span>
+<span zp-user-lastname *ngIf="lastname" text-capitalize>{{user.lastname}}</span>

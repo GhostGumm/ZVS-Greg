@@ -5,7 +5,10 @@ import { SidenavComponent } from './sidenav/sidenav.component'
 import { SidenavContextComponent } from './sidenav/sidenav.context.component'
 import { UserListComponent } from './list/user.list.component'
 import { UsernameComponent } from './username/username.component'
+
 import { MessagesComponent } from './messages/messages.component'
+import { AttachmentPlaceholderComponent } from './messages/messages.attachment.placeholder.component'
+
 import { VideoComponent } from './video/video.component'
 import { AudioComponent } from './audio/audio.component'
 import { OrganizationComponent, OrganizationDialogComponent } from './organization/organization.component'
@@ -27,6 +30,7 @@ export const COMPONENTS = [
   UserListComponent,
   UsernameComponent,
   MessagesComponent,
+  AttachmentPlaceholderComponent,
   VideoComponent,
   AudioComponent,
   OrganizationComponent,

@@ -75,7 +75,7 @@ export class MessageService {
           checkCondition(msg, previous, index)
         }
       }
-    } else {
+    } else if (messages.length === 1) {
       messages[0].isOld = true
     }
     console.debug('MessageOrder', {
@@ -111,8 +111,15 @@ export class MessageService {
     const attachment = this.processData({ message, users })
     const { metadata } = attachment
 
-    // Rename value with proxy url
+    // Rename value & thumbnail with proxy url
     attachment.value = `${this.proxy}${attachment.value}`
+    if (metadata.thumbnails && metadata.thumbnails.length >= 1) {
+      attachment.metadata.thumbnails.map(thumb => thumb.url = `${this.proxy}${thumb.guid}`)
+      // prefered thumbnail
+      attachment.metadata.thumbnail = metadata.thumbnails[0].url
+    }
+
+    // Add files to global list
     this.setFile(attachment, isNew)
 
     // Format size value

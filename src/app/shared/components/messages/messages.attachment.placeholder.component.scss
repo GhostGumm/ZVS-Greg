@@ -1,0 +1,40 @@
+@import '../../../../styles/_variables';
+  
+[image]{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: $md-list-image-size;
+  height: $md-list-image-size;
+  &.background {
+    background-color: $zp-whiter;
+  }
+}
+
+md-icon{
+  width: $md-list-placeholder-icon-size;
+  height: $md-list-placeholder-icon-size;
+  font-size: $md-list-placeholder-icon-size;
+  color: md-color($primary);    
+}
+
+
+[file]{
+  display: flex;
+  align-items: center;
+  margin-left: -12px;
+  > span {
+    overflow: hidden;
+  }
+  p{
+    font-size: $font-size-xs;
+    padding: 1px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    > span{
+      font-weight: bold;
+    }
+  }
+}

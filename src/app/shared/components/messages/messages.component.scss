@@ -129,47 +129,15 @@ md-list-item{
 [md-list-image]{
   display: block;
   object-fit: cover;
-  width: 300px;
-  height: 300px;
+  // width: $md-list-image-size;
+  max-width: 100%;
+  height: $md-list-image-size;
   border-radius: $zp-radius;
   transition-property: opacity, transform;
   will-change: opacity, transform;
   transition-duration: $transition-duration-fast;
   transition-timing-function: $transition-easing;
   backface-visibility: hidden;
-}
-[md-list-image-holder]{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: $zp-white;
-  md-icon{
-    width: $zp-size-xxxl;
-    height: $zp-size-xxxl;
-    font-size: $zp-size-xxxl;
-  }
-}
-[md-list-file]{
-  display: flex;
-  align-items: center;
-  margin-left: -12px;
-  md-icon{
-    width: $zp-size-xxxl;
-    height: $zp-size-xxxl;
-    font-size: $zp-size-xxxl;
-    color: md-color($primary);    
-  }
-  p{
-    font-size: $font-size-xs;
-    padding: 1px 0;
-    max-width: 300px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    span{
-      font-weight: bold;
-    }
-  }
 }
 
 [zp-messages-pagination]{

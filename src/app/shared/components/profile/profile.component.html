@@ -1,6 +1,7 @@
-<zp-avatar [user]="user" [size]="40"></zp-avatar>
+<zp-avatar [user]="user" [size]="40" [presence]="true"></zp-avatar>
+
 <div zp-profile-username>
-  <zp-username [user]="user"></zp-username>
+  <zp-username [user]="user" [presence]="false" [lastname]="false"></zp-username>
   <button md-icon-button [md-menu-trigger-for]="menuProfile">
     <md-icon>sort</md-icon>
   </button>

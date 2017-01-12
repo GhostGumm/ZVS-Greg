@@ -1,0 +1,16 @@
+<div image *ngIf="message.metadata.type == 'image'" [class.background]="background">
+  <md-icon>image</md-icon>
+</div>
+
+<div file *ngIf="message.metadata.type != 'image'">
+  <div [ngSwitch]="message.metadata.extension">
+    <md-icon *ngSwitchDefault>insert_drive_file</md-icon>
+    <md-icon *ngSwitchCase="'video'">play_circle_filled</md-icon>
+    <md-icon *ngSwitchCase="'audio'">audiotrack</md-icon>  
+  </div>        
+  <span>
+    <p><span>Name:</span> {{message.metadata.name}}</p>
+    <p><span>Type:</span> {{message.metadata.extension}}</p>
+    <p><span>Size:</span> {{message.metadata.size}}</p>
+  </span>
+</div>

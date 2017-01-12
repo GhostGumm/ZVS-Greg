@@ -47,6 +47,7 @@ export class GalleryComponent implements OnInit {
   }
 
   checkAvailable() {
+    this.loading = false
     console.debug('GalleryComponent::checkAvailable', {
       index: this.index,
       length: this.files.length,

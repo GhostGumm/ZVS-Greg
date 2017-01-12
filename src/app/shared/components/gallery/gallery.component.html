@@ -29,7 +29,9 @@
 </button>
 
 <div zp-gallery-container>
-  <img image *ngIf="selected.metadata.type == 'image'" [src]="selected.value" alt="" draggable="false" (load)="onLoaded()" [class.loading]="loading" #imageRef>
+  <img image-loader *ngIf="selected.metadata.type == 'image' && selected.metadata.thumbnail" [src]="selected.metadata.thumbnail" alt="" draggable="false" [class.loading]="loading" #imageLoaderRef>
+  <img image *ngIf="selected.metadata.type == 'image'  && selected.metadata.parsable == true" [src]="selected.value" alt="" draggable="false" (load)="onLoaded()" [class.loading]="loading" #imageRef>
+  <zp-attachement-placeholder [message]="selected" *ngIf="selected.metadata.type == 'image' && selected.metadata.parsable == false"></zp-attachement-placeholder>
 
   <!-- Parsable File -->
   <div file *ngIf="selected.metadata.type == 'file' && selected.metadata.parsable == true" [class.loading]="loading"  [ngSwitch]="selected.metadata.extension">
@@ -45,20 +47,7 @@
     </pdf-viewer>
   </div>
   <!-- Unparsable File -->
-  <div file *ngIf="selected.metadata.type == 'file' && selected.metadata.parsable == false" [class.loading]="loading">
-    <div default class="flex-centered flex-column">
-      <div [ngSwitch]="selected.metadata.extension">
-        <md-icon *ngSwitchDefault>insert_drive_file</md-icon>
-        <md-icon *ngSwitchCase="'video'">play_circle_filled</md-icon>
-        <md-icon *ngSwitchCase="'audio'">audiotrack</md-icon> 
-      </div>
-      <span>
-        <p><span>Name:</span> {{selected.metadata.name}}</p>
-        <p><span>Type:</span> {{selected.metadata.contentType}}</p>
-        <p><span>Size:</span> {{selected.metadata.size}}</p>
-      </span>
-    </div>
-  </div>
+  <zp-attachement-placeholder [message]="selected" *ngIf="selected.metadata.type == 'file' && selected.metadata.parsable == false"></zp-attachement-placeholder>
 </div>
 
 <button lg accent zp-gallery-next *ngIf="hasNext" md-icon-button (click)="next()" [@fadeInAnimation]="hasNext">
@@ -73,4 +62,4 @@
   <span *ngIf="files.length > 1">{{index + 1}}/{{files.length}}</span>
 </md-toolbar>
 
-<md-spinner centered *ngIf="loading" [@fadeInAnimation]="loading"></md-spinner>
+<md-spinner centered *ngIf="loading" [@fadeInAnimation]="loading" color="accent"></md-spinner>

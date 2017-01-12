@@ -86,6 +86,13 @@ md-toolbar{
   }
 }
 
+// Overide default height on responsive
+@media (max-width: 600px) and (orientation: portrait) {
+  md-toolbar-row {
+      height: inherit;
+  }
+}
+
 // A bit taller notification & overflow authorized
 snack-bar-container{
   height: 32px !important;

@@ -14,16 +14,16 @@
       <md-icon>menu</md-icon>
     </button>
     <zp-avatar [user]="user" [size]="40" presence="true" *ngIf="!navigationOpened" [@slideUpDown]="!navigationOpened"></zp-avatar>
-    <span *ngIf="!navigationOpened" [@slideUpDown]="!navigationOpened" text-capitalize>{{ user.firstname }}</span>
+    <zp-username *ngIf="!navigationOpened" [@slideUpDown]="!navigationOpened" [user]="user" [presence]="false" [lastname]="false"></zp-username>
     <span class="flex-fill"></span>
     <button md-icon-button [md-menu-trigger-for]="menu"><md-icon>more_vert</md-icon></button>
-    <md-toolbar-row>
-      <!--<div>
+    <!--<md-toolbar-row>
+      <div>
         <span *ngFor="let path of $url; let $index = index;" (click)="goTo($index)" text-capitalize>
           {{path}}{{$index != $url.length - 1 ? ' / ' : ''}}
         </span>
-      </div>-->
-    </md-toolbar-row>
+      </div>
+    </md-toolbar-row>-->
   </md-toolbar>
 
   <md-menu #menu="mdMenu" x-position="before">

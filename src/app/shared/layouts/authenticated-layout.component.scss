@@ -11,16 +11,13 @@ md-toolbar{
   z-index: 1;
   height: $md-toolbar-height;
 }
+
 md-sidenav{
   overflow:hidden;
   // box-shadow: none !important;
   &.md-sidenav-over{
     background-color: $zp-white !important;
   }
-}
-
-zp-avatar{
-  margin-right: 10px;
 }
 
 .zp-content {

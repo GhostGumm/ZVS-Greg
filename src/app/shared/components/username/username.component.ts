@@ -8,6 +8,8 @@ import { UserInterface } from '../../../services/user'
 })
 export class UsernameComponent implements OnInit {
   @Input() user: UserInterface
+  @Input() presence: boolean = true
+  @Input() lastname: boolean = true
 
   constructor() { }
 
