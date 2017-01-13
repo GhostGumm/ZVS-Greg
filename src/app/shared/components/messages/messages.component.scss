@@ -139,6 +139,12 @@ md-list-item{
   transition-timing-function: $transition-easing;
   backface-visibility: hidden;
 }
+[md-list-incoming] {
+}
+[md-list-incoming-author] {
+  margin-left: 16px;
+}
+
 
 [zp-messages-pagination]{
   width: 100%;
@@ -146,6 +152,8 @@ md-list-item{
   justify-content: center;
   margin: 20px 0;
 }
+
+
 
 .zp-messages-inputs {
   box-shadow: $zp-shadow-1-up;

@@ -1,5 +1,6 @@
 <div image *ngIf="message.metadata.type == 'image'" [class.background]="background">
   <md-icon>image</md-icon>
+  <p *ngIf="warning">Unsupported format</p>
 </div>
 
 <div file *ngIf="message.metadata.type != 'image'">

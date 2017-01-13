@@ -31,7 +31,6 @@ export class MessageService {
   }
 
   setFile(file, isNew) {
-    console.debug('MessageService::setFile', file)
     if (isNew === true) {
       this.files.push(file)
     } else {
@@ -127,44 +126,53 @@ export class MessageService {
 
     // Default type & parsable metadata
     metadata.parsable = false
+    metadata.printable = false
     metadata.type = 'file'
 
     // Set type & extension base on ContentType
     const contentType = metadata ? metadata.contentType : null
+    metadata.extension = contentType.split('/')[1]
+
     if (contentType) {
       if (contentType.match(/image/g)) {
         metadata.type = 'image'
-        metadata.extension = contentType.split('/')[1]
         if (contentType.match(/gif|png|jpeg/g)) {
           metadata.parsable = true
+          metadata.printable = true
+        }
+        // Critic exception
+        if (contentType.match(/adobe/g)) {
+          metadata.type = 'file'
         }
       } else {
         // VIDEO
         if (contentType.match(/video/g)) {
-          metadata.extension = 'video'
+          metadata.subtype = 'video'
           if (contentType.match(/mp4|mp3|ogg|webm/g)) {
             metadata.parsable = true
           }
         // AUDIO
         } else if (contentType.match(/audio/g)) {
-          metadata.extension = 'audio'
+          metadata.subtype = 'audio'
           if (contentType.match(/mp4|mpeg|ogg|webm|wav/g)) {
             metadata.parsable = true
           }
         } else if (contentType.match(/pdf/g)) {
-          metadata.extension = 'pdf'
+          metadata.subtype = 'pdf'
           metadata.parsable = true
-        } else if (contentType.match(/msword/g)) {
-          metadata.extension = 'word'
-        } else if (contentType.match(/excel/g)) {
-          metadata.extension = 'excel'
-        } else if (contentType.match(/zip|compressed|bzip/g)) {
-          metadata.extension = 'zip'
-        } else if (contentType.match(/powerpoint/g)) {
-          metadata.extension = 'powerpoint'
-        } else if (contentType.match(/byte/g)) {
-          metadata.extension = 'code'
+          // metadata.printable = true
         }
+        // else if (contentType.match(/msword/g)) {
+        //   metadata.extension = 'word'
+        // } else if (contentType.match(/excel/g)) {
+        //   metadata.extension = 'excel'
+        // } else if (contentType.match(/zip|compressed|bzip/g)) {
+        //   metadata.extension = 'zip'
+        // } else if (contentType.match(/powerpoint/g)) {
+        //   metadata.extension = 'powerpoint'
+        // } else if (contentType.match(/byte/g)) {
+        //   metadata.extension = 'code'
+        // }
       }
     } else {
       metadata.contentType = 'unknown'

@@ -4,7 +4,7 @@
     <md-icon>file_download</md-icon>
   </button>
   
-  <button md-icon-button (click)="print()">
+  <button md-icon-button (click)="print()" *ngIf="selected.metadata.printable">
     <md-icon>print</md-icon>
   </button>
   
@@ -34,7 +34,7 @@
   <zp-attachement-placeholder [message]="selected" *ngIf="selected.metadata.type == 'image' && selected.metadata.parsable == false"></zp-attachement-placeholder>
 
   <!-- Parsable File -->
-  <div file *ngIf="selected.metadata.type == 'file' && selected.metadata.parsable == true" [class.loading]="loading"  [ngSwitch]="selected.metadata.extension">
+  <div file *ngIf="selected.metadata.type == 'file' && selected.metadata.parsable == true" [class.loading]="loading"  [ngSwitch]="selected.metadata.subtype">
     <video video *ngSwitchCase="'video'" controls autoplay [src]="selected.value" (canplay)="onLoaded()"></video>
     
     <audio audio *ngSwitchCase="'audio'" controls autoplay [src]="selected.value" (canplay)="onLoaded()"></audio>
@@ -54,10 +54,10 @@
   <md-icon>keyboard_arrow_right</md-icon>
 </button>
 
-<md-toolbar color="primary" sm>
-  <span>{{selected.metadata.name}}</span>
-  <span>&nbsp;-&nbsp;</span>
-  <span>{{selected.metadata.size}}</span>
+<md-toolbar toolbar-bottom color="primary" sm>
+  <span filename>{{selected.metadata.name}}</span>
+  <span hidden-xs>&nbsp;-&nbsp;</span>
+  <span hidden-xs>{{selected.metadata.size}}</span>
   <span class="flex-fill"></span>
   <span *ngIf="files.length > 1">{{index + 1}}/{{files.length}}</span>
 </md-toolbar>

@@ -2,8 +2,8 @@
 
 :host {
   position: relative;
-  width: 95vw;
-  height: 95vh;
+  width: 100vw;
+  height: 100vh;
   background-color: $zp-white;
   display: flex;
   flex-direction: column;
@@ -104,6 +104,14 @@ pdf-viewer{
 
 md-toolbar{
   font-size: $font-size-xs;
+}
+[toolbar-bottom]{
+  [filename]{
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 md-spinner{

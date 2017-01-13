@@ -6,7 +6,7 @@ import { NgForm } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { MdDialog, MdDialogRef } from '@angular/material'
 import { Subscription } from 'rxjs/Subscription'
-import { fadeIn, swipeOutDownView } from '../../../utils/utils.animation'
+import { fadeIn, fadeInHeight, swipeOutDownView } from '../../../utils/utils.animation'
 import { ZetaPushClient } from '../../../zetapush'
 
 import { ScrollGlueDirective } from '../../../utils/utils.scroll'
@@ -27,7 +27,8 @@ const PROVIDERS = [ ScrollGlueDirective, FileDropDirective, FileSelectDirective]
   providers: [ ...PROVIDERS ],
   animations: [
     trigger('routeAnimation', swipeOutDownView),
-    trigger('fadeInAnimation', fadeIn)
+    trigger('fadeInAnimation', fadeIn),
+    trigger('fadeInHeightAnimation', fadeInHeight)
   ]
 })
 
@@ -49,6 +50,10 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     // maxFileSize:this.limits.upload,
     removeAfterUpload: true
   })
+  private incomingMessage: any = {
+    user: {},
+    active: false
+  }
 
   @ViewChild(ScrollGlueDirective) messageListRef: ScrollGlueDirective // message container directive ref
   @ViewChild('uploadInput') uploadInputRef: ElementRef // uploader dom ref
@@ -210,7 +215,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     }
   }
 
-  // User add message
+  // user send a message
   addMessage(event) {
     event.preventDefault()
     const { owner, id } = this.conversation
@@ -222,7 +227,7 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
       })
     }
   }
-  // On user add message
+  // users receive a message
   onAddMessage(message) {
     console.debug('MessagesComponent::onAddMessage', { message })
     const { data } = message
@@ -234,6 +239,17 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
         this.processMarkup(message)
       break
     }
+  }
+  // user is writing message
+  onIncomingMessage(message: MessageInterface) {
+    console.debug('MessagesComponent::onIncomingMessage')
+    this.incomingMessage.active = true
+    this.incomingMessage.user = message.user
+  }
+  // user cancel message he was writing
+  onCanceledMessage() {
+    this.incomingMessage.active = false
+    this.incomingMessage.user = {}
   }
 
   // Process received attachment

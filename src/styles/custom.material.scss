@@ -74,22 +74,22 @@ md-toolbar{
     height: $zp-size-sm;
     font-size: $zp-size-sm - 6;
     md-toolbar-row{
-      height: $zp-size-sm;
+      height: $zp-size-sm !important;
     }
   }
   &[md]{
     min-height: $zp-size-md;
     height: $zp-size-md;
     md-toolbar-row{
-      height: $zp-size-md;
+      height: $zp-size-md !important;
     }
   }
 }
 
 // Overide default height on responsive
 @media (max-width: 600px) and (orientation: portrait) {
-  md-toolbar-row {
-      height: inherit;
+  md-toolbar-row {      
+    height: 64px !important;
   }
 }
 
@@ -113,4 +113,10 @@ md-progress-bar[white]{
   border-radius: 24px;
   font-size: 13px;
   line-height: 16px;
+}
+
+[hidden-xs]{
+  @media (max-width: 600px) and (orientation: portrait) {
+    display: none;
+  }
 }

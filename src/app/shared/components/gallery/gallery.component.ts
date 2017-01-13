@@ -1,4 +1,4 @@
-import { Component, OnInit, trigger, HostBinding, ViewChild, ElementRef, NgZone } from '@angular/core'
+import { Component, OnInit, trigger, HostBinding, HostListener, ViewChild, ElementRef, NgZone } from '@angular/core'
 import { MdDialogRef } from '@angular/material'
 import { fadeIn, slideUpDown } from '../../../utils/utils.animation'
 import { MessageInterface } from './../../../services'
@@ -38,6 +38,22 @@ export class GalleryComponent implements OnInit {
     return true
   }
 
+  @HostListener('window:keyup', ['$event'])
+  onKeyUp(event: any) {
+    console.debug('GalleryComponent::onKeyUp', { event })
+    // 37 = arrow right
+    // 39 = arrow left
+    const { keyCode } = event
+    switch (keyCode) {
+      case 37:
+        this.previous()
+      break
+      case 39:
+        this.next()
+      break
+    }
+  }
+
   ngOnInit() {
     console.debug('GalleryComponent::ngOnInit', {
       files: this.files
@@ -62,14 +78,18 @@ export class GalleryComponent implements OnInit {
   }
 
   previous() {
-    this.index--
-    this.selected = this.files[this.index]
-    this.checkAvailable()
+    if (this.hasPrevious) {
+      this.index--
+      this.selected = this.files[this.index]
+      this.checkAvailable()
+    }
   }
   next() {
-    this.index++
-    this.selected = this.files[this.index]
-    this.checkAvailable()
+    if (this.hasNext) {
+      this.index++
+      this.selected = this.files[this.index]
+      this.checkAvailable()
+    }
   }
 
   download() {
@@ -111,12 +131,17 @@ export class GalleryComponent implements OnInit {
 
     popup.document.write(`<html><head><title>${document.title}</title>`)
     popup.document.write('</head><body >')
-    const image = new Image()
-    image.src = this.selected.value
-    // Typescript issue with unknown attr...
-    const style: CSSStyleDeclarationExtended = image.style as CSSStyleDeclarationExtended
-    style.maxWidth = '100%'
-    popup.document.write(image.outerHTML)
+    if (this.selected.metadata.type === 'image') {
+      const image = new Image()
+      image.src = this.selected.value
+      // Typescript issue with unknown attr...
+      const style: CSSStyleDeclarationExtended = image.style as CSSStyleDeclarationExtended
+      style.maxWidth = '100%'
+      popup.document.write(image.outerHTML)
+    } else if (this.selected.metadata.extension === 'pdf') {
+      // To Fix
+      // popup.document.write(`<object id="exPDF" type="application/pdf" data="${this.selected.value}" width="100%" height="500"/>`)
+    }
     popup.document.write('</body></html>')
     popup.document.close() // necessary for IE >= 10
     popup.focus() // necessary for IE >= 10*/

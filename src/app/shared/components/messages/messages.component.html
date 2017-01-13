@@ -42,6 +42,10 @@
       {{ message.date | date:'HH:mm:ss' }}
     </span>
   </md-list-item>
+
+  <md-list-item md-list-incoming *ngIf="incomingMessage.active" [@fadeInHeightAnimation]="incomingMessage.active">
+    <p md-list-incoming-author text-capitalize>{{incomingMessage.user.firstname}}</p><p>&nbsp;is writing ...</p>
+  </md-list-item>
 </md-list>
 
 <md-toolbar class="zp-messages-inputs flex-centered">

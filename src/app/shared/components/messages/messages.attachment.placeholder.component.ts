@@ -14,13 +14,11 @@ export class AttachmentPlaceholderComponent implements OnInit {
 
   @Input() message: MessageInterface
   @Input() background: boolean = false
+  @Input() warning: boolean = false
 
   constructor() {
   }
 
   ngOnInit() {
-    console.debug('AttachementPlaceholderComponent::onInit', {
-      message: this.message
-    })
   }
 }
