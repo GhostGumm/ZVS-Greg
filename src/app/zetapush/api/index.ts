@@ -18,6 +18,16 @@ const apiFactory = (Api: Api, zone: NgZone) => {
     Type: Api,
     listener
   })
+  const $publish = service.$publish
+  service.$publish = (method: string, parameters: any, hardFail?: boolean, debug?: number) => new Promise<any>((resolve, reject) => {
+    const onSuccess = (message) => zone.run(() => {
+      resolve(message)
+    })
+    const onError = (error) => zone.run(() => {
+      reject(error)
+    })
+    $publish(method, parameters, hardFail, debug).then(onSuccess, onError)
+  })
   return Object.assign(service, extensions)
 }
 
