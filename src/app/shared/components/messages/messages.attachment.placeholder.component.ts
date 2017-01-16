@@ -1,5 +1,5 @@
 import {
-  Component, Input, OnInit
+  Component, Input, OnInit, Output, EventEmitter
 } from '@angular/core'
 
 import { MessageInterface } from './../../../services'
@@ -16,9 +16,12 @@ export class AttachmentPlaceholderComponent implements OnInit {
   @Input() background: boolean = false
   @Input() warning: boolean = false
 
+  @Output() onInitEmitter = new EventEmitter<boolean>()
+
   constructor() {
   }
 
   ngOnInit() {
+    this.onInitEmitter.emit()
   }
 }

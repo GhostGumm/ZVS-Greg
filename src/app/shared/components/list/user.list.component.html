@@ -10,7 +10,7 @@
     <p md-line md-line-last-message *ngIf="lastMessage">
       <span> {{user.metadata.message}} </span>
     </p>
-    <div md-list-unread *ngIf="unreadMessage">1</div>     
+    <!--<div md-list-unread *ngIf="unreadMessage">1</div>-->
     <template [ngTemplateOutlet]="templateUserAction" [ngOutletContext]="{user:user}" select=".zp-user-list-user-action"></template>
   </md-list-item>
 

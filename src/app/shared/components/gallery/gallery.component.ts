@@ -24,6 +24,7 @@ export class GalleryComponent implements OnInit {
   private hasPrevious: boolean = false
   private hasNext: boolean = false
   private loading: boolean = false
+  private preview: boolean = false
 
   @ViewChild('imageRef') imageRef: ElementRef // image dom ref
 
@@ -64,6 +65,7 @@ export class GalleryComponent implements OnInit {
 
   checkAvailable() {
     this.loading = false
+    this.preview = false
     console.debug('GalleryComponent::checkAvailable', {
       index: this.index,
       length: this.files.length,
@@ -111,6 +113,11 @@ export class GalleryComponent implements OnInit {
     setTimeout(() => {
       this.loading = false
     }, 100)
+  }
+
+  activePreview() {
+    this.loading = true
+    this.preview = true
   }
 
   afterPdfLoaded(pdf) {

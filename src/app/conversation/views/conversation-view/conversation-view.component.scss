@@ -26,6 +26,7 @@ md-toolbar{
 }
 
 zp-messages{
+  // height: calc(100% - 64px) !important;
   transition-property: width, opacity;
   will-change: width, opacity;
   transition-duration: $transition-duration-fast;

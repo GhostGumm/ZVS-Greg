@@ -16,13 +16,15 @@
   margin-top: -($zp-user-presence-size * 0.5);
 }
 
+
 [zp-user-firstname]{
   margin-left: 4px;
+  font-weight: 300;
   &.presence{
     margin-left: $zp-user-presence-size * 1.5;
   }
 }
 
 [zp-user-lastname]{
-  font-weight: 400;
+  font-weight: 600;
 }

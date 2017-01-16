@@ -33,21 +33,32 @@
   <img image *ngIf="selected.metadata.type == 'image'  && selected.metadata.parsable == true" [src]="selected.value" alt="" draggable="false" (load)="onLoaded()" [class.loading]="loading" #imageRef>
   <zp-attachement-placeholder [message]="selected" *ngIf="selected.metadata.type == 'image' && selected.metadata.parsable == false"></zp-attachement-placeholder>
 
-  <!-- Parsable File -->
-  <div file *ngIf="selected.metadata.type == 'file' && selected.metadata.parsable == true" [class.loading]="loading"  [ngSwitch]="selected.metadata.subtype">
-    <video video *ngSwitchCase="'video'" controls autoplay [src]="selected.value" (canplay)="onLoaded()"></video>
-    
-    <audio audio *ngSwitchCase="'audio'" controls autoplay [src]="selected.value" (canplay)="onLoaded()"></audio>
+  <template [ngIf]="selected.metadata.type == 'file'">
+    <!-- Parsable File -->
+    <div file *ngIf="selected.metadata.parsable == true" [class.loading]="loading"  [ngSwitch]="selected.metadata.subtype">
+      <video video *ngSwitchCase="'video'" controls autoplay [src]="selected.value" (canplay)="onLoaded()"></video>
+      
+      <audio audio *ngSwitchCase="'audio'" controls autoplay [src]="selected.value" (canplay)="onLoaded()"></audio>
 
-    <pdf-viewer *ngSwitchCase="'pdf'" [src]="selected.value"
-                [after-load-complete]="afterPdfLoaded"
-                [page]="1"
-                [render-text]="true"
-                [original-size]="false">
-    </pdf-viewer>
-  </div>
-  <!-- Unparsable File -->
-  <zp-attachement-placeholder [message]="selected" *ngIf="selected.metadata.type == 'file' && selected.metadata.parsable == false"></zp-attachement-placeholder>
+      <template [ngSwitchCase]="'pdf'">
+        <template [ngIf]="preview == true">
+          <pdf-viewer [src]="selected.value"
+                      [after-load-complete]="afterPdfLoaded"
+                      [page]="1"
+                      [render-text]="true"
+                      [original-size]="false">
+          </pdf-viewer>
+          <p *ngIf="loading">PDF preview can be slow...</p>
+        </template>
+        <template [ngIf]="preview == false">
+          <zp-attachement-placeholder [message]="selected" (onInitEmitter)="onLoaded()"></zp-attachement-placeholder>
+          <button lg color="primary" md-raised-button (click)="activePreview()">preview</button>
+        </template>
+      </template>
+    </div>
+    <!-- Unparsable File -->
+    <zp-attachement-placeholder [message]="selected" *ngIf="selected.metadata.parsable == false"></zp-attachement-placeholder>
+  </template>
 </div>
 
 <button lg accent zp-gallery-next *ngIf="hasNext" md-icon-button (click)="next()" [@fadeInAnimation]="hasNext">

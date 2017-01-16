@@ -160,10 +160,10 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
             this.messageListRef.el.scrollTop = 80
           }
         }, 0)
-        // 500ms timeout to allow <img> element to be parsed before reactivate scroll-glue
+        // 1000ms if user re-scroll fast
         setTimeout(() => {
           this.messageListRef.isLocked = true
-        }, 500)
+        }, 1000)
       })
     })
   }
