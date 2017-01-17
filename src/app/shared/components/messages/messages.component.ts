@@ -304,5 +304,6 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
   ngOnDestroy() {
     console.debug('MessagesComponent::ngOnDestroy')
     this.subscriptions.forEach((subscription) => subscription.unsubscribe())
+    this.conversationService.cancelupload()
   }
 }

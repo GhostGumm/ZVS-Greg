@@ -18,6 +18,7 @@ export class ConversationService implements OnInit, OnDestroy {
 
   public subscriptions: Array<Subscription> = []
   public percent: any
+  private xhrs: Array<any> = []
 
   public onAddConversationAttachment: Observable<any>
   public onAddConversationMarkup: Observable<any>
@@ -50,17 +51,15 @@ export class ConversationService implements OnInit, OnDestroy {
     })
   }
 
-  ngOnDestroy() {
-    console.debug('ConversationService::ngOnDestroy')
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe())
-  }
-
   createOneToOneConversation(interlocutor): Promise<ConversationInterface> {
     return this.api.createOneToOneConversation({ interlocutor })
   }
 
   getOneToOneConversation(interlocutor: Array<string>, pagination: ConversationPagination): Promise<ConversationViewInterface> {
     return this.api.getOneToOneConversation({ interlocutor, pagination }).then((conversation) => {
+      // Clear last upload
+      this.cancelupload()
+      
       const { page, messages, group: { members }, details: { id, owner } } = conversation
       const result: ConversationViewInterface = {
         id,
@@ -163,6 +162,7 @@ export class ConversationService implements OnInit, OnDestroy {
     console.debug('ConversationService::upload', { attachment, guid, httpMethod, url })
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest()
+      this.xhrs.push(xhr)
 
       xhr.open(httpMethod, url, true)
       // xhr.responseType = 'arraybuffer'
@@ -183,5 +183,17 @@ export class ConversationService implements OnInit, OnDestroy {
       }
       xhr.send(attachment._file)
     })
+  }
+
+  cancelupload() {
+    console.debug('ConversationService::cancelupload')
+    this.xhrs.forEach(xhr => xhr.abort())
+    this.percent.next(0)
+  }
+
+  ngOnDestroy() {
+    console.debug('ConversationService::ngOnDestroy')
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe())
+    this.cancelupload()
   }
 }
