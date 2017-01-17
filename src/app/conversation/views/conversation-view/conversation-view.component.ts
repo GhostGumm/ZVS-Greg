@@ -1,6 +1,6 @@
 import {
   Component, HostBinding, OnInit, OnDestroy, AfterViewInit, AfterContentInit,
-  trigger, NgZone
+  trigger
 } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
@@ -39,7 +39,6 @@ export class ConversationViewComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   constructor(
-    private zone: NgZone,
     private route: ActivatedRoute,
     private router: Router,
     private conversationService: ConversationService,
@@ -74,12 +73,10 @@ export class ConversationViewComponent implements OnInit, OnDestroy, AfterViewIn
       pageSize: CONVERSATION_PAGE_SIZE
     }
     this.conversationService.getOneToOneConversation(interlocutor, pagination).then((result) => {
-      this.zone.run(() => {
-        this.conversation = result
-        this.loading = false
-        console.log('ConversationViewComponent::getConversation:success', {
-          conversation: this.conversation
-        })
+      this.conversation = result
+      this.loading = false
+      console.log('ConversationViewComponent::getConversation:success', {
+        conversation: this.conversation
       })
     })
   }

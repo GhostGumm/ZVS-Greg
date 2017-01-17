@@ -152,19 +152,17 @@ export class MessagesComponent implements OnInit, OnChanges, AfterViewInit, OnDe
     }
     this.messageListRef.isLocked = false
     this.conversationService.getConversationMessages(this.conversation).then((result) => {
-      this.zone.run(() => {
-        console.debug('MessagesComponent::getNextMessage', { result })
-        // Zero timeout scroll incase of no scrollbar on first fetch 
-        setTimeout(() => {
-          if (this.conversation.pagination.hasNext === true) {
-            this.messageListRef.el.scrollTop = 80
-          }
-        }, 0)
-        // 1000ms if user re-scroll fast
-        setTimeout(() => {
-          this.messageListRef.isLocked = true
-        }, 1000)
-      })
+      console.debug('MessagesComponent::getNextMessage', { result })
+      // Zero timeout scroll incase of no scrollbar on first fetch 
+      setTimeout(() => {
+        if (this.conversation.pagination.hasNext === true) {
+          this.messageListRef.el.scrollTop = 80
+        }
+      }, 0)
+      // 1000ms if user re-scroll fast
+      setTimeout(() => {
+        this.messageListRef.isLocked = true
+      }, 1000)
     })
   }
 

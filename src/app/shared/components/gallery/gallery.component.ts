@@ -1,4 +1,4 @@
-import { Component, OnInit, trigger, HostBinding, HostListener, ViewChild, ElementRef, NgZone } from '@angular/core'
+import { Component, OnInit, trigger, HostBinding, HostListener, ViewChild, ElementRef } from '@angular/core'
 import { MdDialogRef } from '@angular/material'
 import { fadeIn, slideUpDown } from '../../../utils/utils.animation'
 import { MessageInterface } from './../../../services'
@@ -29,8 +29,7 @@ export class GalleryComponent implements OnInit {
   @ViewChild('imageRef') imageRef: ElementRef // image dom ref
 
   constructor(
-    public dialogRef: MdDialogRef<GalleryComponent>,
-    private zone: NgZone
+    public dialogRef: MdDialogRef<GalleryComponent>
   ) {
     this.afterPdfLoaded = this.afterPdfLoaded.bind(this)
   }

@@ -1,4 +1,4 @@
-import { Injectable, OnInit, OnDestroy, NgZone } from '@angular/core'
+import { Injectable, OnInit, OnDestroy } from '@angular/core'
 import { Http } from '@angular/http'
 import { Observable } from 'rxjs/Observable'
 import { Subscription } from 'rxjs/Subscription'
@@ -28,8 +28,7 @@ export class ConversationService implements OnInit, OnDestroy {
   constructor(
     private api: ApiConversation,
     private http: Http,
-    private messageService: MessageService,
-    private zone: NgZone
+    private messageService: MessageService
   ) {
     this.onAddConversationAttachment = api.onAddConversationAttachment
     this.onAddConversationMarkup = api.onAddConversationMarkup

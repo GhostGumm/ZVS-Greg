@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy, NgZone } from '@angular/core'
+import { Injectable, OnDestroy } from '@angular/core'
 import { Subscription } from 'rxjs/Subscription'
 
 import { UserClass, UserInterface } from '../user'
@@ -11,8 +11,7 @@ export class UserService implements OnDestroy {
 
   constructor(
     private apiUser: ApiUser,
-    private apiZetalk: ApiZetalk,
-    private zone: NgZone
+    private apiZetalk: ApiZetalk
   ) {}
 
   ngOnDestroy() {
