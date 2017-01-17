@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewContainerRef, NgZone } from '@angular/core'
+import { Component, OnDestroy, OnInit, ViewContainerRef } from '@angular/core'
 import { MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material'
 
 import { ZetaPushClient } from './../../../zetapush'
@@ -11,7 +11,7 @@ import { ApiConversation } from '../../../zetapush/api'
   styleUrls: ['./organization.component.scss'],
   templateUrl: './organization.component.html'
 })
-export class OrganizationComponent implements OnInit {
+export class OrganizationComponent {
 
   dialogRef: MdDialogRef<OrganizationDialogComponent>
 
@@ -44,8 +44,6 @@ export class OrganizationComponent implements OnInit {
     })
   }
 
-  ngOnInit() {}
-
   createConversation(interlocutor) {
     this.apiConversation
         .createOneToOneConversation({ interlocutor })
@@ -71,8 +69,7 @@ export class OrganizationDialogComponent implements OnInit, OnDestroy {
 
   constructor(
     public dialogRef: MdDialogRef<OrganizationDialogComponent>,
-    private userService: UserService,
-    private zone: NgZone
+    private userService: UserService
   ) {
 
   }
@@ -87,11 +84,9 @@ export class OrganizationDialogComponent implements OnInit, OnDestroy {
     this.userService
       .getPotentialContact()
       .then((members) => {
-        this.zone.run(() => {
-          console.debug('OrganizationDialogComponent::onGetMembers')
-          this.members = members
-          this.loading = false
-        })
+        console.debug('OrganizationDialogComponent::onGetMembers')
+        this.members = members
+        this.loading = false
       })
   }
 
