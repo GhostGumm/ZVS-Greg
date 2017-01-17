@@ -11,7 +11,7 @@
       <span> {{user.metadata.message}} </span>
     </p>
     <!--<div md-list-unread *ngIf="unreadMessage">1</div>-->
-    <template [ngTemplateOutlet]="templateUserAction" [ngOutletContext]="{user:user}" select=".zp-user-list-user-action"></template>
+    <template [ngTemplateOutlet]="templateUserAction" [ngTemplateOutletContext]="{user:user}" select=".zp-user-list-user-action"></template>
   </md-list-item>
 
   <ng-content *ngIf="users.length == 0" select=".zp-user-list-empty"></ng-content>

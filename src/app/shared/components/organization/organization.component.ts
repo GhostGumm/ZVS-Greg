@@ -110,7 +110,7 @@ export class OrganizationDialogComponent implements OnInit, OnDestroy {
   }
 
   userSelected(member: UserInterface) {
-    console.debug('OrganizationDialogComponent::userSelected', { member })
+    console.debug('OrganizationDialogComponent::userSelected', { selected:this.selected, members:this.members.length })
     if (member.metadata.checked === true) {
       this.selected++
       if (this.selected === this.members.length) {

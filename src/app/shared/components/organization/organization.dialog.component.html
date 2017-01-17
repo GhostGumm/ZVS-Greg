@@ -11,12 +11,12 @@
     <!--<button type="button" md-icon-button (click)="dialogRef.close(members)" color="primary">
       <md-icon>add</md-icon>
     </button>-->
-    <md-checkbox [disabled]="loading" [checked]="inviteAll" (change)="selectAll()" *ngIf="members?.length > 0"></md-checkbox>
+    <!--<md-checkbox [disabled]="loading" [checked]="inviteAll" (change)="selectAll()" *ngIf="members?.length > 0"></md-checkbox>-->
   </div>
 
-  <div class="zp-user-list-empty" *ngIf="members?.length == 0">
+  <!--<div class="zp-user-list-empty" *ngIf="members?.length == 0">
     0 members left to invite
-  </div>
+  </div>-->
 
   <template class="zp-user-list-user-action" let-user="user">
     <!--<button type="button" md-icon-button (click)="dialogRef.close(user)" color="primary">
