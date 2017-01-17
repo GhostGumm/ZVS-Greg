@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, AfterViewInit, Output, EventEmitter, NgZone } from '@angular/core'
+import { Component, Input, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Subscription } from 'rxjs/Subscription'
 
@@ -14,7 +14,7 @@ import { UserService, UserInterface } from '../../../services/user'
   templateUrl: './navigation.component.html',
   providers: [ UserService ]
 })
-export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
+export class NavigationComponent implements OnDestroy, OnInit {
   @Input() navigation: any // md-sidenav reference
   @Input() user: UserInterface
   @Input() isMobile: boolean
@@ -47,8 +47,7 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private conversationService: ConversationService,
-    private userService: UserService,
-    private zone: NgZone
+    private userService: UserService
   ) {
     /**
      * Route state listener
@@ -80,8 +79,6 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
     this.getContact()
   }
 
-  ngAfterViewInit() {}
-
   refreshLayout() {
     this.refreshStats()
   }
@@ -97,10 +94,8 @@ export class NavigationComponent implements OnDestroy, OnInit, AfterViewInit {
 
   getContact() {
     this.userService.getContact().then(contacts => {
-      this.zone.run(() => {
-        this.contacts = contacts
-        this.loading = false
-      })
+      this.contacts = contacts
+      this.loading = false
     })
   }
 

@@ -1,17 +1,8 @@
-<button class="zp-nav-close" md-icon-button (click)="navigation.close()"> <!--  md-tooltip="{{navigationOpened ? 'close menu' : 'open menu'}}" -->
+<button class="zp-nav-close" md-icon-button (click)="navigation.close()">
   <md-icon>close</md-icon>
 </button>
-
 <zp-profile [user]="user" (logout)="onLogout()"></zp-profile>
-
 <div zp-nav-overflow>
-  <!--<md-nav-list>
-    <button color="primary" *ngFor="let route of routes" md-button [routerLink]="route.link">
-      <md-icon>{{route.icon}}</md-icon>
-      {{route.name}}
-    </button>
-  </md-nav-list>-->
-
   <zp-user-list [users]="contacts" [loading]="loading" [lastMessage]="true" [unreadMessage]="true" (userClickedEmitter)="onContactClicked($event)">
     <div class="zp-user-list-actions">
       <h4>Contacts({{contacts?.length}})</h4>
