@@ -8,7 +8,7 @@
     "start2": "ng serve --port 3000 --host 0.0.0.0 --environment=aurelien",
     "lint": "tslint \"src/**/*.ts\"",
     "serve": "(cd dist && python ../python-gzip.py)",
-    "build": "ng build --prod"
+    "build": "ng build --prod --no-sourcemap"
   },
   "private": true,
   "dependencies": {
