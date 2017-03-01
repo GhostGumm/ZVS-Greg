@@ -11,5 +11,7 @@ interface Window {
   RTCIceCandidate: any,
   RTCSessionDescription: any,
   RTCPeerConnection: any,
-  Notification: any
+  Notification: any,
+  Janus: any,
+  adapter:any
 }

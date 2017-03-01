@@ -1,80 +1,82 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>ZeTalk</title>
-    <meta name="application-name" content="ZeTalk">
-    <meta name="description" content="ZetaPush Realtime Collaboration">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <link rel="manifest" href="assets/manifest.json">
+  <!doctype html>
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <title>ZeTalk</title>
+      <meta name="application-name" content="ZeTalk">
+      <meta name="description" content="ZetaPush Realtime Collaboration">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+      <link rel="icon" type="image/x-icon" href="favicon.ico" />
+      <link rel="manifest" href="assets/manifest.json">
 
-    <!--<link rel="icon" type="image/png" href="assets/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="assets/favicon-16x16.png" sizes="16x16">
-    <link rel="icon" type="image/png" href="assets/zetapush_logo.png" sizes="192x192">-->
+      <script type="javascript" src="js/adapter.js"></script>
+      <!--<link rel="icon" type="image/png" href="assets/favicon-32x32.png" sizes="32x32">
+      <link rel="icon" type="image/png" href="assets/favicon-16x16.png" sizes="16x16">
+      <link rel="icon" type="image/png" href="assets/zetapush_logo.png" sizes="192x192">-->
+
+      <style>
+        html::before {
+          content:'';
+          opacity: 0;
+          transition:opacity 1.5s linear;
+          will-change: opacity;
+        }
+        zp-loader {
+          position: fixed;
+          top:50%;left:50%;
+          transform:translate3d(-50%,-50%,0);
+          border:3px solid #13213C;
+          border-radius:50%;
+          pointer-events:none;
+          animation:zp-loader 1.5s infinite both ease-in-out;
+          transition:visiblity 0.5s;
+          will-change: visiblity;
+        }
+        @keyframes zp-loader {
+          30%,70%{
+            opacity: 1;
+          }
+          from{
+            width: 10px;height: 10px;opacity: 0;
+          }
+          to{
+            width: 100px;height: 100px;opacity: 0;
+          }
+        }
+      </style>
+
+      <meta name="theme-color" content="#F5F5F5">
+      <!--[if IE]><link rel="shortcut icon" type="image/x-icon" href="favicon.ico" /><![endif]-->
+      <!--Chrome-->
+      <meta name="mobile-web-app-capable" content="yes">
+      <link rel="icon" type="image/png" sizes="192x192"  href="assets/android-icon-192x192.png">
+      <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+      <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon-96x96.png">
+      <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+      <!--Windows Phone-->
+      <meta name="msapplication-navbutton-color" content="#F5F5F5">
+      <meta name="msapplication-TileColor" content="#F5F5F5">
+      <meta name="msapplication-TileImage" content="assets/ms-icon-144x144.png">
+      <!--Safari-->
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-title" content="ZeTalk">
+      <link rel="apple-touch-startup-image" href="assets/apple-icon-180x180.png">
+      <link rel="apple-touch-icon" sizes="60x60" href="assets/apple-icon-60x60.png">
+      <link rel="apple-touch-icon" sizes="72x72" href="assets/apple-icon-72x72.png">
+      <link rel="apple-touch-icon" sizes="76x76" href="assets/apple-icon-76x76.png">
+      <link rel="apple-touch-icon" sizes="114x114" href="assets/apple-icon-114x114.png">
+      <link rel="apple-touch-icon" sizes="120x120" href="assets/apple-icon-120x120.png">
+      <link rel="apple-touch-icon" sizes="144x144" href="assets/apple-icon-144x144.png">
+      <link rel="apple-touch-icon" sizes="152x152" href="assets/apple-icon-152x152.png">
+      <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-icon-180x180.png">
+    </head>
+    <body>
+      <zp-root>
+        <zp-loader></zp-loader>
+      </zp-root>
+    </body>
     <style>
-      html::before {
-        content:'';
-        opacity: 0;
-        transition:opacity 1.5s linear;
-        will-change: opacity;
-      }
-      zp-loader {
-        position: fixed;
-        top:50%;left:50%;
-        transform:translate3d(-50%,-50%,0);
-        border:3px solid #13213C;
-        border-radius:50%;
-        pointer-events:none;
-        animation:zp-loader 1.5s infinite both ease-in-out;
-        transition:visiblity 0.5s;
-        will-change: visiblity;
-      }
-      @keyframes zp-loader {
-        30%,70%{
-          opacity: 1;
-        }
-        from{
-          width: 10px;height: 10px;opacity: 0;
-        }
-        to{
-          width: 100px;height: 100px;opacity: 0;
-        }
-      }
     </style>
-
-    <meta name="theme-color" content="#F5F5F5">
-    <!--[if IE]><link rel="shortcut icon" type="image/x-icon" href="favicon.ico" /><![endif]-->
-    <!--Chrome-->
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" type="image/png" sizes="192x192"  href="assets/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
-    <!--Windows Phone-->
-    <meta name="msapplication-navbutton-color" content="#F5F5F5">
-    <meta name="msapplication-TileColor" content="#F5F5F5">
-    <meta name="msapplication-TileImage" content="assets/ms-icon-144x144.png">
-    <!--Safari-->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="ZeTalk">
-    <link rel="apple-touch-startup-image" href="assets/apple-icon-180x180.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="assets/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="assets/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="assets/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="assets/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="assets/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="assets/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="assets/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-icon-180x180.png">
-  </head>
-  <body>
-    <zp-root>
-      <zp-loader></zp-loader>
-    </zp-root>
-  </body>
-  <style>
-  </style>
-</html>
+  </html>

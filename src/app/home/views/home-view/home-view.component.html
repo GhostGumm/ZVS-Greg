@@ -3,9 +3,10 @@
 <div md-card-container>
   <md-card *ngFor="let card of cards; let $index = index"
            [attr.data-hint]="card.hint ? card.hint : null" data-hintPosition="top-left">
-    <md-card-title>{{card.title}}</md-card-title>   
+    <md-card-title>{{card.title}}</md-card-title>
     <md-card-subtitle>{{card.subtitle}}</md-card-subtitle>
-
+    <button (click)="myFunction()">Click me</button>
+  <button class="btn btn-primary" (click)="startZanus()"> Start! </button>
     <md-card-content>
       <p>{{card.content}}</p>
       <x-chartist *ngIf="card.chart" #chart
@@ -17,7 +18,7 @@
         [events]="card.chart.events">
       </x-chartist>
     </md-card-content>
-    
+
     <md-card-actions>
       <template ngFor let-action [ngForOf]="card.actions">
         <button *ngIf="action.text" md-raised-button>{{action.text}}</button>
@@ -26,5 +27,5 @@
         </button>
       </template>
     </md-card-actions>
-  </md-card>  
+  </md-card>
 </div>

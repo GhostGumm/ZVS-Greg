@@ -22,7 +22,10 @@
         "styles/index.scss"
       ],
       "scripts": [
-        "../node_modules/webfontloader/webfontloader.js"
+        "../node_modules/webfontloader/webfontloader.js",
+        "./js/janus.js",
+        "./js/videoroom.js",
+        "./js/adapter.js"
       ],
       "environments": {
         "source": "environments/environment.ts",
